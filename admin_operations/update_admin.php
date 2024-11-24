@@ -1,4 +1,4 @@
-<?php
+ <?php
 session_start();
 require '../configs/config.php'; // Ensure this is the path to your config file
 

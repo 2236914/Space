@@ -3,6 +3,9 @@ class SessionLogger {
     private $pdo;
 
     public function __construct($pdo) {
+        if (!($pdo instanceof PDO)) {
+            throw new Exception('Invalid PDO connection');
+        }
         $this->pdo = $pdo;
     }
 
@@ -122,6 +125,55 @@ class SessionLogger {
         } catch (Exception $e) {
             error_log("Get Session Error: " . $e->getMessage());
             return false;
+        }
+    }
+
+    public function logActivity($srcode, $therapist_id, $admin_id, $action, $description, $ip_address) {
+        try {
+            // Enable PDO error mode
+            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            
+            // Debug logging
+            error_log("=== Activity Logging Start ===");
+            error_log("SR Code: " . ($srcode ?? 'null'));
+            error_log("Therapist ID: " . ($therapist_id ?? 'null'));
+            error_log("Admin ID: " . ($admin_id ?? 'null'));
+            error_log("Action: " . $action);
+            error_log("Action Details: " . $description);
+            error_log("IP: " . $ip_address);
+            
+            // Updated SQL to match your actual table structure
+            $sql = "INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())";
+            
+            error_log("Executing SQL: " . $sql);
+            
+            $stmt = $this->pdo->prepare($sql);
+            
+            // Execute with parameters
+            $success = $stmt->execute([
+                $srcode,
+                $therapist_id,
+                $admin_id,
+                $action,
+                $description,  // This will go into action_details column
+                $ip_address
+            ]);
+            
+            if (!$success) {
+                error_log("Failed to insert activity log. Error info: " . print_r($stmt->errorInfo(), true));
+                return false;
+            }
+            
+            error_log("Activity log inserted successfully. ID: " . $this->pdo->lastInsertId());
+            error_log("=== Activity Logging End ===");
+            return true;
+            
+        } catch (PDOException $e) {
+            error_log("Database error in logActivity: " . $e->getMessage());
+            error_log("Stack trace: " . $e->getTraceAsString());
+            throw new Exception('Failed to log activity: ' . $e->getMessage());
         }
     }
 }

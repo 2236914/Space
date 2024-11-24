@@ -25,6 +25,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $hashedPassword = hash('sha256', $password);
             
             if ($hashedPassword === $student['password']) {
+                // Check if account is deactivated
+                if ($student['status'] === 'deactivated') {
+                    // Reactivate the account
+                    $reactivateStmt = $pdo->prepare("UPDATE students SET status = 'active' WHERE srcode = ?");
+                    $reactivateStmt->execute([$student['srcode']]);
+                    
+                    // Log the reactivation
+                    $logStmt = $pdo->prepare("
+                        INSERT INTO activity_logs 
+                        (srcode, action, action_details, ip_address, created_at) 
+                        VALUES (?, 'ACCOUNT_REACTIVATION', ?, ?, ?)
+                    ");
+                    $logStmt->execute([
+                        $student['srcode'],
+                        'Student account reactivated through login',
+                        $ip_address,
+                        $current_time
+                    ]);
+                }
+
                 // Log the login attempt
                 $logStmt = $pdo->prepare("
                     INSERT INTO activity_logs 

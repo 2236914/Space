@@ -36,6 +36,12 @@ header("Pragma: no-cache");
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
   <link id="pagestyle" href="../../assets/css/material-dashboard.css?v=3.2.0" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    const BASE_URL = '<?php echo BASE_URL; ?>';
+  </script>
+  <script src="<?php echo BASE_URL; ?>/assets/js/plugins/quotes.js"></script>
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
@@ -56,7 +62,9 @@ header("Pragma: no-cache");
             <!-- User Profile -->
             <li class="nav-item mb-2 mt-0">
                 <a data-bs-toggle="collapse" href="#ProfileNav" class="nav-link text-dark" aria-controls="ProfileNav" role="button" aria-expanded="false">
-                    <img src="../../assets/img/team-3.jpg" class="avatar">
+                    <img src="../../admin_operations/get_profile_picture.php?user_id=<?php echo $_SESSION['user_id']; ?>&user_type=<?php echo $_SESSION['role']; ?>" 
+                         class="avatar"
+                         onerror="this.src='../../assets/img/default-avatar.png';">
                     <span class="nav-link-text ms-2 ps-1">
                         <?php 
                         if (isset($_SESSION['user_id'])) {
@@ -117,6 +125,12 @@ header("Pragma: no-cache");
                             <a class="nav-link text-dark" href="mood-tracker.php">
                                 <span class="sidenav-mini-icon">MT</span>
                                 <span class="sidenav-normal ms-1 ps-1">Mood Tracker</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="notifications.php">
+                                <span class="sidenav-mini-icon">N</span>
+                                <span class="sidenav-normal ms-1 ps-1">Notifications</span>
                             </a>
                         </li>
                     </ul>
@@ -282,6 +296,8 @@ header("Pragma: no-cache");
       </div>
     </nav>
 
+     
+
     <div class="container-fluid py-4">
       <div class="row">
         <div class="col-md-8">
@@ -303,7 +319,7 @@ header("Pragma: no-cache");
           <div class="card">
             <div class="card-header p-2 ps-3">
               <div class="d-flex align-items-center">
-                <div class="icon icon-md icon-shape bg-primary shadow-dark shadow text-center border-radius-lg me-3">
+                <div class="icon icon-md icon-shape bg-gradient-primary shadow-dark shadow text-center border-radius-lg me-3">
                   <i class="material-symbols-outlined opacity-10">psychiatry</i>
                 </div>
                 <div>
@@ -334,12 +350,12 @@ header("Pragma: no-cache");
           <div class="card">
             <div class="card-header p-2 ps-3">
               <div class="d-flex align-items-center">
-                <div class="icon icon-md icon-shape bg-primary shadow-dark shadow text-center border-radius-lg me-3">
+                <div class="icon icon-md icon-shape bg-gradient-primary shadow-dark shadow text-center border-radius-lg me-3">
                   <i class="material-symbols-outlined opacity-10">event_available</i>
                 </div>
                 <div>
                   <p class="text-sm mb-0 text-capitalize">My Check-ins</p>
-                  <h4 class="mb-0">2300</h4>
+                  <h4 class="mb-0"><?php echo $analytics->getUserTotalCheckins($_SESSION['user_id']); ?></h4>
                 </div>
               </div>
             </div>
@@ -353,7 +369,7 @@ header("Pragma: no-cache");
           <div class="card">
             <div class="card-header p-2 ps-3">
               <div class="d-flex align-items-center">
-                <div class="icon icon-md icon-shape bg-primary shadow-dark shadow text-center border-radius-lg me-3">
+                <div class="icon icon-md icon-shape bg-gradient-primary shadow-dark shadow text-center border-radius-lg me-3">
                   <i class="material-symbols-outlined opacity-10">stylus</i>
                 </div>
                 <div>
@@ -372,7 +388,7 @@ header("Pragma: no-cache");
           <div class="card">
             <div class="card-header p-2 ps-3">
               <div class="d-flex align-items-center">
-                <div class="icon icon-md icon-shape bg-primary shadow-dark shadow text-center border-radius-lg me-3">
+                <div class="icon icon-md icon-shape bg-gradient-primary shadow-dark shadow text-center border-radius-lg me-3">
                   <i class="material-symbols-outlined opacity-10">assignment_ind</i>
                 </div>
                 <div>
@@ -387,108 +403,214 @@ header("Pragma: no-cache");
             </div>
           </div>
         </div>
-        
+
         <div class="container-fluid py-3">
-          <div class="row align-items-stretch">
-            <!-- Upcoming Events Card -->
-            <div class="col-lg-4 col-md-7 d-flex">
-              <div class="card pb-3 w-100">
-                <div class="card-header p-3 pb-0">
-                  <h6 class="mb-0">Upcoming events</h6>
-                  <p class="text-sm mb-0 text-capitalize font-weight-normal">Joined</p>
-                </div>
-                <!-- Scrollable Content -->
-                <div class="card-body border-radius-lg p-3 perfect-scrollbar" style="max-height: 220px; overflow-y: auto;" id="modern-scroll">
-                  <div class="d-flex mb-4">
-                    <div>
-                      <div class="icon icon-shape bg-primary icon-md text-center border-radius-md shadow-none">
-                        <i class="material-symbols-rounded text-white opacity-10" aria-hidden="true">savings</i>
-                      </div>
-                    </div>
-                    <div class="ms-3">
-                      <div class="numbers">
-                        <h6 class="mb-1 text-dark text-sm">Cyber Week</h6>
-                        <span class="text-sm">27 March 2020, at 12:30 PM</span>
-                      </div>
-                    </div>
+        <div class="row align-items-stretch">
+        <!-- Website Views Card -->
+        <div class="col-lg-4 col-md-7 d-flex">
+        <div class="card w-100">
+          <div class="card-header p-3 pb-0">
+              <div class="d-flex align-items-center">
+                  <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                      <i class="material-symbols-rounded text-white opacity-10">activity_zone</i>
                   </div>
-                  <div class="d-flex mb-4">
-                    <div>
-                      <div class="icon icon-shape bg-primary icon-md text-center border-radius-md shadow-none">
-                        <i class="material-symbols-rounded text-white opacity-10" aria-hidden="true">notifications_active</i>
-                      </div>
-                    </div>
-                    <div class="ms-3">
-                      <div class="numbers">
-                        <h6 class="mb-1 text-dark text-sm">Meeting with Marry</h6>
-                        <span class="text-sm">24 March 2020, at 10:00 PM</span>
-                      </div>
-                    </div>
+                  <div class="ms-3">
+                      <h6 class="mb-0">Space Interactions</h6>
+                      <p class="text-sm mb-0">Weekly Activity</p>
                   </div>
-                  <div class="d-flex mb-4">
-                    <div>
-                      <div class="icon icon-shape bg-primary icon-md text-center border-radius-md shadow-none">
-                        <i class="material-symbols-rounded text-white opacity-10" aria-hidden="true">task</i>
-                      </div>
-                    </div>
-                    <div class="ms-3">
-                      <div class="numbers">
-                        <h6 class="mb-1 text-dark text-sm">Tasks planification</h6>
-                        <span class="text-sm">24 March 2020, at 12:30 AM</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </div>
-            </div>
-            <!-- Care-O-Meter Card -->
-            <div class="col-lg-8 d-flex mt-lg-0 mt-4">
-              <div class="card overflow-hidden h-100 w-100">
+          </div>
+          <div class="card-body p-3">
+              <div class="chart position-relative" style="height: 170px">
+                  <canvas id="chart-bars"></canvas>
+              </div>
+              <hr class="dark horizontal">
+              <div class="d-flex justify-content-between align-items-center">
+                  <div class="d-flex align-items-center">
+                      <i class="material-symbols-rounded text-sm my-auto me-1">update</i>
+                      <p class="mb-0 text-sm" id="last-activity">
+                          <?php
+                          try {
+                              // Get activities for the last 7 days including today
+                              $query = "SELECT 
+                                  DATE_FORMAT(created_at, '%a') as day,
+                                  COUNT(*) as count,
+                                  MAX(created_at) as latest_activity
+                                  FROM activity_logs 
+                                  WHERE srcode = :user_id 
+                                  AND created_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)
+                                  AND action IN (
+                                      'Logged In',
+                                      'Liked Quote',
+                                      'Refreshed Quote',
+                                      'Updated Profile',
+                                      'Logged Mood',
+                                      'Viewed Resource'
+                                  )
+                                  GROUP BY DATE_FORMAT(created_at, '%a')
+                                  ORDER BY created_at DESC";
+                                  
+                              $stmt = $pdo->prepare($query);
+                              $stmt->execute(['user_id' => $_SESSION['user_id']]);
+                              $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                                  
+                              if ($result) {
+                                  $timeAgo = time() - strtotime($result['latest_activity']);
+                                  if ($timeAgo < 3600) {
+                                      echo "-" . floor($timeAgo / 60) . " minutes ago";
+                                  } elseif ($timeAgo < 86400) {
+                                      echo "-" . floor($timeAgo / 3600) . " hours ago";
+                                  } else {
+                                      echo "-" . floor($timeAgo / 86400) . " days ago";
+                                  }
+                                  
+                                  // Debug information
+                                  error_log("Today's count: " . $result['count'] . " for day: " . $result['day']);
+                              } else {
+                                  echo "No recent activity";
+                              }
+                          } catch (PDOException $e) {
+                              error_log("Error fetching activity data: " . $e->getMessage());
+                              echo "Error loading activity data";
+                          }
+                          ?>
+                      </p>
+                  </div>
+                  <p class="mb-0 text-sm text-muted">
+                      <i class="material-symbols-rounded text-sm">refresh</i>
+                      Refresh every week
+                  </p>
+              </div>
+          </div>
+        </div>
+      </div>
+
+        <div class="col-lg-4 col-md-7 d-flex">
+            <div class="card w-100">
                 <div class="card-header p-3 pb-0">
-                  <div class="d-flex align-items-center justify-content-between flex-wrap">
-                    <!-- Icon and Title -->
                     <div class="d-flex align-items-center">
-                      <div class="icon icon-shape bg-primary shadow text-center border-radius-md">
-                        <i class="ni ni-calendar-grid-58 text-lg opacity-10" aria-hidden="true"></i>
-                      </div>
-                      <div class="ms-3">
-                        <h6 class="mb-0">Care-O-Meter</h6>
-                        <p class="text-sm mb-0 text-capitalize font-weight-normal">
-                          Average time spent on self-care modules
-                        </p>
+                        <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                            <i class="material-symbols-rounded text-white opacity-10">mood</i>
+                        </div>
+                        <div class="ms-3">
+                            <h6 class="mb-0">Today's Mood</h6>
+                            <p class="text-sm mb-0 text-capitalize font-weight-normal"><?php echo date('F j, Y'); ?></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body p-3">
+                  <?php
+                  try {
+                    $tableExists = $pdo->query("SHOW TABLES LIKE 'moodlog'")->rowCount() > 0;
+                    
+                    if ($tableExists) {
+                      $query = "SELECT TRIM(selected_emoji) as selected_emoji 
+                                FROM moodlog 
+                                WHERE srcode = :srcode 
+                                AND DATE(log_date) = CURDATE() 
+                                ORDER BY log_date DESC 
+                                LIMIT 5";
+                      
+                      $stmt = $pdo->prepare($query);
+                      $stmt->execute(['srcode' => $_SESSION['user_id']]);
+                      $moods = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                      if (!empty($moods)): ?>
+                        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 150px;">
+                          <?php foreach($moods as $mood): ?>
+                            <div class="mb-2">
+                              <span style="font-size: 32px;"><?php echo str_replace(',', '', $mood['selected_emoji']); ?></span>
+                            </div>
+                          <?php endforeach; ?>
+                        </div>
+                      <?php else: ?>
+                        <div class="text-center text-muted" style="min-height: 150px;">
+                          <p class="mb-3">No mood logged today</p>
+                          <a href="moodlog.php" class="btn btn-sm btn-outline-primary">Log Your Mood</a>
+                        </div>
+                      <?php endif;
+                    } else {
+                      echo '<div class="text-center text-muted" style="min-height: 150px;">';
+                      echo '<p class="mb-3">Mood tracking feature is not yet set up</p>';
+                      echo '<a href="moodlog.php" class="btn btn-sm btn-outline-primary">Log Your First Mood</a>';
+                      echo '</div>';
+                    }
+                  } catch (PDOException $e) {
+                    echo '<div class="text-center text-muted" style="min-height: 150px;">';
+                    echo '<p>Error accessing mood data</p>';
+                    echo '</div>';
+                    error_log("Mood tracking error: " . $e->getMessage());
+                  }
+                  ?>
+                </div>
+                <?php if (!empty($moods)): ?>
+                <div class="card-footer p-3 text-center">
+                  <a href="mood-tracker.php" class="btn btn-sm btn-primary">See More</a>
+                </div>
+                <?php endif; ?>
+              </div>
+            </div>
+
+
+
+            <!-- Announcements Card -->
+            <div class="col-lg-4 col-md-7 d-flex">
+            <div class="card w-100">
+                <div class="card-header p-3 pb-0">
+                    <div class="d-flex align-items-center">
+                        <div class="icon icon-shape bg-gradient-warning shadow text-center border-radius-md">
+                            <i class="material-symbols-rounded text-white opacity-10">campaign</i>
+                        </div>
+                        <div class="ms-3">
+                            <h6 class="mb-0">Announcements</h6>
+                            <p class="text-sm mb-0">Latest updates</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body border-radius-lg p-3 perfect-scrollbar" style="max-height: 220px; overflow-y: auto;" id="announcements-scroll">
+                  <div class="d-flex mb-4">
+                    <div>
+                      <div class="icon icon-shape bg-warning icon-md text-center border-radius-md shadow-none">
+                        <i class="material-symbols-rounded text-white opacity-10" aria-hidden="true">campaign</i>
                       </div>
                     </div>
-                    <!-- Year Dropdown -->
-                    <div class="dropdown mt-3 mt-lg-0">
-                      <button
-                        class="btn btn-sm btn-primary dropdown-toggle"
-                        type="button"
-                        id="dropdownMenuButtonYearCare"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                      >
-                        Select Year
-                      </button>
-                      <ul
-                        class="dropdown-menu"
-                        aria-labelledby="dropdownMenuButtonYearCare"
-                        id="yearDropdownCare"
-                      >
-                        <!-- Year options -->
-                        <li><a class="dropdown-item" href="#">2023</a></li>
-                        <li><a class="dropdown-item" href="#">2022</a></li>
-                        <li><a class="dropdown-item" href="#">2021</a></li>
-                      </ul>
+                    <div class="ms-3">
+                      <div class="numbers">
+                        <h6 class="mb-1 text-dark text-sm">Holiday Schedule</h6>
+                        <span class="text-sm">Posted 2 hours ago</span>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="card-body mt-3 p-2">
-                  <div class="chart" style="padding: 0 5px;">
-                    <canvas id="chart-line-widgets" class="chart-canvas" height="200"></canvas>
+                  <div class="d-flex mb-4">
+                    <div>
+                      <div class="icon icon-shape bg-warning icon-md text-center border-radius-md shadow-none">
+                        <i class="material-symbols-rounded text-white opacity-10" aria-hidden="true">event</i>
+                      </div>
+                    </div>
+                    <div class="ms-3">
+                      <div class="numbers">
+                        <h6 class="mb-1 text-dark text-sm">Wellness Workshop</h6>
+                        <span class="text-sm">Posted yesterday</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="d-flex mb-4">
+                    <div>
+                      <div class="icon icon-shape bg-warning icon-md text-center border-radius-md shadow-none">
+                        <i class="material-symbols-rounded text-white opacity-10" aria-hidden="true">tips_and_updates</i>
+                      </div>
+                    </div>
+                    <div class="ms-3">
+                      <div class="numbers">
+                        <h6 class="mb-1 text-dark text-sm">New Resources Available</h6>
+                        <span class="text-sm">Posted 2 days ago</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+
           </div>
         </div>
 
@@ -708,7 +830,24 @@ header("Pragma: no-cache");
   <script src="../../assets/js/core/bootstrap.min.js"></script>
   <script src="../../assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../../assets/js/plugins/smooth-scrollbar.min.js"></script>
+  <script src="../../assets/js/plugins/chart.min.js"></script>
   <script src="../../assets/js/material-dashboard.min.js?v=3.2.0"></script>
+  
+
+  <script>
+document.querySelectorAll('[ms-code-emoji]').forEach(element => {
+  var imageUrl = element.getAttribute('ms-code-emoji');
+  if (imageUrl) {
+    var img = document.createElement('img');
+    img.src = imageUrl;
+    img.style.width = '35px';
+    img.style.height = '35px';
+    img.style.verticalAlign = 'middle';
+    element.innerHTML = '';
+    element.appendChild(img);
+  }
+});
+</script>
 
   <script>
     var ctx3 = document.getElementById("doughnut-chart").getContext("2d");
@@ -807,7 +946,6 @@ new Chart(ctx3, {
                         return `Engagement Time: ${tooltipItem.raw} minutes`;
                     },
                 },
-            },
             annotation: {
                 annotations: {
                     benchmark: {
@@ -1033,6 +1171,125 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Periodically check login status
 setInterval(checkLoginStatus, 30000); // Check every 30 seconds
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Add refresh button to card header
+    const cardHeader = document.querySelector('#quote-container').closest('.card').querySelector('.card-header');
+    const refreshBtn = document.createElement('button');
+    refreshBtn.className = 'btn btn-link p-0 ms-auto';
+    refreshBtn.innerHTML = '<i class="material-symbols-rounded">refresh</i>';
+    refreshBtn.onclick = function() {
+        location.reload();
+    };
+    cardHeader.style.display = 'flex';
+    cardHeader.style.alignItems = 'start';
+    cardHeader.appendChild(refreshBtn);
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var ctx = document.getElementById("chart-bars");
+    
+    // Fetch activity data
+    $.ajax({
+        url: BASE_URL + '/admin_operations/get_activity_data.php',
+        type: 'GET',
+        success: function(response) {
+            const chartData = typeof response === 'string' ? JSON.parse(response) : response;
+            
+            if (chartData.error) {
+                console.error('Error:', chartData.error);
+                return;
+            }
+
+            new Chart(ctx, {
+                type: "bar",
+                data: {
+                    labels: chartData.labels,
+                    datasets: [{
+                        label: "Activities",
+                        tension: 0.4,
+                        borderWidth: 0,
+                        borderRadius: 4,
+                        borderSkipped: false,
+                        backgroundColor: "#43A047",
+                        data: chartData.data,
+                        maxBarThickness: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false,
+                        },
+                        tooltip: {
+                            callbacks: {
+                                title: function(context) {
+                                    return context[0].label;
+                                },
+                                label: function(context) {
+                                    return context.parsed.y + ' activities';
+                                }
+                            }
+                        }
+                    },
+                    interaction: {
+                        intersect: false,
+                        mode: 'index',
+                    },
+                    scales: {
+                        y: {
+                            grid: {
+                                drawBorder: false,
+                                display: true,
+                                drawOnChartArea: true,
+                                drawTicks: false,
+                                borderDash: [5, 5],
+                                color: '#e5e5e5'
+                            },
+                            ticks: {
+                                suggestedMin: 0,
+                                suggestedMax: 10,
+                                beginAtZero: true,
+                                padding: 10,
+                                font: {
+                                    size: 14,
+                                    lineHeight: 2
+                                },
+                                color: "#737373"
+                            },
+                        },
+                        x: {
+                            grid: {
+                                drawBorder: false,
+                                display: false,
+                                drawOnChartArea: false,
+                                drawTicks: false,
+                            },
+                            ticks: {
+                                display: true,
+                                color: '#737373',
+                                padding: 10,
+                                font: {
+                                    size: 14,
+                                    lineHeight: 2
+                                },
+                            }
+                        },
+                    },
+                },
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error('Ajax error:', error);
+        }
+    });
+});
 </script>
 
 </body>

@@ -1,23 +1,146 @@
 <?php
-// Prevent direct access to this file
-if (!defined('ALLOW_ACCESS')) {
-    header("Location: ../index.php");
-    exit();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
 }
 
-// Handle AJAX requests
-if (isset($_GET['action']) && $_GET['action'] === 'update_profile_picture') {
-    header('Content-Type: application/json');
-    $profileOps = new ProfileOperations($pdo);
-    echo json_encode($profileOps->handleProfilePictureUpdate());
-    exit;
+// Enable error logging
+ini_set('log_errors', 1);
+ini_set('error_log', __DIR__ . '/upload_errors.log');
+error_reporting(E_ALL);
+ini_set('display_errors', 0);
+
+// Fix the path by using correct relative path and ensure PDO is available
+require_once __DIR__ . '/../configs/config.php';
+require_once __DIR__ . '/SessionLogger.php';
+
+// Verify PDO connection
+if (!isset($pdo) || !($pdo instanceof PDO)) {
+    // Recreate connection if needed
+    try {
+        $host = 'localhost';
+        $dbname = 'space';
+        $username = 'root';
+        $password = '';
+        
+        $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    } catch (PDOException $e) {
+        error_log("Database connection failed: " . $e->getMessage());
+        die(json_encode([
+            'status' => 'error',
+            'message' => 'Database connection failed'
+        ]));
+    }
 }
 
 class ProfileOperations {
     private $pdo;
-
+    
     public function __construct($pdo) {
+        if (!($pdo instanceof PDO)) {
+            throw new Exception('Invalid PDO connection');
+        }
         $this->pdo = $pdo;
+    }
+
+    public function handleProfilePictureUpdate() {
+        if (!isset($_FILES['profile_picture'])) {
+            throw new Exception('No file uploaded');
+        }
+
+        try {
+            $file = $_FILES['profile_picture'];
+            error_log("Processing file: " . print_r($file, true));
+            
+            // Validate upload
+            if ($file['error'] !== UPLOAD_ERR_OK) {
+                throw new Exception($this->getUploadErrorMessage($file['error']));
+            }
+            
+            // File validations...
+            $allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+            $fileInfo = new finfo(FILEINFO_MIME_TYPE);
+            $detectedType = $fileInfo->file($file['tmp_name']);
+            
+            if (!in_array($detectedType, $allowedTypes)) {
+                throw new Exception("Invalid file type: {$detectedType}");
+            }
+            
+            // Size validation (5MB)
+            $maxSize = 5 * 1024 * 1024;
+            if ($file['size'] > $maxSize) {
+                throw new Exception("File too large. Maximum size is 5MB");
+            }
+            
+            // Read file data
+            $fileData = file_get_contents($file['tmp_name']);
+            if ($fileData === false) {
+                throw new Exception('Failed to read uploaded file');
+            }
+
+            // Start transaction
+            $this->pdo->beginTransaction();
+            
+            // Deactivate old profile picture
+            $stmt = $this->pdo->prepare("
+                UPDATE profile_pictures 
+                SET status = 'inactive' 
+                WHERE user_id = ? AND user_type = ? AND status = 'active'
+            ");
+            $stmt->execute([$_SESSION['user_id'], $_SESSION['role']]);
+            
+            // Insert new profile picture
+            $stmt = $this->pdo->prepare("
+                INSERT INTO profile_pictures 
+                (user_id, user_type, file_name, file_type, file_data) 
+                VALUES (?, ?, ?, ?, ?)
+            ");
+            $stmt->execute([
+                $_SESSION['user_id'],
+                $_SESSION['role'],
+                $file['name'],
+                $detectedType,
+                $fileData
+            ]);
+
+            // Log the activity
+            $sessionLogger = new SessionLogger($this->pdo);
+            $this->logProfileUpdate($sessionLogger, $file['name']);
+            
+            // Commit transaction
+            $this->pdo->commit();
+            
+            return [
+                'status' => 'success',
+                'message' => 'Profile picture updated successfully'
+            ];
+            
+        } catch (Exception $e) {
+            // Rollback transaction if active
+            if ($this->pdo && $this->pdo->inTransaction()) {
+                $this->pdo->rollBack();
+            }
+            error_log("Profile picture update error: " . $e->getMessage());
+            throw $e;
+        }
+    }
+
+    private function logProfileUpdate($sessionLogger, $fileName) {
+        $user_id = $_SESSION['user_id'];
+        $user_type = $_SESSION['role'];
+        
+        $srcode = ($user_type === 'student') ? $user_id : null;
+        $therapist_id = ($user_type === 'therapist') ? $user_id : null;
+        $admin_id = ($user_type === 'admin') ? $user_id : null;
+        
+        $sessionLogger->logActivity(
+            $srcode,
+            $therapist_id, 
+            $admin_id,
+            'UPDATE_PROFILE_PICTURE',
+            'Updated profile picture: ' . $fileName,
+            $_SERVER['REMOTE_ADDR']
+        );
     }
 
     public function updateStudentProfile($data) {
@@ -171,65 +294,25 @@ class ProfileOperations {
         return $stmt->fetch();
     }
 
-    public function handleProfilePictureUpdate() {
-        if (isset($_FILES['profile_picture'])) {
-            try {
-                $file = $_FILES['profile_picture'];
-                
-                // Validate file type
-                $allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
-                $allowedExtensions = ['jpg', 'jpeg', 'png'];
-                
-                // Get file info
-                $fileInfo = finfo_open(FILEINFO_MIME_TYPE);
-                $detectedType = finfo_file($fileInfo, $file['tmp_name']);
-                finfo_close($fileInfo);
-                
-                // Get file extension
-                $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-                
-                if (!in_array($detectedType, $allowedTypes) || !in_array($extension, $allowedExtensions)) {
-                    throw new Exception('Invalid file type. Only JPG, JPEG, and PNG files are allowed.');
-                }
-                
-                // Validate file size (5MB max)
-                $maxSize = 5 * 1024 * 1024;
-                if ($file['size'] > $maxSize) {
-                    throw new Exception('File size too large. Maximum size is 5MB.');
-                }
-                
-                $fileData = file_get_contents($file['tmp_name']);
-                $result = $this->updateProfilePicture(
-                    $_SESSION['user_id'],
-                    $_SESSION['role'],
-                    $fileData,
-                    $file['name'],
-                    $file['type']
-                );
-                
-                // Log the activity
-                $sessionLogger = new SessionLogger($this->pdo);
-                $user_id = $_SESSION['user_id'];
-                $user_type = $_SESSION['role'];
-                
-                $srcode = ($user_type === 'student') ? $user_id : null;
-                $therapist_id = ($user_type === 'therapist') ? $user_id : null;
-                $admin_id = ($user_type === 'admin') ? $user_id : null;
-                
-                $sessionLogger->logActivity(
-                    $srcode,
-                    $therapist_id, 
-                    $admin_id,
-                    'UPDATE_PROFILE_PICTURE',
-                    'Updated profile picture: ' . $file['name'],
-                    $_SERVER['REMOTE_ADDR']
-                );
-                
-                return ['status' => 'success', 'message' => 'Profile picture updated successfully'];
-            } catch (Exception $e) {
-                return ['status' => 'error', 'message' => $e->getMessage()];
-            }
+    // Add new helper method
+    private function getUploadErrorMessage($errorCode) {
+        switch ($errorCode) {
+            case UPLOAD_ERR_INI_SIZE:
+                return 'The uploaded file exceeds the upload_max_filesize directive in php.ini';
+            case UPLOAD_ERR_FORM_SIZE:
+                return 'The uploaded file exceeds the MAX_FILE_SIZE directive in the HTML form';
+            case UPLOAD_ERR_PARTIAL:
+                return 'The uploaded file was only partially uploaded';
+            case UPLOAD_ERR_NO_FILE:
+                return 'No file was uploaded';
+            case UPLOAD_ERR_NO_TMP_DIR:
+                return 'Missing a temporary folder';
+            case UPLOAD_ERR_CANT_WRITE:
+                return 'Failed to write file to disk';
+            case UPLOAD_ERR_EXTENSION:
+                return 'File upload stopped by extension';
+            default:
+                return 'Unknown upload error';
         }
-        return ['status' => 'error', 'message' => 'No file uploaded'];
     }
 }

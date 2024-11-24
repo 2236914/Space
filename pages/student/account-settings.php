@@ -1,11 +1,16 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 // Debug session variables
 error_log("Current Session Variables: " . print_r($_SESSION, true));
-require_once '../../configs/config.php';
+
+// Use correct relative paths
+require_once __DIR__ . '/../../configs/config.php';
 define('ALLOW_ACCESS', true);
-require_once '../../admin_operations/profile_operations.php';
-require_once '../../admin_operations/SessionLogger.php';
+require_once __DIR__ . '/../../admin_operations/profile_operations.php';
+require_once __DIR__ . '/../../admin_operations/SessionLogger.php';
 
 // Initialize ProfileOperations
 $profileOps = new ProfileOperations($pdo);
@@ -58,7 +63,9 @@ header("Pragma: no-cache");
             <!-- User Profile -->
             <li class="nav-item mb-2 mt-0">
                 <a data-bs-toggle="collapse" href="#ProfileNav" class="nav-link text-dark" aria-controls="ProfileNav" role="button" aria-expanded="false">
-                    <img src="../../assets/img/team-3.jpg" class="avatar">
+                    <img src="../../admin_operations/get_profile_picture.php?user_id=<?php echo $_SESSION['user_id']; ?>&user_type=<?php echo $_SESSION['role']; ?>" 
+                         class="avatar"
+                         onerror="this.src='../../assets/img/default-avatar.png';">
                     <span class="nav-link-text ms-2 ps-1">
                         <?php 
                         if (isset($_SESSION['user_id'])) {
@@ -119,6 +126,12 @@ header("Pragma: no-cache");
                             <a class="nav-link text-dark" href="mood-tracker.php">
                                 <span class="sidenav-mini-icon">MT</span>
                                 <span class="sidenav-normal ms-1 ps-1">Mood Tracker</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="notifications.php">
+                                <span class="sidenav-mini-icon">N</span>
+                                <span class="sidenav-normal ms-1 ps-1">Notifications</span>
                             </a>
                         </li>
                     </ul>
@@ -216,47 +229,47 @@ header("Pragma: no-cache");
             notifications
           </i>
               <span class="position-absolute top-5 start-100 translate-middle badge rounded-pill bg-danger border border-white small py-1 px-2">
-                <span class="small">11</span>
+                <span class="small">3</span>
                 <span class="visually-hidden">unread notifications</span>
               </span>
             </a>
             <ul class="dropdown-menu dropdown-menu-end p-2 me-sm-n4" aria-labelledby="dropdownMenuButton">
-              <li class="mb-2">
-                <a class="dropdown-item border-radius-md" href="javascript:;">
-                  <div class="d-flex align-items-center py-1">
-                    <span class="material-symbols-rounded">email</span>
-                    <div class="ms-2">
-                      <h6 class="text-sm font-weight-normal my-auto">
-                        Check new messages
-                      </h6>
-                    </div>
-                  </div>
-                </a>
-              </li>
-              <li class="mb-2">
-                <a class="dropdown-item border-radius-md" href="javascript:;">
-                  <div class="d-flex align-items-center py-1">
-                    <span class="material-symbols-rounded">podcasts</span>
-                    <div class="ms-2">
-                      <h6 class="text-sm font-weight-normal my-auto">
-                        Manage podcast session
-                      </h6>
-                    </div>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a class="dropdown-item border-radius-md" href="javascript:;">
-                  <div class="d-flex align-items-center py-1">
-                    <span class="material-symbols-rounded">shopping_cart</span>
-                    <div class="ms-2">
-                      <h6 class="text-sm font-weight-normal my-auto">
-                        Payment successfully completed
-                      </h6>
-                    </div>
-                  </div>
-                </a>
-              </li>
+                <li class="mb-2">
+                    <a class="dropdown-item border-radius-md" href="calendar.php">
+                        <div class="d-flex align-items-center py-1">
+                            <span class="material-symbols-rounded">calendar_month</span>
+                            <div class="ms-2">
+                                <h6 class="text-sm font-weight-normal my-auto">
+                                    Upcoming Counseling Session
+                                </h6>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li class="mb-2">
+                    <a class="dropdown-item border-radius-md" href="mood-tracker.php">
+                        <div class="d-flex align-items-center py-1">
+                            <span class="material-symbols-rounded">mood</span>
+                            <div class="ms-2">
+                                <h6 class="text-sm font-weight-normal my-auto">
+                                    Daily Mood Check Reminder
+                                </h6>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item border-radius-md" href="support.php">
+                        <div class="d-flex align-items-center py-1">
+                            <span class="material-symbols-rounded">support_agent</span>
+                            <div class="ms-2">
+                                <h6 class="text-sm font-weight-normal my-auto">
+                                    New Message from Counselor
+                                </h6>
+                            </div>
+                        </div>
+                    </a>
+                </li>
             </ul>
           </li>
           <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
@@ -385,15 +398,25 @@ header("Pragma: no-cache");
                                       <div class="col-6">
                                           <div class="input-group input-group-static">
                                               <label>First Name</label>
-                                              <input type="text" name="firstname" class="form-control" 
-                                                     value="<?php echo htmlspecialchars($studentData['firstname']); ?>">
+                                              <input type="text" 
+                                                     name="firstname" 
+                                                     class="form-control" 
+                                                     pattern="[A-Za-z\s]+"
+                                                     title="Only letters and spaces are allowed"
+                                                     value="<?php echo htmlspecialchars($studentData['firstname']); ?>"
+                                                     required>
                                           </div>
                                       </div>
                                       <div class="col-6">
                                           <div class="input-group input-group-static">
                                               <label>Last Name</label>
-                                              <input type="text" name="lastname" class="form-control" 
-                                                     value="<?php echo htmlspecialchars($studentData['lastname']); ?>">
+                                              <input type="text" 
+                                                     name="lastname" 
+                                                     class="form-control" 
+                                                     pattern="[A-Za-z\s]+"
+                                                     title="Only letters and spaces are allowed"
+                                                     value="<?php echo htmlspecialchars($studentData['lastname']); ?>"
+                                                     required>
                                           </div>
                                       </div>
                                   </div>
@@ -584,7 +607,7 @@ header("Pragma: no-cache");
                         <!--id: Notifications -->
                         <div class="card mt-4" id="notifications">
                           <div class="card-header">
-                            <h5>Notifications</h5>
+                            <h6>Notifications</h6>
                             <p class="text-sm">Choose how you receive notifications. These notification settings apply to the things youre watching.</p>
                           </div>
                           <div class="card-body pt-0">
@@ -610,94 +633,71 @@ header("Pragma: no-cache");
                                   <tr>
                                     <td class="ps-1" colspan="4">
                                       <div class="my-auto">
-                                        <span class="text-dark d-block text-sm">Mentions</span>
-                                        <span class="text-xs font-weight-normal">Notify when another user mentions you in a comment</span>
+                                        <span class="text-dark d-block text-sm">Session Schedule</span>
+                                        <span class="text-xs font-weight-normal">Appointment reminders and confirmations for upcoming counseling sessions</span>
                                       </div>
                                     </td>
                                     <td>
                                       <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                        <input class="form-check-input" checked type="checkbox" id="flexSwitchCheckDefault11">
+                                        <input class="form-check-input" checked type="checkbox" id="flexSwitchCheckDefault11" disabled>
                                       </div>
                                     </td>
                                     <td>
                                       <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault12">
+                                        <input class="form-check-input" checked type="checkbox" id="flexSwitchCheckDefault12" disabled>
                                       </div>
                                     </td>
                                     <td>
                                       <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault13">
+                                        <input class="form-check-input" checked type="checkbox" id="flexSwitchCheckDefault13" disabled>
                                       </div>
                                     </td>
                                   </tr>
                                   <tr>
                                     <td class="ps-1" colspan="4">
                                       <div class="my-auto">
-                                        <span class="text-dark d-block text-sm">Comments</span>
-                                        <span class="text-xs font-weight-normal">Notify when another user comments your item.</span>
+                                        <span class="text-dark d-block text-sm">Community</span>
+                                        <span class="text-xs font-weight-normal">Updates on responses, mentions, and interactions in community discussions</span>
                                       </div>
                                     </td>
                                     <td>
                                       <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                        <input class="form-check-input" checked type="checkbox" id="flexSwitchCheckDefault14">
+                                        <input class="form-check-input" checked type="checkbox" id="flexSwitchCheckDefault14" disabled>
                                       </div>
                                     </td>
                                     <td>
                                       <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                        <input class="form-check-input" checked type="checkbox" id="flexSwitchCheckDefault15">
+                                        <input class="form-check-input" checked type="checkbox" id="flexSwitchCheckDefault15" disabled>
                                       </div>
                                     </td>
                                     <td>
                                       <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault16">
+                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault16" disabled>
                                       </div>
                                     </td>
                                   </tr>
                                   <tr>
-                                    <td class="ps-1" colspan="4">
-                                      <div class="my-auto">
-                                        <span class="text-dark d-block text-sm">Follows</span>
-                                        <span class="text-xs font-weight-normal">Notify when another user follows you.</span>
-                                      </div>
-                                    </td>
-                                    <td>
-                                      <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                      </div>
-                                    </td>
-                                    <td>
-                                      <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                        <input class="form-check-input" checked type="checkbox" id="flexSwitchCheckDefault18">
-                                      </div>
-                                    </td>
-                                    <td>
-                                      <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault19">
-                                      </div>
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <td class="ps-1" colspan="4">
-                                        <div class="my-auto">
-                                            <span class="text-dark d-block text-sm">Scheduled Session</span>
-                                            <span class="text-xs font-weight-normal">Notify when you have an upcoming counseling session.</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault20">
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                            <input class="form-check-input" checked type="checkbox" id="flexSwitchCheckDefault21">
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                            <input class="form-check-input" checked type="checkbox" id="flexSwitchCheckDefault22">
-                                        </div>
-                                    </td>
+                                <td class="ps-1" colspan="4">
+                                    <div class="my-auto">
+                                    <span class="text-dark d-block text-sm">Announcements</span>
+                                    <span class="text-xs font-weight-normal">Important updates, system notifications, and general announcements</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                                    <input class="form-check-input" checked type="checkbox" id="flexSwitchCheckDefault17" disabled>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                                    <input class="form-check-input" checked type="checkbox" id="flexSwitchCheckDefault18" disabled>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault19" disabled>
+                                    </div>
+                                </td>
                                 </tr>
                                 </tbody>
                               </table>
@@ -837,115 +837,79 @@ document.getElementById('profilePictureInput').addEventListener('change', async 
     const file = e.target.files[0];
     if (!file) return;
     
-    // Validate file type
-    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
-    if (!allowedTypes.includes(file.type)) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Invalid File Type',
-            text: 'Please upload only JPG, JPEG, or PNG images.',
-            confirmButtonText: 'OK',
-            buttonsStyling: false,
-            customClass: {
-                confirmButton: 'btn bg-gradient-primary btn-sm mx-2'
-            }
-        });
-        this.value = '';
-        return;
-    }
-    
-    // Show preview
     const reader = new FileReader();
     reader.onload = async function(event) {
-        // Update preview
-        document.getElementById('previewImage').src = event.target.result;
-        
-        // Ask for confirmation
-        const result = await Swal.fire({
-            title: 'Upload Profile Picture?',
-            text: 'Are you sure you want to upload this image as your profile picture?',
-            imageUrl: event.target.result,
-            imageWidth: 200,
-            imageHeight: 200,
-            imageAlt: 'Profile picture preview',
-            showCancelButton: true,
-            confirmButtonText: 'Yes, upload it!',
-            cancelButtonText: 'Cancel',
-            buttonsStyling: false,
-            customClass: {
-                confirmButton: 'btn bg-gradient-primary btn-sm mx-2',
-                cancelButton: 'btn btn-outline-secondary btn-sm mx-2'
-            }
-        });
-        
-        // If user confirms, proceed with upload
-        if (result.isConfirmed) {
-            // Show loading state
-            Swal.fire({
-                title: 'Uploading...',
-                text: 'Please wait while we upload your profile picture.',
-                allowOutsideClick: false,
-                didOpen: () => {
-                    Swal.showLoading();
+        try {
+            const result = await Swal.fire({
+                title: 'Upload Profile Picture?',
+                text: 'Do you want to upload this image as your profile picture?',
+                imageUrl: event.target.result,
+                imageWidth: 200,
+                imageHeight: 200,
+                imageAlt: 'Profile picture preview',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, upload it!',
+                cancelButtonText: 'Cancel',
+                buttonsStyling: false,
+                customClass: {
+                    confirmButton: 'btn bg-gradient-primary btn-sm mx-2',
+                    cancelButton: 'btn btn-outline-secondary btn-sm mx-2'
                 }
             });
 
-            const formData = new FormData();
-            formData.append('profile_picture', file);
-            
-            try {
-                console.log('Uploading to:', '../../admin_operations/update_profile_picture.php'); // Debug line
+            if (result.isConfirmed) {
+                // Show loading state
+                Swal.fire({
+                    title: 'Uploading...',
+                    text: 'Please wait while we process your image.',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+
+                const formData = new FormData();
+                formData.append('profile_picture', file);
+
                 const response = await fetch('../../admin_operations/update_profile_picture.php', {
                     method: 'POST',
                     body: formData
                 });
-                
-                if (!response.ok) {
-                    console.error('Response not OK:', response.status, response.statusText); // Debug line
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                
-                const uploadResult = await response.json();
-                console.log('Upload result:', uploadResult); // Debug line
-                
-                if (uploadResult.status === 'success') {
-                    Swal.fire({
+
+                const data = await response.json();
+
+                if (data.status === 'success') {
+                    // Show success message
+                    await Swal.fire({
                         icon: 'success',
                         title: 'Success!',
-                        text: uploadResult.message,
+                        text: data.message,
                         confirmButtonText: 'OK',
                         buttonsStyling: false,
                         customClass: {
                             confirmButton: 'btn bg-gradient-primary btn-sm mx-2'
                         }
-                    }).then(() => {
-                        // Refresh the profile picture with cache-busting
-                        const timestamp = new Date().getTime();
-                        document.getElementById('previewImage').src = 
-                            `../../admin_operations/get_profile_picture.php?user_id=<?php echo $_SESSION['user_id']; ?>&user_type=<?php echo $_SESSION['role']; ?>&t=${timestamp}`;
                     });
+                    
+                    // Reload the page after clicking OK
+                    window.location.reload();
+                    
                 } else {
-                    throw new Error(uploadResult.message || 'Failed to update profile picture');
+                    throw new Error(data.message || 'Failed to update profile picture');
                 }
-            } catch (error) {
-                console.error('Upload error:', error); // Debug line
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: error.message || 'Failed to update profile picture',
-                    confirmButtonText: 'OK',
-                    buttonsStyling: false,
-                    customClass: {
-                        confirmButton: 'btn bg-gradient-primary btn-sm mx-2'
-                    }
-                });
-                // Reset the preview on error
-                document.getElementById('previewImage').src = '../../admin_operations/get_profile_picture.php?user_id=<?php echo $_SESSION['user_id']; ?>&user_type=<?php echo $_SESSION['role']; ?>';
             }
-        } else {
-            // If user cancels, reset the preview and file input
-            document.getElementById('previewImage').src = '../../admin_operations/get_profile_picture.php?user_id=<?php echo $_SESSION['user_id']; ?>&user_type=<?php echo $_SESSION['role']; ?>';
-            document.getElementById('profilePictureInput').value = '';
+        } catch (error) {
+            console.error('Upload error:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Upload Failed',
+                text: error.message || 'An error occurred while uploading the image.',
+                confirmButtonText: 'OK',
+                buttonsStyling: false,
+                customClass: {
+                    confirmButton: 'btn bg-gradient-primary btn-sm mx-2'
+                }
+            });
         }
     };
     reader.readAsDataURL(file);
@@ -1442,6 +1406,98 @@ document.getElementById('profilePictureInput').addEventListener('change', async 
     });
 <?php endif; ?>
 </script>
+<script>
+// Function to capitalize first letter of each word
+function capitalizeWords(input) {
+    return input.value
+        .toLowerCase()
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+}
+
+// Add event listeners to name fields
+document.addEventListener('DOMContentLoaded', function() {
+    const firstNameInput = document.querySelector('input[name="firstname"]');
+    const lastNameInput = document.querySelector('input[name="lastname"]');
+
+    // Function to handle input changes
+    function handleNameInput(e) {
+        const input = e.target;
+        input.value = capitalizeWords(input);
+    }
+
+    // Add event listeners for both blur (when leaving the field) and input events
+    if (firstNameInput) {
+        firstNameInput.addEventListener('blur', handleNameInput);
+        firstNameInput.addEventListener('input', function(e) {
+            this.value = this.value.replace(/[0-9]/g, ''); // Remove numbers
+        });
+    }
+
+    if (lastNameInput) {
+        lastNameInput.addEventListener('blur', handleNameInput);
+        lastNameInput.addEventListener('input', function(e) {
+            this.value = this.value.replace(/[0-9]/g, ''); // Remove numbers
+        });
+    }
+});
+</script>
+<script>
+    // Add this function before the closingtag
+    async function handleSignOut() {
+        // Show confirmation dialog
+        const result = await Swal.fire({
+            title: 'Sign Out?',
+            text: 'Are you sure you want to sign out?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, sign out',
+            cancelButtonText: 'Cancel',
+            customClass: {
+                confirmButton: 'btn bg-gradient-primary btn-sm mb-0 mx-2',
+                cancelButton: 'btn bg-gradient-secondary btn-sm mb-0 mx-2',
+                actions: 'mt-3',
+                popup: 'px-3'
+            },
+            buttonsStyling: false
+        });
+
+        // If user confirms, proceed with sign out
+        if (result.isConfirmed) {
+            try {
+                // Show loading state
+                Swal.fire({
+                    title: 'Signing Out...',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+
+                // Perform sign out
+                const response = await fetch('../../admin_operations/logout.php');
+                if (response.ok) {
+                    window.location.href = '../signin.php';
+                } else {
+                    throw new Error('Sign out failed');
+                }
+            } catch (error) {
+                console.error('Sign out error:', error);
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Failed to sign out. Please try again.',
+                    icon: 'error',
+                    customClass: {
+                        confirmButton: 'btn bg-gradient-primary btn-sm mb-0'
+                    },
+                    buttonsStyling: false
+                });
+            }
+        }
+    }
+</script>
 </body>
 </html>
+
 

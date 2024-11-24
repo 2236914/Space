@@ -84,5 +84,19 @@ class DashboardAnalytics {
             return ['error' => true];
         }
     }
+
+    public function getUserTotalCheckins($srcode) {
+        try {
+            $query = "SELECT COUNT(*) as total FROM session_logs 
+                     WHERE srcode = ? AND login_time IS NOT NULL";
+            $stmt = $this->pdo->prepare($query);
+            $stmt->execute([$srcode]);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return number_format($result['total']); // Format number with commas for readability
+        } catch (PDOException $e) {
+            error_log("Error getting user checkins: " . $e->getMessage());
+            return 0;
+        }
+    }
 }
 ?>
