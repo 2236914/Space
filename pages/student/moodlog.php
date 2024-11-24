@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once '../../configs/config.php';
 require_once '../../admin_operations/check_mood_logged.php';
 ?>
@@ -9,6 +8,8 @@ require_once '../../admin_operations/check_mood_logged.php';
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="../../assets/img/logo-space.png">
+  <link rel="icon" type="image/png" href="../../assets/img/logo-space.png">
   <title>Mood</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,900" />
   <link href="../../assets/css/nucleo-icons.css" rel="stylesheet" />

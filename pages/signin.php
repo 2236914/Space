@@ -1,12 +1,16 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-?>
 
-<?php
-session_start();
+// Add a check before starting session
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Debug session data
+echo "<!-- Session data: " . print_r($_SESSION, true) . " -->";
+
 require __DIR__ . '/../configs/config.php';
-
 ?>
 
 <!DOCTYPE html>
@@ -15,11 +19,9 @@ require __DIR__ . '/../configs/config.php';
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/space-logo.png">
-    <link rel="icon" type="image/png" href="../assets/img/space-logo.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/logo-space.png">
+    <link rel="icon" type="image/png" href="../assets/img/logo-space.png">
     <title>Sign In</title>
-    
-    <!-- External CSS Links -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,900" />
     <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
     <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
@@ -83,7 +85,7 @@ require __DIR__ . '/../configs/config.php';
                                         </div>
                                         <!-- Buttons -->
                                         <div class="text-center">
-                                            <button type="submit" class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">
+                                            <button type="submit" class="btn btn-lg bg-gradient-primary btn-lg btn-responsive w-100 mt-4 mb-0">
                                                 Sign In
                                             </button>
                                         </div>
@@ -108,6 +110,9 @@ require __DIR__ . '/../configs/config.php';
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="../assets/js/scrollreveal.min.js"></script>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <script src="../assets/js/material-dashboard.min.js?v=3.2.0"></script>
   <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
@@ -163,12 +168,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
                 
                 const result = await response.json();
+                console.log('Server response:', result); // Debug log
 
                 if (result.status === 'success') {
-                    // Success SweetAlert
-                    await Swal.fire({
+                    Swal.fire({
                         icon: 'success',
-                        title: 'Success!',
+                        title: result.title,
                         text: result.message,
                         confirmButtonText: 'Continue',
                         buttonsStyling: false,
@@ -176,25 +181,12 @@ document.addEventListener('DOMContentLoaded', function() {
                             confirmButton: 'btn bg-gradient-primary btn-sm mx-2',
                             actions: 'justify-content-center'
                         }
-                    });
-
-                    // Use the redirect path from the response
-                    if (result.redirect) {
-                        window.location.href = result.redirect;
-                    } else {
-                        // Fallback to role-based redirect for non-student users
-                        switch(result.role) {
-                            case 'admin':
-                            case 'superadmin':
-                                window.location.href = '../pages/admin/admin.php';
-                                break;
-                            case 'therapist':
-                                window.location.href = '../pages/therapist/therapist.php';
-                                break;
+                    }).then((sweetAlertResult) => {
+                        if (sweetAlertResult.isConfirmed) {
+                            window.location.replace('/Space' + result.redirect);
                         }
-                    }
+                    });
                 } else {
-                    // Error SweetAlert
                     await Swal.fire({
                         icon: 'warning',
                         title: 'Login Failed',
@@ -207,7 +199,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         }
                     });
                     
-                    // Clear password field on error
                     document.querySelector('input[name="password"]').value = '';
                 }
             } catch (error) {
@@ -228,7 +219,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Password toggle function
 function togglePassword(inputId) {
     const input = document.getElementById(inputId);
     const icon = document.getElementById(inputId + '-toggle');
@@ -243,12 +233,69 @@ function togglePassword(inputId) {
 }
 </script>
 
-  
-  <script src="../assets/js/scrollreveal.min.js"></script>
-  <!-- Github buttons -->
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="../assets/js/material-dashboard.min.js?v=3.2.0"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Handle input focus and blur events for material design effect
+    const inputs = document.querySelectorAll('.input-group-outline input');
+    
+    inputs.forEach(input => {
+        // Add is-filled class if input has value on page load
+        if (input.value !== '') {
+            input.parentElement.classList.add('is-filled');
+        }
+        
+        // Handle focus event
+        input.addEventListener('focus', function() {
+            this.parentElement.classList.add('is-focused');
+        });
+        
+        // Handle blur event
+        input.addEventListener('blur', function() {
+            this.parentElement.classList.remove('is-focused');
+            if (this.value !== '') {
+                this.parentElement.classList.add('is-filled');
+            } else {
+                this.parentElement.classList.remove('is-filled');
+            }
+        });
+        
+        // Handle input event
+        input.addEventListener('input', function() {
+            if (this.value !== '') {
+                this.parentElement.classList.add('is-filled');
+            } else {
+                this.parentElement.classList.remove('is-filled');
+            }
+        });
+    });
+});
+</script>
+
+<script>
+<?php if (isset($_GET['msg']) && $_GET['msg'] === 'account_deactivated'): ?>
+    Swal.fire({
+        title: 'Account Deactivated',
+        text: 'Your account has been successfully deactivated. You can reactivate it anytime by logging in.',
+        icon: 'success',
+        customClass: {
+            confirmButton: 'btn bg-gradient-primary btn-sm mb-0'
+        },
+        buttonsStyling: false
+    });
+<?php endif; ?>
+
+<?php if (isset($_GET['error']) && $_GET['error'] === 'deactivation_failed'): ?>
+    Swal.fire({
+        title: 'Error',
+        text: 'Failed to deactivate account. Please try again or contact support.',
+        icon: 'error',
+        customClass: {
+            confirmButton: 'btn bg-gradient-primary btn-sm mb-0'
+        },
+        buttonsStyling: false
+    });
+<?php endif; ?>
+</script>
 
 </body>
 

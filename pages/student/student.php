@@ -23,8 +23,8 @@ header("Pragma: no-cache");
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href="../../assets/img/space-logo.png">
-  <link rel="icon" type="image/png" href="../../assets/img/space-logo.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="../../assets/img/logo-space.png">
+  <link rel="icon" type="image/png" href="../../assets/img/logo-space.png">
   <title>
     Space
   </title>
@@ -44,7 +44,7 @@ header("Pragma: no-cache");
     <div class="sidenav-header">
         <i class="fas fa-times p-3 cursor-pointer text-dark opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
         <a class="navbar-brand px-4 py-3 m-0" href="student.php">
-            <img src="../../assets/img/space-logo.png" class="navbar-brand-img" width="26" height="26" alt="main_logo">
+            <img src="../../assets/img/logo-space.png" class="navbar-brand-img" width="26" height="26" alt="main_logo">
             <span class="ms-1 font-weight-bold lead text-dark">SPACE</span>
         </a>
     </div>
@@ -90,14 +90,8 @@ header("Pragma: no-cache");
                     <ul class="nav">
                         <li class="nav-item">
                             <a class="nav-link text-dark" href="profile.php">
-                                <span class="sidenav-mini-icon">MP</span>
-                                <span class="sidenav-normal ms-3 ps-1">My Profile</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" href="settings.php">
-                                <span class="sidenav-mini-icon">S</span>
-                                <span class="sidenav-normal ms-3 ps-1">Settings</span>
+                                <span class="sidenav-mini-icon">P</span>
+                                <span class="sidenav-normal ms-3 ps-1">Profile</span>
                             </a>
                         </li>
                     </ul>
@@ -114,7 +108,7 @@ header("Pragma: no-cache");
                 <div class="collapse show" id="dashboardsExamples">
                     <ul class="nav">
                         <li class="nav-item active">
-                            <a class="nav-link text-dark active" href="analytics.php">
+                            <a class="nav-link text-dark active" href="student.php">
                                 <span class="sidenav-mini-icon">A</span>
                                 <span class="sidenav-normal ms-1 ps-1">Analytics</span>
                             </a>
@@ -128,33 +122,21 @@ header("Pragma: no-cache");
                     </ul>
                 </div>
             </li>
-
-            <!-- Session -->
+            <!-- MENU -->
             <li class="nav-item mt-3">
-                <h6 class="ps-3 ms-2 text-uppercase text-xs font-weight-bolder text-dark">SESSION</h6>
+                <h6 class="ps-3 ms-2 text-uppercase text-xs font-weight-bolder text-dark">MENU</h6>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-dark" href="schedule.php">
-                    <i class="material-symbols-rounded opacity-5">schedule</i>
-                    <span class="nav-link-text ms-1 ps-1">Schedule</span>
+                <a data-bs-toggle="collapse" href="#account" class="nav-link text-dark" aria-controls="selfCareExamples" role="button" aria-expanded="false">
+                    <i class="material-symbols-rounded opacity-5">account_circle</i>
+                    <span class="nav-link-text ms-1 ps-1">Account</span>
                 </a>
-            </li>
-
-            <!-- Self-Care -->
-            <li class="nav-item mt-3">
-                <h6 class="ps-3 ms-2 text-uppercase text-xs font-weight-bolder text-dark">SELF-CARE</h6>
-            </li>
-            <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#selfCareExamples" class="nav-link text-dark" aria-controls="selfCareExamples" role="button" aria-expanded="false">
-                    <i class="material-symbols-rounded opacity-5">self_improvement</i>
-                    <span class="nav-link-text ms-1 ps-1">Self-Care</span>
-                </a>
-                <div class="collapse" id="selfCareExamples">
+                <div class="collapse" id="account">
                     <ul class="nav">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" href="modules.php">
-                                <span class="sidenav-mini-icon">M</span>
-                                <span class="sidenav-normal ms-1 ps-1">Modules</span>
+                            <a class="nav-link text-dark" href="account-settings.php">
+                                <span class="sidenav-mini-icon">S</span>
+                                <span class="sidenav-normal ms-1 ps-1">Settings</span>
                             </a>
                         </li>
                         <li class="nav-item">

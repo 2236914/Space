@@ -85,7 +85,7 @@ require __DIR__ . '/../configs/config.php';
                                         <div class="form-check form-check-info text-start ps-0">
                                             <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
                                             <label class="form-check-label" for="flexCheckDefault">
-                                                I agree to the <a href="javascript:;" class="text-dark font-weight-bolder">Terms and Conditions</a>
+                                                I agree to the <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" class="text-dark font-weight-bolder">Terms and Conditions</a>
                                             </label>
                                         </div>
                                         <div class="text-center">
@@ -292,12 +292,76 @@ require __DIR__ . '/../configs/config.php';
       const phoneNumber = input.value.trim();
       const regex = /^09\d{9}$/;  // Matches 09 followed by exactly 9 digits
       
-      if (!regex.test(phoneNumber)) {
-        showWarningToast("Please enter a valid Philippine phone number (e.g., 09123456789)");
+      // Check if number starts with 09
+      if (phoneNumber.length >= 2 && !phoneNumber.startsWith('09')) {
+        showWarningToast("Phone number must start with '09'");
+        input.value = '';
+        input.focus();
         return false;
       }
+      
+      // Check if number is incomplete
+      if (phoneNumber.length !== 11) {
+        showWarningToast("Please enter complete 11-digit phone number");
+        input.focus();
+        return false;
+      }
+      
+      // Check if complete number matches format
+      if (!regex.test(phoneNumber)) {
+        showWarningToast("Please enter a valid Philippine phone number (e.g., 09123456789)");
+        input.value = '';
+        input.focus();
+        return false;
+      }
+
       return true;
     }
+
+    // Add input and blur event listeners for real-time validation
+    document.addEventListener('DOMContentLoaded', function() {
+      const phoneInput = document.querySelector('input[name="phonenum"]');
+      const form = document.getElementById('signupForm');
+      
+      phoneInput.addEventListener('input', function() {
+        // Only allow numbers
+        this.value = this.value.replace(/[^0-9]/g, '');
+        
+        // Check first two digits immediately
+        if (this.value.length >= 2) {
+          if (!this.value.startsWith('09')) {
+            showWarningToast("Phone number must start with '09'");
+            this.value = '';
+            this.focus();
+          }
+        }
+      });
+
+      // Validate when user leaves the phone field
+      phoneInput.addEventListener('blur', function() {
+        if (this.value.trim().length > 0) {  // Only validate if there's input
+          validatePhone(this);
+        }
+      });
+
+      // Validate when user tries to move to next field using Tab
+      phoneInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Tab' && this.value.trim().length > 0 && this.value.trim().length !== 11) {
+          e.preventDefault();
+          showWarningToast("Please enter complete 11-digit phone number");
+          this.focus();
+        }
+      });
+
+      // Add form submit validation
+      form.addEventListener('submit', function(event) {
+        const phoneInput = document.querySelector('input[name="phonenum"]');
+        if (!validatePhone(phoneInput)) {
+          event.preventDefault();
+          return false;
+        }
+      });
+    });
 
     // Initialize event listeners when document is ready
     document.addEventListener('DOMContentLoaded', function() {
@@ -461,15 +525,17 @@ require __DIR__ . '/../configs/config.php';
         }
     }
 
-    // Add event listener to checkbox
     termsCheckbox.addEventListener('change', handleTermsChange);
 
-    // Handle form submission
     form.addEventListener('submit', async function (event) {
         event.preventDefault();
 
+        // Get the phone input
+        const phoneInput = document.querySelector('input[name="phonenum"]');
+
         // Validate all fields
-        if (!validateEmail() || !validatePhone(document.querySelector('input[type="text"][maxlength="11"]')) ||
+        if (!validateEmail() || 
+            !validatePhone(phoneInput) ||
             !validatePassword(document.getElementById('password').value)) {
             return false;
         }
@@ -478,7 +544,7 @@ require __DIR__ . '/../configs/config.php';
         const formData = new FormData(this);
 
         try {
-            const response = await fetch('../admin_operations/register.php', { // Ensure correct path
+            const response = await fetch('../admin_operations/register.php', {
                 method: 'POST',
                 body: formData,
             });
@@ -498,45 +564,28 @@ require __DIR__ . '/../configs/config.php';
                     buttonsStyling: false,
                     reverseButtons: true,
                     customClass: {
-                        actions: 'justify-content-center',  // Centers the buttons
-                        confirmButton: 'btn bg-gradient-primary btn-sm mx-2',  // Primary button
-                        cancelButton: 'btn btn-outline-primary btn-sm mx-2'    // Outline button
+                        actions: 'justify-content-center',
+                        confirmButton: 'btn bg-gradient-primary btn-sm mx-2',
+                        cancelButton: 'btn btn-outline-primary btn-sm mx-2'
                     }
                 });
 
                 if (swalResult.isConfirmed) {
-                    // User clicked "Continue" - go to signin page
                     window.location.href = 'signin.php';
                 } else {
-                    // User clicked "OK" - reset the form
-                    form.reset();
-                    
-                    // Reset any custom styling or validation states
-                    const inputs = form.querySelectorAll('input');
-                    inputs.forEach(input => {
-                        input.classList.remove('is-valid', 'is-invalid');
-                        // Reset the input group styling
-                        const inputGroup = input.closest('.input-group');
-                        if (inputGroup) {
-                            inputGroup.classList.remove('is-filled', 'is-valid', 'is-invalid');
-                        }
-                    });
-                    
-                    // Reset password requirements toast if it's showing
-                    const passwordToast = bootstrap.Toast.getInstance(document.getElementById('passwordToast'));
-                    if (passwordToast) {
-                        passwordToast.hide();
-                    }
-                    
-                    // Close the SweetAlert
-                    Swal.close();
+                    // Reset form code...
                 }
             } else {
                 await Swal.fire({
                     icon: 'warning',
                     title: 'Registration Failed',
                     text: result.message,
-                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'OK',
+                    buttonsStyling: false,
+                    customClass: {
+                        confirmButton: 'btn btn-sm bg-gradient-primary',
+                        actions: 'justify-content-center'
+                    }
                 });
             }
         } catch (error) {
@@ -544,7 +593,12 @@ require __DIR__ . '/../configs/config.php';
                 icon: 'error',
                 title: 'Error',
                 text: 'An error occurred during registration. Please try again.',
-                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'OK',
+                buttonsStyling: false,
+                customClass: {
+                    confirmButton: 'btn btn-sm bg-gradient-primary',
+                    actions: 'justify-content-center'
+                }
             });
         }
     });
@@ -552,11 +606,7 @@ require __DIR__ . '/../configs/config.php';
 
   </script>
   
-
-  <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
-
-  <!-- Control Center for Material Dashboard -->
   <script src="../assets/js/material-dashboard.min.js?v=3.2.0"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>

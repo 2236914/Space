@@ -1,10 +1,13 @@
 <?php
-// Use the correct path relative to this file
+// Add a check before starting session
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 require_once __DIR__ . '/../configs/config.php';
 
 // Check if user is logged in and is a student
 if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']) || $_SESSION['role'] !== 'student') {
-    header("Location: ../pages/signin.php");
+    header("Location: /Space/pages/signin.php");
     exit();
 }
 
@@ -21,7 +24,7 @@ $moodCheck = $stmt->fetch();
 
 // If mood already logged, redirect to dashboard
 if ($moodCheck['mood_count'] > 0) {
-    header("Location: ../../pages/student/student.php");
+    header("Location: /Space/pages/student/student.php");
     exit();
 }
 ?>

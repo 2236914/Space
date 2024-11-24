@@ -1,4 +1,8 @@
 <?php
+if (!defined('BASE_URL')) {  // Only define if not already defined
+    define('BASE_URL', '/Space');
+}
+
 // Database connection settings
 $host = 'localhost';
 $dbname = 'space';

@@ -10,8 +10,8 @@ require __DIR__ . '/../configs/config.php';
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/space-logo.png">
-    <link rel="icon" type="image/png" href="../assets/img/space-logo.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/logo-space.png">
+    <link rel="icon" type="image/png" href="../assets/img/logo-space.png">
     <title>Sign In</title>
     
     <!-- External CSS Links -->

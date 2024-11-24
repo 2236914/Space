@@ -4,8 +4,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/space-logo.png">
-  <link rel="icon" type="image/png" href="../assets/img/space-logo.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/logo-space.png">
+  <link rel="icon" type="image/png" href="../assets/img/logo-space.png">
   <title>
     Space
   </title>
@@ -287,20 +287,20 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <div class="input-group input-group-static mb-4">
+                                            <div class="input-group input-group-dynamic mb-4">
                                                 <label class="form-label">First Name</label>
-                                                <input class="form-control" name="firstName" id="firstName" type="text" required>
+                                                <input class="form-control" type="text" name="firstName" id="firstName">
                                             </div>
                                         </div>
                                         <div class="col-md-6 ps-2">
-                                            <div class="input-group input-group-static mb-4">
+                                            <div class="input-group input-group-dynamic">
                                                 <label class="form-label">Last Name</label>
-                                                <input type="text" class="form-control" name="lastName" id="lastName" required>
+                                                <input type="text" class="form-control" name="lastName" id="lastName" aria-label="Last Name..." required>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="mb-4">
-                                        <div class="input-group input-group-static">
+                                        <div class="input-group input-group-dynamic">
                                             <label class="form-label">Email Address</label>
                                             <input type="email" class="form-control" name="email" id="email" required>
                                         </div>
@@ -314,12 +314,12 @@
                                             <div class="form-check form-switch mb-4 d-flex align-items-center">
                                                 <input class="form-check-input" type="checkbox" id="terms">
                                                 <label class="form-check-label ms-3 mb-0" for="terms">
-                                                    I agree to the <a href="javascript:void(0)" class="text-dark text-decoration-underline" data-bs-toggle="modal" data-bs-target="#termsModal">Terms and Conditions</a>
+                                                    I agree to the <button type="button" onclick="openTermsModal()" class="btn btn-link p-0 text-dark text-decoration-underline border-0" style="vertical-align: baseline;"><u>Terms and Conditions</u></button>
                                                 </label>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
-                                            <button type="submit" class="btn bg-gradient-primary w-100">Send Message</button>
+                                            <button type="submit" class="btn bg-gradient-primary w-100">Send to Space</button>
                                         </div>
                                     </div>
                                 </div>
@@ -660,6 +660,9 @@
   <script src="../assets/js/plugins/chartjs.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="../assets/js/scrollreveal.min.js"></script>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <script src="../assets/js/material-dashboard.min.js?v=3.2.0"></script>
   <script>
     const initializeForm = () => {
         const form = document.getElementById('contact-form');
@@ -812,8 +815,6 @@
       }
   });
   </script>
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <script src="../assets/js/material-dashboard.min.js?v=3.2.0"></script>
   <script>
 function openTermsModal() {
     const termsModal = new bootstrap.Modal(document.getElementById('termsModal'));
@@ -832,6 +833,56 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('terms').dispatchEvent(new Event('change'));
         });
     }
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const dynamicInputs = document.querySelectorAll('.input-group-dynamic input');
+    
+    dynamicInputs.forEach(input => {
+        input.addEventListener('focus', function() {
+            this.parentElement.classList.add('is-focused');
+        });
+        
+        input.addEventListener('blur', function() {
+            this.parentElement.classList.remove('is-focused');
+            if (this.value) {
+                this.parentElement.classList.add('is-filled');
+            } else {
+                this.parentElement.classList.remove('is-filled');
+            }
+        });
+    });
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Get references to elements
+    const termsLink = document.querySelector('a[onclick="openTermsModal()"]');
+    const termsModal = document.getElementById('termsModal');
+    const termsCheckbox = document.getElementById('terms');
+    
+    // Initialize the modal
+    const modal = new bootstrap.Modal(termsModal);
+    
+    // Function to open modal
+    window.openTermsModal = function() {
+        modal.show();
+    }
+    
+    // Handle modal events
+    termsModal.addEventListener('hidden.bs.modal', function () {
+        termsCheckbox.checked = true;
+        // Trigger change event to update button state
+        termsCheckbox.dispatchEvent(new Event('change'));
+    });
+    
+    // Handle checkbox click
+    termsCheckbox.addEventListener('change', function() {
+        if (!this.checked) {
+            modal.show();
+        }
+    });
 });
 </script>
 </body>

@@ -21758,7 +21758,7 @@ fieldset:disabled .btn {
 }
 
 .avatar-xxl.avatar-raised {
-  margin-top: -55px;
+  margin-top: -55p`x;
 }
 
 .avatar-xl {
@@ -21857,6 +21857,28 @@ fieldset:disabled .btn {
 .badge {
   text-transform: uppercase;
 }
+
+
+.choices__list--multiple .choices__item {
+  background-color: #f8f9fa;
+  border: none;
+  border-radius: 4px;
+  color: #344767;
+  margin: 2px;
+  padding: 2px 8px;
+}
+
+.choices__list--multiple .choices__item .choices__button {
+  border-left: none;
+  padding-left: 4px;
+}
+
+.choices__input {
+  background-color: var(--bs-2ndgreen);
+}
+
+
+
 
 .btn {
   margin-bottom: 1rem;
@@ -24088,7 +24110,7 @@ label,
 }
 
 .bg-gradient-primary {
-  background-image: linear-gradient(195deg, #EC407A 0%, #D81B60 100%);
+  background-image: linear-gradient(195deg, #3c6454 0%, #6CA0A3 100%);
 }
 
 .bg-gradient-secondary {
@@ -25728,7 +25750,7 @@ hr.horizontal.gray-light {
 
 .sidenav[data-color=dark] .navbar-nav>.nav-item .nav-link.active+.collapse .nav-item.active .nav-link.active,
 .sidenav[data-color=dark] .navbar-nav>.nav-item .nav-link.active+.collapsing .nav-item.active .nav-link.active {
-  background-image: linear-gradient(195deg, #262626 0%, #262626 100%);
+  background-image: linear-gradient(195deg, #3c6454 0%, #6CA0A3 100%);
 }
 
 .sidenav[data-color=dark] .navbar-nav>.nav-item .nav-link.active+.collapse .nav-item .nav-link.active,
@@ -25738,7 +25760,7 @@ hr.horizontal.gray-light {
 
 .sidenav[data-color=dark] .navbar-nav>.nav-item .nav-link.active+.collapse .nav-item .nav-link.active+.collapse .nav-item .nav-link.active,
 .sidenav[data-color=dark] .navbar-nav>.nav-item .nav-link.active+.collapsing .nav-item .nav-link.active+.collapse .nav-item .nav-link.active {
-  background-image: linear-gradient(195deg, #262626 0%, #262626 100%);
+  background-image: linear-gradient(195deg, #3c6454 0%, #6CA0A3 100%);
 }
 
 .sidenav[data-color=white] .navbar-nav>.nav-item .nav-link.active+.collapse .nav-item.active .nav-link.active,
@@ -25884,7 +25906,7 @@ hr.horizontal.gray-light {
 
 .navbar-vertical .navbar-nav>.nav-item .nav-link.active+.collapse .nav-item.active .nav-link.active,
 .navbar-vertical .navbar-nav>.nav-item .nav-link.active+.collapsing .nav-item.active .nav-link.active {
-  background-image: linear-gradient(195deg, #262626 0%, #262626 100%);
+  background-image: linear-gradient(195deg, #3c6454 0%, #6CA0A3 100%);
 }
 
 .navbar-vertical .navbar-nav>.nav-item .nav-link.active+.collapse .nav-item.active .nav-link.active span,
@@ -25899,7 +25921,7 @@ hr.horizontal.gray-light {
 
 .navbar-vertical .navbar-nav>.nav-item .nav-link.active+.collapse .nav-item .nav-link.active+.collapse .nav-item .nav-link.active,
 .navbar-vertical .navbar-nav>.nav-item .nav-link.active+.collapsing .nav-item .nav-link.active+.collapse .nav-item .nav-link.active {
-  background-image: linear-gradient(195deg, #262626 0%, #262626 100%);
+  background-image: linear-gradient(195deg, #3c6454 0%, #6CA0A3 100%);
   color: #fff !important;
 }
 
