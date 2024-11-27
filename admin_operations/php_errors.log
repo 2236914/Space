@@ -1,0 +1,73 @@
+[26-Nov-2024 12:20:31 Europe/Berlin] PHP Warning:  require_once(../../configs/config.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\save_mood.php on line 47
+[26-Nov-2024 12:20:31 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required '../../configs/config.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\Space\admin_operations\save_mood.php:47
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\Space\admin_operations\save_mood.php on line 47
+[27-Nov-2024 02:38:20 Europe/Berlin] PHP Warning:  require_once(../../configs/config.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\save_mood.php on line 47
+[27-Nov-2024 02:38:20 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required '../../configs/config.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\Space\admin_operations\save_mood.php:47
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\Space\admin_operations\save_mood.php on line 47
+[27-Nov-2024 02:41:32 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\Space\admin_operations/../../configs/config.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\save_mood.php on line 47
+[27-Nov-2024 02:41:32 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\Space\admin_operations/../../configs/config.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\Space\admin_operations\save_mood.php:47
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\Space\admin_operations\save_mood.php on line 47
+[27-Nov-2024 02:43:04 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\Space\admin_operations../configs/config.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\save_mood.php on line 47
+[27-Nov-2024 02:43:04 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\Space\admin_operations../configs/config.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\Space\admin_operations\save_mood.php:47
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\Space\admin_operations\save_mood.php on line 47
+[27-Nov-2024 02:43:23 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\Space\admin_operations../configs/config.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\save_mood.php on line 47
+[27-Nov-2024 02:43:23 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\Space\admin_operations../configs/config.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\Space\admin_operations\save_mood.php:47
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\Space\admin_operations\save_mood.php on line 47
+[27-Nov-2024 02:46:46 Europe/Berlin] Received request: Array
+(
+    [selected_emoji] => 😊,😠,😠,😌,😨
+    [mood_name] => Happy,Angry,Angry,Calm,Fearful
+    [description] => At sa paglisan ng araw, akala'y 'di ka mahal
+At ang nadarama'y hindi magtatagal
+Malay ko bang hindi magpapagal
+Iibigin kita kahit ga'no pa katagal
+Tumingin ka sa 'king mga mata
+At hindi mo na kailangan pang
+Magtanong nang paulit-ulit
+Ikaw lang ang iniibig .... At sa paglisan ng araw, akala'y 'di ka mahal
+At ang nadarama'y hindi magtatagal
+Malay ko bang hindi magpapagal
+Iibigin kita kahit ga'no pa katagal
+Tumingin ka sa 'king mga mata
+At hindi mo na kailangan pang
+Magtanong nang paulit-ulit
+Ikaw lang ang iniibig....
+)
+
+[27-Nov-2024 02:46:46 Europe/Berlin] Session data: Array
+(
+    [user_id] => 2236914
+    [srcode] => 2236914
+    [firstname] => Parmessan
+    [lastname] => cheese
+    [role] => student
+    [session_log_id] => 26
+)
+
+[27-Nov-2024 05:14:37 Europe/Berlin] Received request: Array
+(
+    [selected_emoji] => ☹️,☹️,😠,😍,😔
+    [mood_name] => Sad,Sad,Angry,Love,Disappointed
+    [description] => 'Today was an absolutely fantastic day. I woke up feeling refreshed and ready to tackle any challenges that came my way. The sun was shining brightly, and there was a gentle breeze that made the weather perfect. I spent the morning working on a project that I am truly passionate about, and everything seemed to flow effortlessly. In the afternoon, I met up with some friends for lunch, and we had a great time catching up and sharing stories. The food was delicious, and the company was even better. Later in the evening, I went for a walk in the park, enjoying the beautiful scenery and reflecting on how grateful I am for all the positive things in my life. Overall, it was a day filled with joy, laughter, and meaningful moments that I will cherish.
+)
+
+[27-Nov-2024 05:14:37 Europe/Berlin] Session data: Array
+(
+    [user_id] => 222222
+    [srcode] => 222222
+    [firstname] => Faith
+    [lastname] => Creotech
+    [role] => student
+    [session_log_id] => 28
+)
+

@@ -5,6 +5,26 @@ if (session_status() === PHP_SESSION_NONE) {
 require_once '../configs/config.php';
 
 try {
+    $current_time = date('Y-m-d H:i:s');
+    
+    // Add specific session log updates for admin and therapist
+    if ($_SESSION['role'] === 'admin') {
+        $adminSessionStmt = $pdo->prepare("
+            UPDATE admin_session_logs 
+            SET logout_time = ?, session_status = 'inactive' 
+            WHERE admin_id = ? AND session_status = 'active'
+        ");
+        $adminSessionStmt->execute([$current_time, $_SESSION['user_id']]);
+    } elseif ($_SESSION['role'] === 'therapist') {
+        $therapistSessionStmt = $pdo->prepare("
+            UPDATE therapist_session_logs 
+            SET logout_time = ?, session_status = 'inactive' 
+            WHERE therapist_id = ? AND session_status = 'active'
+        ");
+        $therapistSessionStmt->execute([$current_time, $_SESSION['user_id']]);
+    }
+
+    // Keep existing session and activity log code
     if (isset($_SESSION['session_log_id'])) {
         // Update session log
         $stmt = $pdo->prepare("

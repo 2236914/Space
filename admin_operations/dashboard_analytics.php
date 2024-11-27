@@ -98,5 +98,15 @@ class DashboardAnalytics {
             return 0;
         }
     }
+
+    public function getTotalStudents() {
+        try {
+            $stmt = $this->pdo->query("SELECT COUNT(*) FROM students");
+            return $stmt->fetchColumn();
+        } catch (PDOException $e) {
+            error_log("Error getting total students: " . $e->getMessage());
+            return 0;
+        }
+    }
 }
 ?>

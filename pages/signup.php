@@ -557,23 +557,55 @@ require __DIR__ . '/../configs/config.php';
                     title: 'Success!',
                     text: 'Your account has been successfully registered!',
                     showCancelButton: true,
-                    confirmButtonText: 'Continue',
+                    confirmButtonText: 'CONTINUE',
                     cancelButtonText: 'OK',
-                    confirmButtonClass: 'btn bg-gradient-primary btn-sm mx-2',
-                    cancelButtonClass: 'btn btn-outline-primary btn-sm mx-2',
                     buttonsStyling: false,
-                    reverseButtons: true,
                     customClass: {
-                        actions: 'justify-content-center',
-                        confirmButton: 'btn bg-gradient-primary btn-sm mx-2',
-                        cancelButton: 'btn btn-outline-primary btn-sm mx-2'
+                        confirmButton: 'btn btn-sm bg-gradient-primary mx-1',
+                        cancelButton: 'btn btn-sm bg-gradient-secondary mx-1',
+                        actions: 'justify-content-center'
                     }
                 });
 
                 if (swalResult.isConfirmed) {
+                    // Redirect to login page
                     window.location.href = 'signin.php';
                 } else {
-                    // Reset form code...
+                    // Reset the form
+                    form.reset();
+                    
+                    // Reset any visual validations
+                    const passwordToast = bootstrap.Toast.getInstance(document.getElementById('passwordToast'));
+                    if (passwordToast) {
+                        passwordToast.hide();
+                    }
+                    
+                    // Reset password requirement indicators
+                    ['length', 'special', 'number'].forEach(type => {
+                        const icon = document.getElementById(`${type}Check`);
+                        const text = document.getElementById(`${type}Text`);
+                        
+                        icon.textContent = 'close';
+                        icon.classList.remove('text-success');
+                        icon.classList.add('text-danger');
+                        text.classList.remove('text-success');
+                        text.classList.add('text-danger');
+                    });
+
+                    // Reset input fields to their original state
+                    document.querySelectorAll('.input-group-outline').forEach(group => {
+                        group.classList.remove('is-filled', 'is-focused');
+                    });
+
+                    // Reset terms checkbox and signup button
+                    const termsCheckbox = document.getElementById('flexCheckDefault');
+                    const signupBtn = document.getElementById('signupBtn');
+                    termsCheckbox.checked = false;
+                    signupBtn.disabled = true;
+                    signupBtn.classList.add('opacity-50');
+                    
+                    // Scroll to top of form
+                    form.scrollIntoView({ behavior: 'smooth' });
                 }
             } else {
                 await Swal.fire({
@@ -635,7 +667,12 @@ async function submitForm(event) {
                 icon: 'success',
                 title: 'Success!',
                 text: result.message,
-                confirmButtonColor: '#3085d6'
+                confirmButtonText: 'OK',
+                buttonsStyling: false,
+                customClass: {
+                    confirmButton: 'btn btn-sm bg-gradient-primary',
+                    actions: 'justify-content-center'
+                }
             });
             // Redirect to login page or dashboard
             window.location.href = 'signin.php';
@@ -644,7 +681,12 @@ async function submitForm(event) {
                 icon: 'warning',
                 title: 'Registration Failed',
                 text: result.message,
-                confirmButtonColor: '#3085d6'
+                confirmButtonText: 'OK',
+                buttonsStyling: false,
+                customClass: {
+                    confirmButton: 'btn btn-sm bg-gradient-primary',
+                    actions: 'justify-content-center'
+                }
             });
         }
     } catch (error) {
@@ -652,7 +694,12 @@ async function submitForm(event) {
             icon: 'error',
             title: 'Error',
             text: 'An error occurred during registration. Please try again.',
-            confirmButtonColor: '#3085d6'
+            confirmButtonText: 'OK',
+            buttonsStyling: false,
+            customClass: {
+                confirmButton: 'btn btn-sm bg-gradient-primary',
+                actions: 'justify-content-center'
+            }
         });
     }
 

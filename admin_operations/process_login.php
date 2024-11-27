@@ -15,16 +15,39 @@ if (isset($_POST['login'])) {
         if ($user && password_verify($password, $user['password'])) {
             // If account is deactivated, show reactivation prompt
             if ($user['status'] === 'deactivated') {
-                // Show SweetAlert2 confirmation
-                $_SESSION['temp_srcode'] = $srcode; // Temporarily store srcode
+                $_SESSION['temp_srcode'] = $srcode;
                 header("Location: ../login.php?prompt=reactivate");
                 exit();
             }
 
-            // If account is active, proceed with normal login
+            // Set session variables
+            $_SESSION['user_id'] = $user['srcode'];
             $_SESSION['srcode'] = $user['srcode'];
-            // ... rest of your login logic ...
-            header("Location: ../pages/student/student.php");
+            $_SESSION['role'] = 'student';
+
+            // Add login activity log here
+            $log_query = "INSERT INTO activity_logs 
+                          (srcode, action, action_details, created_at) 
+                          VALUES (?, 'LOGIN', 'Student logged in successfully', NOW())";
+            $stmt_log = $pdo->prepare($log_query);
+            $stmt_log->execute([$user['srcode']]);
+
+            // Check if student has logged their mood today
+            $mood_stmt = $pdo->prepare("
+                SELECT COUNT(*) 
+                FROM moodlog 
+                WHERE srcode = ? 
+                AND DATE(log_date) = CURRENT_DATE()
+            ");
+            $mood_stmt->execute([$srcode]);
+            $has_mood_today = $mood_stmt->fetchColumn() > 0;
+
+            // Redirect based on mood log status
+            if ($has_mood_today) {
+                header("Location: ../pages/student/student.php");
+            } else {
+                header("Location: ../pages/student/moodtracker.php?prompt=daily_log");
+            }
             exit();
         } else {
             header("Location: ../login.php?error=invalid_credentials");
@@ -45,12 +68,11 @@ if (isset($_POST['reactivate']) && isset($_SESSION['temp_srcode'])) {
     
     try {
         // Update user status to active
-        $query = "UPDATE students SET 
-                  status = 'active',
-                  deactivated_at = NULL 
-                  WHERE srcode = ?";
-                  
-        $stmt = $pdo->prepare($query);
+        $stmt = $pdo->prepare("
+            UPDATE students 
+            SET status = 'active', deactivated_at = NULL 
+            WHERE srcode = ?
+        ");
         $stmt->execute([$srcode]);
         
         // Get student details for the log

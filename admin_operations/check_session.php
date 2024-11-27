@@ -1,11 +1,23 @@
 <?php
 session_start();
 
-header('Content-Type: application/json');
+// Debug
+error_log("Checking session: " . print_r($_SESSION, true));
 
-if (isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])) {
-    echo json_encode(['logged_in' => true]);
+$response = [
+    'logged_in' => false,
+    'message' => ''
+];
+
+// Check if user is logged in and session is valid
+if (isset($_SESSION['user_id']) && isset($_SESSION['srcode'])) {
+    // Add additional checks if needed
+    $response['logged_in'] = true;
+    $response['message'] = 'Session valid';
 } else {
-    echo json_encode(['logged_in' => false]);
+    $response['message'] = 'Session invalid or expired';
 }
+
+header('Content-Type: application/json');
+echo json_encode($response);
 ?>

@@ -1932,3 +1932,4035 @@ Stack trace:
 )
 
 [24-Nov-2024 17:38:37 Europe/Berlin] Update result: true, Rows affected: 1
+[25-Nov-2024 09:25:01 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 2236914
+    [firstname] => Faith
+    [lastname] => Anne
+    [phonenum] => 09267075697
+    [email] => 22-36914@g.batstate-u.edu.ph
+    [course] => heheh
+    [year] => 4
+    [section] => SM-4102
+    [department] => CICS
+    [personality] => ISFP
+    [address] => Sabang, Lipa City
+)
+
+[25-Nov-2024 09:25:01 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Faith
+    [lastname] => Anne
+    [phonenum] => 09267075697
+    [email] => 22-36914@g.batstate-u.edu.ph
+    [department] => CICS
+    [course] => heheh
+    [year] => 4
+    [section] => SM-4102
+    [address] => Sabang, Lipa City
+    [personality] => ISFP
+    [srcode] => 2236914
+)
+
+[25-Nov-2024 09:25:01 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Faith
+    [:lastname] => Anne
+    [:phonenum] => 09267075697
+    [:email] => 22-36914@g.batstate-u.edu.ph
+    [:department] => CICS
+    [:course] => heheh
+    [:year] => 4
+    [:section] => SM-4102
+    [:address] => Sabang, Lipa City
+    [:personality] => ISFP
+    [:srcode] => 2236914
+)
+
+[25-Nov-2024 09:25:01 Europe/Berlin] Update result: true, Rows affected: 1
+[25-Nov-2024 11:32:11 Europe/Berlin] 
+=== New Upload Request (2024-11-25 11:32:11) ===
+[25-Nov-2024 11:32:11 Europe/Berlin] Remote IP: ::1
+[25-Nov-2024 11:32:11 Europe/Berlin] User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36
+[25-Nov-2024 11:32:11 Europe/Berlin] Session Data: Array
+(
+    [session_log_id] => 36
+    [user_id] => 2236914
+    [firstname] => Faith
+    [role] => student
+    [lastname] => Anne
+)
+
+[25-Nov-2024 11:32:11 Europe/Berlin] POST Data: Array
+(
+)
+
+[25-Nov-2024 11:32:11 Europe/Berlin] FILES Data: Array
+(
+    [profile_picture] => Array
+        (
+            [name] => F_fbYfRawAAsOGg.jpg
+            [full_path] => F_fbYfRawAAsOGg.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php9FBF.tmp
+            [error] => 0
+            [size] => 80280
+        )
+
+)
+
+[25-Nov-2024 11:32:11 Europe/Berlin] Loading required files...
+[25-Nov-2024 11:32:11 Europe/Berlin] Required files loaded successfully
+[25-Nov-2024 11:32:11 Europe/Berlin] Session validated successfully
+[25-Nov-2024 11:32:11 Europe/Berlin] File details: Array
+(
+    [name] => F_fbYfRawAAsOGg.jpg
+    [full_path] => F_fbYfRawAAsOGg.jpg
+    [type] => image/jpeg
+    [tmp_name] => C:\xampp\tmp\php9FBF.tmp
+    [error] => 0
+    [size] => 80280
+)
+
+[25-Nov-2024 11:32:11 Europe/Berlin] Reading file data...
+[25-Nov-2024 11:32:11 Europe/Berlin] File data read successfully. Size: 80280 bytes
+[25-Nov-2024 11:32:11 Europe/Berlin] Starting database transaction...
+[25-Nov-2024 11:32:11 Europe/Berlin] Deactivating old profile pictures...
+[25-Nov-2024 11:32:11 Europe/Berlin] Old pictures deactivated successfully
+[25-Nov-2024 11:32:11 Europe/Berlin] Inserting new profile picture...
+[25-Nov-2024 11:32:11 Europe/Berlin] New picture inserted successfully
+[25-Nov-2024 11:32:11 Europe/Berlin] Initializing SessionLogger...
+[25-Nov-2024 11:32:11 Europe/Berlin] Processing user role: student, ID: 2236914
+[25-Nov-2024 11:32:11 Europe/Berlin] Attempting to log activity...
+[25-Nov-2024 11:32:11 Europe/Berlin] SR Code: 2236914
+[25-Nov-2024 11:32:11 Europe/Berlin] Therapist ID: null
+[25-Nov-2024 11:32:11 Europe/Berlin] Admin ID: null
+[25-Nov-2024 11:32:11 Europe/Berlin] Description: Profile picture updated: F_fbYfRawAAsOGg.jpg (Type: image/jpeg, Size: 80280 bytes)
+[25-Nov-2024 11:32:11 Europe/Berlin] === Activity Logging Start ===
+[25-Nov-2024 11:32:11 Europe/Berlin] SR Code: 2236914
+[25-Nov-2024 11:32:11 Europe/Berlin] Therapist ID: null
+[25-Nov-2024 11:32:11 Europe/Berlin] Admin ID: null
+[25-Nov-2024 11:32:11 Europe/Berlin] Action: UPDATE_PROFILE_PICTURE
+[25-Nov-2024 11:32:11 Europe/Berlin] Action Details: Profile picture updated: F_fbYfRawAAsOGg.jpg (Type: image/jpeg, Size: 80280 bytes)
+[25-Nov-2024 11:32:11 Europe/Berlin] IP: ::1
+[25-Nov-2024 11:32:11 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[25-Nov-2024 11:32:11 Europe/Berlin] Activity log inserted successfully. ID: 74
+[25-Nov-2024 11:32:11 Europe/Berlin] === Activity Logging End ===
+[25-Nov-2024 11:32:11 Europe/Berlin] Activity logged successfully
+[25-Nov-2024 11:32:11 Europe/Berlin] Transaction committed successfully
+[25-Nov-2024 11:32:11 Europe/Berlin] Sending success response: {"status":"success","message":"Profile picture updated successfully"}
+[25-Nov-2024 11:32:11 Europe/Berlin] === Request Complete (2024-11-25 11:32:11) ===
+
+[25-Nov-2024 11:33:13 Europe/Berlin] 
+=== New Upload Request (2024-11-25 11:33:13) ===
+[25-Nov-2024 11:33:13 Europe/Berlin] Remote IP: ::1
+[25-Nov-2024 11:33:13 Europe/Berlin] User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36
+[25-Nov-2024 11:33:13 Europe/Berlin] Session Data: Array
+(
+    [session_log_id] => 36
+    [user_id] => 2236914
+    [firstname] => Faith
+    [role] => student
+    [lastname] => Anne
+)
+
+[25-Nov-2024 11:33:13 Europe/Berlin] POST Data: Array
+(
+)
+
+[25-Nov-2024 11:33:13 Europe/Berlin] FILES Data: Array
+(
+    [profile_picture] => Array
+        (
+            [name] => avatars-uFWf6ATsVT9yIpWF-N4qDhg-t240x240.jpg
+            [full_path] => avatars-uFWf6ATsVT9yIpWF-N4qDhg-t240x240.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php9099.tmp
+            [error] => 0
+            [size] => 15216
+        )
+
+)
+
+[25-Nov-2024 11:33:13 Europe/Berlin] Loading required files...
+[25-Nov-2024 11:33:13 Europe/Berlin] Required files loaded successfully
+[25-Nov-2024 11:33:13 Europe/Berlin] Session validated successfully
+[25-Nov-2024 11:33:13 Europe/Berlin] File details: Array
+(
+    [name] => avatars-uFWf6ATsVT9yIpWF-N4qDhg-t240x240.jpg
+    [full_path] => avatars-uFWf6ATsVT9yIpWF-N4qDhg-t240x240.jpg
+    [type] => image/jpeg
+    [tmp_name] => C:\xampp\tmp\php9099.tmp
+    [error] => 0
+    [size] => 15216
+)
+
+[25-Nov-2024 11:33:13 Europe/Berlin] Reading file data...
+[25-Nov-2024 11:33:13 Europe/Berlin] File data read successfully. Size: 15216 bytes
+[25-Nov-2024 11:33:13 Europe/Berlin] Starting database transaction...
+[25-Nov-2024 11:33:13 Europe/Berlin] Deactivating old profile pictures...
+[25-Nov-2024 11:33:13 Europe/Berlin] Old pictures deactivated successfully
+[25-Nov-2024 11:33:13 Europe/Berlin] Inserting new profile picture...
+[25-Nov-2024 11:33:13 Europe/Berlin] New picture inserted successfully
+[25-Nov-2024 11:33:13 Europe/Berlin] Initializing SessionLogger...
+[25-Nov-2024 11:33:13 Europe/Berlin] Processing user role: student, ID: 2236914
+[25-Nov-2024 11:33:13 Europe/Berlin] Attempting to log activity...
+[25-Nov-2024 11:33:13 Europe/Berlin] SR Code: 2236914
+[25-Nov-2024 11:33:13 Europe/Berlin] Therapist ID: null
+[25-Nov-2024 11:33:13 Europe/Berlin] Admin ID: null
+[25-Nov-2024 11:33:13 Europe/Berlin] Description: Profile picture updated: avatars-uFWf6ATsVT9yIpWF-N4qDhg-t240x240.jpg (Type: image/jpeg, Size: 15216 bytes)
+[25-Nov-2024 11:33:13 Europe/Berlin] === Activity Logging Start ===
+[25-Nov-2024 11:33:13 Europe/Berlin] SR Code: 2236914
+[25-Nov-2024 11:33:13 Europe/Berlin] Therapist ID: null
+[25-Nov-2024 11:33:13 Europe/Berlin] Admin ID: null
+[25-Nov-2024 11:33:13 Europe/Berlin] Action: UPDATE_PROFILE_PICTURE
+[25-Nov-2024 11:33:13 Europe/Berlin] Action Details: Profile picture updated: avatars-uFWf6ATsVT9yIpWF-N4qDhg-t240x240.jpg (Type: image/jpeg, Size: 15216 bytes)
+[25-Nov-2024 11:33:13 Europe/Berlin] IP: ::1
+[25-Nov-2024 11:33:13 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[25-Nov-2024 11:33:13 Europe/Berlin] Activity log inserted successfully. ID: 75
+[25-Nov-2024 11:33:13 Europe/Berlin] === Activity Logging End ===
+[25-Nov-2024 11:33:13 Europe/Berlin] Activity logged successfully
+[25-Nov-2024 11:33:13 Europe/Berlin] Transaction committed successfully
+[25-Nov-2024 11:33:13 Europe/Berlin] Sending success response: {"status":"success","message":"Profile picture updated successfully"}
+[25-Nov-2024 11:33:13 Europe/Berlin] === Request Complete (2024-11-25 11:33:13) ===
+
+[25-Nov-2024 11:41:03 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 2236914
+    [firstname] => I Want
+    [lastname] => Anne
+    [phonenum] => 09267075697
+    [email] => 22-36914@g.batstate-u.edu.ph
+    [course] => heheh
+    [year] => 4
+    [section] => SM-4102
+    [department] => CICS
+    [personality] => ISFP
+    [address] => Sabang, Lipa City
+)
+
+[25-Nov-2024 11:41:03 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => I Want
+    [lastname] => Anne
+    [phonenum] => 09267075697
+    [email] => 22-36914@g.batstate-u.edu.ph
+    [department] => CICS
+    [course] => heheh
+    [year] => 4
+    [section] => SM-4102
+    [address] => Sabang, Lipa City
+    [personality] => ISFP
+    [srcode] => 2236914
+)
+
+[25-Nov-2024 11:41:03 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => I Want
+    [:lastname] => Anne
+    [:phonenum] => 09267075697
+    [:email] => 22-36914@g.batstate-u.edu.ph
+    [:department] => CICS
+    [:course] => heheh
+    [:year] => 4
+    [:section] => SM-4102
+    [:address] => Sabang, Lipa City
+    [:personality] => ISFP
+    [:srcode] => 2236914
+)
+
+[25-Nov-2024 11:41:03 Europe/Berlin] Update result: true, Rows affected: 1
+[25-Nov-2024 11:41:03 Europe/Berlin] === Activity Logging Start ===
+[25-Nov-2024 11:41:03 Europe/Berlin] SR Code: 2236914
+[25-Nov-2024 11:41:03 Europe/Berlin] Therapist ID: null
+[25-Nov-2024 11:41:03 Europe/Berlin] Admin ID: null
+[25-Nov-2024 11:41:03 Europe/Berlin] Action: Updated Profile
+[25-Nov-2024 11:41:03 Europe/Berlin] Action Details: Profile information updated
+[25-Nov-2024 11:41:03 Europe/Berlin] IP: ::1
+[25-Nov-2024 11:41:03 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[25-Nov-2024 11:41:03 Europe/Berlin] Activity log inserted successfully. ID: 76
+[25-Nov-2024 11:41:03 Europe/Berlin] === Activity Logging End ===
+[25-Nov-2024 11:41:15 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 2236914
+    [firstname] => I Want
+    [lastname] => Dq
+    [phonenum] => 09267075697
+    [email] => 22-36914@g.batstate-u.edu.ph
+    [course] => heheh
+    [year] => 4
+    [section] => SM-4102
+    [department] => CICS
+    [personality] => ISFP
+    [address] => Sabang, Lipa City
+)
+
+[25-Nov-2024 11:41:15 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => I Want
+    [lastname] => Dq
+    [phonenum] => 09267075697
+    [email] => 22-36914@g.batstate-u.edu.ph
+    [department] => CICS
+    [course] => heheh
+    [year] => 4
+    [section] => SM-4102
+    [address] => Sabang, Lipa City
+    [personality] => ISFP
+    [srcode] => 2236914
+)
+
+[25-Nov-2024 11:41:15 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => I Want
+    [:lastname] => Dq
+    [:phonenum] => 09267075697
+    [:email] => 22-36914@g.batstate-u.edu.ph
+    [:department] => CICS
+    [:course] => heheh
+    [:year] => 4
+    [:section] => SM-4102
+    [:address] => Sabang, Lipa City
+    [:personality] => ISFP
+    [:srcode] => 2236914
+)
+
+[25-Nov-2024 11:41:15 Europe/Berlin] Update result: true, Rows affected: 1
+[25-Nov-2024 11:41:15 Europe/Berlin] === Activity Logging Start ===
+[25-Nov-2024 11:41:15 Europe/Berlin] SR Code: 2236914
+[25-Nov-2024 11:41:15 Europe/Berlin] Therapist ID: null
+[25-Nov-2024 11:41:15 Europe/Berlin] Admin ID: null
+[25-Nov-2024 11:41:15 Europe/Berlin] Action: Updated Profile
+[25-Nov-2024 11:41:15 Europe/Berlin] Action Details: Profile information updated
+[25-Nov-2024 11:41:15 Europe/Berlin] IP: ::1
+[25-Nov-2024 11:41:15 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[25-Nov-2024 11:41:15 Europe/Berlin] Activity log inserted successfully. ID: 78
+[25-Nov-2024 11:41:15 Europe/Berlin] === Activity Logging End ===
+[25-Nov-2024 11:41:34 Europe/Berlin] 
+=== New Upload Request (2024-11-25 11:41:34) ===
+[25-Nov-2024 11:41:34 Europe/Berlin] Remote IP: ::1
+[25-Nov-2024 11:41:34 Europe/Berlin] User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36
+[25-Nov-2024 11:41:34 Europe/Berlin] Session Data: Array
+(
+    [session_log_id] => 36
+    [user_id] => 2236914
+    [firstname] => I Want
+    [role] => student
+    [lastname] => Dq
+)
+
+[25-Nov-2024 11:41:34 Europe/Berlin] POST Data: Array
+(
+)
+
+[25-Nov-2024 11:41:34 Europe/Berlin] FILES Data: Array
+(
+    [profile_picture] => Array
+        (
+            [name] => ab67706c0000da84b9c2588cf984ad9f8b3eadab.jpg
+            [full_path] => ab67706c0000da84b9c2588cf984ad9f8b3eadab.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php34E6.tmp
+            [error] => 0
+            [size] => 22343
+        )
+
+)
+
+[25-Nov-2024 11:41:34 Europe/Berlin] Loading required files...
+[25-Nov-2024 11:41:34 Europe/Berlin] Required files loaded successfully
+[25-Nov-2024 11:41:34 Europe/Berlin] Session validated successfully
+[25-Nov-2024 11:41:34 Europe/Berlin] File details: Array
+(
+    [name] => ab67706c0000da84b9c2588cf984ad9f8b3eadab.jpg
+    [full_path] => ab67706c0000da84b9c2588cf984ad9f8b3eadab.jpg
+    [type] => image/jpeg
+    [tmp_name] => C:\xampp\tmp\php34E6.tmp
+    [error] => 0
+    [size] => 22343
+)
+
+[25-Nov-2024 11:41:34 Europe/Berlin] Reading file data...
+[25-Nov-2024 11:41:34 Europe/Berlin] File data read successfully. Size: 22343 bytes
+[25-Nov-2024 11:41:34 Europe/Berlin] Starting database transaction...
+[25-Nov-2024 11:41:34 Europe/Berlin] Deactivating old profile pictures...
+[25-Nov-2024 11:41:34 Europe/Berlin] Old pictures deactivated successfully
+[25-Nov-2024 11:41:34 Europe/Berlin] Inserting new profile picture...
+[25-Nov-2024 11:41:34 Europe/Berlin] New picture inserted successfully
+[25-Nov-2024 11:41:34 Europe/Berlin] Initializing SessionLogger...
+[25-Nov-2024 11:41:34 Europe/Berlin] Processing user role: student, ID: 2236914
+[25-Nov-2024 11:41:34 Europe/Berlin] Attempting to log activity...
+[25-Nov-2024 11:41:34 Europe/Berlin] SR Code: 2236914
+[25-Nov-2024 11:41:34 Europe/Berlin] Therapist ID: null
+[25-Nov-2024 11:41:34 Europe/Berlin] Admin ID: null
+[25-Nov-2024 11:41:34 Europe/Berlin] Description: Profile picture updated: ab67706c0000da84b9c2588cf984ad9f8b3eadab.jpg (Type: image/jpeg, Size: 22343 bytes)
+[25-Nov-2024 11:41:34 Europe/Berlin] === Activity Logging Start ===
+[25-Nov-2024 11:41:34 Europe/Berlin] SR Code: 2236914
+[25-Nov-2024 11:41:34 Europe/Berlin] Therapist ID: null
+[25-Nov-2024 11:41:34 Europe/Berlin] Admin ID: null
+[25-Nov-2024 11:41:34 Europe/Berlin] Action: UPDATE_PROFILE_PICTURE
+[25-Nov-2024 11:41:34 Europe/Berlin] Action Details: Profile picture updated: ab67706c0000da84b9c2588cf984ad9f8b3eadab.jpg (Type: image/jpeg, Size: 22343 bytes)
+[25-Nov-2024 11:41:34 Europe/Berlin] IP: ::1
+[25-Nov-2024 11:41:34 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[25-Nov-2024 11:41:34 Europe/Berlin] Activity log inserted successfully. ID: 80
+[25-Nov-2024 11:41:34 Europe/Berlin] === Activity Logging End ===
+[25-Nov-2024 11:41:34 Europe/Berlin] Activity logged successfully
+[25-Nov-2024 11:41:34 Europe/Berlin] Transaction committed successfully
+[25-Nov-2024 11:41:34 Europe/Berlin] Sending success response: {"status":"success","message":"Profile picture updated successfully"}
+[25-Nov-2024 11:41:34 Europe/Berlin] === Request Complete (2024-11-25 11:41:34) ===
+
+[25-Nov-2024 11:48:05 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 2236914
+    [firstname] => I Want
+    [lastname] => Dq
+    [phonenum] => 09267075697
+    [email] => 22-36914@g.batstate-u.edu.ph
+    [course] => ??
+    [year] => 4
+    [section] => SM-4102
+    [department] => CICS
+    [personality] => ISFP
+    [address] => Sabang, Lipa City
+)
+
+[25-Nov-2024 11:48:05 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => I Want
+    [lastname] => Dq
+    [phonenum] => 09267075697
+    [email] => 22-36914@g.batstate-u.edu.ph
+    [department] => CICS
+    [course] => ??
+    [year] => 4
+    [section] => SM-4102
+    [address] => Sabang, Lipa City
+    [personality] => ISFP
+    [srcode] => 2236914
+)
+
+[25-Nov-2024 11:48:05 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => I Want
+    [:lastname] => Dq
+    [:phonenum] => 09267075697
+    [:email] => 22-36914@g.batstate-u.edu.ph
+    [:department] => CICS
+    [:course] => ??
+    [:year] => 4
+    [:section] => SM-4102
+    [:address] => Sabang, Lipa City
+    [:personality] => ISFP
+    [:srcode] => 2236914
+)
+
+[25-Nov-2024 11:48:05 Europe/Berlin] Update result: true, Rows affected: 1
+[25-Nov-2024 11:48:05 Europe/Berlin] === Activity Logging Start ===
+[25-Nov-2024 11:48:05 Europe/Berlin] SR Code: 2236914
+[25-Nov-2024 11:48:05 Europe/Berlin] Therapist ID: null
+[25-Nov-2024 11:48:05 Europe/Berlin] Admin ID: null
+[25-Nov-2024 11:48:05 Europe/Berlin] Action: Updated Profile
+[25-Nov-2024 11:48:05 Europe/Berlin] Action Details: Profile information updated
+[25-Nov-2024 11:48:05 Europe/Berlin] IP: ::1
+[25-Nov-2024 11:48:05 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[25-Nov-2024 11:48:05 Europe/Berlin] Activity log inserted successfully. ID: 81
+[25-Nov-2024 11:48:05 Europe/Berlin] === Activity Logging End ===
+[25-Nov-2024 11:55:49 Europe/Berlin] 
+=== New Upload Request (2024-11-25 11:55:49) ===
+[25-Nov-2024 11:55:49 Europe/Berlin] Remote IP: ::1
+[25-Nov-2024 11:55:49 Europe/Berlin] User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36
+[25-Nov-2024 11:55:49 Europe/Berlin] Session Data: Array
+(
+    [session_log_id] => 36
+    [user_id] => 2236914
+    [firstname] => I Want
+    [role] => student
+    [lastname] => Dq
+)
+
+[25-Nov-2024 11:55:49 Europe/Berlin] POST Data: Array
+(
+)
+
+[25-Nov-2024 11:55:49 Europe/Berlin] FILES Data: Array
+(
+    [profile_picture] => Array
+        (
+            [name] => tumblr_c1f8849fefffd8f2c54220cd48ff5469_c61b20d6_500.png
+            [full_path] => tumblr_c1f8849fefffd8f2c54220cd48ff5469_c61b20d6_500.png
+            [type] => image/png
+            [tmp_name] => C:\xampp\tmp\php3F96.tmp
+            [error] => 0
+            [size] => 87392
+        )
+
+)
+
+[25-Nov-2024 11:55:49 Europe/Berlin] Loading required files...
+[25-Nov-2024 11:55:49 Europe/Berlin] Required files loaded successfully
+[25-Nov-2024 11:55:49 Europe/Berlin] Session validated successfully
+[25-Nov-2024 11:55:49 Europe/Berlin] File details: Array
+(
+    [name] => tumblr_c1f8849fefffd8f2c54220cd48ff5469_c61b20d6_500.png
+    [full_path] => tumblr_c1f8849fefffd8f2c54220cd48ff5469_c61b20d6_500.png
+    [type] => image/png
+    [tmp_name] => C:\xampp\tmp\php3F96.tmp
+    [error] => 0
+    [size] => 87392
+)
+
+[25-Nov-2024 11:55:49 Europe/Berlin] Reading file data...
+[25-Nov-2024 11:55:49 Europe/Berlin] File data read successfully. Size: 87392 bytes
+[25-Nov-2024 11:55:49 Europe/Berlin] Starting database transaction...
+[25-Nov-2024 11:55:49 Europe/Berlin] Deactivating old profile pictures...
+[25-Nov-2024 11:55:49 Europe/Berlin] Old pictures deactivated successfully
+[25-Nov-2024 11:55:49 Europe/Berlin] Inserting new profile picture...
+[25-Nov-2024 11:55:49 Europe/Berlin] New picture inserted successfully
+[25-Nov-2024 11:55:49 Europe/Berlin] Initializing SessionLogger...
+[25-Nov-2024 11:55:49 Europe/Berlin] Processing user role: student, ID: 2236914
+[25-Nov-2024 11:55:49 Europe/Berlin] Attempting to log activity...
+[25-Nov-2024 11:55:49 Europe/Berlin] SR Code: 2236914
+[25-Nov-2024 11:55:49 Europe/Berlin] Therapist ID: null
+[25-Nov-2024 11:55:49 Europe/Berlin] Admin ID: null
+[25-Nov-2024 11:55:49 Europe/Berlin] Description: Profile picture updated: tumblr_c1f8849fefffd8f2c54220cd48ff5469_c61b20d6_500.png (Type: image/png, Size: 87392 bytes)
+[25-Nov-2024 11:55:49 Europe/Berlin] === Activity Logging Start ===
+[25-Nov-2024 11:55:49 Europe/Berlin] SR Code: 2236914
+[25-Nov-2024 11:55:49 Europe/Berlin] Therapist ID: null
+[25-Nov-2024 11:55:49 Europe/Berlin] Admin ID: null
+[25-Nov-2024 11:55:49 Europe/Berlin] Action: UPDATE_PROFILE_PICTURE
+[25-Nov-2024 11:55:49 Europe/Berlin] Action Details: Profile picture updated: tumblr_c1f8849fefffd8f2c54220cd48ff5469_c61b20d6_500.png (Type: image/png, Size: 87392 bytes)
+[25-Nov-2024 11:55:49 Europe/Berlin] IP: ::1
+[25-Nov-2024 11:55:49 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[25-Nov-2024 11:55:49 Europe/Berlin] Activity log inserted successfully. ID: 83
+[25-Nov-2024 11:55:49 Europe/Berlin] === Activity Logging End ===
+[25-Nov-2024 11:55:49 Europe/Berlin] Activity logged successfully
+[25-Nov-2024 11:55:49 Europe/Berlin] Transaction committed successfully
+[25-Nov-2024 11:55:49 Europe/Berlin] Sending success response: {"status":"success","message":"Profile picture updated successfully"}
+[25-Nov-2024 11:55:49 Europe/Berlin] === Request Complete (2024-11-25 11:55:49) ===
+
+[25-Nov-2024 11:58:13 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 2236914
+    [firstname] => Hephep
+    [lastname] => Hooray
+    [phonenum] => 09267075697
+    [email] => 22-36914@g.batstate-u.edu.ph
+    [course] => ??
+    [year] => 4
+    [section] => SM-4102
+    [department] => CICS
+    [personality] => ISFP
+    [address] => Sabang, Lipa City
+)
+
+[25-Nov-2024 11:58:13 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Hephep
+    [lastname] => Hooray
+    [phonenum] => 09267075697
+    [email] => 22-36914@g.batstate-u.edu.ph
+    [department] => CICS
+    [course] => ??
+    [year] => 4
+    [section] => SM-4102
+    [address] => Sabang, Lipa City
+    [personality] => ISFP
+    [srcode] => 2236914
+)
+
+[25-Nov-2024 11:58:13 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Hephep
+    [:lastname] => Hooray
+    [:phonenum] => 09267075697
+    [:email] => 22-36914@g.batstate-u.edu.ph
+    [:department] => CICS
+    [:course] => ??
+    [:year] => 4
+    [:section] => SM-4102
+    [:address] => Sabang, Lipa City
+    [:personality] => ISFP
+    [:srcode] => 2236914
+)
+
+[25-Nov-2024 11:58:13 Europe/Berlin] Update result: true, Rows affected: 1
+[25-Nov-2024 11:58:13 Europe/Berlin] === Activity Logging Start ===
+[25-Nov-2024 11:58:13 Europe/Berlin] SR Code: 2236914
+[25-Nov-2024 11:58:13 Europe/Berlin] Therapist ID: null
+[25-Nov-2024 11:58:13 Europe/Berlin] Admin ID: null
+[25-Nov-2024 11:58:13 Europe/Berlin] Action: Updated Profile
+[25-Nov-2024 11:58:13 Europe/Berlin] Action Details: Profile information updated
+[25-Nov-2024 11:58:13 Europe/Berlin] IP: ::1
+[25-Nov-2024 11:58:13 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[25-Nov-2024 11:58:13 Europe/Berlin] Activity log inserted successfully. ID: 84
+[25-Nov-2024 11:58:13 Europe/Berlin] === Activity Logging End ===
+[25-Nov-2024 12:22:38 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 2236914
+    [firstname] => Hephep
+    [lastname] => Hooray
+    [phonenum] => 09267075697
+    [email] => 22-36914@g.batstate-u.edu.ph
+    [course] => uco na
+    [year] => 4
+    [section] => SM-4102
+    [department] => CICS
+    [personality] => ISFP
+    [address] => Sabang, Lipa City
+)
+
+[25-Nov-2024 12:22:38 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Hephep
+    [lastname] => Hooray
+    [phonenum] => 09267075697
+    [email] => 22-36914@g.batstate-u.edu.ph
+    [department] => CICS
+    [course] => uco na
+    [year] => 4
+    [section] => SM-4102
+    [address] => Sabang, Lipa City
+    [personality] => ISFP
+    [srcode] => 2236914
+)
+
+[25-Nov-2024 12:22:38 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Hephep
+    [:lastname] => Hooray
+    [:phonenum] => 09267075697
+    [:email] => 22-36914@g.batstate-u.edu.ph
+    [:department] => CICS
+    [:course] => uco na
+    [:year] => 4
+    [:section] => SM-4102
+    [:address] => Sabang, Lipa City
+    [:personality] => ISFP
+    [:srcode] => 2236914
+)
+
+[25-Nov-2024 12:22:38 Europe/Berlin] Update result: true, Rows affected: 1
+[25-Nov-2024 12:22:38 Europe/Berlin] === Activity Logging Start ===
+[25-Nov-2024 12:22:38 Europe/Berlin] SR Code: 2236914
+[25-Nov-2024 12:22:38 Europe/Berlin] Therapist ID: null
+[25-Nov-2024 12:22:38 Europe/Berlin] Admin ID: null
+[25-Nov-2024 12:22:38 Europe/Berlin] Action: Updated Profile
+[25-Nov-2024 12:22:38 Europe/Berlin] Action Details: Profile information updated
+[25-Nov-2024 12:22:38 Europe/Berlin] IP: ::1
+[25-Nov-2024 12:22:38 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[25-Nov-2024 12:22:38 Europe/Berlin] Activity log inserted successfully. ID: 86
+[25-Nov-2024 12:22:38 Europe/Berlin] === Activity Logging End ===
+[25-Nov-2024 13:54:48 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 2236914
+    [firstname] => Hephep
+    [lastname] => Hooray
+    [phonenum] => 09267075697
+    [email] => 22-36914@g.batstate-u.edu.ph
+    [course] => uco na
+    [year] => 4
+    [section] => SM-4102
+    [department] => CICS
+    [personality] => INFP
+    [address] => Sabang, Lipa City
+)
+
+[25-Nov-2024 13:54:48 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Hephep
+    [lastname] => Hooray
+    [phonenum] => 09267075697
+    [email] => 22-36914@g.batstate-u.edu.ph
+    [department] => CICS
+    [course] => uco na
+    [year] => 4
+    [section] => SM-4102
+    [address] => Sabang, Lipa City
+    [personality] => INFP
+    [srcode] => 2236914
+)
+
+[25-Nov-2024 13:54:48 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Hephep
+    [:lastname] => Hooray
+    [:phonenum] => 09267075697
+    [:email] => 22-36914@g.batstate-u.edu.ph
+    [:department] => CICS
+    [:course] => uco na
+    [:year] => 4
+    [:section] => SM-4102
+    [:address] => Sabang, Lipa City
+    [:personality] => INFP
+    [:srcode] => 2236914
+)
+
+[25-Nov-2024 13:54:48 Europe/Berlin] Update result: true, Rows affected: 1
+[25-Nov-2024 13:54:48 Europe/Berlin] === Activity Logging Start ===
+[25-Nov-2024 13:54:48 Europe/Berlin] SR Code: 2236914
+[25-Nov-2024 13:54:48 Europe/Berlin] Therapist ID: null
+[25-Nov-2024 13:54:48 Europe/Berlin] Admin ID: null
+[25-Nov-2024 13:54:48 Europe/Berlin] Action: Updated Profile
+[25-Nov-2024 13:54:48 Europe/Berlin] Action Details: Profile information updated
+[25-Nov-2024 13:54:48 Europe/Berlin] IP: ::1
+[25-Nov-2024 13:54:48 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[25-Nov-2024 13:54:48 Europe/Berlin] Activity log inserted successfully. ID: 93
+[25-Nov-2024 13:54:48 Europe/Berlin] === Activity Logging End ===
+[25-Nov-2024 14:10:17 Europe/Berlin] Error getting today's mood: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'space.mood_logs' doesn't exist
+[25-Nov-2024 14:10:17 Europe/Berlin] Error getting yesterday's mood: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'space.mood_logs' doesn't exist
+[25-Nov-2024 14:10:17 Europe/Berlin] Error getting weekly entries count: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'space.mood_logs' doesn't exist
+[25-Nov-2024 14:10:17 Europe/Berlin] Error getting current streak: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'space.mood_logs' doesn't exist
+[25-Nov-2024 14:10:17 Europe/Berlin] Error getting journal stats: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'space.journal_entries' doesn't exist
+[25-Nov-2024 14:10:17 Europe/Berlin] PHP Warning:  Trying to access array offset on value of type null in C:\xampp\htdocs\Space\pages\student\moodtracker.php on line 371
+[25-Nov-2024 14:28:43 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[25-Nov-2024 14:28:56 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[25-Nov-2024 14:28:56 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[25-Nov-2024 14:29:23 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 2213456
+    [firstname] => Eli
+    [lastname] => Melorcia
+    [phonenum] => 09123456789
+    [email] => 2213456@g.batstate-u.edu.ph
+    [course] => BSIT
+    [year] => 4
+    [section] => SM-3102
+    [department] => CICS
+    [personality] => ISFJ
+    [address] => 
+)
+
+[25-Nov-2024 14:29:23 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Eli
+    [lastname] => Melorcia
+    [phonenum] => 09123456789
+    [email] => 2213456@g.batstate-u.edu.ph
+    [department] => CICS
+    [course] => BSIT
+    [year] => 4
+    [section] => SM-3102
+    [address] => 
+    [personality] => ISFJ
+    [srcode] => 2213456
+)
+
+[25-Nov-2024 14:29:23 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Eli
+    [:lastname] => Melorcia
+    [:phonenum] => 09123456789
+    [:email] => 2213456@g.batstate-u.edu.ph
+    [:department] => CICS
+    [:course] => BSIT
+    [:year] => 4
+    [:section] => SM-3102
+    [:address] => 
+    [:personality] => ISFJ
+    [:srcode] => 2213456
+)
+
+[25-Nov-2024 14:29:23 Europe/Berlin] Update result: true, Rows affected: 1
+[25-Nov-2024 14:29:23 Europe/Berlin] === Activity Logging Start ===
+[25-Nov-2024 14:29:23 Europe/Berlin] SR Code: 2213456
+[25-Nov-2024 14:29:23 Europe/Berlin] Therapist ID: null
+[25-Nov-2024 14:29:23 Europe/Berlin] Admin ID: null
+[25-Nov-2024 14:29:23 Europe/Berlin] Action: Updated Profile
+[25-Nov-2024 14:29:23 Europe/Berlin] Action Details: Profile information updated
+[25-Nov-2024 14:29:23 Europe/Berlin] IP: ::1
+[25-Nov-2024 14:29:23 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[25-Nov-2024 14:29:23 Europe/Berlin] Activity log inserted successfully. ID: 98
+[25-Nov-2024 14:29:23 Europe/Berlin] === Activity Logging End ===
+[25-Nov-2024 14:29:24 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[25-Nov-2024 14:29:24 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[25-Nov-2024 14:29:31 Europe/Berlin] 
+=== New Upload Request (2024-11-25 14:29:31) ===
+[25-Nov-2024 14:29:31 Europe/Berlin] Remote IP: ::1
+[25-Nov-2024 14:29:31 Europe/Berlin] User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36
+[25-Nov-2024 14:29:31 Europe/Berlin] Session Data: Array
+(
+    [session_log_id] => 37
+    [user_id] => 2213456
+    [firstname] => Eli
+    [role] => student
+    [lastname] => Melorcia
+)
+
+[25-Nov-2024 14:29:31 Europe/Berlin] POST Data: Array
+(
+)
+
+[25-Nov-2024 14:29:31 Europe/Berlin] FILES Data: Array
+(
+    [profile_picture] => Array
+        (
+            [name] => tumblr_c1f8849fefffd8f2c54220cd48ff5469_c61b20d6_500.png
+            [full_path] => tumblr_c1f8849fefffd8f2c54220cd48ff5469_c61b20d6_500.png
+            [type] => image/png
+            [tmp_name] => C:\xampp\tmp\phpF870.tmp
+            [error] => 0
+            [size] => 87392
+        )
+
+)
+
+[25-Nov-2024 14:29:31 Europe/Berlin] Loading required files...
+[25-Nov-2024 14:29:31 Europe/Berlin] Required files loaded successfully
+[25-Nov-2024 14:29:31 Europe/Berlin] Session validated successfully
+[25-Nov-2024 14:29:31 Europe/Berlin] File details: Array
+(
+    [name] => tumblr_c1f8849fefffd8f2c54220cd48ff5469_c61b20d6_500.png
+    [full_path] => tumblr_c1f8849fefffd8f2c54220cd48ff5469_c61b20d6_500.png
+    [type] => image/png
+    [tmp_name] => C:\xampp\tmp\phpF870.tmp
+    [error] => 0
+    [size] => 87392
+)
+
+[25-Nov-2024 14:29:31 Europe/Berlin] Reading file data...
+[25-Nov-2024 14:29:31 Europe/Berlin] File data read successfully. Size: 87392 bytes
+[25-Nov-2024 14:29:31 Europe/Berlin] Starting database transaction...
+[25-Nov-2024 14:29:31 Europe/Berlin] Deactivating old profile pictures...
+[25-Nov-2024 14:29:31 Europe/Berlin] Old pictures deactivated successfully
+[25-Nov-2024 14:29:31 Europe/Berlin] Inserting new profile picture...
+[25-Nov-2024 14:29:31 Europe/Berlin] New picture inserted successfully
+[25-Nov-2024 14:29:31 Europe/Berlin] Initializing SessionLogger...
+[25-Nov-2024 14:29:31 Europe/Berlin] Processing user role: student, ID: 2213456
+[25-Nov-2024 14:29:31 Europe/Berlin] Attempting to log activity...
+[25-Nov-2024 14:29:31 Europe/Berlin] SR Code: 2213456
+[25-Nov-2024 14:29:31 Europe/Berlin] Therapist ID: null
+[25-Nov-2024 14:29:31 Europe/Berlin] Admin ID: null
+[25-Nov-2024 14:29:31 Europe/Berlin] Description: Profile picture updated: tumblr_c1f8849fefffd8f2c54220cd48ff5469_c61b20d6_500.png (Type: image/png, Size: 87392 bytes)
+[25-Nov-2024 14:29:31 Europe/Berlin] === Activity Logging Start ===
+[25-Nov-2024 14:29:31 Europe/Berlin] SR Code: 2213456
+[25-Nov-2024 14:29:31 Europe/Berlin] Therapist ID: null
+[25-Nov-2024 14:29:31 Europe/Berlin] Admin ID: null
+[25-Nov-2024 14:29:31 Europe/Berlin] Action: UPDATE_PROFILE_PICTURE
+[25-Nov-2024 14:29:31 Europe/Berlin] Action Details: Profile picture updated: tumblr_c1f8849fefffd8f2c54220cd48ff5469_c61b20d6_500.png (Type: image/png, Size: 87392 bytes)
+[25-Nov-2024 14:29:31 Europe/Berlin] IP: ::1
+[25-Nov-2024 14:29:31 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[25-Nov-2024 14:29:31 Europe/Berlin] Activity log inserted successfully. ID: 100
+[25-Nov-2024 14:29:31 Europe/Berlin] === Activity Logging End ===
+[25-Nov-2024 14:29:31 Europe/Berlin] Activity logged successfully
+[25-Nov-2024 14:29:31 Europe/Berlin] Transaction committed successfully
+[25-Nov-2024 14:29:31 Europe/Berlin] Sending success response: {"status":"success","message":"Profile picture updated successfully"}
+[25-Nov-2024 14:29:31 Europe/Berlin] === Request Complete (2024-11-25 14:29:31) ===
+
+[25-Nov-2024 16:17:31 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 22840101
+    [firstname] => Jungkook
+    [lastname] => Jeon
+    [phonenum] => 09293019000
+    [email] => 22-840101@g.batstate-u.edu.ph
+    [course] => Golden Closet
+    [year] => 4
+    [section] => BTS
+    [department] => CAS
+    [personality] => INTJ
+    [address] => Sa puso koh
+)
+
+[25-Nov-2024 16:17:31 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Jungkook
+    [lastname] => Jeon
+    [phonenum] => 09293019000
+    [email] => 22-840101@g.batstate-u.edu.ph
+    [department] => CAS
+    [course] => Golden Closet
+    [year] => 4
+    [section] => BTS
+    [address] => Sa puso koh
+    [personality] => INTJ
+    [srcode] => 22840101
+)
+
+[25-Nov-2024 16:17:31 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Jungkook
+    [:lastname] => Jeon
+    [:phonenum] => 09293019000
+    [:email] => 22-840101@g.batstate-u.edu.ph
+    [:department] => CAS
+    [:course] => Golden Closet
+    [:year] => 4
+    [:section] => BTS
+    [:address] => Sa puso koh
+    [:personality] => INTJ
+    [:srcode] => 22840101
+)
+
+[25-Nov-2024 16:17:31 Europe/Berlin] Update result: true, Rows affected: 1
+[25-Nov-2024 16:17:31 Europe/Berlin] === Activity Logging Start ===
+[25-Nov-2024 16:17:31 Europe/Berlin] SR Code: 22840101
+[25-Nov-2024 16:17:31 Europe/Berlin] Therapist ID: null
+[25-Nov-2024 16:17:31 Europe/Berlin] Admin ID: null
+[25-Nov-2024 16:17:31 Europe/Berlin] Action: Updated Profile
+[25-Nov-2024 16:17:31 Europe/Berlin] Action Details: Profile information updated
+[25-Nov-2024 16:17:31 Europe/Berlin] IP: ::1
+[25-Nov-2024 16:17:31 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[25-Nov-2024 16:17:31 Europe/Berlin] Activity log inserted successfully. ID: 112
+[25-Nov-2024 16:17:31 Europe/Berlin] === Activity Logging End ===
+[25-Nov-2024 19:14:55 Europe/Berlin] PHP Warning:  Undefined array key "srcode" in C:\xampp\htdocs\Space\pages\student\moodtracker.php on line 797
+[25-Nov-2024 19:14:55 Europe/Berlin] PHP Warning:  Undefined array key "srcode" in C:\xampp\htdocs\Space\pages\student\moodtracker.php on line 844
+[25-Nov-2024 19:14:55 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\Space\pages\student\moodtracker.php:66
+Stack trace:
+#0 C:\xampp\htdocs\Space\pages\student\moodtracker.php(844): getMoodHistory(NULL)
+#1 {main}
+  thrown in C:\xampp\htdocs\Space\pages\student\moodtracker.php on line 66
+[25-Nov-2024 19:18:08 Europe/Berlin] PHP Warning:  Undefined array key "srcode" in C:\xampp\htdocs\Space\pages\student\moodtracker.php on line 794
+[25-Nov-2024 19:18:08 Europe/Berlin] PHP Warning:  Undefined array key "srcode" in C:\xampp\htdocs\Space\pages\student\moodtracker.php on line 841
+[25-Nov-2024 19:18:08 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\Space\pages\student\moodtracker.php:66
+Stack trace:
+#0 C:\xampp\htdocs\Space\pages\student\moodtracker.php(841): getMoodHistory(NULL)
+#1 {main}
+  thrown in C:\xampp\htdocs\Space\pages\student\moodtracker.php on line 66
+[25-Nov-2024 19:18:31 Europe/Berlin] PHP Warning:  Undefined array key "srcode" in C:\xampp\htdocs\Space\pages\student\moodtracker.php on line 794
+[25-Nov-2024 19:18:31 Europe/Berlin] PHP Warning:  Undefined array key "srcode" in C:\xampp\htdocs\Space\pages\student\moodtracker.php on line 841
+[25-Nov-2024 19:18:31 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\Space\pages\student\moodtracker.php:66
+Stack trace:
+#0 C:\xampp\htdocs\Space\pages\student\moodtracker.php(841): getMoodHistory(NULL)
+#1 {main}
+  thrown in C:\xampp\htdocs\Space\pages\student\moodtracker.php on line 66
+[25-Nov-2024 19:21:15 Europe/Berlin] PHP Warning:  Undefined array key "srcode" in C:\xampp\htdocs\Space\pages\student\moodtracker.php on line 794
+[25-Nov-2024 19:21:15 Europe/Berlin] PHP Warning:  Undefined array key "srcode" in C:\xampp\htdocs\Space\pages\student\moodtracker.php on line 837
+[25-Nov-2024 19:21:15 Europe/Berlin] PHP Warning:  Undefined array key "srcode" in C:\xampp\htdocs\Space\pages\student\moodtracker.php on line 854
+[25-Nov-2024 19:21:15 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\Space\pages\student\moodtracker.php:66
+Stack trace:
+#0 C:\xampp\htdocs\Space\pages\student\moodtracker.php(854): getMoodHistory(NULL)
+#1 {main}
+  thrown in C:\xampp\htdocs\Space\pages\student\moodtracker.php on line 66
+[25-Nov-2024 19:22:18 Europe/Berlin] PHP Warning:  Undefined array key "srcode" in C:\xampp\htdocs\Space\pages\student\moodtracker.php on line 794
+[25-Nov-2024 19:22:18 Europe/Berlin] PHP Warning:  Undefined array key "srcode" in C:\xampp\htdocs\Space\pages\student\moodtracker.php on line 837
+[25-Nov-2024 19:22:18 Europe/Berlin] PHP Warning:  Undefined array key "srcode" in C:\xampp\htdocs\Space\pages\student\moodtracker.php on line 854
+[25-Nov-2024 19:22:18 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\Space\pages\student\moodtracker.php:66
+Stack trace:
+#0 C:\xampp\htdocs\Space\pages\student\moodtracker.php(854): getMoodHistory(NULL)
+#1 {main}
+  thrown in C:\xampp\htdocs\Space\pages\student\moodtracker.php on line 66
+[25-Nov-2024 19:23:28 Europe/Berlin] PHP Warning:  Undefined array key "srcode" in C:\xampp\htdocs\Space\pages\student\moodtracker.php on line 794
+[25-Nov-2024 19:23:28 Europe/Berlin] PHP Warning:  Undefined array key "srcode" in C:\xampp\htdocs\Space\pages\student\moodtracker.php on line 837
+[25-Nov-2024 19:23:28 Europe/Berlin] PHP Warning:  Undefined array key "srcode" in C:\xampp\htdocs\Space\pages\student\moodtracker.php on line 854
+[25-Nov-2024 19:23:28 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\Space\pages\student\moodtracker.php:66
+Stack trace:
+#0 C:\xampp\htdocs\Space\pages\student\moodtracker.php(854): getMoodHistory(NULL)
+#1 {main}
+  thrown in C:\xampp\htdocs\Space\pages\student\moodtracker.php on line 66
+[25-Nov-2024 19:24:59 Europe/Berlin] Session srcode not set
+[25-Nov-2024 19:25:24 Europe/Berlin] Session srcode not set
+[25-Nov-2024 19:25:33 Europe/Berlin] Session srcode not set
+[25-Nov-2024 19:28:52 Europe/Berlin] PHP Warning:  Undefined array key "srcode" in C:\xampp\htdocs\Space\pages\student\moodtracker.php on line 794
+[25-Nov-2024 19:28:52 Europe/Berlin] PHP Warning:  Undefined array key "srcode" in C:\xampp\htdocs\Space\pages\student\moodtracker.php on line 837
+[25-Nov-2024 19:28:52 Europe/Berlin] PHP Warning:  Undefined array key "srcode" in C:\xampp\htdocs\Space\pages\student\moodtracker.php on line 854
+[25-Nov-2024 19:28:52 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\Space\pages\student\moodtracker.php:66
+Stack trace:
+#0 C:\xampp\htdocs\Space\pages\student\moodtracker.php(854): getMoodHistory(NULL)
+#1 {main}
+  thrown in C:\xampp\htdocs\Space\pages\student\moodtracker.php on line 66
+[25-Nov-2024 21:35:58 Europe/Berlin] Error fetching profile picture: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'space.profile_pictures' doesn't exist
+[25-Nov-2024 21:35:58 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 32
+[25-Nov-2024 21:35:59 Europe/Berlin] Error fetching profile picture: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'space.profile_pictures' doesn't exist
+[25-Nov-2024 21:35:59 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 32
+[25-Nov-2024 21:36:01 Europe/Berlin] Error fetching profile picture: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'space.profile_pictures' doesn't exist
+[25-Nov-2024 21:36:01 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 32
+[25-Nov-2024 21:36:01 Europe/Berlin] Error fetching profile picture: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'space.profile_pictures' doesn't exist
+[25-Nov-2024 21:36:01 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 32
+[25-Nov-2024 21:36:11 Europe/Berlin] 
+=== New Upload Request (2024-11-25 21:36:11) ===
+[25-Nov-2024 21:36:11 Europe/Berlin] Remote IP: ::1
+[25-Nov-2024 21:36:11 Europe/Berlin] User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36
+[25-Nov-2024 21:36:11 Europe/Berlin] Session Data: Array
+(
+    [user_id] => 2236914
+    [srcode] => 2236914
+    [firstname] => Jeon
+    [lastname] => Jungkook
+    [role] => student
+    [session_log_id] => 5
+)
+
+[25-Nov-2024 21:36:11 Europe/Berlin] POST Data: Array
+(
+)
+
+[25-Nov-2024 21:36:11 Europe/Berlin] FILES Data: Array
+(
+    [profile_picture] => Array
+        (
+            [name] => tumblr_c1f8849fefffd8f2c54220cd48ff5469_c61b20d6_500.png
+            [full_path] => tumblr_c1f8849fefffd8f2c54220cd48ff5469_c61b20d6_500.png
+            [type] => image/png
+            [tmp_name] => C:\xampp\tmp\php9A30.tmp
+            [error] => 0
+            [size] => 87392
+        )
+
+)
+
+[25-Nov-2024 21:36:11 Europe/Berlin] Loading required files...
+[25-Nov-2024 21:36:11 Europe/Berlin] Required files loaded successfully
+[25-Nov-2024 21:36:11 Europe/Berlin] Session validated successfully
+[25-Nov-2024 21:36:11 Europe/Berlin] File details: Array
+(
+    [name] => tumblr_c1f8849fefffd8f2c54220cd48ff5469_c61b20d6_500.png
+    [full_path] => tumblr_c1f8849fefffd8f2c54220cd48ff5469_c61b20d6_500.png
+    [type] => image/png
+    [tmp_name] => C:\xampp\tmp\php9A30.tmp
+    [error] => 0
+    [size] => 87392
+)
+
+[25-Nov-2024 21:36:11 Europe/Berlin] Reading file data...
+[25-Nov-2024 21:36:11 Europe/Berlin] File data read successfully. Size: 87392 bytes
+[25-Nov-2024 21:36:11 Europe/Berlin] Starting database transaction...
+[25-Nov-2024 21:36:11 Europe/Berlin] Deactivating old profile pictures...
+[25-Nov-2024 21:36:11 Europe/Berlin] Transaction error occurred: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'space.profile_pictures' doesn't exist
+[25-Nov-2024 21:36:11 Europe/Berlin] Stack trace: #0 C:\xampp\htdocs\Space\admin_operations\update_profile_picture.php(108): PDOStatement->execute(Array)
+#1 {main}
+[25-Nov-2024 21:36:11 Europe/Berlin] Rolling back transaction
+[25-Nov-2024 21:36:11 Europe/Berlin] Fatal error occurred: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'space.profile_pictures' doesn't exist
+[25-Nov-2024 21:36:11 Europe/Berlin] Stack trace: #0 C:\xampp\htdocs\Space\admin_operations\update_profile_picture.php(108): PDOStatement->execute(Array)
+#1 {main}
+[25-Nov-2024 21:36:11 Europe/Berlin] Sending error response: {"status":"error","message":"Failed to update profile picture: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'space.profile_pictures' doesn't exist","debug_info":{"file":"C:\\xampp\\htdocs\\Space\\admin_operations\\update_profile_picture.php","line":108}}
+[25-Nov-2024 21:36:11 Europe/Berlin] === Request Complete (2024-11-25 21:36:11) ===
+
+[25-Nov-2024 21:42:16 Europe/Berlin] Error fetching profile picture: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'upload_date' in 'order clause'
+[25-Nov-2024 21:42:16 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 32
+[25-Nov-2024 21:42:18 Europe/Berlin] Error fetching profile picture: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'upload_date' in 'order clause'
+[25-Nov-2024 21:42:18 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 32
+[25-Nov-2024 21:43:27 Europe/Berlin] Error fetching profile picture: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'upload_date' in 'order clause'
+[25-Nov-2024 21:43:27 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 32
+[25-Nov-2024 21:43:27 Europe/Berlin] Error fetching profile picture: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'upload_date' in 'order clause'
+[25-Nov-2024 21:43:27 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 32
+[25-Nov-2024 21:43:34 Europe/Berlin] 
+=== New Upload Request (2024-11-25 21:43:34) ===
+[25-Nov-2024 21:43:34 Europe/Berlin] Remote IP: ::1
+[25-Nov-2024 21:43:34 Europe/Berlin] User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36
+[25-Nov-2024 21:43:34 Europe/Berlin] Session Data: Array
+(
+    [user_id] => 2236914
+    [srcode] => 2236914
+    [firstname] => Jeon
+    [lastname] => Jungkook
+    [role] => student
+    [session_log_id] => 5
+)
+
+[25-Nov-2024 21:43:34 Europe/Berlin] POST Data: Array
+(
+)
+
+[25-Nov-2024 21:43:34 Europe/Berlin] FILES Data: Array
+(
+    [profile_picture] => Array
+        (
+            [name] => tumblr_c1f8849fefffd8f2c54220cd48ff5469_c61b20d6_500.png
+            [full_path] => tumblr_c1f8849fefffd8f2c54220cd48ff5469_c61b20d6_500.png
+            [type] => image/png
+            [tmp_name] => C:\xampp\tmp\php5A67.tmp
+            [error] => 0
+            [size] => 87392
+        )
+
+)
+
+[25-Nov-2024 21:43:34 Europe/Berlin] Loading required files...
+[25-Nov-2024 21:43:34 Europe/Berlin] Required files loaded successfully
+[25-Nov-2024 21:43:34 Europe/Berlin] Session validated successfully
+[25-Nov-2024 21:43:34 Europe/Berlin] File details: Array
+(
+    [name] => tumblr_c1f8849fefffd8f2c54220cd48ff5469_c61b20d6_500.png
+    [full_path] => tumblr_c1f8849fefffd8f2c54220cd48ff5469_c61b20d6_500.png
+    [type] => image/png
+    [tmp_name] => C:\xampp\tmp\php5A67.tmp
+    [error] => 0
+    [size] => 87392
+)
+
+[25-Nov-2024 21:43:34 Europe/Berlin] Reading file data...
+[25-Nov-2024 21:43:34 Europe/Berlin] File data read successfully. Size: 87392 bytes
+[25-Nov-2024 21:43:34 Europe/Berlin] Starting database transaction...
+[25-Nov-2024 21:43:34 Europe/Berlin] Deactivating old profile pictures...
+[25-Nov-2024 21:43:34 Europe/Berlin] Old pictures deactivated successfully
+[25-Nov-2024 21:43:34 Europe/Berlin] Inserting new profile picture...
+[25-Nov-2024 21:43:34 Europe/Berlin] New picture inserted successfully
+[25-Nov-2024 21:43:34 Europe/Berlin] Initializing SessionLogger...
+[25-Nov-2024 21:43:34 Europe/Berlin] Processing user role: student, ID: 2236914
+[25-Nov-2024 21:43:34 Europe/Berlin] Attempting to log activity...
+[25-Nov-2024 21:43:34 Europe/Berlin] SR Code: 2236914
+[25-Nov-2024 21:43:34 Europe/Berlin] Therapist ID: null
+[25-Nov-2024 21:43:34 Europe/Berlin] Admin ID: null
+[25-Nov-2024 21:43:34 Europe/Berlin] Description: Profile picture updated: tumblr_c1f8849fefffd8f2c54220cd48ff5469_c61b20d6_500.png (Type: image/png, Size: 87392 bytes)
+[25-Nov-2024 21:43:34 Europe/Berlin] === Activity Logging Start ===
+[25-Nov-2024 21:43:34 Europe/Berlin] SR Code: 2236914
+[25-Nov-2024 21:43:34 Europe/Berlin] Therapist ID: null
+[25-Nov-2024 21:43:34 Europe/Berlin] Admin ID: null
+[25-Nov-2024 21:43:34 Europe/Berlin] Action: UPDATE_PROFILE_PICTURE
+[25-Nov-2024 21:43:34 Europe/Berlin] Action Details: Profile picture updated: tumblr_c1f8849fefffd8f2c54220cd48ff5469_c61b20d6_500.png (Type: image/png, Size: 87392 bytes)
+[25-Nov-2024 21:43:34 Europe/Berlin] IP: ::1
+[25-Nov-2024 21:43:34 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[25-Nov-2024 21:43:34 Europe/Berlin] Activity log inserted successfully. ID: 8
+[25-Nov-2024 21:43:34 Europe/Berlin] === Activity Logging End ===
+[25-Nov-2024 21:43:34 Europe/Berlin] Activity logged successfully
+[25-Nov-2024 21:43:34 Europe/Berlin] Transaction committed successfully
+[25-Nov-2024 21:43:34 Europe/Berlin] Sending success response: {"status":"success","message":"Profile picture updated successfully"}
+[25-Nov-2024 21:43:34 Europe/Berlin] === Request Complete (2024-11-25 21:43:34) ===
+
+[25-Nov-2024 21:43:35 Europe/Berlin] Error fetching profile picture: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'upload_date' in 'order clause'
+[25-Nov-2024 21:43:35 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 32
+[25-Nov-2024 21:43:35 Europe/Berlin] Error fetching profile picture: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'upload_date' in 'order clause'
+[25-Nov-2024 21:43:35 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 32
+[25-Nov-2024 21:43:38 Europe/Berlin] Error fetching profile picture: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'upload_date' in 'order clause'
+[25-Nov-2024 21:43:38 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 32
+[25-Nov-2024 21:43:38 Europe/Berlin] Error fetching profile picture: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'upload_date' in 'order clause'
+[25-Nov-2024 21:43:38 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 32
+[25-Nov-2024 22:41:01 Europe/Berlin] PHP Warning:  Undefined array key "user_id" in C:\xampp\htdocs\Space\pages\student\account-settings.php on line 20
+[25-Nov-2024 22:41:01 Europe/Berlin] PHP Warning:  Undefined array key "user_id" in C:\xampp\htdocs\Space\pages\student\account-settings.php on line 82
+[25-Nov-2024 22:41:01 Europe/Berlin] PHP Warning:  Undefined array key "role" in C:\xampp\htdocs\Space\pages\student\account-settings.php on line 82
+[26-Nov-2024 03:40:32 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[26-Nov-2024 03:42:31 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[26-Nov-2024 03:42:32 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[26-Nov-2024 03:42:38 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[26-Nov-2024 03:42:39 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[26-Nov-2024 03:42:40 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[26-Nov-2024 03:43:11 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[26-Nov-2024 03:43:11 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[26-Nov-2024 03:43:42 Europe/Berlin] 
+=== New Upload Request (2024-11-26 03:43:42) ===
+[26-Nov-2024 03:43:42 Europe/Berlin] Remote IP: ::1
+[26-Nov-2024 03:43:42 Europe/Berlin] User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36
+[26-Nov-2024 03:43:42 Europe/Berlin] Session Data: Array
+(
+    [user_id] => 123456
+    [srcode] => 123456
+    [firstname] => Eli
+    [lastname] => Melorcia
+    [role] => student
+    [session_log_id] => 10
+)
+
+[26-Nov-2024 03:43:42 Europe/Berlin] POST Data: Array
+(
+)
+
+[26-Nov-2024 03:43:42 Europe/Berlin] FILES Data: Array
+(
+    [profile_picture] => Array
+        (
+            [name] => 467285205_899347749001853_8529674210567124513_n.jpg
+            [full_path] => 467285205_899347749001853_8529674210567124513_n.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\phpD997.tmp
+            [error] => 0
+            [size] => 34068
+        )
+
+)
+
+[26-Nov-2024 03:43:42 Europe/Berlin] Loading required files...
+[26-Nov-2024 03:43:42 Europe/Berlin] Required files loaded successfully
+[26-Nov-2024 03:43:42 Europe/Berlin] Session validated successfully
+[26-Nov-2024 03:43:42 Europe/Berlin] File details: Array
+(
+    [name] => 467285205_899347749001853_8529674210567124513_n.jpg
+    [full_path] => 467285205_899347749001853_8529674210567124513_n.jpg
+    [type] => image/jpeg
+    [tmp_name] => C:\xampp\tmp\phpD997.tmp
+    [error] => 0
+    [size] => 34068
+)
+
+[26-Nov-2024 03:43:42 Europe/Berlin] Reading file data...
+[26-Nov-2024 03:43:42 Europe/Berlin] File data read successfully. Size: 34068 bytes
+[26-Nov-2024 03:43:42 Europe/Berlin] Starting database transaction...
+[26-Nov-2024 03:43:42 Europe/Berlin] Deactivating old profile pictures...
+[26-Nov-2024 03:43:42 Europe/Berlin] Old pictures deactivated successfully
+[26-Nov-2024 03:43:42 Europe/Berlin] Inserting new profile picture...
+[26-Nov-2024 03:43:42 Europe/Berlin] New picture inserted successfully
+[26-Nov-2024 03:43:42 Europe/Berlin] Initializing SessionLogger...
+[26-Nov-2024 03:43:42 Europe/Berlin] Processing user role: student, ID: 123456
+[26-Nov-2024 03:43:42 Europe/Berlin] Attempting to log activity...
+[26-Nov-2024 03:43:42 Europe/Berlin] SR Code: 123456
+[26-Nov-2024 03:43:42 Europe/Berlin] Therapist ID: null
+[26-Nov-2024 03:43:42 Europe/Berlin] Admin ID: null
+[26-Nov-2024 03:43:42 Europe/Berlin] Description: Profile picture updated: 467285205_899347749001853_8529674210567124513_n.jpg (Type: image/jpeg, Size: 34068 bytes)
+[26-Nov-2024 03:43:42 Europe/Berlin] === Activity Logging Start ===
+[26-Nov-2024 03:43:42 Europe/Berlin] SR Code: 123456
+[26-Nov-2024 03:43:42 Europe/Berlin] Therapist ID: null
+[26-Nov-2024 03:43:42 Europe/Berlin] Admin ID: null
+[26-Nov-2024 03:43:42 Europe/Berlin] Action: UPDATE_PROFILE_PICTURE
+[26-Nov-2024 03:43:42 Europe/Berlin] Action Details: Profile picture updated: 467285205_899347749001853_8529674210567124513_n.jpg (Type: image/jpeg, Size: 34068 bytes)
+[26-Nov-2024 03:43:42 Europe/Berlin] IP: ::1
+[26-Nov-2024 03:43:42 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[26-Nov-2024 03:43:42 Europe/Berlin] Activity log inserted successfully. ID: 15
+[26-Nov-2024 03:43:42 Europe/Berlin] === Activity Logging End ===
+[26-Nov-2024 03:43:42 Europe/Berlin] Activity logged successfully
+[26-Nov-2024 03:43:42 Europe/Berlin] Transaction committed successfully
+[26-Nov-2024 03:43:42 Europe/Berlin] Sending success response: {"status":"success","message":"Profile picture updated successfully"}
+[26-Nov-2024 03:43:42 Europe/Berlin] === Request Complete (2024-11-26 03:43:42) ===
+
+[26-Nov-2024 03:54:39 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[26-Nov-2024 03:54:48 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[26-Nov-2024 03:54:48 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[26-Nov-2024 03:54:58 Europe/Berlin] 
+=== New Upload Request (2024-11-26 03:54:58) ===
+[26-Nov-2024 03:54:58 Europe/Berlin] Remote IP: ::1
+[26-Nov-2024 03:54:58 Europe/Berlin] User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 OPR/114.0.0.0
+[26-Nov-2024 03:54:58 Europe/Berlin] Session Data: Array
+(
+    [user_id] => 123456
+    [srcode] => 123456
+    [firstname] => Eli
+    [lastname] => Melorcia
+    [role] => student
+    [session_log_id] => 12
+)
+
+[26-Nov-2024 03:54:58 Europe/Berlin] POST Data: Array
+(
+)
+
+[26-Nov-2024 03:54:58 Europe/Berlin] FILES Data: Array
+(
+    [profile_picture] => Array
+        (
+            [name] => GMwu11wWIAA7TwB.jpg
+            [full_path] => GMwu11wWIAA7TwB.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php8155.tmp
+            [error] => 0
+            [size] => 51636
+        )
+
+)
+
+[26-Nov-2024 03:54:58 Europe/Berlin] Loading required files...
+[26-Nov-2024 03:54:58 Europe/Berlin] Required files loaded successfully
+[26-Nov-2024 03:54:58 Europe/Berlin] Session validated successfully
+[26-Nov-2024 03:54:58 Europe/Berlin] File details: Array
+(
+    [name] => GMwu11wWIAA7TwB.jpg
+    [full_path] => GMwu11wWIAA7TwB.jpg
+    [type] => image/jpeg
+    [tmp_name] => C:\xampp\tmp\php8155.tmp
+    [error] => 0
+    [size] => 51636
+)
+
+[26-Nov-2024 03:54:58 Europe/Berlin] Reading file data...
+[26-Nov-2024 03:54:58 Europe/Berlin] File data read successfully. Size: 51636 bytes
+[26-Nov-2024 03:54:58 Europe/Berlin] Starting database transaction...
+[26-Nov-2024 03:54:58 Europe/Berlin] Deactivating old profile pictures...
+[26-Nov-2024 03:54:58 Europe/Berlin] Old pictures deactivated successfully
+[26-Nov-2024 03:54:58 Europe/Berlin] Inserting new profile picture...
+[26-Nov-2024 03:54:58 Europe/Berlin] New picture inserted successfully
+[26-Nov-2024 03:54:58 Europe/Berlin] Initializing SessionLogger...
+[26-Nov-2024 03:54:58 Europe/Berlin] Processing user role: student, ID: 123456
+[26-Nov-2024 03:54:58 Europe/Berlin] Attempting to log activity...
+[26-Nov-2024 03:54:58 Europe/Berlin] SR Code: 123456
+[26-Nov-2024 03:54:58 Europe/Berlin] Therapist ID: null
+[26-Nov-2024 03:54:58 Europe/Berlin] Admin ID: null
+[26-Nov-2024 03:54:58 Europe/Berlin] Description: Profile picture updated: GMwu11wWIAA7TwB.jpg (Type: image/jpeg, Size: 51636 bytes)
+[26-Nov-2024 03:54:58 Europe/Berlin] === Activity Logging Start ===
+[26-Nov-2024 03:54:58 Europe/Berlin] SR Code: 123456
+[26-Nov-2024 03:54:58 Europe/Berlin] Therapist ID: null
+[26-Nov-2024 03:54:58 Europe/Berlin] Admin ID: null
+[26-Nov-2024 03:54:58 Europe/Berlin] Action: UPDATE_PROFILE_PICTURE
+[26-Nov-2024 03:54:58 Europe/Berlin] Action Details: Profile picture updated: GMwu11wWIAA7TwB.jpg (Type: image/jpeg, Size: 51636 bytes)
+[26-Nov-2024 03:54:58 Europe/Berlin] IP: ::1
+[26-Nov-2024 03:54:58 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[26-Nov-2024 03:54:58 Europe/Berlin] Activity log inserted successfully. ID: 17
+[26-Nov-2024 03:54:58 Europe/Berlin] === Activity Logging End ===
+[26-Nov-2024 03:54:58 Europe/Berlin] Activity logged successfully
+[26-Nov-2024 03:54:58 Europe/Berlin] Transaction committed successfully
+[26-Nov-2024 03:54:58 Europe/Berlin] Sending success response: {"status":"success","message":"Profile picture updated successfully"}
+[26-Nov-2024 03:54:58 Europe/Berlin] === Request Complete (2024-11-26 03:54:58) ===
+
+[26-Nov-2024 04:15:27 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[26-Nov-2024 04:18:42 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[26-Nov-2024 04:29:09 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[26-Nov-2024 04:34:45 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[26-Nov-2024 04:34:50 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[26-Nov-2024 04:34:52 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[26-Nov-2024 04:34:52 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[26-Nov-2024 04:35:01 Europe/Berlin] 
+=== New Upload Request (2024-11-26 04:35:01) ===
+[26-Nov-2024 04:35:01 Europe/Berlin] Remote IP: ::1
+[26-Nov-2024 04:35:01 Europe/Berlin] User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36
+[26-Nov-2024 04:35:01 Europe/Berlin] Session Data: Array
+(
+    [user_id] => 567890
+    [srcode] => 567890
+    [firstname] => Faith
+    [lastname] => Banares
+    [role] => student
+    [session_log_id] => 15
+)
+
+[26-Nov-2024 04:35:01 Europe/Berlin] POST Data: Array
+(
+)
+
+[26-Nov-2024 04:35:01 Europe/Berlin] FILES Data: Array
+(
+    [profile_picture] => Array
+        (
+            [name] => tumblr_c1f8849fefffd8f2c54220cd48ff5469_c61b20d6_500.png
+            [full_path] => tumblr_c1f8849fefffd8f2c54220cd48ff5469_c61b20d6_500.png
+            [type] => image/png
+            [tmp_name] => C:\xampp\tmp\php2AD5.tmp
+            [error] => 0
+            [size] => 87392
+        )
+
+)
+
+[26-Nov-2024 04:35:01 Europe/Berlin] Loading required files...
+[26-Nov-2024 04:35:01 Europe/Berlin] Required files loaded successfully
+[26-Nov-2024 04:35:01 Europe/Berlin] Session validated successfully
+[26-Nov-2024 04:35:01 Europe/Berlin] File details: Array
+(
+    [name] => tumblr_c1f8849fefffd8f2c54220cd48ff5469_c61b20d6_500.png
+    [full_path] => tumblr_c1f8849fefffd8f2c54220cd48ff5469_c61b20d6_500.png
+    [type] => image/png
+    [tmp_name] => C:\xampp\tmp\php2AD5.tmp
+    [error] => 0
+    [size] => 87392
+)
+
+[26-Nov-2024 04:35:01 Europe/Berlin] Reading file data...
+[26-Nov-2024 04:35:01 Europe/Berlin] File data read successfully. Size: 87392 bytes
+[26-Nov-2024 04:35:01 Europe/Berlin] Starting database transaction...
+[26-Nov-2024 04:35:01 Europe/Berlin] Deactivating old profile pictures...
+[26-Nov-2024 04:35:01 Europe/Berlin] Old pictures deactivated successfully
+[26-Nov-2024 04:35:01 Europe/Berlin] Inserting new profile picture...
+[26-Nov-2024 04:35:01 Europe/Berlin] New picture inserted successfully
+[26-Nov-2024 04:35:01 Europe/Berlin] Initializing SessionLogger...
+[26-Nov-2024 04:35:01 Europe/Berlin] Processing user role: student, ID: 567890
+[26-Nov-2024 04:35:01 Europe/Berlin] Attempting to log activity...
+[26-Nov-2024 04:35:01 Europe/Berlin] SR Code: 567890
+[26-Nov-2024 04:35:01 Europe/Berlin] Therapist ID: null
+[26-Nov-2024 04:35:01 Europe/Berlin] Admin ID: null
+[26-Nov-2024 04:35:01 Europe/Berlin] Description: Profile picture updated: tumblr_c1f8849fefffd8f2c54220cd48ff5469_c61b20d6_500.png (Type: image/png, Size: 87392 bytes)
+[26-Nov-2024 04:35:01 Europe/Berlin] === Activity Logging Start ===
+[26-Nov-2024 04:35:01 Europe/Berlin] SR Code: 567890
+[26-Nov-2024 04:35:01 Europe/Berlin] Therapist ID: null
+[26-Nov-2024 04:35:01 Europe/Berlin] Admin ID: null
+[26-Nov-2024 04:35:01 Europe/Berlin] Action: UPDATE_PROFILE_PICTURE
+[26-Nov-2024 04:35:01 Europe/Berlin] Action Details: Profile picture updated: tumblr_c1f8849fefffd8f2c54220cd48ff5469_c61b20d6_500.png (Type: image/png, Size: 87392 bytes)
+[26-Nov-2024 04:35:01 Europe/Berlin] IP: ::1
+[26-Nov-2024 04:35:01 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[26-Nov-2024 04:35:01 Europe/Berlin] Activity log inserted successfully. ID: 27
+[26-Nov-2024 04:35:01 Europe/Berlin] === Activity Logging End ===
+[26-Nov-2024 04:35:01 Europe/Berlin] Activity logged successfully
+[26-Nov-2024 04:35:01 Europe/Berlin] Transaction committed successfully
+[26-Nov-2024 04:35:01 Europe/Berlin] Sending success response: {"status":"success","message":"Profile picture updated successfully"}
+[26-Nov-2024 04:35:01 Europe/Berlin] === Request Complete (2024-11-26 04:35:01) ===
+
+[26-Nov-2024 04:47:03 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 567890
+    [firstname] => Red
+    [lastname] => Lipstick
+    [phonenum] => 09215942638
+    [email] => 567890@g.batstate-u.edu.ph
+    [course] => 
+    [year] => 
+    [section] => 
+    [department] => 
+    [personality] => 
+    [address] => 
+)
+
+[26-Nov-2024 04:47:03 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Red
+    [lastname] => Lipstick
+    [phonenum] => 09215942638
+    [email] => 567890@g.batstate-u.edu.ph
+    [department] => 
+    [course] => 
+    [year] => 
+    [section] => 
+    [address] => 
+    [personality] => 
+    [srcode] => 567890
+)
+
+[26-Nov-2024 04:47:03 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Red
+    [:lastname] => Lipstick
+    [:phonenum] => 09215942638
+    [:email] => 567890@g.batstate-u.edu.ph
+    [:department] => 
+    [:course] => 
+    [:year] => 
+    [:section] => 
+    [:address] => 
+    [:personality] => 
+    [:srcode] => 567890
+)
+
+[26-Nov-2024 04:47:03 Europe/Berlin] Update result: true, Rows affected: 1
+[26-Nov-2024 04:47:03 Europe/Berlin] === Activity Logging Start ===
+[26-Nov-2024 04:47:03 Europe/Berlin] SR Code: 567890
+[26-Nov-2024 04:47:03 Europe/Berlin] Therapist ID: null
+[26-Nov-2024 04:47:03 Europe/Berlin] Admin ID: null
+[26-Nov-2024 04:47:03 Europe/Berlin] Action: Updated Profile
+[26-Nov-2024 04:47:03 Europe/Berlin] Action Details: Profile information updated
+[26-Nov-2024 04:47:03 Europe/Berlin] IP: ::1
+[26-Nov-2024 04:47:03 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[26-Nov-2024 04:47:03 Europe/Berlin] Activity log inserted successfully. ID: 28
+[26-Nov-2024 04:47:03 Europe/Berlin] === Activity Logging End ===
+[26-Nov-2024 04:47:15 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 567890
+    [firstname] => Red
+    [lastname] => Lipstick
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.ph
+    [course] => 
+    [year] => 
+    [section] => 
+    [department] => 
+    [personality] => 
+    [address] => 
+)
+
+[26-Nov-2024 04:47:15 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Red
+    [lastname] => Lipstick
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.ph
+    [department] => 
+    [course] => 
+    [year] => 
+    [section] => 
+    [address] => 
+    [personality] => 
+    [srcode] => 567890
+)
+
+[26-Nov-2024 04:47:15 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Red
+    [:lastname] => Lipstick
+    [:phonenum] => 09215942630
+    [:email] => 567890@g.batstate-u.edu.ph
+    [:department] => 
+    [:course] => 
+    [:year] => 
+    [:section] => 
+    [:address] => 
+    [:personality] => 
+    [:srcode] => 567890
+)
+
+[26-Nov-2024 04:47:15 Europe/Berlin] Update result: true, Rows affected: 1
+[26-Nov-2024 04:47:15 Europe/Berlin] === Activity Logging Start ===
+[26-Nov-2024 04:47:15 Europe/Berlin] SR Code: 567890
+[26-Nov-2024 04:47:15 Europe/Berlin] Therapist ID: null
+[26-Nov-2024 04:47:15 Europe/Berlin] Admin ID: null
+[26-Nov-2024 04:47:15 Europe/Berlin] Action: Updated Profile
+[26-Nov-2024 04:47:15 Europe/Berlin] Action Details: Profile information updated
+[26-Nov-2024 04:47:15 Europe/Berlin] IP: ::1
+[26-Nov-2024 04:47:15 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[26-Nov-2024 04:47:15 Europe/Berlin] Activity log inserted successfully. ID: 30
+[26-Nov-2024 04:47:15 Europe/Berlin] === Activity Logging End ===
+[26-Nov-2024 04:47:23 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 567890
+    [firstname] => Red
+    [lastname] => Lipstick
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.ph
+    [course] => BSIT
+    [year] => 
+    [section] => 
+    [department] => 
+    [personality] => 
+    [address] => 
+)
+
+[26-Nov-2024 04:47:23 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Red
+    [lastname] => Lipstick
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.ph
+    [department] => 
+    [course] => BSIT
+    [year] => 
+    [section] => 
+    [address] => 
+    [personality] => 
+    [srcode] => 567890
+)
+
+[26-Nov-2024 04:47:23 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Red
+    [:lastname] => Lipstick
+    [:phonenum] => 09215942630
+    [:email] => 567890@g.batstate-u.edu.ph
+    [:department] => 
+    [:course] => BSIT
+    [:year] => 
+    [:section] => 
+    [:address] => 
+    [:personality] => 
+    [:srcode] => 567890
+)
+
+[26-Nov-2024 04:47:23 Europe/Berlin] Update result: true, Rows affected: 1
+[26-Nov-2024 04:47:23 Europe/Berlin] === Activity Logging Start ===
+[26-Nov-2024 04:47:23 Europe/Berlin] SR Code: 567890
+[26-Nov-2024 04:47:23 Europe/Berlin] Therapist ID: null
+[26-Nov-2024 04:47:23 Europe/Berlin] Admin ID: null
+[26-Nov-2024 04:47:23 Europe/Berlin] Action: Updated Profile
+[26-Nov-2024 04:47:23 Europe/Berlin] Action Details: Profile information updated
+[26-Nov-2024 04:47:23 Europe/Berlin] IP: ::1
+[26-Nov-2024 04:47:23 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[26-Nov-2024 04:47:23 Europe/Berlin] Activity log inserted successfully. ID: 32
+[26-Nov-2024 04:47:23 Europe/Berlin] === Activity Logging End ===
+[26-Nov-2024 04:51:17 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 567890
+    [firstname] => Paimon
+    [lastname] => Lipstick
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.ph
+    [course] => BSIT
+    [year] => 
+    [section] => 
+    [department] => 
+    [personality] => 
+    [address] => 
+)
+
+[26-Nov-2024 04:51:17 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Paimon
+    [lastname] => Lipstick
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.ph
+    [department] => 
+    [course] => BSIT
+    [year] => 
+    [section] => 
+    [address] => 
+    [personality] => 
+    [srcode] => 567890
+)
+
+[26-Nov-2024 04:51:17 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Paimon
+    [:lastname] => Lipstick
+    [:phonenum] => 09215942630
+    [:email] => 567890@g.batstate-u.edu.ph
+    [:department] => 
+    [:course] => BSIT
+    [:year] => 
+    [:section] => 
+    [:address] => 
+    [:personality] => 
+    [:srcode] => 567890
+)
+
+[26-Nov-2024 04:51:17 Europe/Berlin] Update result: true, Rows affected: 1
+[26-Nov-2024 04:51:17 Europe/Berlin] === Activity Logging Start ===
+[26-Nov-2024 04:51:17 Europe/Berlin] SR Code: 567890
+[26-Nov-2024 04:51:17 Europe/Berlin] Therapist ID: null
+[26-Nov-2024 04:51:17 Europe/Berlin] Admin ID: null
+[26-Nov-2024 04:51:17 Europe/Berlin] Action: Updated Profile
+[26-Nov-2024 04:51:17 Europe/Berlin] Action Details: Profile information updated
+[26-Nov-2024 04:51:17 Europe/Berlin] IP: ::1
+[26-Nov-2024 04:51:17 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[26-Nov-2024 04:51:17 Europe/Berlin] Activity log inserted successfully. ID: 34
+[26-Nov-2024 04:51:17 Europe/Berlin] === Activity Logging End ===
+[26-Nov-2024 04:51:24 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 567890
+    [firstname] => Paimon
+    [lastname] => Lipstick
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.p
+    [course] => BSIT
+    [year] => 
+    [section] => 
+    [department] => 
+    [personality] => 
+    [address] => 
+)
+
+[26-Nov-2024 04:51:24 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Paimon
+    [lastname] => Lipstick
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.p
+    [department] => 
+    [course] => BSIT
+    [year] => 
+    [section] => 
+    [address] => 
+    [personality] => 
+    [srcode] => 567890
+)
+
+[26-Nov-2024 04:51:24 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Paimon
+    [:lastname] => Lipstick
+    [:phonenum] => 09215942630
+    [:email] => 567890@g.batstate-u.edu.p
+    [:department] => 
+    [:course] => BSIT
+    [:year] => 
+    [:section] => 
+    [:address] => 
+    [:personality] => 
+    [:srcode] => 567890
+)
+
+[26-Nov-2024 04:51:24 Europe/Berlin] Update result: true, Rows affected: 1
+[26-Nov-2024 04:51:24 Europe/Berlin] === Activity Logging Start ===
+[26-Nov-2024 04:51:24 Europe/Berlin] SR Code: 567890
+[26-Nov-2024 04:51:24 Europe/Berlin] Therapist ID: null
+[26-Nov-2024 04:51:24 Europe/Berlin] Admin ID: null
+[26-Nov-2024 04:51:24 Europe/Berlin] Action: Updated Profile
+[26-Nov-2024 04:51:24 Europe/Berlin] Action Details: Profile information updated
+[26-Nov-2024 04:51:24 Europe/Berlin] IP: ::1
+[26-Nov-2024 04:51:24 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[26-Nov-2024 04:51:24 Europe/Berlin] Activity log inserted successfully. ID: 36
+[26-Nov-2024 04:51:24 Europe/Berlin] === Activity Logging End ===
+[26-Nov-2024 04:51:33 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 567890
+    [firstname] => Paimon
+    [lastname] => Lipstick
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.ph
+    [course] => BSIT
+    [year] => 
+    [section] => 
+    [department] => 
+    [personality] => 
+    [address] => 
+)
+
+[26-Nov-2024 04:51:33 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Paimon
+    [lastname] => Lipstick
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.ph
+    [department] => 
+    [course] => BSIT
+    [year] => 
+    [section] => 
+    [address] => 
+    [personality] => 
+    [srcode] => 567890
+)
+
+[26-Nov-2024 04:51:33 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Paimon
+    [:lastname] => Lipstick
+    [:phonenum] => 09215942630
+    [:email] => 567890@g.batstate-u.edu.ph
+    [:department] => 
+    [:course] => BSIT
+    [:year] => 
+    [:section] => 
+    [:address] => 
+    [:personality] => 
+    [:srcode] => 567890
+)
+
+[26-Nov-2024 04:51:33 Europe/Berlin] Update result: true, Rows affected: 1
+[26-Nov-2024 04:51:33 Europe/Berlin] === Activity Logging Start ===
+[26-Nov-2024 04:51:33 Europe/Berlin] SR Code: 567890
+[26-Nov-2024 04:51:33 Europe/Berlin] Therapist ID: null
+[26-Nov-2024 04:51:33 Europe/Berlin] Admin ID: null
+[26-Nov-2024 04:51:33 Europe/Berlin] Action: Updated Profile
+[26-Nov-2024 04:51:33 Europe/Berlin] Action Details: Profile information updated
+[26-Nov-2024 04:51:33 Europe/Berlin] IP: ::1
+[26-Nov-2024 04:51:33 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[26-Nov-2024 04:51:33 Europe/Berlin] Activity log inserted successfully. ID: 38
+[26-Nov-2024 04:51:33 Europe/Berlin] === Activity Logging End ===
+[26-Nov-2024 04:51:37 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 567890
+    [firstname] => Paimon
+    [lastname] => Lipstick
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.p
+    [course] => BSIT
+    [year] => 
+    [section] => 
+    [department] => 
+    [personality] => 
+    [address] => 
+)
+
+[26-Nov-2024 04:51:37 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Paimon
+    [lastname] => Lipstick
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.p
+    [department] => 
+    [course] => BSIT
+    [year] => 
+    [section] => 
+    [address] => 
+    [personality] => 
+    [srcode] => 567890
+)
+
+[26-Nov-2024 04:51:37 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Paimon
+    [:lastname] => Lipstick
+    [:phonenum] => 09215942630
+    [:email] => 567890@g.batstate-u.edu.p
+    [:department] => 
+    [:course] => BSIT
+    [:year] => 
+    [:section] => 
+    [:address] => 
+    [:personality] => 
+    [:srcode] => 567890
+)
+
+[26-Nov-2024 04:51:37 Europe/Berlin] Update result: true, Rows affected: 1
+[26-Nov-2024 04:51:37 Europe/Berlin] === Activity Logging Start ===
+[26-Nov-2024 04:51:37 Europe/Berlin] SR Code: 567890
+[26-Nov-2024 04:51:37 Europe/Berlin] Therapist ID: null
+[26-Nov-2024 04:51:37 Europe/Berlin] Admin ID: null
+[26-Nov-2024 04:51:37 Europe/Berlin] Action: Updated Profile
+[26-Nov-2024 04:51:37 Europe/Berlin] Action Details: Profile information updated
+[26-Nov-2024 04:51:37 Europe/Berlin] IP: ::1
+[26-Nov-2024 04:51:37 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[26-Nov-2024 04:51:37 Europe/Berlin] Activity log inserted successfully. ID: 40
+[26-Nov-2024 04:51:37 Europe/Berlin] === Activity Logging End ===
+[26-Nov-2024 04:51:41 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 567890
+    [firstname] => Paimon
+    [lastname] => Lipstick
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.ph
+    [course] => BSIT
+    [year] => 
+    [section] => 
+    [department] => 
+    [personality] => 
+    [address] => 
+)
+
+[26-Nov-2024 04:51:41 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Paimon
+    [lastname] => Lipstick
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.ph
+    [department] => 
+    [course] => BSIT
+    [year] => 
+    [section] => 
+    [address] => 
+    [personality] => 
+    [srcode] => 567890
+)
+
+[26-Nov-2024 04:51:41 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Paimon
+    [:lastname] => Lipstick
+    [:phonenum] => 09215942630
+    [:email] => 567890@g.batstate-u.edu.ph
+    [:department] => 
+    [:course] => BSIT
+    [:year] => 
+    [:section] => 
+    [:address] => 
+    [:personality] => 
+    [:srcode] => 567890
+)
+
+[26-Nov-2024 04:51:41 Europe/Berlin] Update result: true, Rows affected: 1
+[26-Nov-2024 04:51:41 Europe/Berlin] === Activity Logging Start ===
+[26-Nov-2024 04:51:41 Europe/Berlin] SR Code: 567890
+[26-Nov-2024 04:51:41 Europe/Berlin] Therapist ID: null
+[26-Nov-2024 04:51:41 Europe/Berlin] Admin ID: null
+[26-Nov-2024 04:51:41 Europe/Berlin] Action: Updated Profile
+[26-Nov-2024 04:51:41 Europe/Berlin] Action Details: Profile information updated
+[26-Nov-2024 04:51:41 Europe/Berlin] IP: ::1
+[26-Nov-2024 04:51:41 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[26-Nov-2024 04:51:41 Europe/Berlin] Activity log inserted successfully. ID: 42
+[26-Nov-2024 04:51:41 Europe/Berlin] === Activity Logging End ===
+[26-Nov-2024 04:53:13 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 567890
+    [firstname] => Red
+    [lastname] => Lipstick
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.ph
+    [course] => BSIT
+    [year] => 
+    [section] => 
+    [department] => 
+    [personality] => 
+    [address] => 
+)
+
+[26-Nov-2024 04:53:13 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Red
+    [lastname] => Lipstick
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.ph
+    [department] => 
+    [course] => BSIT
+    [year] => 
+    [section] => 
+    [address] => 
+    [personality] => 
+    [srcode] => 567890
+)
+
+[26-Nov-2024 04:53:13 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Red
+    [:lastname] => Lipstick
+    [:phonenum] => 09215942630
+    [:email] => 567890@g.batstate-u.edu.ph
+    [:department] => 
+    [:course] => BSIT
+    [:year] => 
+    [:section] => 
+    [:address] => 
+    [:personality] => 
+    [:srcode] => 567890
+)
+
+[26-Nov-2024 04:53:13 Europe/Berlin] Update result: true, Rows affected: 1
+[26-Nov-2024 04:53:13 Europe/Berlin] === Activity Logging Start ===
+[26-Nov-2024 04:53:13 Europe/Berlin] SR Code: 567890
+[26-Nov-2024 04:53:13 Europe/Berlin] Therapist ID: null
+[26-Nov-2024 04:53:13 Europe/Berlin] Admin ID: null
+[26-Nov-2024 04:53:13 Europe/Berlin] Action: Updated Profile
+[26-Nov-2024 04:53:13 Europe/Berlin] Action Details: Profile information updated
+[26-Nov-2024 04:53:13 Europe/Berlin] IP: ::1
+[26-Nov-2024 04:53:13 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[26-Nov-2024 04:53:13 Europe/Berlin] Activity log inserted successfully. ID: 44
+[26-Nov-2024 04:53:13 Europe/Berlin] === Activity Logging End ===
+[26-Nov-2024 04:53:20 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 567890
+    [firstname] => Redpaimon
+    [lastname] => Lipstick
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.ph
+    [course] => BSIT
+    [year] => 
+    [section] => 
+    [department] => 
+    [personality] => 
+    [address] => 
+)
+
+[26-Nov-2024 04:53:20 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Redpaimon
+    [lastname] => Lipstick
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.ph
+    [department] => 
+    [course] => BSIT
+    [year] => 
+    [section] => 
+    [address] => 
+    [personality] => 
+    [srcode] => 567890
+)
+
+[26-Nov-2024 04:53:20 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Redpaimon
+    [:lastname] => Lipstick
+    [:phonenum] => 09215942630
+    [:email] => 567890@g.batstate-u.edu.ph
+    [:department] => 
+    [:course] => BSIT
+    [:year] => 
+    [:section] => 
+    [:address] => 
+    [:personality] => 
+    [:srcode] => 567890
+)
+
+[26-Nov-2024 04:53:20 Europe/Berlin] Update result: true, Rows affected: 1
+[26-Nov-2024 04:53:20 Europe/Berlin] === Activity Logging Start ===
+[26-Nov-2024 04:53:20 Europe/Berlin] SR Code: 567890
+[26-Nov-2024 04:53:20 Europe/Berlin] Therapist ID: null
+[26-Nov-2024 04:53:20 Europe/Berlin] Admin ID: null
+[26-Nov-2024 04:53:20 Europe/Berlin] Action: Updated Profile
+[26-Nov-2024 04:53:20 Europe/Berlin] Action Details: Profile information updated
+[26-Nov-2024 04:53:20 Europe/Berlin] IP: ::1
+[26-Nov-2024 04:53:20 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[26-Nov-2024 04:53:20 Europe/Berlin] Activity log inserted successfully. ID: 46
+[26-Nov-2024 04:53:20 Europe/Berlin] === Activity Logging End ===
+[26-Nov-2024 04:55:28 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 567890
+    [firstname] => Redpaimon
+    [lastname] => Neon
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.ph
+    [course] => BSIT
+    [year] => 
+    [section] => 
+    [department] => 
+    [personality] => 
+    [address] => 
+)
+
+[26-Nov-2024 04:55:28 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Redpaimon
+    [lastname] => Neon
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.ph
+    [department] => 
+    [course] => BSIT
+    [year] => 
+    [section] => 
+    [address] => 
+    [personality] => 
+    [srcode] => 567890
+)
+
+[26-Nov-2024 04:55:28 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Redpaimon
+    [:lastname] => Neon
+    [:phonenum] => 09215942630
+    [:email] => 567890@g.batstate-u.edu.ph
+    [:department] => 
+    [:course] => BSIT
+    [:year] => 
+    [:section] => 
+    [:address] => 
+    [:personality] => 
+    [:srcode] => 567890
+)
+
+[26-Nov-2024 04:55:28 Europe/Berlin] Update result: true, Rows affected: 1
+[26-Nov-2024 04:55:28 Europe/Berlin] === Activity Logging Start ===
+[26-Nov-2024 04:55:28 Europe/Berlin] SR Code: 567890
+[26-Nov-2024 04:55:28 Europe/Berlin] Therapist ID: null
+[26-Nov-2024 04:55:28 Europe/Berlin] Admin ID: null
+[26-Nov-2024 04:55:28 Europe/Berlin] Action: Updated Profile
+[26-Nov-2024 04:55:28 Europe/Berlin] Action Details: Profile information updated
+[26-Nov-2024 04:55:28 Europe/Berlin] IP: ::1
+[26-Nov-2024 04:55:28 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[26-Nov-2024 04:55:28 Europe/Berlin] Activity log inserted successfully. ID: 48
+[26-Nov-2024 04:55:28 Europe/Berlin] === Activity Logging End ===
+[26-Nov-2024 04:55:38 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 567890
+    [firstname] => Redpaimon
+    [lastname] => Neon
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.ph
+    [course] => BSIT
+    [year] => 
+    [section] => 
+    [department] => 
+    [personality] => 
+    [address] => 
+)
+
+[26-Nov-2024 04:55:38 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Redpaimon
+    [lastname] => Neon
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.ph
+    [department] => 
+    [course] => BSIT
+    [year] => 
+    [section] => 
+    [address] => 
+    [personality] => 
+    [srcode] => 567890
+)
+
+[26-Nov-2024 04:55:38 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Redpaimon
+    [:lastname] => Neon
+    [:phonenum] => 09215942630
+    [:email] => 567890@g.batstate-u.edu.ph
+    [:department] => 
+    [:course] => BSIT
+    [:year] => 
+    [:section] => 
+    [:address] => 
+    [:personality] => 
+    [:srcode] => 567890
+)
+
+[26-Nov-2024 04:55:38 Europe/Berlin] No rows were updated. SRCode might not exist: 567890
+[26-Nov-2024 04:55:38 Europe/Berlin] Error: Failed to update profile. Please check your input and try again.
+[26-Nov-2024 04:55:42 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 567890
+    [firstname] => Redpaimon
+    [lastname] => Neon
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.p
+    [course] => BSIT
+    [year] => 
+    [section] => 
+    [department] => 
+    [personality] => 
+    [address] => 
+)
+
+[26-Nov-2024 04:55:42 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Redpaimon
+    [lastname] => Neon
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.p
+    [department] => 
+    [course] => BSIT
+    [year] => 
+    [section] => 
+    [address] => 
+    [personality] => 
+    [srcode] => 567890
+)
+
+[26-Nov-2024 04:55:42 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Redpaimon
+    [:lastname] => Neon
+    [:phonenum] => 09215942630
+    [:email] => 567890@g.batstate-u.edu.p
+    [:department] => 
+    [:course] => BSIT
+    [:year] => 
+    [:section] => 
+    [:address] => 
+    [:personality] => 
+    [:srcode] => 567890
+)
+
+[26-Nov-2024 04:55:42 Europe/Berlin] Update result: true, Rows affected: 1
+[26-Nov-2024 04:55:42 Europe/Berlin] === Activity Logging Start ===
+[26-Nov-2024 04:55:42 Europe/Berlin] SR Code: 567890
+[26-Nov-2024 04:55:42 Europe/Berlin] Therapist ID: null
+[26-Nov-2024 04:55:42 Europe/Berlin] Admin ID: null
+[26-Nov-2024 04:55:42 Europe/Berlin] Action: Updated Profile
+[26-Nov-2024 04:55:42 Europe/Berlin] Action Details: Profile information updated
+[26-Nov-2024 04:55:42 Europe/Berlin] IP: ::1
+[26-Nov-2024 04:55:42 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[26-Nov-2024 04:55:42 Europe/Berlin] Activity log inserted successfully. ID: 50
+[26-Nov-2024 04:55:42 Europe/Berlin] === Activity Logging End ===
+[26-Nov-2024 04:55:46 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 567890
+    [firstname] => Redpaimon
+    [lastname] => Neon
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.ph
+    [course] => BSIT
+    [year] => 
+    [section] => 
+    [department] => 
+    [personality] => 
+    [address] => 
+)
+
+[26-Nov-2024 04:55:46 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Redpaimon
+    [lastname] => Neon
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.ph
+    [department] => 
+    [course] => BSIT
+    [year] => 
+    [section] => 
+    [address] => 
+    [personality] => 
+    [srcode] => 567890
+)
+
+[26-Nov-2024 04:55:46 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Redpaimon
+    [:lastname] => Neon
+    [:phonenum] => 09215942630
+    [:email] => 567890@g.batstate-u.edu.ph
+    [:department] => 
+    [:course] => BSIT
+    [:year] => 
+    [:section] => 
+    [:address] => 
+    [:personality] => 
+    [:srcode] => 567890
+)
+
+[26-Nov-2024 04:55:46 Europe/Berlin] Update result: true, Rows affected: 1
+[26-Nov-2024 04:55:46 Europe/Berlin] === Activity Logging Start ===
+[26-Nov-2024 04:55:46 Europe/Berlin] SR Code: 567890
+[26-Nov-2024 04:55:46 Europe/Berlin] Therapist ID: null
+[26-Nov-2024 04:55:46 Europe/Berlin] Admin ID: null
+[26-Nov-2024 04:55:46 Europe/Berlin] Action: Updated Profile
+[26-Nov-2024 04:55:46 Europe/Berlin] Action Details: Profile information updated
+[26-Nov-2024 04:55:46 Europe/Berlin] IP: ::1
+[26-Nov-2024 04:55:46 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[26-Nov-2024 04:55:46 Europe/Berlin] Activity log inserted successfully. ID: 52
+[26-Nov-2024 04:55:46 Europe/Berlin] === Activity Logging End ===
+[26-Nov-2024 04:59:05 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 567890
+    [firstname] => Red
+    [lastname] => Neon
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.ph
+    [course] => BSIT
+    [year] => 
+    [section] => 
+    [department] => 
+    [personality] => 
+    [address] => 
+)
+
+[26-Nov-2024 04:59:05 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Red
+    [lastname] => Neon
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.ph
+    [department] => 
+    [course] => BSIT
+    [year] => 
+    [section] => 
+    [address] => 
+    [personality] => 
+    [srcode] => 567890
+)
+
+[26-Nov-2024 04:59:05 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Red
+    [:lastname] => Neon
+    [:phonenum] => 09215942630
+    [:email] => 567890@g.batstate-u.edu.ph
+    [:department] => 
+    [:course] => BSIT
+    [:year] => 
+    [:section] => 
+    [:address] => 
+    [:personality] => 
+    [:srcode] => 567890
+)
+
+[26-Nov-2024 04:59:05 Europe/Berlin] Update result: true, Rows affected: 1
+[26-Nov-2024 04:59:05 Europe/Berlin] === Activity Logging Start ===
+[26-Nov-2024 04:59:05 Europe/Berlin] SR Code: 567890
+[26-Nov-2024 04:59:05 Europe/Berlin] Therapist ID: null
+[26-Nov-2024 04:59:05 Europe/Berlin] Admin ID: null
+[26-Nov-2024 04:59:05 Europe/Berlin] Action: Updated Profile
+[26-Nov-2024 04:59:05 Europe/Berlin] Action Details: Profile information updated
+[26-Nov-2024 04:59:05 Europe/Berlin] IP: ::1
+[26-Nov-2024 04:59:05 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[26-Nov-2024 04:59:05 Europe/Berlin] Activity log inserted successfully. ID: 54
+[26-Nov-2024 04:59:05 Europe/Berlin] === Activity Logging End ===
+[26-Nov-2024 04:59:57 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 567890
+    [firstname] => Red
+    [lastname] => Paimon
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.ph
+    [course] => BSIT
+    [year] => 
+    [section] => 
+    [department] => 
+    [personality] => 
+    [address] => 
+)
+
+[26-Nov-2024 04:59:57 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Red
+    [lastname] => Paimon
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.ph
+    [department] => 
+    [course] => BSIT
+    [year] => 
+    [section] => 
+    [address] => 
+    [personality] => 
+    [srcode] => 567890
+)
+
+[26-Nov-2024 04:59:57 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Red
+    [:lastname] => Paimon
+    [:phonenum] => 09215942630
+    [:email] => 567890@g.batstate-u.edu.ph
+    [:department] => 
+    [:course] => BSIT
+    [:year] => 
+    [:section] => 
+    [:address] => 
+    [:personality] => 
+    [:srcode] => 567890
+)
+
+[26-Nov-2024 04:59:57 Europe/Berlin] Update result: true, Rows affected: 1
+[26-Nov-2024 04:59:57 Europe/Berlin] === Activity Logging Start ===
+[26-Nov-2024 04:59:57 Europe/Berlin] SR Code: 567890
+[26-Nov-2024 04:59:57 Europe/Berlin] Therapist ID: null
+[26-Nov-2024 04:59:57 Europe/Berlin] Admin ID: null
+[26-Nov-2024 04:59:57 Europe/Berlin] Action: Updated Profile
+[26-Nov-2024 04:59:57 Europe/Berlin] Action Details: Profile information updated
+[26-Nov-2024 04:59:57 Europe/Berlin] IP: ::1
+[26-Nov-2024 04:59:57 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[26-Nov-2024 04:59:57 Europe/Berlin] Activity log inserted successfully. ID: 58
+[26-Nov-2024 04:59:57 Europe/Berlin] === Activity Logging End ===
+[26-Nov-2024 05:00:47 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 567890
+    [firstname] => Red
+    [lastname] => Paimon
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.ph
+    [course] => BSIT
+    [year] => 4
+    [section] => 
+    [department] => 
+    [personality] => 
+    [address] => 
+)
+
+[26-Nov-2024 05:00:47 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Red
+    [lastname] => Paimon
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.ph
+    [department] => 
+    [course] => BSIT
+    [year] => 4
+    [section] => 
+    [address] => 
+    [personality] => 
+    [srcode] => 567890
+)
+
+[26-Nov-2024 05:00:47 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Red
+    [:lastname] => Paimon
+    [:phonenum] => 09215942630
+    [:email] => 567890@g.batstate-u.edu.ph
+    [:department] => 
+    [:course] => BSIT
+    [:year] => 4
+    [:section] => 
+    [:address] => 
+    [:personality] => 
+    [:srcode] => 567890
+)
+
+[26-Nov-2024 05:00:47 Europe/Berlin] Update result: true, Rows affected: 1
+[26-Nov-2024 05:00:47 Europe/Berlin] === Activity Logging Start ===
+[26-Nov-2024 05:00:47 Europe/Berlin] SR Code: 567890
+[26-Nov-2024 05:00:47 Europe/Berlin] Therapist ID: null
+[26-Nov-2024 05:00:47 Europe/Berlin] Admin ID: null
+[26-Nov-2024 05:00:47 Europe/Berlin] Action: Updated Profile
+[26-Nov-2024 05:00:47 Europe/Berlin] Action Details: Profile information updated
+[26-Nov-2024 05:00:47 Europe/Berlin] IP: ::1
+[26-Nov-2024 05:00:47 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[26-Nov-2024 05:00:47 Europe/Berlin] Activity log inserted successfully. ID: 60
+[26-Nov-2024 05:00:47 Europe/Berlin] === Activity Logging End ===
+[26-Nov-2024 05:01:36 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 567890
+    [firstname] => Hephep
+    [lastname] => Paimon
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.ph
+    [course] => BSIT
+    [year] => 4
+    [section] => 
+    [department] => 
+    [personality] => 
+    [address] => 
+)
+
+[26-Nov-2024 05:01:36 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Hephep
+    [lastname] => Paimon
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.ph
+    [department] => 
+    [course] => BSIT
+    [year] => 4
+    [section] => 
+    [address] => 
+    [personality] => 
+    [srcode] => 567890
+)
+
+[26-Nov-2024 05:01:36 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Hephep
+    [:lastname] => Paimon
+    [:phonenum] => 09215942630
+    [:email] => 567890@g.batstate-u.edu.ph
+    [:department] => 
+    [:course] => BSIT
+    [:year] => 4
+    [:section] => 
+    [:address] => 
+    [:personality] => 
+    [:srcode] => 567890
+)
+
+[26-Nov-2024 05:01:36 Europe/Berlin] Update result: true, Rows affected: 1
+[26-Nov-2024 05:01:36 Europe/Berlin] === Activity Logging Start ===
+[26-Nov-2024 05:01:36 Europe/Berlin] SR Code: 567890
+[26-Nov-2024 05:01:36 Europe/Berlin] Therapist ID: null
+[26-Nov-2024 05:01:36 Europe/Berlin] Admin ID: null
+[26-Nov-2024 05:01:36 Europe/Berlin] Action: Updated Profile
+[26-Nov-2024 05:01:36 Europe/Berlin] Action Details: Profile information updated
+[26-Nov-2024 05:01:36 Europe/Berlin] IP: ::1
+[26-Nov-2024 05:01:36 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[26-Nov-2024 05:01:36 Europe/Berlin] Activity log inserted successfully. ID: 62
+[26-Nov-2024 05:01:36 Europe/Berlin] === Activity Logging End ===
+[26-Nov-2024 05:01:47 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 567890
+    [firstname] => Hephep
+    [lastname] => Paimon
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.ph
+    [course] => BSIT
+    [year] => 4
+    [section] => paimon
+    [department] => 
+    [personality] => 
+    [address] => 
+)
+
+[26-Nov-2024 05:01:47 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Hephep
+    [lastname] => Paimon
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.ph
+    [department] => 
+    [course] => BSIT
+    [year] => 4
+    [section] => paimon
+    [address] => 
+    [personality] => 
+    [srcode] => 567890
+)
+
+[26-Nov-2024 05:01:47 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Hephep
+    [:lastname] => Paimon
+    [:phonenum] => 09215942630
+    [:email] => 567890@g.batstate-u.edu.ph
+    [:department] => 
+    [:course] => BSIT
+    [:year] => 4
+    [:section] => paimon
+    [:address] => 
+    [:personality] => 
+    [:srcode] => 567890
+)
+
+[26-Nov-2024 05:01:47 Europe/Berlin] Update result: true, Rows affected: 1
+[26-Nov-2024 05:01:47 Europe/Berlin] === Activity Logging Start ===
+[26-Nov-2024 05:01:47 Europe/Berlin] SR Code: 567890
+[26-Nov-2024 05:01:47 Europe/Berlin] Therapist ID: null
+[26-Nov-2024 05:01:47 Europe/Berlin] Admin ID: null
+[26-Nov-2024 05:01:47 Europe/Berlin] Action: Updated Profile
+[26-Nov-2024 05:01:47 Europe/Berlin] Action Details: Profile information updated
+[26-Nov-2024 05:01:47 Europe/Berlin] IP: ::1
+[26-Nov-2024 05:01:47 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[26-Nov-2024 05:01:47 Europe/Berlin] Activity log inserted successfully. ID: 64
+[26-Nov-2024 05:01:47 Europe/Berlin] === Activity Logging End ===
+[26-Nov-2024 05:05:52 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 567890
+    [firstname] => Hephep
+    [lastname] => Hooray
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.ph
+    [course] => BSIT
+    [year] => 4
+    [section] => paimon
+    [department] => 
+    [personality] => 
+    [address] => 
+)
+
+[26-Nov-2024 05:05:52 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Hephep
+    [lastname] => Hooray
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.ph
+    [department] => 
+    [course] => BSIT
+    [year] => 4
+    [section] => paimon
+    [address] => 
+    [personality] => 
+    [srcode] => 567890
+)
+
+[26-Nov-2024 05:05:52 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Hephep
+    [:lastname] => Hooray
+    [:phonenum] => 09215942630
+    [:email] => 567890@g.batstate-u.edu.ph
+    [:department] => 
+    [:course] => BSIT
+    [:year] => 4
+    [:section] => paimon
+    [:address] => 
+    [:personality] => 
+    [:srcode] => 567890
+)
+
+[26-Nov-2024 05:05:52 Europe/Berlin] Update result: true, Rows affected: 1
+[26-Nov-2024 05:05:52 Europe/Berlin] === Activity Logging Start ===
+[26-Nov-2024 05:05:52 Europe/Berlin] SR Code: 567890
+[26-Nov-2024 05:05:52 Europe/Berlin] Therapist ID: null
+[26-Nov-2024 05:05:52 Europe/Berlin] Admin ID: null
+[26-Nov-2024 05:05:52 Europe/Berlin] Action: Updated Profile
+[26-Nov-2024 05:05:52 Europe/Berlin] Action Details: Profile information updated
+[26-Nov-2024 05:05:52 Europe/Berlin] IP: ::1
+[26-Nov-2024 05:05:52 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[26-Nov-2024 05:05:52 Europe/Berlin] Activity log inserted successfully. ID: 66
+[26-Nov-2024 05:05:52 Europe/Berlin] === Activity Logging End ===
+[26-Nov-2024 05:06:05 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 567890
+    [firstname] => Hephep
+    [lastname] => Paimon
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.ph
+    [course] => BSIT
+    [year] => 4
+    [section] => paimon
+    [department] => 
+    [personality] => 
+    [address] => 
+)
+
+[26-Nov-2024 05:06:05 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Hephep
+    [lastname] => Paimon
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.ph
+    [department] => 
+    [course] => BSIT
+    [year] => 4
+    [section] => paimon
+    [address] => 
+    [personality] => 
+    [srcode] => 567890
+)
+
+[26-Nov-2024 05:06:05 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Hephep
+    [:lastname] => Paimon
+    [:phonenum] => 09215942630
+    [:email] => 567890@g.batstate-u.edu.ph
+    [:department] => 
+    [:course] => BSIT
+    [:year] => 4
+    [:section] => paimon
+    [:address] => 
+    [:personality] => 
+    [:srcode] => 567890
+)
+
+[26-Nov-2024 05:06:05 Europe/Berlin] Update result: true, Rows affected: 1
+[26-Nov-2024 05:06:05 Europe/Berlin] === Activity Logging Start ===
+[26-Nov-2024 05:06:05 Europe/Berlin] SR Code: 567890
+[26-Nov-2024 05:06:05 Europe/Berlin] Therapist ID: null
+[26-Nov-2024 05:06:05 Europe/Berlin] Admin ID: null
+[26-Nov-2024 05:06:05 Europe/Berlin] Action: Updated Profile
+[26-Nov-2024 05:06:05 Europe/Berlin] Action Details: Profile information updated
+[26-Nov-2024 05:06:05 Europe/Berlin] IP: ::1
+[26-Nov-2024 05:06:05 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[26-Nov-2024 05:06:05 Europe/Berlin] Activity log inserted successfully. ID: 68
+[26-Nov-2024 05:06:05 Europe/Berlin] === Activity Logging End ===
+[26-Nov-2024 05:07:57 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 567890
+    [firstname] => Red
+    [lastname] => Paimon
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.ph
+    [course] => BSIT
+    [year] => 4
+    [section] => paimon
+    [department] => 
+    [personality] => 
+    [address] => 
+)
+
+[26-Nov-2024 05:07:57 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Red
+    [lastname] => Paimon
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.ph
+    [department] => 
+    [course] => BSIT
+    [year] => 4
+    [section] => paimon
+    [address] => 
+    [personality] => 
+    [srcode] => 567890
+)
+
+[26-Nov-2024 05:07:57 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Red
+    [:lastname] => Paimon
+    [:phonenum] => 09215942630
+    [:email] => 567890@g.batstate-u.edu.ph
+    [:department] => 
+    [:course] => BSIT
+    [:year] => 4
+    [:section] => paimon
+    [:address] => 
+    [:personality] => 
+    [:srcode] => 567890
+)
+
+[26-Nov-2024 05:07:57 Europe/Berlin] Update result: true, Rows affected: 1
+[26-Nov-2024 05:07:57 Europe/Berlin] === Activity Logging Start ===
+[26-Nov-2024 05:07:57 Europe/Berlin] SR Code: 567890
+[26-Nov-2024 05:07:57 Europe/Berlin] Therapist ID: null
+[26-Nov-2024 05:07:57 Europe/Berlin] Admin ID: null
+[26-Nov-2024 05:07:57 Europe/Berlin] Action: Updated Profile
+[26-Nov-2024 05:07:57 Europe/Berlin] Action Details: Profile information updated
+[26-Nov-2024 05:07:57 Europe/Berlin] IP: ::1
+[26-Nov-2024 05:07:57 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[26-Nov-2024 05:07:57 Europe/Berlin] Activity log inserted successfully. ID: 70
+[26-Nov-2024 05:07:57 Europe/Berlin] === Activity Logging End ===
+[26-Nov-2024 05:10:08 Europe/Berlin] 
+=== New Upload Request (2024-11-26 05:10:08) ===
+[26-Nov-2024 05:10:08 Europe/Berlin] Remote IP: ::1
+[26-Nov-2024 05:10:08 Europe/Berlin] User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36
+[26-Nov-2024 05:10:08 Europe/Berlin] Session Data: Array
+(
+    [user_id] => 567890
+    [srcode] => 567890
+    [firstname] => Red
+    [lastname] => Paimon
+    [role] => student
+    [session_log_id] => 16
+)
+
+[26-Nov-2024 05:10:08 Europe/Berlin] POST Data: Array
+(
+)
+
+[26-Nov-2024 05:10:08 Europe/Berlin] FILES Data: Array
+(
+    [profile_picture] => Array
+        (
+            [name] => tumblr_c1f8849fefffd8f2c54220cd48ff5469_c61b20d6_500.png
+            [full_path] => tumblr_c1f8849fefffd8f2c54220cd48ff5469_c61b20d6_500.png
+            [type] => image/png
+            [tmp_name] => C:\xampp\tmp\php51DB.tmp
+            [error] => 0
+            [size] => 87392
+        )
+
+)
+
+[26-Nov-2024 05:10:08 Europe/Berlin] Loading required files...
+[26-Nov-2024 05:10:08 Europe/Berlin] Required files loaded successfully
+[26-Nov-2024 05:10:08 Europe/Berlin] Session validated successfully
+[26-Nov-2024 05:10:08 Europe/Berlin] File details: Array
+(
+    [name] => tumblr_c1f8849fefffd8f2c54220cd48ff5469_c61b20d6_500.png
+    [full_path] => tumblr_c1f8849fefffd8f2c54220cd48ff5469_c61b20d6_500.png
+    [type] => image/png
+    [tmp_name] => C:\xampp\tmp\php51DB.tmp
+    [error] => 0
+    [size] => 87392
+)
+
+[26-Nov-2024 05:10:08 Europe/Berlin] Reading file data...
+[26-Nov-2024 05:10:08 Europe/Berlin] File data read successfully. Size: 87392 bytes
+[26-Nov-2024 05:10:08 Europe/Berlin] Starting database transaction...
+[26-Nov-2024 05:10:08 Europe/Berlin] Deactivating old profile pictures...
+[26-Nov-2024 05:10:08 Europe/Berlin] Old pictures deactivated successfully
+[26-Nov-2024 05:10:08 Europe/Berlin] Inserting new profile picture...
+[26-Nov-2024 05:10:08 Europe/Berlin] New picture inserted successfully
+[26-Nov-2024 05:10:08 Europe/Berlin] Initializing SessionLogger...
+[26-Nov-2024 05:10:08 Europe/Berlin] Processing user role: student, ID: 567890
+[26-Nov-2024 05:10:08 Europe/Berlin] Attempting to log activity...
+[26-Nov-2024 05:10:08 Europe/Berlin] SR Code: 567890
+[26-Nov-2024 05:10:08 Europe/Berlin] Therapist ID: null
+[26-Nov-2024 05:10:08 Europe/Berlin] Admin ID: null
+[26-Nov-2024 05:10:08 Europe/Berlin] Description: Profile picture updated: tumblr_c1f8849fefffd8f2c54220cd48ff5469_c61b20d6_500.png (Type: image/png, Size: 87392 bytes)
+[26-Nov-2024 05:10:08 Europe/Berlin] === Activity Logging Start ===
+[26-Nov-2024 05:10:08 Europe/Berlin] SR Code: 567890
+[26-Nov-2024 05:10:08 Europe/Berlin] Therapist ID: null
+[26-Nov-2024 05:10:08 Europe/Berlin] Admin ID: null
+[26-Nov-2024 05:10:08 Europe/Berlin] Action: UPDATE_PROFILE_PICTURE
+[26-Nov-2024 05:10:08 Europe/Berlin] Action Details: Profile picture updated: tumblr_c1f8849fefffd8f2c54220cd48ff5469_c61b20d6_500.png (Type: image/png, Size: 87392 bytes)
+[26-Nov-2024 05:10:08 Europe/Berlin] IP: ::1
+[26-Nov-2024 05:10:08 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[26-Nov-2024 05:10:08 Europe/Berlin] Activity log inserted successfully. ID: 72
+[26-Nov-2024 05:10:08 Europe/Berlin] === Activity Logging End ===
+[26-Nov-2024 05:10:08 Europe/Berlin] Activity logged successfully
+[26-Nov-2024 05:10:08 Europe/Berlin] Transaction committed successfully
+[26-Nov-2024 05:10:08 Europe/Berlin] Sending success response: {"status":"success","message":"Profile picture updated successfully"}
+[26-Nov-2024 05:10:08 Europe/Berlin] === Request Complete (2024-11-26 05:10:08) ===
+
+[26-Nov-2024 05:10:16 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 567890
+    [firstname] => Red
+    [lastname] => Paimon
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.ph
+    [course] => BSIT
+    [year] => 4
+    [section] => paimon
+    [department] => 
+    [personality] => ESFP
+    [address] => 
+)
+
+[26-Nov-2024 05:10:16 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Red
+    [lastname] => Paimon
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.ph
+    [department] => 
+    [course] => BSIT
+    [year] => 4
+    [section] => paimon
+    [address] => 
+    [personality] => ESFP
+    [srcode] => 567890
+)
+
+[26-Nov-2024 05:10:16 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Red
+    [:lastname] => Paimon
+    [:phonenum] => 09215942630
+    [:email] => 567890@g.batstate-u.edu.ph
+    [:department] => 
+    [:course] => BSIT
+    [:year] => 4
+    [:section] => paimon
+    [:address] => 
+    [:personality] => ESFP
+    [:srcode] => 567890
+)
+
+[26-Nov-2024 05:10:16 Europe/Berlin] Update result: true, Rows affected: 1
+[26-Nov-2024 05:10:16 Europe/Berlin] === Activity Logging Start ===
+[26-Nov-2024 05:10:16 Europe/Berlin] SR Code: 567890
+[26-Nov-2024 05:10:16 Europe/Berlin] Therapist ID: null
+[26-Nov-2024 05:10:16 Europe/Berlin] Admin ID: null
+[26-Nov-2024 05:10:16 Europe/Berlin] Action: Updated Profile
+[26-Nov-2024 05:10:16 Europe/Berlin] Action Details: Profile information updated
+[26-Nov-2024 05:10:16 Europe/Berlin] IP: ::1
+[26-Nov-2024 05:10:16 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[26-Nov-2024 05:10:16 Europe/Berlin] Activity log inserted successfully. ID: 73
+[26-Nov-2024 05:10:16 Europe/Berlin] === Activity Logging End ===
+[26-Nov-2024 05:12:13 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 567890
+    [firstname] => Blue
+    [lastname] => Paimon
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.ph
+    [course] => BSIT
+    [year] => 4
+    [section] => paimon
+    [department] => 
+    [personality] => ESFP
+    [address] => 
+)
+
+[26-Nov-2024 05:12:13 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Blue
+    [lastname] => Paimon
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.ph
+    [department] => 
+    [course] => BSIT
+    [year] => 4
+    [section] => paimon
+    [address] => 
+    [personality] => ESFP
+    [srcode] => 567890
+)
+
+[26-Nov-2024 05:12:13 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Blue
+    [:lastname] => Paimon
+    [:phonenum] => 09215942630
+    [:email] => 567890@g.batstate-u.edu.ph
+    [:department] => 
+    [:course] => BSIT
+    [:year] => 4
+    [:section] => paimon
+    [:address] => 
+    [:personality] => ESFP
+    [:srcode] => 567890
+)
+
+[26-Nov-2024 05:12:13 Europe/Berlin] Update result: true, Rows affected: 1
+[26-Nov-2024 05:12:13 Europe/Berlin] === Activity Logging Start ===
+[26-Nov-2024 05:12:13 Europe/Berlin] SR Code: 567890
+[26-Nov-2024 05:12:13 Europe/Berlin] Therapist ID: null
+[26-Nov-2024 05:12:13 Europe/Berlin] Admin ID: null
+[26-Nov-2024 05:12:13 Europe/Berlin] Action: Updated Profile
+[26-Nov-2024 05:12:13 Europe/Berlin] Action Details: Profile information updated
+[26-Nov-2024 05:12:13 Europe/Berlin] IP: ::1
+[26-Nov-2024 05:12:13 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[26-Nov-2024 05:12:13 Europe/Berlin] Activity log inserted successfully. ID: 75
+[26-Nov-2024 05:12:13 Europe/Berlin] === Activity Logging End ===
+[26-Nov-2024 05:12:30 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 567890
+    [firstname] => Blue
+    [lastname] => Paimon
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.ph
+    [course] => BSIT
+    [year] => 4
+    [section] => paimon
+    [department] => 
+    [personality] => ISFP
+    [address] => 
+)
+
+[26-Nov-2024 05:12:30 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Blue
+    [lastname] => Paimon
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.ph
+    [department] => 
+    [course] => BSIT
+    [year] => 4
+    [section] => paimon
+    [address] => 
+    [personality] => ISFP
+    [srcode] => 567890
+)
+
+[26-Nov-2024 05:12:30 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Blue
+    [:lastname] => Paimon
+    [:phonenum] => 09215942630
+    [:email] => 567890@g.batstate-u.edu.ph
+    [:department] => 
+    [:course] => BSIT
+    [:year] => 4
+    [:section] => paimon
+    [:address] => 
+    [:personality] => ISFP
+    [:srcode] => 567890
+)
+
+[26-Nov-2024 05:12:30 Europe/Berlin] Update result: true, Rows affected: 1
+[26-Nov-2024 05:12:30 Europe/Berlin] === Activity Logging Start ===
+[26-Nov-2024 05:12:30 Europe/Berlin] SR Code: 567890
+[26-Nov-2024 05:12:30 Europe/Berlin] Therapist ID: null
+[26-Nov-2024 05:12:30 Europe/Berlin] Admin ID: null
+[26-Nov-2024 05:12:31 Europe/Berlin] Action: Updated Profile
+[26-Nov-2024 05:12:31 Europe/Berlin] Action Details: Profile information updated
+[26-Nov-2024 05:12:31 Europe/Berlin] IP: ::1
+[26-Nov-2024 05:12:31 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[26-Nov-2024 05:12:31 Europe/Berlin] Activity log inserted successfully. ID: 77
+[26-Nov-2024 05:12:31 Europe/Berlin] === Activity Logging End ===
+[26-Nov-2024 05:12:39 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 567890
+    [firstname] => Bluer
+    [lastname] => Paimon
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.ph
+    [course] => BSIT
+    [year] => 4
+    [section] => paimon
+    [department] => 
+    [personality] => ISFP
+    [address] => 
+)
+
+[26-Nov-2024 05:12:39 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Bluer
+    [lastname] => Paimon
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.ph
+    [department] => 
+    [course] => BSIT
+    [year] => 4
+    [section] => paimon
+    [address] => 
+    [personality] => ISFP
+    [srcode] => 567890
+)
+
+[26-Nov-2024 05:12:39 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Bluer
+    [:lastname] => Paimon
+    [:phonenum] => 09215942630
+    [:email] => 567890@g.batstate-u.edu.ph
+    [:department] => 
+    [:course] => BSIT
+    [:year] => 4
+    [:section] => paimon
+    [:address] => 
+    [:personality] => ISFP
+    [:srcode] => 567890
+)
+
+[26-Nov-2024 05:12:39 Europe/Berlin] Update result: true, Rows affected: 1
+[26-Nov-2024 05:12:39 Europe/Berlin] === Activity Logging Start ===
+[26-Nov-2024 05:12:39 Europe/Berlin] SR Code: 567890
+[26-Nov-2024 05:12:39 Europe/Berlin] Therapist ID: null
+[26-Nov-2024 05:12:39 Europe/Berlin] Admin ID: null
+[26-Nov-2024 05:12:39 Europe/Berlin] Action: Updated Profile
+[26-Nov-2024 05:12:39 Europe/Berlin] Action Details: Profile information updated
+[26-Nov-2024 05:12:39 Europe/Berlin] IP: ::1
+[26-Nov-2024 05:12:39 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[26-Nov-2024 05:12:39 Europe/Berlin] Activity log inserted successfully. ID: 79
+[26-Nov-2024 05:12:39 Europe/Berlin] === Activity Logging End ===
+[26-Nov-2024 05:14:38 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 567890
+    [firstname] => Bluer
+    [lastname] => Paimonnnn
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.ph
+    [course] => BSIT
+    [year] => 4
+    [section] => paimon
+    [department] => 
+    [personality] => ISFP
+    [address] => 
+)
+
+[26-Nov-2024 05:14:38 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Bluer
+    [lastname] => Paimonnnn
+    [phonenum] => 09215942630
+    [email] => 567890@g.batstate-u.edu.ph
+    [department] => 
+    [course] => BSIT
+    [year] => 4
+    [section] => paimon
+    [address] => 
+    [personality] => ISFP
+    [srcode] => 567890
+)
+
+[26-Nov-2024 05:14:38 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Bluer
+    [:lastname] => Paimonnnn
+    [:phonenum] => 09215942630
+    [:email] => 567890@g.batstate-u.edu.ph
+    [:department] => 
+    [:course] => BSIT
+    [:year] => 4
+    [:section] => paimon
+    [:address] => 
+    [:personality] => ISFP
+    [:srcode] => 567890
+)
+
+[26-Nov-2024 05:14:38 Europe/Berlin] Update result: true, Rows affected: 1
+[26-Nov-2024 05:14:38 Europe/Berlin] === Activity Logging Start ===
+[26-Nov-2024 05:14:38 Europe/Berlin] SR Code: 567890
+[26-Nov-2024 05:14:38 Europe/Berlin] Therapist ID: null
+[26-Nov-2024 05:14:38 Europe/Berlin] Admin ID: null
+[26-Nov-2024 05:14:38 Europe/Berlin] Action: Updated Profile
+[26-Nov-2024 05:14:38 Europe/Berlin] Action Details: Profile information updated
+[26-Nov-2024 05:14:38 Europe/Berlin] IP: ::1
+[26-Nov-2024 05:14:38 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[26-Nov-2024 05:14:38 Europe/Berlin] Activity log inserted successfully. ID: 81
+[26-Nov-2024 05:14:38 Europe/Berlin] === Activity Logging End ===
+[26-Nov-2024 09:09:35 Europe/Berlin] 
+=== New Upload Request (2024-11-26 09:09:35) ===
+[26-Nov-2024 09:09:35 Europe/Berlin] Remote IP: ::1
+[26-Nov-2024 09:09:35 Europe/Berlin] User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36
+[26-Nov-2024 09:09:35 Europe/Berlin] Session Data: Array
+(
+    [user_id] => 567890
+    [srcode] => 567890
+    [firstname] => Bluer
+    [lastname] => Paimonnnn
+    [role] => student
+    [session_log_id] => 16
+)
+
+[26-Nov-2024 09:09:35 Europe/Berlin] POST Data: Array
+(
+)
+
+[26-Nov-2024 09:09:35 Europe/Berlin] FILES Data: Array
+(
+    [profile_picture] => Array
+        (
+            [name] => ffe0682265d47adb1af7114ff1593ab9.jpg
+            [full_path] => ffe0682265d47adb1af7114ff1593ab9.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php8C8A.tmp
+            [error] => 0
+            [size] => 22371
+        )
+
+)
+
+[26-Nov-2024 09:09:35 Europe/Berlin] Loading required files...
+[26-Nov-2024 09:09:35 Europe/Berlin] Required files loaded successfully
+[26-Nov-2024 09:09:35 Europe/Berlin] Session validated successfully
+[26-Nov-2024 09:09:35 Europe/Berlin] File details: Array
+(
+    [name] => ffe0682265d47adb1af7114ff1593ab9.jpg
+    [full_path] => ffe0682265d47adb1af7114ff1593ab9.jpg
+    [type] => image/jpeg
+    [tmp_name] => C:\xampp\tmp\php8C8A.tmp
+    [error] => 0
+    [size] => 22371
+)
+
+[26-Nov-2024 09:09:35 Europe/Berlin] Reading file data...
+[26-Nov-2024 09:09:35 Europe/Berlin] File data read successfully. Size: 22371 bytes
+[26-Nov-2024 09:09:35 Europe/Berlin] Starting database transaction...
+[26-Nov-2024 09:09:35 Europe/Berlin] Deactivating old profile pictures...
+[26-Nov-2024 09:09:35 Europe/Berlin] Transaction error occurred: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '567890-student-inactive' for key 'active_profile'
+[26-Nov-2024 09:09:35 Europe/Berlin] Stack trace: #0 C:\xampp\htdocs\Space\admin_operations\update_profile_picture.php(108): PDOStatement->execute(Array)
+#1 {main}
+[26-Nov-2024 09:09:35 Europe/Berlin] Rolling back transaction
+[26-Nov-2024 09:09:35 Europe/Berlin] Fatal error occurred: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '567890-student-inactive' for key 'active_profile'
+[26-Nov-2024 09:09:35 Europe/Berlin] Stack trace: #0 C:\xampp\htdocs\Space\admin_operations\update_profile_picture.php(108): PDOStatement->execute(Array)
+#1 {main}
+[26-Nov-2024 09:09:35 Europe/Berlin] Sending error response: {"status":"error","message":"Failed to update profile picture: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '567890-student-inactive' for key 'active_profile'","debug_info":{"file":"C:\\xampp\\htdocs\\Space\\admin_operations\\update_profile_picture.php","line":108}}
+[26-Nov-2024 09:09:35 Europe/Berlin] === Request Complete (2024-11-26 09:09:35) ===
+
+[26-Nov-2024 09:13:06 Europe/Berlin] 
+=== New Upload Request (2024-11-26 09:13:06) ===
+[26-Nov-2024 09:13:06 Europe/Berlin] Remote IP: ::1
+[26-Nov-2024 09:13:06 Europe/Berlin] User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36
+[26-Nov-2024 09:13:06 Europe/Berlin] Session Data: Array
+(
+    [user_id] => 123456
+    [srcode] => 123456
+    [firstname] => Eli
+    [lastname] => Melorcia
+    [role] => student
+    [session_log_id] => 18
+)
+
+[26-Nov-2024 09:13:06 Europe/Berlin] POST Data: Array
+(
+)
+
+[26-Nov-2024 09:13:06 Europe/Berlin] FILES Data: Array
+(
+    [profile_picture] => Array
+        (
+            [name] => ffe0682265d47adb1af7114ff1593ab9.jpg
+            [full_path] => ffe0682265d47adb1af7114ff1593ab9.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\phpC475.tmp
+            [error] => 0
+            [size] => 22371
+        )
+
+)
+
+[26-Nov-2024 09:13:06 Europe/Berlin] Loading required files...
+[26-Nov-2024 09:13:06 Europe/Berlin] Required files loaded successfully
+[26-Nov-2024 09:13:06 Europe/Berlin] Session validated successfully
+[26-Nov-2024 09:13:06 Europe/Berlin] File details: Array
+(
+    [name] => ffe0682265d47adb1af7114ff1593ab9.jpg
+    [full_path] => ffe0682265d47adb1af7114ff1593ab9.jpg
+    [type] => image/jpeg
+    [tmp_name] => C:\xampp\tmp\phpC475.tmp
+    [error] => 0
+    [size] => 22371
+)
+
+[26-Nov-2024 09:13:06 Europe/Berlin] Reading file data...
+[26-Nov-2024 09:13:06 Europe/Berlin] File data read successfully. Size: 22371 bytes
+[26-Nov-2024 09:13:06 Europe/Berlin] Starting database transaction...
+[26-Nov-2024 09:13:06 Europe/Berlin] Deactivating old profile pictures...
+[26-Nov-2024 09:13:06 Europe/Berlin] Old pictures deactivated successfully
+[26-Nov-2024 09:13:06 Europe/Berlin] Inserting new profile picture...
+[26-Nov-2024 09:13:06 Europe/Berlin] New picture inserted successfully
+[26-Nov-2024 09:13:06 Europe/Berlin] Initializing SessionLogger...
+[26-Nov-2024 09:13:06 Europe/Berlin] Processing user role: student, ID: 123456
+[26-Nov-2024 09:13:06 Europe/Berlin] Attempting to log activity...
+[26-Nov-2024 09:13:06 Europe/Berlin] SR Code: 123456
+[26-Nov-2024 09:13:06 Europe/Berlin] Therapist ID: null
+[26-Nov-2024 09:13:06 Europe/Berlin] Admin ID: null
+[26-Nov-2024 09:13:06 Europe/Berlin] Description: Profile picture updated: ffe0682265d47adb1af7114ff1593ab9.jpg (Type: image/jpeg, Size: 22371 bytes)
+[26-Nov-2024 09:13:06 Europe/Berlin] === Activity Logging Start ===
+[26-Nov-2024 09:13:06 Europe/Berlin] SR Code: 123456
+[26-Nov-2024 09:13:06 Europe/Berlin] Therapist ID: null
+[26-Nov-2024 09:13:06 Europe/Berlin] Admin ID: null
+[26-Nov-2024 09:13:06 Europe/Berlin] Action: UPDATE_PROFILE_PICTURE
+[26-Nov-2024 09:13:06 Europe/Berlin] Action Details: Profile picture updated: ffe0682265d47adb1af7114ff1593ab9.jpg (Type: image/jpeg, Size: 22371 bytes)
+[26-Nov-2024 09:13:06 Europe/Berlin] IP: ::1
+[26-Nov-2024 09:13:06 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[26-Nov-2024 09:13:06 Europe/Berlin] Activity log inserted successfully. ID: 88
+[26-Nov-2024 09:13:06 Europe/Berlin] === Activity Logging End ===
+[26-Nov-2024 09:13:06 Europe/Berlin] Activity logged successfully
+[26-Nov-2024 09:13:06 Europe/Berlin] Transaction committed successfully
+[26-Nov-2024 09:13:06 Europe/Berlin] Sending success response: {"status":"success","message":"Profile picture updated successfully"}
+[26-Nov-2024 09:13:06 Europe/Berlin] === Request Complete (2024-11-26 09:13:06) ===
+
+[26-Nov-2024 09:13:18 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 123456
+    [firstname] => Cream
+    [lastname] => soup
+    [phonenum] => 09267075698
+    [email] => 123456@g.batstate-u.edu.ph
+    [course] => 
+    [year] => 
+    [section] => 
+    [department] => 
+    [personality] => 
+    [address] => 
+)
+
+[26-Nov-2024 09:13:18 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Cream
+    [lastname] => soup
+    [phonenum] => 09267075698
+    [email] => 123456@g.batstate-u.edu.ph
+    [department] => 
+    [course] => 
+    [year] => 
+    [section] => 
+    [address] => 
+    [personality] => 
+    [srcode] => 123456
+)
+
+[26-Nov-2024 09:13:18 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Cream
+    [:lastname] => soup
+    [:phonenum] => 09267075698
+    [:email] => 123456@g.batstate-u.edu.ph
+    [:department] => 
+    [:course] => 
+    [:year] => 
+    [:section] => 
+    [:address] => 
+    [:personality] => 
+    [:srcode] => 123456
+)
+
+[26-Nov-2024 09:13:18 Europe/Berlin] Update result: true, Rows affected: 1
+[26-Nov-2024 09:13:18 Europe/Berlin] === Activity Logging Start ===
+[26-Nov-2024 09:13:18 Europe/Berlin] SR Code: 123456
+[26-Nov-2024 09:13:18 Europe/Berlin] Therapist ID: null
+[26-Nov-2024 09:13:18 Europe/Berlin] Admin ID: null
+[26-Nov-2024 09:13:18 Europe/Berlin] Action: Updated Profile
+[26-Nov-2024 09:13:18 Europe/Berlin] Action Details: Profile information updated
+[26-Nov-2024 09:13:18 Europe/Berlin] IP: ::1
+[26-Nov-2024 09:13:18 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[26-Nov-2024 09:13:18 Europe/Berlin] Activity log inserted successfully. ID: 89
+[26-Nov-2024 09:13:18 Europe/Berlin] === Activity Logging End ===
+[26-Nov-2024 09:13:32 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 123456
+    [firstname] => Cream
+    [lastname] => soup
+    [phonenum] => 09267075698
+    [email] => 123456@g.batstate-u.edu.ph
+    [course] => tanginannyonglahat talaga
+    [year] => 
+    [section] => 
+    [department] => 
+    [personality] => 
+    [address] => 
+)
+
+[26-Nov-2024 09:13:32 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Cream
+    [lastname] => soup
+    [phonenum] => 09267075698
+    [email] => 123456@g.batstate-u.edu.ph
+    [department] => 
+    [course] => tanginannyonglahat talaga
+    [year] => 
+    [section] => 
+    [address] => 
+    [personality] => 
+    [srcode] => 123456
+)
+
+[26-Nov-2024 09:13:32 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Cream
+    [:lastname] => soup
+    [:phonenum] => 09267075698
+    [:email] => 123456@g.batstate-u.edu.ph
+    [:department] => 
+    [:course] => tanginannyonglahat talaga
+    [:year] => 
+    [:section] => 
+    [:address] => 
+    [:personality] => 
+    [:srcode] => 123456
+)
+
+[26-Nov-2024 09:13:32 Europe/Berlin] Update result: true, Rows affected: 1
+[26-Nov-2024 09:13:32 Europe/Berlin] === Activity Logging Start ===
+[26-Nov-2024 09:13:32 Europe/Berlin] SR Code: 123456
+[26-Nov-2024 09:13:32 Europe/Berlin] Therapist ID: null
+[26-Nov-2024 09:13:32 Europe/Berlin] Admin ID: null
+[26-Nov-2024 09:13:32 Europe/Berlin] Action: Updated Profile
+[26-Nov-2024 09:13:32 Europe/Berlin] Action Details: Profile information updated
+[26-Nov-2024 09:13:32 Europe/Berlin] IP: ::1
+[26-Nov-2024 09:13:32 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[26-Nov-2024 09:13:32 Europe/Berlin] Activity log inserted successfully. ID: 91
+[26-Nov-2024 09:13:32 Europe/Berlin] === Activity Logging End ===
+[26-Nov-2024 09:13:46 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 123456
+    [firstname] => Cream
+    [lastname] => soup
+    [phonenum] => 09267075698
+    [email] => 123456@g.batstate-u.edu.ph
+    [course] => tanginannyonglahat talaga
+    [year] => 
+    [section] => 
+    [department] => 
+    [personality] => ENTJ
+    [address] => 
+)
+
+[26-Nov-2024 09:13:46 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Cream
+    [lastname] => soup
+    [phonenum] => 09267075698
+    [email] => 123456@g.batstate-u.edu.ph
+    [department] => 
+    [course] => tanginannyonglahat talaga
+    [year] => 
+    [section] => 
+    [address] => 
+    [personality] => ENTJ
+    [srcode] => 123456
+)
+
+[26-Nov-2024 09:13:46 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Cream
+    [:lastname] => soup
+    [:phonenum] => 09267075698
+    [:email] => 123456@g.batstate-u.edu.ph
+    [:department] => 
+    [:course] => tanginannyonglahat talaga
+    [:year] => 
+    [:section] => 
+    [:address] => 
+    [:personality] => ENTJ
+    [:srcode] => 123456
+)
+
+[26-Nov-2024 09:13:46 Europe/Berlin] Update result: true, Rows affected: 1
+[26-Nov-2024 09:13:46 Europe/Berlin] === Activity Logging Start ===
+[26-Nov-2024 09:13:46 Europe/Berlin] SR Code: 123456
+[26-Nov-2024 09:13:46 Europe/Berlin] Therapist ID: null
+[26-Nov-2024 09:13:46 Europe/Berlin] Admin ID: null
+[26-Nov-2024 09:13:46 Europe/Berlin] Action: Updated Profile
+[26-Nov-2024 09:13:46 Europe/Berlin] Action Details: Profile information updated
+[26-Nov-2024 09:13:46 Europe/Berlin] IP: ::1
+[26-Nov-2024 09:13:46 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[26-Nov-2024 09:13:46 Europe/Berlin] Activity log inserted successfully. ID: 93
+[26-Nov-2024 09:13:46 Europe/Berlin] === Activity Logging End ===
+[26-Nov-2024 10:32:22 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 123456
+    [firstname] => Creamy
+    [lastname] => Soup
+    [phonenum] => 09267075698
+    [email] => 123456@g.batstate-u.edu.ph
+    [course] => tanginannyonglahat talaga
+    [year] => 
+    [section] => 
+    [department] => 
+    [personality] => ENTJ
+    [address] => 
+)
+
+[26-Nov-2024 10:32:22 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Creamy
+    [lastname] => Soup
+    [phonenum] => 09267075698
+    [email] => 123456@g.batstate-u.edu.ph
+    [department] => 
+    [course] => tanginannyonglahat talaga
+    [year] => 
+    [section] => 
+    [address] => 
+    [personality] => ENTJ
+    [srcode] => 123456
+)
+
+[26-Nov-2024 10:32:22 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Creamy
+    [:lastname] => Soup
+    [:phonenum] => 09267075698
+    [:email] => 123456@g.batstate-u.edu.ph
+    [:department] => 
+    [:course] => tanginannyonglahat talaga
+    [:year] => 
+    [:section] => 
+    [:address] => 
+    [:personality] => ENTJ
+    [:srcode] => 123456
+)
+
+[26-Nov-2024 10:32:22 Europe/Berlin] Update result: true, Rows affected: 1
+[26-Nov-2024 10:32:22 Europe/Berlin] === Activity Logging Start ===
+[26-Nov-2024 10:32:22 Europe/Berlin] SR Code: 123456
+[26-Nov-2024 10:32:22 Europe/Berlin] Therapist ID: null
+[26-Nov-2024 10:32:22 Europe/Berlin] Admin ID: null
+[26-Nov-2024 10:32:22 Europe/Berlin] Action: Updated Profile
+[26-Nov-2024 10:32:22 Europe/Berlin] Action Details: Profile information updated
+[26-Nov-2024 10:32:22 Europe/Berlin] IP: ::1
+[26-Nov-2024 10:32:22 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[26-Nov-2024 10:32:22 Europe/Berlin] Activity log inserted successfully. ID: 95
+[26-Nov-2024 10:32:22 Europe/Berlin] === Activity Logging End ===
+[26-Nov-2024 12:29:53 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 2236914
+    [firstname] => Neon
+    [lastname] => kwekwek
+    [phonenum] => 09267075697
+    [email] => 22-36914@g.batstate-u.edu.ph
+    [course] => 
+    [year] => 
+    [section] => 
+    [department] => 
+    [personality] => 
+    [address] => 
+)
+
+[26-Nov-2024 12:29:53 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Neon
+    [lastname] => kwekwek
+    [phonenum] => 09267075697
+    [email] => 22-36914@g.batstate-u.edu.ph
+    [department] => 
+    [course] => 
+    [year] => 
+    [section] => 
+    [address] => 
+    [personality] => 
+    [srcode] => 2236914
+)
+
+[26-Nov-2024 12:29:53 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Neon
+    [:lastname] => kwekwek
+    [:phonenum] => 09267075697
+    [:email] => 22-36914@g.batstate-u.edu.ph
+    [:department] => 
+    [:course] => 
+    [:year] => 
+    [:section] => 
+    [:address] => 
+    [:personality] => 
+    [:srcode] => 2236914
+)
+
+[26-Nov-2024 12:29:53 Europe/Berlin] Update result: true, Rows affected: 1
+[26-Nov-2024 12:29:53 Europe/Berlin] === Activity Logging Start ===
+[26-Nov-2024 12:29:53 Europe/Berlin] SR Code: 2236914
+[26-Nov-2024 12:29:53 Europe/Berlin] Therapist ID: null
+[26-Nov-2024 12:29:53 Europe/Berlin] Admin ID: null
+[26-Nov-2024 12:29:53 Europe/Berlin] Action: Updated Profile
+[26-Nov-2024 12:29:53 Europe/Berlin] Action Details: Profile information updated
+[26-Nov-2024 12:29:53 Europe/Berlin] IP: ::1
+[26-Nov-2024 12:29:53 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[26-Nov-2024 12:29:53 Europe/Berlin] Activity log inserted successfully. ID: 103
+[26-Nov-2024 12:29:53 Europe/Berlin] === Activity Logging End ===
+[26-Nov-2024 14:49:47 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 2236914
+    [firstname] => Parmessan
+    [lastname] => cheese
+    [phonenum] => 09267075697
+    [email] => 22-36914@g.batstate-u.edu.ph
+    [course] => 
+    [year] => 
+    [section] => 
+    [department] => 
+    [personality] => 
+    [address] => 
+)
+
+[26-Nov-2024 14:49:47 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Parmessan
+    [lastname] => cheese
+    [phonenum] => 09267075697
+    [email] => 22-36914@g.batstate-u.edu.ph
+    [department] => 
+    [course] => 
+    [year] => 
+    [section] => 
+    [address] => 
+    [personality] => 
+    [srcode] => 2236914
+)
+
+[26-Nov-2024 14:49:47 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Parmessan
+    [:lastname] => cheese
+    [:phonenum] => 09267075697
+    [:email] => 22-36914@g.batstate-u.edu.ph
+    [:department] => 
+    [:course] => 
+    [:year] => 
+    [:section] => 
+    [:address] => 
+    [:personality] => 
+    [:srcode] => 2236914
+)
+
+[26-Nov-2024 14:49:47 Europe/Berlin] Update result: true, Rows affected: 1
+[26-Nov-2024 14:49:47 Europe/Berlin] === Activity Logging Start ===
+[26-Nov-2024 14:49:47 Europe/Berlin] SR Code: 2236914
+[26-Nov-2024 14:49:47 Europe/Berlin] Therapist ID: null
+[26-Nov-2024 14:49:47 Europe/Berlin] Admin ID: null
+[26-Nov-2024 14:49:47 Europe/Berlin] Action: Updated Profile
+[26-Nov-2024 14:49:47 Europe/Berlin] Action Details: Profile information updated
+[26-Nov-2024 14:49:47 Europe/Berlin] IP: ::1
+[26-Nov-2024 14:49:47 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[26-Nov-2024 14:49:47 Europe/Berlin] Activity log inserted successfully. ID: 107
+[26-Nov-2024 14:49:47 Europe/Berlin] === Activity Logging End ===
+[27-Nov-2024 02:50:02 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 2236914
+    [firstname] => Parmessan
+    [lastname] => Cheesyy
+    [phonenum] => 09267075697
+    [email] => 22-36914@g.batstate-u.edu.ph
+    [course] => 
+    [year] => 
+    [section] => 
+    [department] => 
+    [personality] => 
+    [address] => 
+)
+
+[27-Nov-2024 02:50:02 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Parmessan
+    [lastname] => Cheesyy
+    [phonenum] => 09267075697
+    [email] => 22-36914@g.batstate-u.edu.ph
+    [department] => 
+    [course] => 
+    [year] => 
+    [section] => 
+    [address] => 
+    [personality] => 
+    [srcode] => 2236914
+)
+
+[27-Nov-2024 02:50:02 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Parmessan
+    [:lastname] => Cheesyy
+    [:phonenum] => 09267075697
+    [:email] => 22-36914@g.batstate-u.edu.ph
+    [:department] => 
+    [:course] => 
+    [:year] => 
+    [:section] => 
+    [:address] => 
+    [:personality] => 
+    [:srcode] => 2236914
+)
+
+[27-Nov-2024 02:50:02 Europe/Berlin] Update result: true, Rows affected: 1
+[27-Nov-2024 02:50:02 Europe/Berlin] === Activity Logging Start ===
+[27-Nov-2024 02:50:02 Europe/Berlin] SR Code: 2236914
+[27-Nov-2024 02:50:02 Europe/Berlin] Therapist ID: null
+[27-Nov-2024 02:50:02 Europe/Berlin] Admin ID: null
+[27-Nov-2024 02:50:02 Europe/Berlin] Action: Updated Profile
+[27-Nov-2024 02:50:02 Europe/Berlin] Action Details: Profile information updated
+[27-Nov-2024 02:50:02 Europe/Berlin] IP: ::1
+[27-Nov-2024 02:50:02 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[27-Nov-2024 02:50:02 Europe/Berlin] Activity log inserted successfully. ID: 118
+[27-Nov-2024 02:50:02 Europe/Berlin] === Activity Logging End ===
+[27-Nov-2024 03:18:58 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 2236914
+    [firstname] => Cheesy
+    [lastname] => Lasagna
+    [phonenum] => 09267075697
+    [email] => 22-36914@g.batstate-u.edu.ph
+    [course] => 
+    [year] => 
+    [section] => 
+    [department] => 
+    [personality] => 
+    [address] => 
+)
+
+[27-Nov-2024 03:18:58 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Cheesy
+    [lastname] => Lasagna
+    [phonenum] => 09267075697
+    [email] => 22-36914@g.batstate-u.edu.ph
+    [department] => 
+    [course] => 
+    [year] => 
+    [section] => 
+    [address] => 
+    [personality] => 
+    [srcode] => 2236914
+)
+
+[27-Nov-2024 03:18:58 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Cheesy
+    [:lastname] => Lasagna
+    [:phonenum] => 09267075697
+    [:email] => 22-36914@g.batstate-u.edu.ph
+    [:department] => 
+    [:course] => 
+    [:year] => 
+    [:section] => 
+    [:address] => 
+    [:personality] => 
+    [:srcode] => 2236914
+)
+
+[27-Nov-2024 03:18:58 Europe/Berlin] Update result: true, Rows affected: 1
+[27-Nov-2024 03:18:58 Europe/Berlin] === Activity Logging Start ===
+[27-Nov-2024 03:18:58 Europe/Berlin] SR Code: 2236914
+[27-Nov-2024 03:18:58 Europe/Berlin] Therapist ID: null
+[27-Nov-2024 03:18:58 Europe/Berlin] Admin ID: null
+[27-Nov-2024 03:18:58 Europe/Berlin] Action: Updated Profile
+[27-Nov-2024 03:18:58 Europe/Berlin] Action Details: Profile information updated
+[27-Nov-2024 03:18:58 Europe/Berlin] IP: ::1
+[27-Nov-2024 03:18:58 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[27-Nov-2024 03:18:58 Europe/Berlin] Activity log inserted successfully. ID: 120
+[27-Nov-2024 03:18:58 Europe/Berlin] === Activity Logging End ===
+[27-Nov-2024 03:26:27 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 2236914
+    [firstname] => Cheesy
+    [lastname] => Lasagna
+    [phonenum] => 09267075697
+    [email] => 22-36914@g.batstate-u.edu.ph
+    [course] => ofcourse
+    [year] => 
+    [section] => 
+    [department] => 
+    [personality] => 
+    [address] => 
+)
+
+[27-Nov-2024 03:26:27 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Cheesy
+    [lastname] => Lasagna
+    [phonenum] => 09267075697
+    [email] => 22-36914@g.batstate-u.edu.ph
+    [department] => 
+    [course] => ofcourse
+    [year] => 
+    [section] => 
+    [address] => 
+    [personality] => 
+    [srcode] => 2236914
+)
+
+[27-Nov-2024 03:26:27 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Cheesy
+    [:lastname] => Lasagna
+    [:phonenum] => 09267075697
+    [:email] => 22-36914@g.batstate-u.edu.ph
+    [:department] => 
+    [:course] => ofcourse
+    [:year] => 
+    [:section] => 
+    [:address] => 
+    [:personality] => 
+    [:srcode] => 2236914
+)
+
+[27-Nov-2024 03:26:27 Europe/Berlin] Update result: true, Rows affected: 1
+[27-Nov-2024 03:26:27 Europe/Berlin] === Activity Logging Start ===
+[27-Nov-2024 03:26:27 Europe/Berlin] SR Code: 2236914
+[27-Nov-2024 03:26:27 Europe/Berlin] Therapist ID: null
+[27-Nov-2024 03:26:27 Europe/Berlin] Admin ID: null
+[27-Nov-2024 03:26:27 Europe/Berlin] Action: Updated Profile
+[27-Nov-2024 03:26:27 Europe/Berlin] Action Details: Profile information updated
+[27-Nov-2024 03:26:27 Europe/Berlin] IP: ::1
+[27-Nov-2024 03:26:27 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[27-Nov-2024 03:26:27 Europe/Berlin] Activity log inserted successfully. ID: 124
+[27-Nov-2024 03:26:27 Europe/Berlin] === Activity Logging End ===
+[27-Nov-2024 03:32:31 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 2236914
+    [firstname] => Cheesy
+    [lastname] => Lasagna
+    [phonenum] => 09267075697
+    [email] => 22-36914@g.batstate-u.edu.ph
+    [course] => ofcourse juskopo
+    [year] => 
+    [section] => 
+    [department] => 
+    [personality] => 
+    [address] => 
+)
+
+[27-Nov-2024 03:32:31 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Cheesy
+    [lastname] => Lasagna
+    [phonenum] => 09267075697
+    [email] => 22-36914@g.batstate-u.edu.ph
+    [department] => 
+    [course] => ofcourse juskopo
+    [year] => 
+    [section] => 
+    [address] => 
+    [personality] => 
+    [srcode] => 2236914
+)
+
+[27-Nov-2024 03:32:31 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Cheesy
+    [:lastname] => Lasagna
+    [:phonenum] => 09267075697
+    [:email] => 22-36914@g.batstate-u.edu.ph
+    [:department] => 
+    [:course] => ofcourse juskopo
+    [:year] => 
+    [:section] => 
+    [:address] => 
+    [:personality] => 
+    [:srcode] => 2236914
+)
+
+[27-Nov-2024 03:32:31 Europe/Berlin] Update result: true, Rows affected: 1
+[27-Nov-2024 03:32:31 Europe/Berlin] === Activity Logging Start ===
+[27-Nov-2024 03:32:31 Europe/Berlin] SR Code: 2236914
+[27-Nov-2024 03:32:31 Europe/Berlin] Therapist ID: null
+[27-Nov-2024 03:32:31 Europe/Berlin] Admin ID: null
+[27-Nov-2024 03:32:31 Europe/Berlin] Action: Updated Profile
+[27-Nov-2024 03:32:31 Europe/Berlin] Action Details: Profile information updated
+[27-Nov-2024 03:32:31 Europe/Berlin] IP: ::1
+[27-Nov-2024 03:32:31 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[27-Nov-2024 03:32:31 Europe/Berlin] Activity log inserted successfully. ID: 126
+[27-Nov-2024 03:32:31 Europe/Berlin] === Activity Logging End ===
+[27-Nov-2024 04:05:31 Europe/Berlin] PHP Warning:  Undefined variable $conn in C:\xampp\htdocs\Space\pages\student\generate-reports.php on line 404
+[27-Nov-2024 04:05:31 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\Space\pages\student\generate-reports.php:404
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\Space\pages\student\generate-reports.php on line 404
+[27-Nov-2024 04:05:48 Europe/Berlin] PHP Warning:  Undefined variable $conn in C:\xampp\htdocs\Space\pages\student\generate-reports.php on line 404
+[27-Nov-2024 04:05:48 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\Space\pages\student\generate-reports.php:404
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\Space\pages\student\generate-reports.php on line 404
+[27-Nov-2024 04:05:48 Europe/Berlin] PHP Warning:  Undefined variable $conn in C:\xampp\htdocs\Space\pages\student\generate-reports.php on line 404
+[27-Nov-2024 04:05:48 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\Space\pages\student\generate-reports.php:404
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\Space\pages\student\generate-reports.php on line 404
+[27-Nov-2024 04:05:48 Europe/Berlin] PHP Warning:  Undefined variable $conn in C:\xampp\htdocs\Space\pages\student\generate-reports.php on line 404
+[27-Nov-2024 04:05:48 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\Space\pages\student\generate-reports.php:404
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\Space\pages\student\generate-reports.php on line 404
+[27-Nov-2024 04:05:50 Europe/Berlin] PHP Warning:  Undefined variable $conn in C:\xampp\htdocs\Space\pages\student\generate-reports.php on line 404
+[27-Nov-2024 04:05:50 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\Space\pages\student\generate-reports.php:404
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\Space\pages\student\generate-reports.php on line 404
+[27-Nov-2024 04:06:32 Europe/Berlin] PHP Warning:  Undefined variable $conn in C:\xampp\htdocs\Space\pages\student\generate-reports.php on line 404
+[27-Nov-2024 04:06:32 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\Space\pages\student\generate-reports.php:404
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\Space\pages\student\generate-reports.php on line 404
+[27-Nov-2024 04:08:31 Europe/Berlin] PHP Warning:  Undefined variable $conn in C:\xampp\htdocs\Space\pages\student\generate-reports.php on line 404
+[27-Nov-2024 04:08:31 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\Space\pages\student\generate-reports.php:404
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\Space\pages\student\generate-reports.php on line 404
+[27-Nov-2024 05:14:41 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[27-Nov-2024 05:14:45 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[27-Nov-2024 05:15:00 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[27-Nov-2024 05:15:09 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[27-Nov-2024 05:15:09 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[27-Nov-2024 05:15:23 Europe/Berlin] 
+=== New Upload Request (2024-11-27 05:15:23) ===
+[27-Nov-2024 05:15:23 Europe/Berlin] Remote IP: ::1
+[27-Nov-2024 05:15:23 Europe/Berlin] User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 OPR/114.0.0.0
+[27-Nov-2024 05:15:23 Europe/Berlin] Session Data: Array
+(
+    [user_id] => 222222
+    [srcode] => 222222
+    [firstname] => Faith
+    [lastname] => Creotech
+    [role] => student
+    [session_log_id] => 28
+)
+
+[27-Nov-2024 05:15:23 Europe/Berlin] POST Data: Array
+(
+)
+
+[27-Nov-2024 05:15:23 Europe/Berlin] FILES Data: Array
+(
+    [profile_picture] => Array
+        (
+            [name] => avatars-uFWf6ATsVT9yIpWF-N4qDhg-t240x240.jpg
+            [full_path] => avatars-uFWf6ATsVT9yIpWF-N4qDhg-t240x240.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php7531.tmp
+            [error] => 0
+            [size] => 15216
+        )
+
+)
+
+[27-Nov-2024 05:15:23 Europe/Berlin] Loading required files...
+[27-Nov-2024 05:15:23 Europe/Berlin] Required files loaded successfully
+[27-Nov-2024 05:15:23 Europe/Berlin] Session validated successfully
+[27-Nov-2024 05:15:23 Europe/Berlin] File details: Array
+(
+    [name] => avatars-uFWf6ATsVT9yIpWF-N4qDhg-t240x240.jpg
+    [full_path] => avatars-uFWf6ATsVT9yIpWF-N4qDhg-t240x240.jpg
+    [type] => image/jpeg
+    [tmp_name] => C:\xampp\tmp\php7531.tmp
+    [error] => 0
+    [size] => 15216
+)
+
+[27-Nov-2024 05:15:23 Europe/Berlin] Reading file data...
+[27-Nov-2024 05:15:23 Europe/Berlin] File data read successfully. Size: 15216 bytes
+[27-Nov-2024 05:15:23 Europe/Berlin] Starting database transaction...
+[27-Nov-2024 05:15:23 Europe/Berlin] Deactivating old profile pictures...
+[27-Nov-2024 05:15:23 Europe/Berlin] Old pictures deactivated successfully
+[27-Nov-2024 05:15:23 Europe/Berlin] Inserting new profile picture...
+[27-Nov-2024 05:15:23 Europe/Berlin] New picture inserted successfully
+[27-Nov-2024 05:15:23 Europe/Berlin] Initializing SessionLogger...
+[27-Nov-2024 05:15:23 Europe/Berlin] Processing user role: student, ID: 222222
+[27-Nov-2024 05:15:23 Europe/Berlin] Attempting to log activity...
+[27-Nov-2024 05:15:23 Europe/Berlin] SR Code: 222222
+[27-Nov-2024 05:15:23 Europe/Berlin] Therapist ID: null
+[27-Nov-2024 05:15:23 Europe/Berlin] Admin ID: null
+[27-Nov-2024 05:15:23 Europe/Berlin] Description: Profile picture updated: avatars-uFWf6ATsVT9yIpWF-N4qDhg-t240x240.jpg (Type: image/jpeg, Size: 15216 bytes)
+[27-Nov-2024 05:15:23 Europe/Berlin] === Activity Logging Start ===
+[27-Nov-2024 05:15:23 Europe/Berlin] SR Code: 222222
+[27-Nov-2024 05:15:23 Europe/Berlin] Therapist ID: null
+[27-Nov-2024 05:15:23 Europe/Berlin] Admin ID: null
+[27-Nov-2024 05:15:23 Europe/Berlin] Action: UPDATE_PROFILE_PICTURE
+[27-Nov-2024 05:15:23 Europe/Berlin] Action Details: Profile picture updated: avatars-uFWf6ATsVT9yIpWF-N4qDhg-t240x240.jpg (Type: image/jpeg, Size: 15216 bytes)
+[27-Nov-2024 05:15:23 Europe/Berlin] IP: ::1
+[27-Nov-2024 05:15:23 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[27-Nov-2024 05:15:23 Europe/Berlin] Activity log inserted successfully. ID: 131
+[27-Nov-2024 05:15:23 Europe/Berlin] === Activity Logging End ===
+[27-Nov-2024 05:15:23 Europe/Berlin] Activity logged successfully
+[27-Nov-2024 05:15:23 Europe/Berlin] Transaction committed successfully
+[27-Nov-2024 05:15:23 Europe/Berlin] Sending success response: {"status":"success","message":"Profile picture updated successfully"}
+[27-Nov-2024 05:15:23 Europe/Berlin] === Request Complete (2024-11-27 05:15:23) ===
+
+[27-Nov-2024 12:13:00 Europe/Berlin] PHP Warning:  Undefined array key "icon" in C:\xampp\htdocs\Space\pages\student\moodtracker.php on line 495
+[27-Nov-2024 12:13:00 Europe/Berlin] PHP Warning:  Undefined array key "text" in C:\xampp\htdocs\Space\pages\student\moodtracker.php on line 496
+[27-Nov-2024 12:13:03 Europe/Berlin] PHP Warning:  Undefined array key "icon" in C:\xampp\htdocs\Space\pages\student\account-settings.php on line 142
+[27-Nov-2024 12:13:03 Europe/Berlin] PHP Warning:  Undefined array key "text" in C:\xampp\htdocs\Space\pages\student\account-settings.php on line 143
+[27-Nov-2024 12:15:27 Europe/Berlin] PHP Warning:  Undefined array key "icon" in C:\xampp\htdocs\Space\pages\student\account-settings.php on line 142
+[27-Nov-2024 12:15:27 Europe/Berlin] PHP Warning:  Undefined array key "text" in C:\xampp\htdocs\Space\pages\student\account-settings.php on line 143
+[27-Nov-2024 12:17:39 Europe/Berlin] PHP Warning:  Undefined array key "icon" in C:\xampp\htdocs\Space\pages\student\moodtracker.php on line 495
+[27-Nov-2024 12:17:39 Europe/Berlin] PHP Warning:  Undefined array key "text" in C:\xampp\htdocs\Space\pages\student\moodtracker.php on line 496
+[27-Nov-2024 12:37:52 Europe/Berlin] PHP Warning:  Undefined array key "icon" in C:\xampp\htdocs\Space\pages\student\account-settings.php on line 142
+[27-Nov-2024 12:37:52 Europe/Berlin] PHP Warning:  Undefined array key "text" in C:\xampp\htdocs\Space\pages\student\account-settings.php on line 143
+[27-Nov-2024 13:06:27 Europe/Berlin] PHP Warning:  Undefined array key "icon" in C:\xampp\htdocs\Space\pages\student\account-settings.php on line 135
+[27-Nov-2024 13:06:27 Europe/Berlin] PHP Warning:  Undefined array key "text" in C:\xampp\htdocs\Space\pages\student\account-settings.php on line 136
+[27-Nov-2024 13:06:32 Europe/Berlin] PHP Warning:  Undefined array key "icon" in C:\xampp\htdocs\Space\pages\student\account-settings.php on line 135
+[27-Nov-2024 13:06:32 Europe/Berlin] PHP Warning:  Undefined array key "text" in C:\xampp\htdocs\Space\pages\student\account-settings.php on line 136
+[27-Nov-2024 13:07:12 Europe/Berlin] PHP Warning:  Undefined array key "icon" in C:\xampp\htdocs\Space\pages\student\account-settings.php on line 135
+[27-Nov-2024 13:07:12 Europe/Berlin] PHP Warning:  Undefined array key "text" in C:\xampp\htdocs\Space\pages\student\account-settings.php on line 136
+[27-Nov-2024 13:07:12 Europe/Berlin] PHP Warning:  Undefined array key "icon" in C:\xampp\htdocs\Space\pages\student\account-settings.php on line 135
+[27-Nov-2024 13:07:12 Europe/Berlin] PHP Warning:  Undefined array key "text" in C:\xampp\htdocs\Space\pages\student\account-settings.php on line 136
+[27-Nov-2024 14:36:44 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 2236914
+    [firstname] => Cheesy
+    [lastname] => Lasagna
+    [phonenum] => 09267075697
+    [email] => 22-36914@g.batstate-u.edu.ph
+    [course] => ofcourse juskopo
+    [year] => 
+    [section] => luh
+    [department] => 
+    [personality] => 
+    [address] => 
+)
+
+[27-Nov-2024 14:36:44 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Cheesy
+    [lastname] => Lasagna
+    [phonenum] => 09267075697
+    [email] => 22-36914@g.batstate-u.edu.ph
+    [department] => 
+    [course] => ofcourse juskopo
+    [year] => 
+    [section] => luh
+    [address] => 
+    [personality] => 
+    [srcode] => 2236914
+)
+
+[27-Nov-2024 14:36:44 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Cheesy
+    [:lastname] => Lasagna
+    [:phonenum] => 09267075697
+    [:email] => 22-36914@g.batstate-u.edu.ph
+    [:department] => 
+    [:course] => ofcourse juskopo
+    [:year] => 
+    [:section] => luh
+    [:address] => 
+    [:personality] => 
+    [:srcode] => 2236914
+)
+
+[27-Nov-2024 14:36:44 Europe/Berlin] Update result: true, Rows affected: 1
+[27-Nov-2024 14:36:44 Europe/Berlin] === Activity Logging Start ===
+[27-Nov-2024 14:36:45 Europe/Berlin] SR Code: 2236914
+[27-Nov-2024 14:36:45 Europe/Berlin] Therapist ID: null
+[27-Nov-2024 14:36:45 Europe/Berlin] Admin ID: null
+[27-Nov-2024 14:36:45 Europe/Berlin] Action: Updated Profile
+[27-Nov-2024 14:36:45 Europe/Berlin] Action Details: Profile information updated
+[27-Nov-2024 14:36:45 Europe/Berlin] IP: ::1
+[27-Nov-2024 14:36:45 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[27-Nov-2024 14:36:45 Europe/Berlin] Database error in logActivity: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'therapist_id' in 'field list'
+[27-Nov-2024 14:36:45 Europe/Berlin] Stack trace: #0 C:\xampp\htdocs\Space\admin_operations\SessionLogger.php(152): PDO->prepare('INSERT INTO act...')
+#1 C:\xampp\htdocs\Space\admin_operations\profile_operations.php(236): SessionLogger->logActivity(2236914, NULL, NULL, 'Updated Profile', 'Profile informa...', '::1')
+#2 C:\xampp\htdocs\Space\admin_operations\process_profile_update.php(46): ProfileOperations->updateStudentProfile(Array)
+#3 {main}
+[27-Nov-2024 14:36:45 Europe/Berlin] General error in updateStudentProfile: Failed to log activity: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'therapist_id' in 'field list'
+[27-Nov-2024 14:36:45 Europe/Berlin] Error: Failed to log activity: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'therapist_id' in 'field list'
+[27-Nov-2024 14:37:57 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 2236914
+    [firstname] => Cheesy
+    [lastname] => Lasagna
+    [phonenum] => 09267075697
+    [email] => 22-36914@g.batstate-u.edu.ph
+    [course] => ofcourse juskopo
+    [year] => 
+    [section] => hatdog
+    [department] => 
+    [personality] => 
+    [address] => 
+)
+
+[27-Nov-2024 14:37:57 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Cheesy
+    [lastname] => Lasagna
+    [phonenum] => 09267075697
+    [email] => 22-36914@g.batstate-u.edu.ph
+    [department] => 
+    [course] => ofcourse juskopo
+    [year] => 
+    [section] => hatdog
+    [address] => 
+    [personality] => 
+    [srcode] => 2236914
+)
+
+[27-Nov-2024 14:37:57 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Cheesy
+    [:lastname] => Lasagna
+    [:phonenum] => 09267075697
+    [:email] => 22-36914@g.batstate-u.edu.ph
+    [:department] => 
+    [:course] => ofcourse juskopo
+    [:year] => 
+    [:section] => hatdog
+    [:address] => 
+    [:personality] => 
+    [:srcode] => 2236914
+)
+
+[27-Nov-2024 14:37:57 Europe/Berlin] Update result: true, Rows affected: 1
+[27-Nov-2024 14:37:57 Europe/Berlin] === Activity Logging Start ===
+[27-Nov-2024 14:37:57 Europe/Berlin] SR Code: 2236914
+[27-Nov-2024 14:37:57 Europe/Berlin] Therapist ID: null
+[27-Nov-2024 14:37:57 Europe/Berlin] Admin ID: null
+[27-Nov-2024 14:37:57 Europe/Berlin] Action: Updated Profile
+[27-Nov-2024 14:37:57 Europe/Berlin] Action Details: Profile information updated
+[27-Nov-2024 14:37:57 Europe/Berlin] IP: ::1
+[27-Nov-2024 14:37:57 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
+                   VALUES (?, ?, ?, ?, ?, ?, NOW())
+[27-Nov-2024 14:37:57 Europe/Berlin] Database error in logActivity: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'therapist_id' in 'field list'
+[27-Nov-2024 14:37:57 Europe/Berlin] Stack trace: #0 C:\xampp\htdocs\Space\admin_operations\SessionLogger.php(152): PDO->prepare('INSERT INTO act...')
+#1 C:\xampp\htdocs\Space\admin_operations\profile_operations.php(236): SessionLogger->logActivity(2236914, NULL, NULL, 'Updated Profile', 'Profile informa...', '::1')
+#2 C:\xampp\htdocs\Space\admin_operations\process_profile_update.php(46): ProfileOperations->updateStudentProfile(Array)
+#3 {main}
+[27-Nov-2024 14:37:57 Europe/Berlin] General error in updateStudentProfile: Failed to log activity: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'therapist_id' in 'field list'
+[27-Nov-2024 14:37:57 Europe/Berlin] Error: Failed to log activity: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'therapist_id' in 'field list'
+[27-Nov-2024 14:40:24 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 2236914
+    [firstname] => Cheesy
+    [lastname] => Lasagna
+    [phonenum] => 09267075697
+    [email] => 22-36914@g.batstate-u.edu.ph
+    [course] => ofcourse juskopo
+    [year] => 
+    [section] => hatdog
+    [department] => 
+    [personality] => ESFP
+    [address] => 
+)
+
+[27-Nov-2024 14:40:24 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Cheesy
+    [lastname] => Lasagna
+    [phonenum] => 09267075697
+    [email] => 22-36914@g.batstate-u.edu.ph
+    [department] => 
+    [course] => ofcourse juskopo
+    [year] => 
+    [section] => hatdog
+    [address] => 
+    [personality] => ESFP
+    [srcode] => 2236914
+)
+
+[27-Nov-2024 14:40:24 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Cheesy
+    [:lastname] => Lasagna
+    [:phonenum] => 09267075697
+    [:email] => 22-36914@g.batstate-u.edu.ph
+    [:department] => 
+    [:course] => ofcourse juskopo
+    [:year] => 
+    [:section] => hatdog
+    [:address] => 
+    [:personality] => ESFP
+    [:srcode] => 2236914
+)
+
+[27-Nov-2024 14:40:25 Europe/Berlin] Update result: true, Rows affected: 1
+[27-Nov-2024 14:40:25 Europe/Berlin] === Activity Logging Start ===
+[27-Nov-2024 14:40:25 Europe/Berlin] SR Code: 2236914
+[27-Nov-2024 14:40:25 Europe/Berlin] Action: Updated Profile
+[27-Nov-2024 14:40:25 Europe/Berlin] Action Details: Profile information updated
+[27-Nov-2024 14:40:25 Europe/Berlin] IP: ::1
+[27-Nov-2024 14:40:25 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                    (srcode, action, action_details, ip_address) 
+                    VALUES 
+                    (?, ?, ?, ?)
+[27-Nov-2024 14:40:25 Europe/Berlin] Activity log inserted successfully. ID: 160
+[27-Nov-2024 14:40:25 Europe/Berlin] === Activity Logging End ===
+[27-Nov-2024 14:40:25 Europe/Berlin] Attempting to log activity:
+[27-Nov-2024 14:40:25 Europe/Berlin] Array
+(
+    [srcode] => 2236914
+    [action] => PROFILE_UPDATE
+    [action_details] => Updated profile information: email, phone number, course, section, personality
+)
+
+[27-Nov-2024 14:40:25 Europe/Berlin] Activity logged successfully. ID: 161

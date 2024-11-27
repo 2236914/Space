@@ -7,6 +7,7 @@ if (session_status() === PHP_SESSION_NONE) {
 error_log("Current Session Variables: " . print_r($_SESSION, true));
 
 // Use correct relative paths
+require_once '../../includes/navigation_components.php';
 require_once __DIR__ . '/../../configs/config.php';
 define('ALLOW_ACCESS', true);
 require_once __DIR__ . '/../../admin_operations/profile_operations.php';
@@ -49,7 +50,7 @@ header("Pragma: no-cache");
 <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-radius-lg fixed-start ms-2 bg-white my-2" id="sidenav-main">
     <!-- Header -->
     <div class="sidenav-header">
-        <i class="fas fa-times p-3 cursor-pointer text-dark opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
+        <i class="fas fa-times p-3 cursor-pointer text-dark opacity-5 position-absolute end-0 top-0 d-xl-none" aria-hidden="true" id="iconSidenav"></i>
         <a class="navbar-brand px-4 py-3 m-0" href="student.php">
             <img src="../../assets/img/logo-space.png" class="navbar-brand-img" width="26" height="26" alt="main_logo">
             <span class="ms-1 font-weight-bold lead text-dark">SPACE</span>
@@ -62,7 +63,7 @@ header("Pragma: no-cache");
         <ul class="navbar-nav">
             <!-- User Profile -->
             <li class="nav-item mb-2 mt-0">
-                <a data-bs-toggle="collapse" href="#ProfileNav" class="nav-link text-dark" aria-controls="ProfileNav" role="button" aria-expanded="false">
+                <a href="#ProfileNav" class="nav-link text-dark" aria-controls="ProfileNav">
                     <img src="../../admin_operations/get_profile_picture.php?user_id=<?php echo $_SESSION['user_id']; ?>&user_type=<?php echo $_SESSION['role']; ?>" 
                          class="avatar"
                          onerror="this.src='../../assets/img/default-avatar.png';">
@@ -72,7 +73,6 @@ header("Pragma: no-cache");
                             if (isset($_SESSION['firstname']) && isset($_SESSION['lastname'])) {
                                 echo htmlspecialchars($_SESSION['firstname'] . ' ' . $_SESSION['lastname']);
                             } else {
-                                // Try to fetch from database if session variables are missing
                                 try {
                                     require_once '../../configs/config.php';
                                     $stmt = $pdo->prepare("SELECT firstname, lastname FROM students WHERE srcode = ?");
@@ -95,196 +95,188 @@ header("Pragma: no-cache");
                         ?>
                     </span>
                 </a>
-                <div class="collapse" id="ProfileNav">
-                    <ul class="nav">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" href="profile.php">
-                                <span class="sidenav-mini-icon">P</span>
-                                <span class="sidenav-normal ms-3 ps-1">Profile</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
             </li>
             <hr class="horizontal dark mt-0">
 
-            <!-- Dashboard -->
-            <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#dashboardsExamples" class="nav-link text-dark" aria-controls="dashboardsExamples" role="button" aria-expanded="false">
-                    <i class="material-symbols-rounded opacity-5">space_dashboard</i>
-                    <span class="nav-link-text ms-1 ps-1">Dashboard</span>
-                </a>
-                <div class="collapse" id="dashboardsExamples">
-                    <ul class="nav">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" href="student.php">
-                                <span class="sidenav-mini-icon">A</span>
-                                <span class="sidenav-normal ms-1 ps-1">Analytics</span>
+            <!-- Menu Items -->
+            <?php foreach ($menu_items as $link => $item): ?>
+                <?php if (isset($item['type']) && $item['type'] === 'divider'): ?>
+                    <hr class="horizontal dark mt-0">
+                <?php else: ?>
+                    <li class="nav-item">
+                        <?php if (isset($item['submenu'])): ?>
+                            <!-- Submenu item -->
+                            <a data-bs-toggle="collapse" 
+                               href="#<?= $link ?>" 
+                               class="nav-link text-dark <?= array_key_exists($current_page, $item['submenu']) ? 'active' : ''; ?>"
+                               aria-controls="<?= $link ?>" 
+                               role="button" 
+                               aria-expanded="<?= array_key_exists($current_page, $item['submenu']) ? 'true' : 'false'; ?>">
+                                <i class="material-symbols-rounded opacity-5"><?= $item['icon'] ?></i>
+                                <span class="nav-link-text ms-1 ps-1"><?= $item['text'] ?></span>
                             </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" href="mood-tracker.php">
-                                <span class="sidenav-mini-icon">MT</span>
-                                <span class="sidenav-normal ms-1 ps-1">Mood Tracker</span>
+                            <div class="collapse <?= array_key_exists($current_page, $item['submenu']) ? 'show' : ''; ?>" id="<?= $link ?>">
+                                <ul class="nav">
+                                    <?php foreach ($item['submenu'] as $sublink => $subitem): ?>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark <?= $current_page == $sublink ? 'active' : ''; ?>" 
+                                               href="<?= $sublink ?>">
+                                                <span class="sidenav-mini-icon"><?= $subitem['mini'] ?></span>
+                                                <span class="sidenav-normal ms-1 ps-1"><?= $subitem['text'] ?></span>
+                                            </a>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
+                        <?php else: ?>
+                            <!-- Regular item -->
+                            <a class="nav-link text-dark <?= $current_page == $link ? 'active' : ''; ?>" 
+                               href="<?= $link ?>">
+                                <i class="material-symbols-rounded opacity-5"><?= $item['icon'] ?></i>
+                                <span class="nav-link-text ms-1 ps-1"><?= $item['text'] ?></span>
                             </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" href="notifications.php">
-                                <span class="sidenav-mini-icon">N</span>
-                                <span class="sidenav-normal ms-1 ps-1">Notifications</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-            <!-- MENU -->
-            <li class="nav-item mt-3">
-                <h6 class="ps-3 ms-2 text-uppercase text-xs font-weight-bolder text-dark">MENU</h6>
-            </li>
-            <li class="nav-item">
-              <a data-bs-toggle="collapse" href="#account" class="nav-link text-dark active" aria-controls="account" role="button" aria-expanded="false">
-                    <i class="material-symbols-rounded opacity-5">account_circle</i>
-                    <span class="nav-link-text ms-1 ps-1">Account</span>
-                </a>
-                <div class="collapse show" id="account">
-                    <ul class="nav">
-                        <li class="nav-item active">
-                            <a class="nav-link text-dark active" href="account-settings.php">
-                                <span class="sidenav-mini-icon">S</span>
-                                <span class="sidenav-normal ms-1 ps-1">Settings</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
+                        <?php endif; ?>
+                    </li>
+                <?php endif; ?>
+            <?php endforeach; ?>
 
-            <!-- Calendar -->
-            <li class="nav-item">
-                <a class="nav-link text-dark" href="calendar.php">
-                    <i class="material-symbols-rounded opacity-5">calendar_month</i>
-                    <span class="nav-link-text ms-1 ps-1">Calendar</span>
-                </a>
-            </li>
-
-            <!-- Bottom Buttons -->
-            <li class="nav-item mt-3">
-                <hr class="horizontal dark mt-0">
-                <a href="support.php" class="btn bg-gradient-info w-90 mb-2 ms-2">
-                    <i class="material-symbols-rounded opacity-5 me-2">support_agent</i> Space Support
-                </a>
-            </li>
-            <li class="nav-item">
-                <button type="button" class="btn bg-gradient-primary w-90 mb-2 ms-2" onclick="handleSignOut()">
-                    <i class="material-symbols-rounded opacity-5 me-2">logout</i> Sign Out
+            <!-- Space Support Button -->
+            <hr class="horizontal dark mt-0">
+            <div class="d-flex justify-content-center">
+                <button type="button" class="btn bg-gradient-info w-85 mx-auto" onclick="showSupportDialog()">
+                    <i class="material-symbols-rounded opacity-5 me-2">support_agent</i>
+                    <span class="nav-link-text">Space Support</span>
                 </button>
-            </li>
+            </div>
+
+            <!-- Sign Out Button -->
+            <div class="d-flex justify-content-center mt-auto">
+                <button type="button" class="btn bg-gradient-primary w-85 mx-auto" onclick="handleSignOut()">
+                    <i class="material-symbols-rounded opacity-5 me-2">logout</i>
+                    <span class="nav-link-text">Sign Out</span>
+                </button>
+            </div>
         </ul>
     </div>
 </aside>
-  <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
-  <!-- Navbar -->
-  <nav class="navbar navbar-main navbar-expand-lg position-sticky mt-2 top-1 px-0 py-1 mx-3 shadow-none border-radius-lg z-index-sticky" id="navbarBlur" data-scroll="true">
+
+<main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+<nav class="navbar navbar-main navbar-expand-lg position-sticky mt-2 top-1 px-0 py-1 mx-3 shadow-none border-radius-lg z-index-sticky" id="navbarBlur" data-scroll="true">
     <div class="container-fluid py-1 px-2">
-      <div class="sidenav-toggler sidenav-toggler-inner d-xl-block d-none ">
-        <a href="javascript:;" class="nav-link text-body p-0">
-          <div class="sidenav-toggler-inner">
-            <i class="sidenav-toggler-line"></i>
-            <i class="sidenav-toggler-line"></i>
-            <i class="sidenav-toggler-line"></i>
-          </div>
-        </a>
-      </div>
-      <nav aria-label="breadcrumb" class="ps-2">
-        <ol class="breadcrumb bg-transparent mb-0 p-0">
-          <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-          <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Account</a></li>
-          <li class="breadcrumb-item text-sm text-dark active font-weight-bold" aria-current="page">Settings</li>
-        </ol>
-      </nav>
-      <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
-        <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-          <div class="input-group input-group-outline">
-            <label class="form-label">Search here</label>
-            <input type="text" class="form-control">
-          </div>
+    <div class="sidenav-toggler sidenav-toggler-inner d-xl-block d-none">
+            <a href="javascript:;" class="nav-link text-body p-0" id="iconSidenavDesktop">
+                <div class="sidenav-toggler-inner">
+                    <i class="sidenav-toggler-line"></i>
+                    <i class="sidenav-toggler-line"></i>
+                    <i class="sidenav-toggler-line"></i>
+                </div>
+            </a>
         </div>
-        <ul class="navbar-nav  justify-content-end">
-          <li class="nav-item">
-            <a href="Space/pages/authentication/signin/illustration.html" class="px-1 py-0 nav-link line-height-0" target="_blank">
-              <i class="material-symbols-rounded">
-            account_circle
-          </i>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="javascript:;" class="nav-link py-0 px-1 line-height-0">
-              <i class="material-symbols-rounded fixed-plugin-button-nav">
-            settings
-          </i>
-            </a>
-          </li>
-          <li class="nav-item dropdown py-0 pe-3">
-            <a href="javascript:;" class="nav-link py-0 px-1 position-relative line-height-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="material-symbols-rounded">
-            notifications
-          </i>
-              <span class="position-absolute top-5 start-100 translate-middle badge rounded-pill bg-danger border border-white small py-1 px-2">
-                <span class="small">3</span>
-                <span class="visually-hidden">unread notifications</span>
-              </span>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end p-2 me-sm-n4" aria-labelledby="dropdownMenuButton">
-                <li class="mb-2">
-                    <a class="dropdown-item border-radius-md" href="calendar.php">
-                        <div class="d-flex align-items-center py-1">
-                            <span class="material-symbols-rounded">calendar_month</span>
-                            <div class="ms-2">
-                                <h6 class="text-sm font-weight-normal my-auto">
-                                    Upcoming Counseling Session
-                                </h6>
-                            </div>
-                        </div>
-                    </a>
+        <nav aria-label="breadcrumb" class="ps-2">
+            <ol class="breadcrumb bg-transparent mb-0 p-0">
+                <li class="breadcrumb-item text-sm">
+                    <a class="opacity-5 text-dark" href="javascript:;">&nbsp;&nbsp;<?php echo htmlspecialchars($current_info['parent']); ?></a>
                 </li>
-                <li class="mb-2">
-                    <a class="dropdown-item border-radius-md" href="mood-tracker.php">
-                        <div class="d-flex align-items-center py-1">
-                            <span class="material-symbols-rounded">mood</span>
-                            <div class="ms-2">
-                                <h6 class="text-sm font-weight-normal my-auto">
-                                    Daily Mood Check Reminder
-                                </h6>
-                            </div>
-                        </div>
-                    </a>
+                <li class="breadcrumb-item text-sm text-dark active font-weight-bold" aria-current="page">
+                    <?php echo htmlspecialchars($current_info['title']); ?>
                 </li>
-                <li>
-                    <a class="dropdown-item border-radius-md" href="support.php">
-                        <div class="d-flex align-items-center py-1">
-                            <span class="material-symbols-rounded">support_agent</span>
-                            <div class="ms-2">
-                                <h6 class="text-sm font-weight-normal my-auto">
-                                    New Message from Counselor
-                                </h6>
-                            </div>
+            </ol>
+        </nav>
+        <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+            <div class="ms-md-auto pe-md-3 d-flex align-items-center position-relative">
+                <div class="input-group input-group-outline">
+                    <input type="text" class="form-control" id="searchInput" placeholder="Type to search..." oninput="searchMenu()">
+                </div>
+                <div id="searchResults" class="position-absolute bg-white rounded-3 shadow-lg p-2 mt-2 d-none" style="top: 100%; left: 0; right: 0; z-index: 1000;">
+                </div>
+            </div>
+            <ul class="navbar-nav justify-content-end">
+                <?php
+                // Define navbar items
+                $navbar_items = [
+                    [
+                        'href' => 'Space/pages/authentication/signin/illustration.html',
+                        'icon' => 'account_circle',
+                        'target' => '_blank'
+                    ],
+                    [
+                        'href' => 'javascript:;',
+                        'icon' => 'settings',
+                        'class' => 'fixed-plugin-button-nav'
+                    ],
+                    [
+                        'href' => 'javascript:;',
+                        'icon' => 'notifications',
+                        'badge' => '11',
+                        'dropdown' => [
+                            [
+                                'icon' => 'email',
+                                'text' => 'Check new messages'
+                            ],
+                            [
+                                'icon' => 'podcasts',
+                                'text' => 'Manage podcast session'
+                            ],
+                            [
+                                'icon' => 'shopping_cart',
+                                'text' => 'Payment successfully completed'
+                            ]
+                        ]
+                    ]
+                ];
+
+                // Loop through navbar items
+                foreach ($navbar_items as $item): ?>
+                    <li class="nav-item<?php echo isset($item['dropdown']) ? ' dropdown py-0 pe-3' : ''; ?>">
+                        <a href="<?php echo $item['href']; ?>" 
+                           class="<?php echo isset($item['dropdown']) ? 'nav-link py-0 px-1 position-relative line-height-0' : 'px-1 py-0 nav-link line-height-0'; ?>"
+                           <?php echo isset($item['target']) ? 'target="' . $item['target'] . '"' : ''; ?>
+                           <?php echo isset($item['dropdown']) ? 'id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"' : ''; ?>>
+                            <i class="material-symbols-rounded <?php echo isset($item['class']) ? $item['class'] : ''; ?>">
+                                <?php echo $item['icon']; ?>
+                            </i>
+                            <?php if (isset($item['badge'])): ?>
+                                <span class="position-absolute top-5 start-100 translate-middle badge rounded-pill bg-danger border border-white small py-1 px-2">
+                                    <span class="small"><?php echo $item['badge']; ?></span>
+                                    <span class="visually-hidden">unread notifications</span>
+                                </span>
+                            <?php endif; ?>
+                        </a>
+                        <?php if (isset($item['dropdown'])): ?>
+                            <ul class="dropdown-menu dropdown-menu-end p-2 me-sm-n4" aria-labelledby="dropdownMenuButton">
+                                <?php foreach ($item['dropdown'] as $index => $dropdownItem): ?>
+                                    <li class="<?php echo $index < count($item['dropdown']) - 1 ? 'mb-2' : ''; ?>">
+                                        <a class="dropdown-item border-radius-md" href="javascript:;">
+                                            <div class="d-flex align-items-center py-1">
+                                                <span class="material-symbols-rounded"><?php echo $dropdownItem['icon']; ?></span>
+                                                <div class="ms-2">
+                                                    <h6 class="text-sm font-weight-normal my-auto">
+                                                        <?php echo $dropdownItem['text']; ?>
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        <?php endif; ?>
+                    </li>
+                <?php endforeach; ?>
+
+                <!-- Mobile menu toggle -->
+                <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+                    <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
+                        <div class="sidenav-toggler-inner">
+                            <i class="sidenav-toggler-line"></i>
+                            <i class="sidenav-toggler-line"></i>
+                            <i class="sidenav-toggler-line"></i>
                         </div>
                     </a>
                 </li>
             </ul>
-          </li>
-          <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
-            <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
-              <div class="sidenav-toggler-inner">
-                <i class="sidenav-toggler-line"></i>
-                <i class="sidenav-toggler-line"></i>
-                <i class="sidenav-toggler-line"></i>
-              </div>
-            </a>
-          </li>
-        </ul>
-      </div>
+        </div>
     </div>
-  </nav>
+</nav>
     <div class="container-fluid my-3 py-4">
         <div class="row mb-5">
             <div class="col-lg-12 mt-lg-0 mt-4">
@@ -537,7 +529,7 @@ header("Pragma: no-cache");
                                   </div>
 
                                   <!-- Save Changes Button (Only one at the bottom) -->
-                                  <<div class="row mt-4">
+                                  <div class="row mt-4">
                                     <div class="col-12 text-end">
                                         <button type="submit" class="btn bg-gradient-primary btn-sm mb-0" id="saveChangesBtn">
                                             <i class="material-symbols-rounded text-sm">save</i>
@@ -821,16 +813,15 @@ header("Pragma: no-cache");
   <script src="../../assets/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="../../assets/js/material-dashboard.min.js?v=3.2.0"></script>
   <script src="../../assets/js/plugins/choices.min.js"></script>
+  <script src="../../assets/js/signout.js"></script>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <script src="../../assets/js/support.js"></script>
   <script>
     const choices = new Choices('[data-trigger]', {
       searchResultLimit: 5,
       renderChoiceLimit: 5
     });
   </script>
-
-  
-  <script<script async defer src="https://buttons.github.io/buttons.js"></script>
-  <script src="../../assets/js/material-dashboard.min.js?v=3.2.0"></script>
   <script>
 // Image preview and upload functionality
 document.getElementById('profilePictureInput').addEventListener('change', async function(e) {
@@ -942,153 +933,99 @@ document.getElementById('profilePictureInput').addEventListener('change', async 
     document.getElementById('profile-form').addEventListener('submit', async function(e) {
         e.preventDefault();
         
-        // Get form values
-        const email = this.querySelector('input[name="email"]').value;
-        const phone = this.querySelector('input[name="phonenum"]').value;
-        const requiredFields = ['firstname', 'lastname', 'email', 'phonenum', 'department'];
+        const formData = new FormData(this);
+        const email = formData.get('email').trim();
+        const phone = formData.get('phonenum').trim();
         
-        // Function to show toast
-        function showToast(type, message) {
-            const toast = document.createElement('div');
-            toast.className = `toast fade p-2 mt-2 ${type === 'warning' || type === 'danger' ? 'bg-white' : 'bg-gradient-' + type}`;
-            toast.setAttribute('role', 'alert');
-            toast.setAttribute('aria-live', 'assertive');
-            toast.setAttribute('aria-atomic', 'true');
-
-            let icon;
-            switch(type) {
-                case 'warning':
-                    icon = 'travel_explore';
-                    break;
-                case 'danger':
-                    icon = 'campaign';
-                    break;
-                case 'success':
-                    icon = 'check';
-                    break;
-                default:
-                    icon = 'notifications';
-            }
-
-            toast.innerHTML = `
-                <div class="toast-header ${type !== 'warning' && type !== 'danger' ? 'bg-transparent border-0' : 'border-0'}">
-                    <i class="material-symbols-rounded ${type !== 'warning' && type !== 'danger' ? 'text-white' : 'text-' + type} me-2">
-                        ${icon}
-                    </i>
-                    <span class="me-auto ${type !== 'warning' && type !== 'danger' ? 'text-white' : ''} font-weight-bold">
-                        Validation Error
-                    </span>
-                    <small class="${type !== 'warning' && type !== 'danger' ? 'text-white' : 'text-body'}">Just now</small>
-                    <i class="fas fa-times text-md ${type !== 'warning' && type !== 'danger' ? 'text-white' : ''} ms-3 cursor-pointer" 
-                       data-bs-dismiss="toast" aria-label="Close"></i>
-                </div>
-                <hr class="horizontal ${type !== 'warning' && type !== 'danger' ? 'light' : 'dark'} m-0">
-                <div class="toast-body ${type !== 'warning' && type !== 'danger' ? 'text-white' : ''}">
-                    ${message}
-                </div>
-            `;
-
-            const toastContainer = document.querySelector('.position-fixed.bottom-1.end-1.z-index-2');
-            toastContainer.appendChild(toast);
-
-            const bsToast = new bootstrap.Toast(toast);
-            bsToast.show();
-
-            // Remove toast after it's hidden
-            toast.addEventListener('hidden.bs.toast', function() {
-                toast.remove();
+        // Validate formats if provided
+        if (email && !email.endsWith('@g.batstate-u.edu.ph')) {
+            await Swal.fire({
+                icon: 'warning',
+                title: 'Invalid Email Format',
+                text: 'Please use your BatState-U email (@g.batstate-u.edu.ph)',
+                customClass: {
+                    confirmButton: 'btn bg-gradient-primary btn-sm mb-0'
+                },
+                buttonsStyling: false
             });
-        }
-
-        // Check for empty required fields
-        const emptyFields = requiredFields.filter(field => {
-            const value = this.querySelector(`[name="${field}"]`).value.trim();
-            return value === '';
-        });
-
-        if (emptyFields.length > 0) {
-            showToast('warning', 'Please fill in all required fields');
             return;
         }
 
-        // Validate email format
-        if (!email.endsWith('@g.batstate-u.edu.ph')) {
-            showToast('danger', 'Please use your BatState-U email (@g.batstate-u.edu.ph)');
+        if (phone && !/^09\d{9}$/.test(phone)) {
+            await Swal.fire({
+                icon: 'warning',
+                title: 'Invalid Phone Number',
+                text: 'Please enter a valid Philippine mobile number (e.g., 09123456789)',
+                customClass: {
+                    confirmButton: 'btn bg-gradient-primary btn-sm mb-0'
+                },
+                buttonsStyling: false
+            });
             return;
         }
 
-        // Validate phone number format (PH)
-        const phoneRegex = /^09\d{9}$/;
-        if (!phoneRegex.test(phone)) {
-            showToast('warning', 'Please enter a valid Philippine mobile number (e.g., 09123456789)');
-            return;
-        }
-
-        // If validations pass, proceed with confirmation
-        const result = await Swal.fire({
-            title: 'Update Profile?',
-            text: 'Are you sure you want to update your profile information?',
+        // First confirmation dialog
+        const willUpdate = await Swal.fire({
+            title: 'Are you sure?',
+            text: 'Do you want to update your profile information?',
             icon: 'question',
             showCancelButton: true,
             confirmButtonText: 'Yes, update it!',
             cancelButtonText: 'Cancel',
             customClass: {
                 confirmButton: 'btn bg-gradient-primary btn-sm mb-0 mx-2',
-                cancelButton: 'btn bg-gradient-secondary btn-sm mb-0 mx-2',
-                actions: 'mt-3',
-                popup: 'px-3'
+                cancelButton: 'btn bg-gradient-secondary btn-sm mb-0 mx-2'
             },
-            buttonsStyling: false
+            buttonsStyling: false,
+            allowOutsideClick: false
         });
 
-        // If user confirms, proceed with form submission
-        if (result.isConfirmed) {
-            const formData = new FormData(this);
+        // Wait for user confirmation
+        if (!willUpdate.isConfirmed) {
+            return; // Stop if user doesn't confirm
+        }
+
+        // If confirmed, proceed with update
+        try {
+            const response = await fetch('../../admin_operations/process_profile_update.php', {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
             
-            try {
-                const response = await fetch('../../admin_operations/process_profile_update.php', {
-                    method: 'POST',
-                    body: formData
+            if (data.success) {
+                // Show success message and wait for OK
+                const successResult = await Swal.fire({
+                    title: 'Successfully Updated!',
+                    text: 'Your profile has been updated successfully.',
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    customClass: {
+                        confirmButton: 'btn bg-gradient-primary btn-sm mb-0'
+                    },
+                    buttonsStyling: false,
+                    allowOutsideClick: false
                 });
 
-                const data = await response.json();
-                
-                if (data.success) {
-                    Swal.fire({
-                        title: 'Success!',
-                        text: data.message,
-                        icon: 'success',
-                        customClass: {
-                            confirmButton: 'btn bg-gradient-primary btn-sm mb-0',
-                        },
-                        buttonsStyling: false
-                    }).then(() => {
-                        // Reload page or update UI as needed
-                        window.location.reload();
-                    });
-                } else {
-                    Swal.fire({
-                        title: 'Error!',
-                        text: data.message,
-                        icon: 'error',
-                        customClass: {
-                            confirmButton: 'btn bg-gradient-primary btn-sm mb-0',
-                        },
-                        buttonsStyling: false
-                    });
+                // Only reload if OK is clicked
+                if (successResult.isConfirmed) {
+                    window.location.reload();
                 }
-            } catch (error) {
-                console.error('Error:', error);
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'An error occurred while updating the profile.',
-                    icon: 'error',
-                    customClass: {
-                        confirmButton: 'btn bg-gradient-primary btn-sm mb-0',
-                    },
-                    buttonsStyling: false
-                });
+            } else {
+                throw new Error(data.message || 'Update failed');
             }
+        } catch (error) {
+            console.error('Error:', error);
+            await Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: error.message || 'Failed to update profile',
+                customClass: {
+                    confirmButton: 'btn bg-gradient-primary btn-sm mb-0'
+                },
+                buttonsStyling: false
+            });
         }
     });
 
@@ -1444,58 +1381,65 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 <script>
-    // Add this function before the closingtag
-    async function handleSignOut() {
-        // Show confirmation dialog
-        const result = await Swal.fire({
-            title: 'Sign Out?',
-            text: 'Are you sure you want to sign out?',
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonText: 'Yes, sign out',
-            cancelButtonText: 'Cancel',
-            customClass: {
-                confirmButton: 'btn bg-gradient-primary btn-sm mb-0 mx-2',
-                cancelButton: 'btn bg-gradient-secondary btn-sm mb-0 mx-2',
-                actions: 'mt-3',
-                popup: 'px-3'
-            },
-            buttonsStyling: false
-        });
+function searchMenu() {
+    // Get search input
+    let input = document.getElementById("searchInput");
+    let filter = input.value.toLowerCase();
+    let resultsBox = document.getElementById("searchResults");
 
-        // If user confirms, proceed with sign out
-        if (result.isConfirmed) {
-            try {
-                // Show loading state
-                Swal.fire({
-                    title: 'Signing Out...',
-                    allowOutsideClick: false,
-                    didOpen: () => {
-                        Swal.showLoading();
-                    }
-                });
+    // Menu items to search through
+    let menuItems = [
+        { text: 'Analytics', link: 'student.php' },
+        { text: 'Mood Tracker', link: 'moodtracker.php' },
+        { text: 'Notifications', link: 'notifications.php' },
+        { text: 'Calendar', link: 'calendar.php' },
+        { text: 'Profile', link: 'profile.php' },
+        { text: 'Account Settings', link: 'account-settings.php' },
+        { text: 'Articles', link: 'articles.php' },
+        { text: 'Journal', link: 'journal.php' },
+        { text: 'Support', link: 'support.php' }
+    ];
 
-                // Perform sign out
-                const response = await fetch('../../admin_operations/logout.php');
-                if (response.ok) {
-                    window.location.href = '../signin.php';
-                } else {
-                    throw new Error('Sign out failed');
-                }
-            } catch (error) {
-                console.error('Sign out error:', error);
-                Swal.fire({
-                    title: 'Error',
-                    text: 'Failed to sign out. Please try again.',
-                    icon: 'error',
-                    customClass: {
-                        confirmButton: 'btn bg-gradient-primary btn-sm mb-0'
-                    },
-                    buttonsStyling: false
-                });
-            }
+    // Clear previous results
+    resultsBox.innerHTML = '';
+
+    if (filter) {
+        // Filter menu items
+        let matches = menuItems.filter(item => 
+            item.text.toLowerCase().includes(filter)
+        );
+
+        if (matches.length > 0) {
+            matches.forEach(item => {
+                let div = document.createElement('div');
+                div.className = 'search-result-item p-2';
+                div.style.cursor = 'pointer';
+                div.onclick = () => window.location.href = item.link;
+                div.innerHTML = item.text;
+                resultsBox.appendChild(div);
+            });
+            resultsBox.classList.remove('d-none');
+        } else {
+            let div = document.createElement('div');
+            div.className = 'p-2 text-muted';
+            div.innerHTML = 'No results found';
+            resultsBox.appendChild(div);
+            resultsBox.classList.remove('d-none');
         }
+    } else {
+        resultsBox.classList.add('d-none');
     }
+}
+
+// Close search results when clicking outside
+document.addEventListener('click', function(e) {
+    let resultsBox = document.getElementById('searchResults');
+    let searchInput = document.getElementById('searchInput');
+    
+    if (!searchInput.contains(e.target) && !resultsBox.contains(e.target)) {
+        resultsBox.classList.add('d-none');
+    }
+});
 </script>
 </body>
 </html>

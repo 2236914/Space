@@ -1,0 +1,4 @@
+UPDATE admins 
+SET password = SHA2('spaceadmin1@', 256) 
+WHERE email = 'space.admin@g.batstate-u.edu.ph';
+

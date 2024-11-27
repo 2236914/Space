@@ -1,5 +1,19 @@
 <?php
+// First load session config before any session operations
+require_once '../../configs/session_config.php';
+
+// Then start session if it hasn't started yet
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 require_once '../../configs/config.php';
+
+// Add this debug section temporarily
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'student') {
+    error_log('Moodlog access - Session: ' . print_r($_SESSION, true));
+}
+
 require_once '../../admin_operations/check_mood_logged.php';
 ?>
 <!DOCTYPE html>
@@ -19,6 +33,7 @@ require_once '../../admin_operations/check_mood_logged.php';
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twemoji/13.1.0/twemoji.min.css">
   <link id="pagestyle" href="../../assets/css/material-dashboard.css?v=3.2.0" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -109,7 +124,7 @@ require_once '../../admin_operations/check_mood_logged.php';
                         <button class="rounded-circle emoji-button" style="width: 50px; height: 50px; font-size: 40px; background-color: transparent; border: none;" ms-code-emoji="https://em-content.zobj.net/source/apple/354/angry-face_1f620.png" onclick="selectMood('😠')" data-bs-toggle="tooltip" data-bs-placement="top" title="Angry">😠</button>
                       </div>
                       <div class="col-2">
-                              <button class="rounded-circle emoji-button" style="width: 50px; height: 50px; font-size: 40px; background-color: transparent; border: none;" ms-code-emoji="https://em-content.zobj.net/source/apple/354/relieved-face_1f60c.png" onclick="selectMood('😌')" data-bs-toggle="tooltip" data-bs-placement="top" title="Calm">😌</button> 
+                              <button class="rounded-circle emoji-button" style="width: 50px; height: 50px; font-size: 40px; background-color: transparent; border: none;" ms-code-emoji="https://em-content.zobj.net/source/apple/354/relieved-face_1f60c.png" onclick="selectMood('😌')" data-bs-toggle="tooltip" data-bs-placement="top" title="Calm"></button> 
                       </div>
                       <div class="col-2">
                         <button class="rounded-circle emoji-button" style="width: 50px; height: 50px; font-size: 40px; background-color: transparent; border: none;" ms-code-emoji="https://em-content.zobj.net/source/apple/354/fearful-face_1f628.png" onclick="selectMood('😨')" data-bs-toggle="tooltip" data-bs-placement="top" title="Fearful">😨</button>
@@ -247,12 +262,27 @@ require_once '../../admin_operations/check_mood_logged.php';
         selectedButtonIndex = index;
     }
 
-    function selectMood(mood) {
-        if (selectedButtonIndex !== null) {
-            moodButtons[selectedButtonIndex].textContent = mood;
-            selectedEmojis[selectedButtonIndex] = mood;
-            updateEmojiValidation();
-            closeModal();
+    function selectMood(emoji) {
+        if (selectedButtonIndex === null) return;
+        
+        const currentButton = document.getElementById(`moodButton${selectedButtonIndex + 1}`);
+        if (currentButton) {
+            currentButton.innerHTML = emoji;
+            selectedEmojis[selectedButtonIndex] = emoji;
+            
+            // Update hidden inputs
+            document.getElementById('selected_emoji').value = selectedEmojis.filter(e => e).join(',');
+            document.getElementById('mood_name').value = selectedEmojis
+                .filter(e => e)
+                .map(emoji => getMoodName(emoji))
+                .join(',');
+        }
+        
+        // Close modal after selection
+        const modalEl = document.getElementById('emojiModal');
+        const modal = bootstrap.Modal.getInstance(modalEl);
+        if (modal) {
+            modal.hide();
         }
     }
 
@@ -325,56 +355,68 @@ require_once '../../admin_operations/check_mood_logged.php';
 
     moodForm.addEventListener('submit', async function(e) {
         e.preventDefault();
-
-        const description = document.getElementById('description').value;
-        const selectedCount = selectedEmojis.filter(emoji => emoji !== null).length;
         
-        // Case 3: No data entered at all
-        if (selectedCount === 0 && description.trim() === '') {
-            const noDataToast = new bootstrap.Toast(document.getElementById('noDataToast'));
-            noDataToast.show();
-            return;
-        }
-        
-        // Case 1: No emojis but has description
-        if (selectedCount < 5 && description.trim() !== '') {
-            const emojiToast = new bootstrap.Toast(document.getElementById('emojiToast'));
-            document.querySelector('#emojiToast .toast-body').textContent = 
-                `Please select ${5 - selectedCount} more emoji${5 - selectedCount > 1 ? 's' : ''} to express your mood`;
-            emojiToast.show();
-            return;
-        }
-        
-        // Case 2: Has emojis but no/invalid description
-        if (selectedCount > 0 && !validateDescription(description)) {
-            const descriptionToast = new bootstrap.Toast(document.getElementById('descriptionToast'));
-            descriptionToast.show();
-            return;
-        }
-
-        // If all validations pass, proceed with form submission
-        const formData = new FormData(this);
-        formData.append('srcode', '<?php echo $_SESSION['user_id']; ?>');
-
         try {
+            // Validate emojis
+            if (selectedEmojis.filter(e => e).length === 0) {
+                throw new Error('Please select at least one emoji');
+            }
+
+            const description = document.getElementById('description').value;
+            if (!description || description.trim().length < 10) {
+                throw new Error('Please enter a valid description');
+            }
+
+            const formData = new FormData();
+            const emojiString = selectedEmojis.filter(e => e).join(',');
+            const moodString = selectedEmojis
+                .filter(e => e)
+                .map(emoji => getMoodName(emoji))
+                .join(',');
+
+            formData.append('selected_emoji', emojiString);
+            formData.append('mood_name', moodString);
+            formData.append('description', description);
+
+            console.log('Sending mood data:', {
+                emojis: emojiString,
+                moods: moodString,
+                description: description.substring(0, 50) + '...'
+            });
+
             const response = await fetch('../../admin_operations/save_mood.php', {
                 method: 'POST',
                 body: formData
             });
 
-            const result = await response.json();
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
 
+            const result = await response.json();
+            
             if (result.status === 'success') {
-                const moodModal = new bootstrap.Modal(document.getElementById('moodModal'));
-                moodModal.show();
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: result.message,
+                    showConfirmButton: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = 'student.php';
+                    }
+                });
             } else {
                 throw new Error(result.message || 'Failed to log mood');
             }
         } catch (error) {
-            const dangerToast = new bootstrap.Toast(document.getElementById('dangerToast'));
-            document.querySelector('#dangerToast .toast-body').textContent = 
-                error.message || 'Something went wrong!';
-            dangerToast.show();
+            console.error('Error details:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: error.message || 'There was a problem submitting your mood.',
+                footer: 'If this persists, please contact support.'
+            });
         }
     });
 

@@ -3,98 +3,95 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 require_once '../configs/config.php';
+require_once 'SessionLogger.php';
+require_once 'Logger.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $response = array('status' => 'error', 'message' => '', 'role' => '', 'redirect' => '');
-    $ip_address = $_SERVER['REMOTE_ADDR'];
-    $current_time = date('Y-m-d H:i:s');
+    $sessionLogger = new SessionLogger($pdo);
+    $logger = new Logger($pdo);
 
     try {
         $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
         $password = $_POST['password'];
-        
-        // Debug log
-        error_log("Login attempt for email: " . $email);
         
         // Check students table first
         $stmt = $pdo->prepare("SELECT srcode, password, firstname, lastname, status FROM students WHERE email = ?");
         $stmt->execute([$email]);
         $student = $stmt->fetch();
         
-        if ($student) {
-            $hashedPassword = hash('sha256', $password);
+        if ($student && hash('sha256', $password) === $student['password']) {
+            // Store student session variables
+            $_SESSION['user_id'] = $student['srcode'];
+            $_SESSION['srcode'] = $student['srcode'];
+            $_SESSION['firstname'] = $student['firstname'];
+            $_SESSION['lastname'] = $student['lastname'];
+            $_SESSION['role'] = 'student';
             
-            if ($hashedPassword === $student['password']) {
-                // Check if account is deactivated
-                if ($student['status'] === 'deactivated') {
-                    // Reactivate the account
+            // Check if account needs reactivation
+            if ($student['status'] === 'deactivated') {
+                try {
+                    // Begin transaction
+                    $pdo->beginTransaction();
+                    
+                    // Update student status
                     $reactivateStmt = $pdo->prepare("UPDATE students SET status = 'active' WHERE srcode = ?");
                     $reactivateStmt->execute([$student['srcode']]);
                     
-                    // Log the reactivation
-                    $logStmt = $pdo->prepare("
-                        INSERT INTO activity_logs 
-                        (srcode, action, action_details, ip_address, created_at) 
-                        VALUES (?, 'ACCOUNT_REACTIVATION', ?, ?, ?)
-                    ");
-                    $logStmt->execute([
-                        $student['srcode'],
-                        'Student account reactivated through login',
-                        $ip_address,
-                        $current_time
+                    // Log reactivation with more detailed information
+                    $logger->logActivity([
+                        'srcode' => $student['srcode'],
+                        'therapist_id' => null,
+                        'admin_id' => null,
+                        'action' => 'Account Reactivation',  // Make this more readable
+                        'action_details' => 'Account was automatically reactivated upon login',
+                        'ip_address' => $_SERVER['REMOTE_ADDR']
                     ]);
+                    
+                    // Add a notification for the reactivation
+                    $notifStmt = $pdo->prepare("
+                        INSERT INTO notifications 
+                        (user_id, type, title, message, created_at) 
+                        VALUES 
+                        (?, 'account', 'Account Reactivated', 'Your account has been successfully reactivated.', NOW())
+                    ");
+                    $notifStmt->execute([$student['srcode']]);
+                    
+                    $pdo->commit();
+                    
+                    // Log success for debugging
+                    error_log("Account reactivation successful for srcode: " . $student['srcode']);
+                    
+                } catch (Exception $e) {
+                    $pdo->rollBack();
+                    error_log("Reactivation error: " . $e->getMessage());
+                    // Continue with login even if logging fails
                 }
-
-                // Log the login attempt
-                $logStmt = $pdo->prepare("
-                    INSERT INTO activity_logs 
-                    (srcode, action, action_details, ip_address, created_at) 
-                    VALUES (?, 'LOGIN', ?, ?, ?)
-                ");
-                $logStmt->execute([
-                    $student['srcode'],
-                    'Student login successful',
-                    $ip_address,
-                    $current_time
-                ]);
-
-                // Create session log
-                $sessionStmt = $pdo->prepare("
-                    INSERT INTO session_logs 
-                    (srcode, login_time, ip_address, session_status) 
-                    VALUES (?, ?, ?, 'active')
-                ");
-                $sessionStmt->execute([
-                    $student['srcode'],
-                    $current_time,
-                    $ip_address
-                ]);
-
-                // Store session_id for logout tracking
-                $_SESSION['session_log_id'] = $pdo->lastInsertId();
-                
-                // Rest of student login code...
-                $_SESSION['user_id'] = $student['srcode'];
-                $_SESSION['firstname'] = $student['firstname'];
-                $_SESSION['role'] = 'student';
-                
-                // Check mood log
-                $today = date('Y-m-d');
-                $moodCheckStmt = $pdo->prepare("SELECT COUNT(*) as mood_count FROM moodlog WHERE srcode = ? AND DATE(log_date) = ?");
-                $moodCheckStmt->execute([$student['srcode'], $today]);
-                $moodCheck = $moodCheckStmt->fetch();
-                
-                $response = [
-                    'status' => 'success',
-                    'title' => 'Hello ' . $student['firstname'] . '!',
-                    'message' => 'Welcome back to Space',
-                    'role' => 'student',
-                    'redirect' => '/pages/student/moodlog.php'
-                ];
-                
-                echo json_encode($response);
-                exit;
             }
+
+            // Log session and activity
+            $sessionId = $sessionLogger->logUserSession('student', $student['srcode'], 'login');
+            $_SESSION['session_log_id'] = $sessionId;
+            
+            $logger->logActivity([
+                'srcode' => $student['srcode'],
+                'therapist_id' => null,
+                'admin_id' => null,
+                'action' => 'LOGIN',
+                'action_details' => 'Student login successful',
+                'ip_address' => $_SERVER['REMOTE_ADDR']
+            ]);
+
+            $response = [
+                'status' => 'success',
+                'title' => 'Hello ' . $student['firstname'] . '!',
+                'message' => 'Welcome back to Space',
+                'role' => 'student',
+                'redirect' => '/pages/student/moodlog.php'
+            ];
+            
+            echo json_encode($response);
+            exit;
         }
 
         // Check admins
@@ -102,49 +99,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->execute([$email]);
         $admin = $stmt->fetch();
         
-        if ($admin) {
-            $hashedPassword = hash('sha256', $password);
-            if ($hashedPassword === $admin['password']) {
-                // Log admin login
-                $logStmt = $pdo->prepare("
-                    INSERT INTO activity_logs 
-                    (admin_id, action, action_details, ip_address, created_at) 
-                    VALUES (?, 'LOGIN', ?, ?, ?)
-                ");
-                $logStmt->execute([
-                    $admin['admin_id'],
-                    'Admin login successful',
-                    $ip_address,
-                    $current_time
-                ]);
+        if ($admin && hash('sha256', $password) === $admin['password']) {
+            // Store admin session variables
+            $_SESSION['user_id'] = $admin['admin_id'];
+            $_SESSION['firstname'] = $admin['firstname'];
+            $_SESSION['lastname'] = $admin['lastname'];
+            $_SESSION['email'] = $admin['email'];
+            $_SESSION['role'] = 'admin';
 
-                // Create session log
-                $sessionStmt = $pdo->prepare("
-                    INSERT INTO session_logs 
-                    (admin_id, login_time, ip_address, session_status) 
-                    VALUES (?, ?, ?, 'active')
-                ");
-                $sessionStmt->execute([
-                    $admin['admin_id'],
-                    $current_time,
-                    $ip_address
-                ]);
+            // Log session and activity
+            $sessionId = $sessionLogger->logUserSession('admin', $admin['admin_id'], 'login');
+            $_SESSION['session_log_id'] = $sessionId;
+            
+            $logger->logActivity([
+                'srcode' => null,
+                'therapist_id' => null,
+                'admin_id' => $admin['admin_id'],
+                'action' => 'LOGIN',
+                'action_details' => 'Admin login successful',
+                'ip_address' => $_SERVER['REMOTE_ADDR']
+            ]);
 
-                $_SESSION['session_log_id'] = $pdo->lastInsertId();
-                $_SESSION['user_id'] = $admin['admin_id'];
-                $_SESSION['role'] = $admin['role'];
-                
-                $response = [
-                    'status' => 'success',
-                    'title' => 'Hello Administrator!',
-                    'message' => 'Welcome back to Space!',
-                    'role' => $admin['role'],
-                    'redirect' => '/pages/admin/admin.php'
-                ];
-                
-                echo json_encode($response);
-                exit;
-            }
+            $response = [
+                'status' => 'success',
+                'title' => 'Hello ' . $admin['firstname'] . '!',
+                'message' => 'Welcome back to Space!',
+                'role' => 'admin',
+                'redirect' => '/pages/admin/admin.php'
+            ];
+            
+            echo json_encode($response);
+            exit;
         }
 
         // Check therapists
@@ -152,62 +137,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->execute([$email]);
         $therapist = $stmt->fetch();
         
-        if ($therapist) {
-            $hashedPassword = hash('sha256', $password);
-            if ($hashedPassword === $therapist['password']) {
-                // Log therapist login
-                $logStmt = $pdo->prepare("
-                    INSERT INTO activity_logs 
-                    (therapist_id, action, action_details, ip_address, created_at) 
-                    VALUES (?, 'LOGIN', ?, ?, ?)
-                ");
-                $logStmt->execute([
-                    $therapist['therapist_id'],
-                    'Therapist login successful',
-                    $ip_address,
-                    $current_time
-                ]);
+        if ($therapist && hash('sha256', $password) === $therapist['password']) {
+            // Store therapist session variables
+            $_SESSION['user_id'] = $therapist['therapist_id'];
+            $_SESSION['firstname'] = $therapist['firstname'];
+            $_SESSION['lastname'] = $therapist['lastname'];
+            $_SESSION['email'] = $therapist['email'];
+            $_SESSION['role'] = 'therapist';
 
-                // Create session log
-                $sessionStmt = $pdo->prepare("
-                    INSERT INTO session_logs 
-                    (therapist_id, login_time, ip_address, session_status) 
-                    VALUES (?, ?, ?, 'active')
-                ");
-                $sessionStmt->execute([
-                    $therapist['therapist_id'],
-                    $current_time,
-                    $ip_address
-                ]);
+            // Log session and activity
+            $sessionId = $sessionLogger->logUserSession('therapist', $therapist['therapist_id'], 'login');
+            $_SESSION['session_log_id'] = $sessionId;
+            
+            $logger->logActivity([
+                'srcode' => null,
+                'therapist_id' => $therapist['therapist_id'],
+                'admin_id' => null,
+                'action' => 'LOGIN',
+                'action_details' => 'Therapist login successful',
+                'ip_address' => $_SERVER['REMOTE_ADDR']
+            ]);
 
-                $_SESSION['session_log_id'] = $pdo->lastInsertId();
-                $_SESSION['user_id'] = $therapist['therapist_id'];
-                $_SESSION['role'] = 'therapist';
-                
-                $response = [
-                    'status' => 'success',
-                    'title' => 'Hello Therapist!',
-                    'message' => 'Welcome back to Space!',
-                    'role' => 'therapist',
-                    'redirect' => '/pages/therapist/therapist.php'
-                ];
-                
-                echo json_encode($response);
-                exit;
-            }
+            $response = [
+                'status' => 'success',
+                'title' => 'Hello ' . $therapist['firstname'] . '!',
+                'message' => 'Welcome back to Space!',
+                'role' => 'therapist',
+                'redirect' => '/pages/therapist/therapist.php'
+            ];
+            
+            echo json_encode($response);
+            exit;
         }
-
-        // Log failed login attempt
-        $logStmt = $pdo->prepare("
-            INSERT INTO activity_logs 
-            (action, action_details, ip_address, created_at) 
-            VALUES ('LOGIN_FAILED', ?, ?, ?)
-        ");
-        $logStmt->execute([
-            'Failed login attempt for email: ' . $email,
-            $ip_address,
-            $current_time
-        ]);
 
         // If no match found
         $response['status'] = 'error';

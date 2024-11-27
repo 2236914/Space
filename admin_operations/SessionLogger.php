@@ -130,34 +130,28 @@ class SessionLogger {
 
     public function logActivity($srcode, $therapist_id, $admin_id, $action, $description, $ip_address) {
         try {
-            // Enable PDO error mode
-            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            
             // Debug logging
             error_log("=== Activity Logging Start ===");
             error_log("SR Code: " . ($srcode ?? 'null'));
-            error_log("Therapist ID: " . ($therapist_id ?? 'null'));
-            error_log("Admin ID: " . ($admin_id ?? 'null'));
             error_log("Action: " . $action);
             error_log("Action Details: " . $description);
             error_log("IP: " . $ip_address);
             
-            // Updated SQL to match your actual table structure
+            // Modified SQL to match your actual table structure
             $sql = "INSERT INTO activity_logs 
-                   (srcode, therapist_id, admin_id, action, action_details, ip_address, created_at) 
-                   VALUES (?, ?, ?, ?, ?, ?, NOW())";
+                    (srcode, action, action_details, ip_address) 
+                    VALUES 
+                    (?, ?, ?, ?)";
             
             error_log("Executing SQL: " . $sql);
             
             $stmt = $this->pdo->prepare($sql);
             
-            // Execute with parameters
+            // Execute with only the fields that exist in your table
             $success = $stmt->execute([
                 $srcode,
-                $therapist_id,
-                $admin_id,
                 $action,
-                $description,  // This will go into action_details column
+                $description,
                 $ip_address
             ]);
             
@@ -174,6 +168,22 @@ class SessionLogger {
             error_log("Database error in logActivity: " . $e->getMessage());
             error_log("Stack trace: " . $e->getTraceAsString());
             throw new Exception('Failed to log activity: ' . $e->getMessage());
+        }
+    }
+
+    public function logUserSession($userType, $userId, $action = 'login') {
+        $ip = $this->getIPAddress();
+        
+        try {
+            if ($action === 'login') {
+                return $this->startSession($userType, $userId);
+            } else if ($action === 'logout') {
+                return $this->endSession($userType, $userId);
+            }
+            return false;
+        } catch (Exception $e) {
+            error_log("Error logging session: " . $e->getMessage());
+            return false;
         }
     }
 }

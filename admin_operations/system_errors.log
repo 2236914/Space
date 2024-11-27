@@ -1,0 +1,140 @@
+[2024-11-27 02:46:46] DEBUG: Database connection established
+Context: []
+Trace: [
+    {
+        "file": "C:\\xampp\\htdocs\\Space\\admin_operations\\error_logger.php",
+        "line": 76,
+        "function": "logError",
+        "class": "ErrorLogger",
+        "type": "->"
+    },
+    {
+        "file": "C:\\xampp\\htdocs\\Space\\admin_operations\\save_mood.php",
+        "line": 67,
+        "function": "logDebug",
+        "class": "ErrorLogger",
+        "type": "->"
+    }
+]
+--------------------------------------------------------------------------------
+[2024-11-27 02:46:46] DATABASE_ERROR: Failed to log to database: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'user_id' in 'field list'
+[2024-11-27 02:46:46] DEBUG: Preparing insert
+Context: {
+    "moodlog_id": "MOOD-0018",
+    "data": {
+        "selected_emoji": "\ud83d\ude0a,\ud83d\ude20,\ud83d\ude20,\ud83d\ude0c,\ud83d\ude28",
+        "mood_name": "Happy,Angry,Angry,Calm,Fearful",
+        "description": "At sa paglisan ng araw, akala'y 'di ka mahal\r\nAt ang nadarama'y hindi magtatagal\r\nMalay ko bang hindi magpapagal\r\nIibigin kita kahit ga'no pa katagal\r\nTumingin ka sa 'king mga mata\r\nAt hindi mo na kailangan pang\r\nMagtanong nang paulit-ulit\r\nIkaw lang ang iniibig .... At sa paglisan ng araw, akala'y 'di ka mahal\r\nAt ang nadarama'y hindi magtatagal\r\nMalay ko bang hindi magpapagal\r\nIibigin kita kahit ga'no pa katagal\r\nTumingin ka sa 'king mga mata\r\nAt hindi mo na kailangan pang\r\nMagtanong nang paulit-ulit\r\nIkaw lang ang iniibig...."
+    }
+}
+Trace: [
+    {
+        "file": "C:\\xampp\\htdocs\\Space\\admin_operations\\error_logger.php",
+        "line": 76,
+        "function": "logError",
+        "class": "ErrorLogger",
+        "type": "->"
+    },
+    {
+        "file": "C:\\xampp\\htdocs\\Space\\admin_operations\\save_mood.php",
+        "line": 90,
+        "function": "logDebug",
+        "class": "ErrorLogger",
+        "type": "->"
+    }
+]
+--------------------------------------------------------------------------------
+[2024-11-27 02:46:46] DATABASE_ERROR: Failed to log to database: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'user_id' in 'field list'
+[2024-11-27 02:46:46] INFO: Insert successful
+Context: {
+    "moodlog_id": "MOOD-0018",
+    "rows_affected": 1
+}
+Trace: [
+    {
+        "file": "C:\\xampp\\htdocs\\Space\\admin_operations\\error_logger.php",
+        "line": 80,
+        "function": "logError",
+        "class": "ErrorLogger",
+        "type": "->"
+    },
+    {
+        "file": "C:\\xampp\\htdocs\\Space\\admin_operations\\save_mood.php",
+        "line": 115,
+        "function": "logInfo",
+        "class": "ErrorLogger",
+        "type": "->"
+    }
+]
+--------------------------------------------------------------------------------
+[2024-11-27 02:46:46] DATABASE_ERROR: Failed to log to database: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'user_id' in 'field list'
+[2024-11-27 05:14:37] DEBUG: Database connection established
+Context: []
+Trace: [
+    {
+        "file": "C:\\xampp\\htdocs\\Space\\admin_operations\\error_logger.php",
+        "line": 76,
+        "function": "logError",
+        "class": "ErrorLogger",
+        "type": "->"
+    },
+    {
+        "file": "C:\\xampp\\htdocs\\Space\\admin_operations\\save_mood.php",
+        "line": 82,
+        "function": "logDebug",
+        "class": "ErrorLogger",
+        "type": "->"
+    }
+]
+--------------------------------------------------------------------------------
+[2024-11-27 05:14:37] DATABASE_ERROR: Failed to log to database: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'user_id' in 'field list'
+[2024-11-27 05:14:37] DEBUG: Preparing insert
+Context: {
+    "moodlog_id": "MOOD-0019",
+    "data": {
+        "selected_emoji": "\u2639\ufe0f,\u2639\ufe0f,\ud83d\ude20,\ud83d\ude0d,\ud83d\ude14",
+        "mood_name": "Sad,Sad,Angry,Love,Disappointed",
+        "description": "'Today was an absolutely fantastic day. I woke up feeling refreshed and ready to tackle any challenges that came my way. The sun was shining brightly, and there was a gentle breeze that made the weather perfect. I spent the morning working on a project that I am truly passionate about, and everything seemed to flow effortlessly. In the afternoon, I met up with some friends for lunch, and we had a great time catching up and sharing stories. The food was delicious, and the company was even better. Later in the evening, I went for a walk in the park, enjoying the beautiful scenery and reflecting on how grateful I am for all the positive things in my life. Overall, it was a day filled with joy, laughter, and meaningful moments that I will cherish."
+    }
+}
+Trace: [
+    {
+        "file": "C:\\xampp\\htdocs\\Space\\admin_operations\\error_logger.php",
+        "line": 76,
+        "function": "logError",
+        "class": "ErrorLogger",
+        "type": "->"
+    },
+    {
+        "file": "C:\\xampp\\htdocs\\Space\\admin_operations\\save_mood.php",
+        "line": 105,
+        "function": "logDebug",
+        "class": "ErrorLogger",
+        "type": "->"
+    }
+]
+--------------------------------------------------------------------------------
+[2024-11-27 05:14:37] DATABASE_ERROR: Failed to log to database: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'user_id' in 'field list'
+[2024-11-27 05:14:37] INFO: Insert successful
+Context: {
+    "moodlog_id": "MOOD-0019",
+    "rows_affected": 1
+}
+Trace: [
+    {
+        "file": "C:\\xampp\\htdocs\\Space\\admin_operations\\error_logger.php",
+        "line": 80,
+        "function": "logError",
+        "class": "ErrorLogger",
+        "type": "->"
+    },
+    {
+        "file": "C:\\xampp\\htdocs\\Space\\admin_operations\\save_mood.php",
+        "line": 130,
+        "function": "logInfo",
+        "class": "ErrorLogger",
+        "type": "->"
+    }
+]
+--------------------------------------------------------------------------------
+[2024-11-27 05:14:37] DATABASE_ERROR: Failed to log to database: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'user_id' in 'field list'

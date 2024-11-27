@@ -22,10 +22,11 @@
   <!------------------- NAV ----------------------->
   <div class="container position-sticky z-index-sticky top-0">
     <div class="row">
-        <div class="col-12">
-            <nav class="navbar navbar-expand-lg blur border-radius-xl top-0 z-index-fixed shadow position-absolute my-3 py-2 start-0 end-0 mx-4">
+        <div class="col-12 px-0">
+            <nav class="navbar navbar-expand-lg blur border-radius-xl top-0 z-index-fixed shadow position-absolute my-3 py-2 start-0 end-0 mx-auto">
                 <div class="container-fluid">
-                    <a class="navbar-brand font-weight-bolder ms-sm-3" href="index.php" rel="tooltip" data-placement="bottom">
+                    <a class="navbar-brand font-weight-bolder ms-sm-3 d-flex align-items-center" href="index.php" rel="tooltip" data-placement="bottom">
+                        <img src="../assets/img/logo-space.png" class="navbar-brand-img me-2" alt="Space Logo" style="height: 20px; width: auto;">
                         SPACE
                     </a>
                     <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
@@ -100,71 +101,85 @@
   </div>
   <main>
     <!------------------- HEADER/HOME ----------------------->
-  <header id="home">
-    <div class="page-header min-vh-100" style="background-image: url('../assets/img/bg-header.png');" loading="lazy">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-6 col-md-7 d-flex justify-content-center flex-column">
-            <h1 class="font-weight-black mb-4" style="font-size: 4.5rem;">Space</h1>
-            <h5 class="text-muted">
-              Prioritize your well-being with professional support, self-care tools, and a community that understands.
-            </h5>
-            <div class="buttons">
-                <a href="#about" class="btn btn-primary mt-4 btn-responsive">Discover</a>
-                <a type="button" class="btn btn-outline-primary shadow-none mt-4 btn-responsive">Join Space</a>
-            </div>
+  <section class="py-3" id="home">
+    <div class="container">
+      <div class="row align-items-center min-vh-100 py-5 mx-0">
+        <!-- Left column with text -->
+        <div class="col-lg-6 col-md-12 d-flex justify-content-center flex-column mb-lg-0 mb-5 text-lg-start text-center">
+          <h1 class="font-weight-black mb-4" style="font-size: clamp(2.5rem, 5vw, 4.5rem);">Space</h1>
+          <h5 class="text-muted px-lg-0 px-3">
+            Prioritize your well-being with professional support, self-care tools, and a community that understands.
+          </h5>
+          <div class="buttons d-flex gap-3 justify-content-lg-start justify-content-center">
+              <a href="#about" class="btn bg-gradient-primary btn-responsive mt-4">Discover</a>
+              <a type="button" class="btn btn-outline-primary btn-responsive shadow-none mt-4">Join Space</a>
+          </div>
         </div>
+        <!-- Right column with image -->
+        <div class="col-lg-6 col-md-12 text-center">
+          <img src="../assets/img/happy.png" 
+               class="img-fluid" 
+               alt="Space Header Image" 
+               loading="lazy"
+               style="max-width: 80%; width: auto; height: auto;">
         </div>
       </div>
     </div>
-  </header>
+  </section>
     <!------------------- ABOUT  ----------------------->
-    <section class="py-7" id="about">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-md-5 col-10 d-flex justify-content-center flex-column mx-auto text-lg-start text-center">
-            <h3 class="mb-2">Find your safe space</h3>
-            <p class="mb-2">Space is a web-based system providing BSU TNEU students with accessible therapy, mood tracking, and self-care tools. Empowering you to prioritize your mental health, Space offers:</p>
-            <ul class="m-lg-2 m-auto">
+    <section class="py-4" id="about">
+      <div class="container">
+        <div class="row align-items-center py-5 mx-0">
+          <div class="col-lg-6 col-md-12 d-flex justify-content-center flex-column mb-lg-0 mb-5 text-lg-start text-center">
+            <h3 class="mb-4">Find your safe space</h3>
+            <p class="mb-4">Space is a web-based system providing BSU TNEU students with accessible therapy, mood tracking, and self-care tools. Empowering you to prioritize your mental health, Space offers:</p>
+            <ul class="mb-4 px-lg-0 px-3" style="margin-left: 20px;">
               <li class="mb-2">Licensed Therapy: Secure, on-demand sessions.</li>
               <li class="mb-2">Mood Tracking: Monitor and understand your emotions.</li>
               <li class="mb-2">Self-Care Tools: Mindfulness exercises, journaling, and more.</li>
             </ul>
-            <h3 class="mt-4">We’re here for you</h3>
+            <h3 class="mb-4">We're here for you</h3>
             <p>Join a supportive community that puts your well-being first—because your mental health matters.</p>
-            <p class="blockquote my-3 ps-2">
-              <span class="text-bold">“It's okay to not be okay. What matters is taking that first step to heal.”</span>
+            <p class="blockquote my-4 ms-2">
+              <span class="text-bold"> "It's okay to not be okay. What matters is taking that first step to heal."</span>
               <br>
               <small class="blockquote-footer">
-                Space Team.
+                 Space Team.
               </small>
             </p>
           </div>
-          <div class="col-md-5 col-6 mx-lg-0 mx-auto px-lg-0 px-md-0 my-auto">
-            <img class="max-width-400 border-radius-lg shadow-lg" src="https://cdn.donmai.us/original/18/c1/__paimon_genshin_impact_drawn_by_waxgroud__18c1ae5bd2a75471a3552686cf731a0c.png">
+          <div class="col-lg-6 col-md-12 d-flex justify-content-center align-items-center">
+            <img src="https://cdn.donmai.us/original/18/c1/__paimon_genshin_impact_drawn_by_waxgroud__18c1ae5bd2a75471a3552686cf731a0c.png" 
+                 class="img-fluid" 
+                 alt="Space About Image" 
+                 loading="lazy"
+                 style="max-width: 80%; width: auto; height: auto; border-radius: 10px;">
           </div>
         </div>
       </div>
     </section>
     <!------------------- TEAM/DEVELOPERS  ----------------------->
-    <section class="py-8" id="team">
+    <section class="py-5" id="team">
         <div class="container">
-          <div class="row">
-            <div class="col-md-auto mb-5">
+          <div class="row align-items-center py-5 mx-0">
+            <div class="col-12 mb-5">
               <div class="icon icon-shape icon-md bg-gradient-primary shadow text-center mb-3">
                 <i class="material-symbols-rounded opacity-10">supervisor_account</i>
               </div>
-              <h3>CreoTech</h3>
-              <p>Meet the brilliant minds behind CreoTech, the driving force behind Space. Our team is dedicated to blending technology and compassion to create an innovative platform that empowers student mental health.</p>
+              <h3 class="mb-auto">CreoTech</h3>
+              <div class="col-12 mb-5">
+              <p style="max-width: 100%;">
+                Meet the brilliant minds behind CreoTech, the driving force behind Space. Our team is dedicated to blending technology and compassion to create an innovative platform that empowers student mental health.
+              </p>
             </div>
           </div>
-          <div class="row mt-5">
-            <div class="col-lg-4 col-md-6 mt-md-0 mt-5">
+          <div class="row mx-3 pt-6">
+            <div class="col-lg-4 col-md-6 pb-5">
               <div class="card card-profile card-plain">
-                <div class="text-start mt-n5 z-index-1">
+                <div class="text-start mt-n5">
                   <div class="position-relative w-25">
                     <div class="blur-shadow-avatar">
-                      <img class="avatar avatar-xxl border-radius-xl" src="../assets/img/faith.png">
+                      <img class="avatar avatar-xxl border-radius-xl" src="../assets/img/faithanne.png">
                     </div>
                   </div>
                 </div>
@@ -174,9 +189,9 @@
                 </div>
               </div>
             </div>
-            <div class="col-lg-4 col-md-6 mt-md-0 mt-5">
+            <div class="col-lg-4 col-md-6 pb-5">
               <div class="card card-profile card-plain">
-                <div class="mt-n5 z-index-1">
+                <div class="text-start mt-n5">
                   <div class="position-relative w-25">
                     <div class="blur-shadow-avatar">
                       <img class="avatar avatar-xxl border-radius-xl" src="../assets/img/alethea.jpg">
@@ -189,9 +204,9 @@
                 </div>
               </div>
             </div>
-            <div class="col-lg-4 col-md-6 mx-md-auto mt-md-0 mt-5">
+            <div class="col-lg-4 col-md-6 pb-5">
               <div class="card card-profile card-plain">
-                <div class="mt-n5 z-index-1">
+                <div class="text-start mt-n5">
                   <div class="position-relative w-25">
                     <div class="blur-shadow-avatar">
                       <img class="avatar avatar-xxl border-radius-xl" src="../assets/img/gwy.jpg">
@@ -208,11 +223,11 @@
         </div>
     </section>
     <!------------------- THERAPY/APPLICATION  ----------------------->
-    <section class="py-8" id="therapy">
+    <section class="py-5" id="therapy">
       <div class="container">
-          <div class="row align-items-center">
-              <div class="col-lg-6">
-                  <div class="row justify-content-start">
+          <div class="row align-items-center py-5 mx-0">
+              <div class="col-lg-6 col-md-12">
+                  <div class="row justify-content-start g-4">
                       <div class="col-md-6">
                           <div class="info">
                               <i class="material-symbols-rounded text-3xl text-gradient text-primary mb-3">verified</i>
@@ -227,8 +242,6 @@
                               <p>Easily schedule therapy sessions tailored to your needs, ensuring accessibility and privacy.</p>
                           </div>
                       </div>
-                  </div>
-                  <div class="row justify-content-start mt-4">
                       <div class="col-md-6">
                           <div class="info">
                               <i class="material-symbols-rounded text-3xl text-gradient text-primary mb-3">support</i>
@@ -249,15 +262,17 @@
                   <div class="card">
                       <div class="card-header p-0 position-relative mt-2 mx-2 z-index-2">
                           <a class="d-block blur-shadow-image">
-                              <img src="https://w.wallhaven.cc/full/dp/wallhaven-dpyvv3.jpg" alt="img-colored-shadow" class="img-fluid border-radius-lg">
+                              <img src="https://w.wallhaven.cc/full/dp/wallhaven-dpyvv3.jpg" 
+                                   alt="img-colored-shadow" 
+                                   class="img-fluid border-radius-lg">
                           </a>
                       </div>
-                      <div class="card-body text-center">
+                      <div class="card-body text-center p-4">
                           <h5 class="font-weight-normal">
                               <a href="javascript:;">Join Our Mental Health Team!</a>
                           </h5>
                           <p class="mb-0">
-                              We’re expanding our network of licensed therapists to better serve our students. Collaborate with us to make a meaningful impact in the field of mental health.
+                              We're expanding our network of licensed therapists to better serve our students. Collaborate with us to make a meaningful impact in the field of mental health.
                           </p>
                           <button type="button" class="btn bg-gradient-primary btn-sm mb-0 mt-3" onclick="window.location.href='therapist-application.html'">Apply Now</button>
                       </div>
@@ -272,12 +287,15 @@
           <div class="container">
               <div class="row">
                   <!-- Left Side: Image -->
-                  <div class="col-lg-6 col-md-8 d-none d-md-flex justify-content-center align-items-center">
-                    <img src="https://preview.redd.it/happy-birthday-paimon-v0-x5arhzw0yb3b1.jpg?width=640&crop=smart&auto=webp&s=bac82f414b88ca68e5d9852632011ede65a98146" alt="Contact Us" class="img-fluid" style="border-radius: 10px;">
-                  </div>                
+                  <div class="col-lg-6 col-md-8 d-flex justify-content-center align-items-center mx-auto">
+                    <img src="https://preview.redd.it/happy-birthday-paimon-v0-x5arhzw0yb3b1.jpg?width=640&crop=smart&auto=webp&s=bac82f414b88ca68e5d9852632011ede65a98146" 
+                         alt="Contact Us" 
+                         class="img-fluid" 
+                         style="border-radius: 10px; max-width: 80%;">
+                  </div>
                   <!-- Right Side: Contact Form -->
                   <div class="col-lg-6 col-md-8 ms-auto me-auto">
-                    <div class="card d-flex blur justify-content-center my-sm-0 my-sm-6 mt-8 mb-5 border-0"> <!-- Removed shadow-lg and added border-0 -->
+                    <div class="card d-flex blur justify-content-center my-sm-0 my-sm-6 mt-8 mb-5 border-0"> 
                         <div class="card-header p-0 position-relative mt-2 mx-2 z-index-2 bg-transparent text-center">
                             <h3>Contact Us</h3>
                             <p class="text-sm mb-0">For further questions contact us using the form below.</p>
@@ -409,7 +427,7 @@
                 </h5>
                 <div id="collapseFifth" class="accordion-collapse collapse" aria-labelledby="headingFifth" data-bs-parent="#accordionRental">
                   <div class="accordion-body text-sm opacity-8">
-                    Yes, Space sends automated SMS or email reminders for upcoming sessions to ensure students don’t miss their appointments.
+                    Yes, Space sends automated SMS or email reminders for upcoming sessions to ensure students don't miss their appointments.
                   </div>
                 </div>
               </div>
@@ -433,7 +451,7 @@
       </div>
     </section>
   </main>
-<!-- Terms & Conditions Modal -->
+<!-- Terms & Conditions in Contact Form -->
 <div class="modal fade" id="termsModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -499,6 +517,90 @@
   </div>
 </div>
 
+<!-- Terms Modal -->
+<div class="modal fade" id="tncModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="tncModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content"> 
+      <div class="modal-header">
+        <h5 class="modal-title font-weight-normal" id="tncModalLabel">Terms and Conditions</h5>
+      </div>
+      <div class="modal-body p-5" style="max-height: 400px; overflow-y: auto;">
+        <p class="text-xs mb-0"><strong>Welcome to Space: A Web-Based Mental Health Therapy System for Students of BSU TNEU Lipa ("Space").</strong> By accessing and using this platform, you agree to comply with and be bound by the following terms and conditions. Please read them carefully.</p>
+
+        <p class="text-xs mb-0 mt-3"><strong>1. Acceptance of Terms</strong></p>
+        <p class="text-xs mb-0">By using Space, you acknowledge that you have read, understood, and agree to be bound by these Terms and Conditions, as well as any additional terms, policies, and rules that are referenced herein.</p>
+
+        <p class="text-xs mb-0 mt-3"><strong>2. Eligibility</strong></p>
+        <p class="text-xs mb-0">Only students enrolled at BSU TNEU Lipa are eligible to create an account and access the services provided on this platform. Therapists must be licensed professionals whose accounts are created and managed by the system administrator.</p>
+
+        <p class="text-xs mb-0 mt-3"><strong>3. Account Registration and Security</strong></p>
+        <ul>
+          <li class="text-xs mb-0"><strong>User Registration:</strong> Students are required to create an account using their BSU student email through the registration page. A one-time password (OTP) will be sent for account verification.</li>
+          <li class="text-xs mb-0"><strong>Therapist Accounts:</strong> Therapists are granted access by the system administrator. Self-registration is not available for therapists.</li>
+          <li class="text-xs mb-0"><strong>Account Security:</strong> You agree to notify us immediately if you suspect any unauthorized use of your account.</li>
+        </ul>
+
+        <p class="text-xs mb-0 mt-3"><strong>4. Use of Services</strong></p>
+        <ul>
+          <li class="text-xs mb-0"><strong>Mood Tracking:</strong> The mood tracking feature is available for registered students. Therapists can only view mood tracking data for students who have scheduled appointments with them.</li>
+          <li class="text-xs mb-0"><strong>Virtual Therapy Sessions:</strong> Students can schedule therapy sessions with licensed professionals via the platform's calendar. Therapy sessions are conducted using secure video conferencing.</li>
+          <li class="text-xs mb-0"><strong>Post Sharing:</strong> Users (students and therapists) can share posts, which may be done anonymously if preferred. Posts must adhere to community guidelines and must not contain harmful, offensive, or discriminatory content.</li>
+          <li class="text-xs mb-0"><strong>Self-Care Tools:</strong> Space provides access to guided meditations, breathing exercises, and journaling prompts for registered users.</li>
+          <li class="text-xs mb-0"><strong>Guest Access:</strong> Guests can access limited mental health resources without creating an account.</li>
+        </ul>
+
+        <p class="text-xs mb-0 mt-3"><strong>5. User Conduct</strong></p>
+        <p class="text-xs mb-0">By using Space, you agree not to:</p>
+        <ul>
+          <li class="text-xs mb-0">Violate any applicable laws or regulations.</li>
+          <li class="text-xs mb-0">Post any abusive, offensive, harmful, or discriminatory content.</li>
+          <li class="text-xs mb-0">Use the platform to harass or harm other users.</li>
+          <li class="text-xs mb-0">Impersonate another individual or provide false information during registration.</li>
+        </ul>
+        <p class="text-xs mb-0">Failure to adhere to these guidelines may result in the suspension or termination of your account.</p>
+
+        <p class="text-xs mb-0 mt-3"><strong>6. Privacy and Data Security</strong></p>
+        <ul>
+          <li class="text-xs mb-0"><strong>Data Collection:</strong> Space collects personal data, including mood tracking information and session details, to provide services. By using the platform, you consent to the collection, use, and processing of this data in accordance with our [Privacy Policy].</li>
+          <li class="text-xs mb-0"><strong>Data Security:</strong> We employ encryption and other security measures to protect your personal information. However, we cannot guarantee absolute security. You agree that you use the system at your own risk.</li>
+        </ul>
+
+        <p class="text-xs mb-0 mt-3"><strong>7. Payments</strong></p>
+        <ul>
+          <li class="text-xs mb-0"><strong>Membership Fees:</strong> Space operates on a yearly membership fee system for students. Payment is required to access therapy sessions and other premium features.</li>
+          <li class="text-xs mb-0"><strong>Payment Methods:</strong> All payments must be made through the platform's secure payment gateway.</li>
+          <li class="text-xs mb-0"><strong>Refunds:</strong> Membership fees are non-refundable unless otherwise stated or required by law.</li>
+        </ul>
+
+        <p class="text-xs mb-0 mt-3"><strong>8. Intellectual Property</strong></p>
+        <ul>
+          <li class="text-xs mb-0"><strong>Ownership:</strong> All content, trademarks, logos, and materials provided on Space are the intellectual property of the platform and its licensors. You may not use or reproduce any part of the content without prior written permission.</li>
+          <li class="text-xs mb-0"><strong>User-Generated Content:</strong> By posting on the platform, you grant Space a non-exclusive, royalty-free, worldwide license to use, display, and modify your content for the purpose of providing services.</li>
+        </ul>
+
+        <p class="text-xs mb-0 mt-3"><strong>9. Limitation of Liability</strong></p>
+        <p class="text-xs mb-0">Space and its creators, including the CreoTech team, will not be liable for any indirect, incidental, special, or consequential damages arising out of or in connection with the use of this platform, including but not limited to emotional distress, data loss, or unauthorized access to personal information.</p>
+
+        <p class="text-xs mb-0 mt-3"><strong>10. Modification of Terms</strong></p>
+        <p class="text-xs mb-0">We reserve the right to modify these Terms and Conditions at any time. Users will be notified of any significant changes, and continued use of the platform following any such changes constitutes your acceptance of the revised terms.</p>
+
+        <p class="text-xs mb-0 mt-3"><strong>11. Termination of Service</strong></p>
+        <p class="text-xs mb-0">We may suspend or terminate your account and access to the platform at any time for violation of these Terms and Conditions or any other reason deemed necessary for the protection of the platform and its users.</p>
+
+        <p class="text-xs mb-0 mt-3"><strong>12. Governing Law</strong></p>
+        <p class="text-xs mb-0">These Terms and Conditions shall be governed and construed in accordance with the laws of the Philippines, without regard to its conflict of law principles.</p>
+
+        <p class="text-xs mb-0 mt-3"><strong>13. Contact Information</strong></p>
+        <p class="text-xs mb-0">For any questions or concerns regarding these Terms and Conditions, please contact the Space team at <a href="mailto:spacesupport@gmail.com">spacesupport@gmail.com</a>.</p>
+
+        <div class="text-end mt-4">
+          <button type="button" class="btn bg-gradient-primary" onclick="closeTncModal()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Warning Toast -->
 <div class="position-fixed bottom-1 end-1 z-index-2">
     <div class="toast fade hide p-2 bg-white" role="alert" id="warningToast" aria-atomic="true">
@@ -518,8 +620,8 @@
   <footer class="footer pt-5 mt-5">
     <div class="container">
       <div class="row">
-        <!-- Logo and Team Info -->
-        <div class="col-md-3 mb-4 ms-auto">
+        <!-- Logo, Team Info, and Description -->
+        <div class="col-md-4 mb-4 ms-auto">
           <div>
             <a href="#">
               <img src="../assets/img/logo-space.png" class="mb-3 footer-logo" alt="main_logo">
@@ -555,7 +657,7 @@
           </div>
         </div>
   
-        <!-- Quick Links Section -->
+        <!-- About Section -->
         <div class="col-md-2 col-sm-6 col-6 mb-4">
           <div>
             <h6 class="text-sm">About</h6>
@@ -579,29 +681,7 @@
           </div>
         </div>
   
-        <div class="col-md-2 col-sm-6 col-6 mb-4">
-          <div>
-            <h6 class="text-sm">Resources</h6>
-            <ul class="flex-column ms-n3 nav">
-              <li class="nav-item">
-                <a class="nav-link" href="#documentation">
-                  Documentation
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#tools">
-                  Tools Used
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#presentation">
-                  Presentation
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-  
+        <!-- Help & Support Section -->
         <div class="col-md-2 col-sm-6 col-6 mb-4">
           <div>
             <h6 class="text-sm">Help & Support</h6>
@@ -626,13 +706,8 @@
             <h6 class="text-sm">Legal</h6>
             <ul class="flex-column ms-n3 nav">
               <li class="nav-item">
-                <a class="nav-link" href="#terms">
+                <a href="javascript:;" onclick="openTncModal()" class="nav-link">
                   Terms & Conditions
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#privacy">
-                  Privacy Policy
                 </a>
               </li>
             </ul>
@@ -663,6 +738,29 @@
   <script src="../assets/js/scrollreveal.min.js"></script>
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <script src="../assets/js/material-dashboard.min.js?v=3.2.0"></script>
+  <script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize modal with new ID
+    const tncModal = new bootstrap.Modal(document.getElementById('tncModal'));
+    
+    // Function to open modal
+    window.openTncModal = function() {
+        tncModal.show();
+    }
+
+    // Function to close modal
+    window.closeTncModal = function() {
+        tncModal.hide();
+    }
+
+    // Add keyboard event listener to close modal with Escape key
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            tncModal.hide();
+        }
+    });
+});
+</script>
   <script>
     const initializeForm = () => {
         const form = document.getElementById('contact-form');

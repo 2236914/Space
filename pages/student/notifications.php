@@ -1,20 +1,36 @@
 <?php
 session_start();
-require_once '../../configs/config.php';
-require_once '../../admin_operations/dashboard_analytics.php';
 
-$analytics = new DashboardAnalytics($pdo);
-
-// Check if user is logged in and is a student
+// Check authentication first
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'student') {
     header("Location: ../signin.php");
     exit();
 }
 
+// Then load required files and configurations
+require_once '../../configs/config.php';
+require_once '../../admin_operations/dashboard_analytics.php';
+require_once '../../includes/navigation_components.php';
+
+$analytics = new DashboardAnalytics($pdo);
+
 // Prevent caching
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
+
+// Add this near the top of the file after session_start()
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+// Add this at the top of the file after session_start()
+error_log("Current session data: " . print_r($_SESSION, true));
+
+// Verify srcode is set
+if (!isset($_SESSION['srcode'])) {
+    error_log("ERROR: srcode not set in session!");
+    // You might want to redirect or handle this error
+}
 
 // Function to get time ago with better formatting
 function getTimeAgo($timestamp) {
@@ -70,24 +86,13 @@ $notificationTypes = [
 
 // Fetch notifications with proper timezone handling
 try {
-    // Set timezone for PHP
     date_default_timezone_set('Asia/Manila');
     
-    // Notifications query
-    $notifQuery = "SELECT 
-        'notification' as source,
-        id,
-        type,
-        title as header,
-        message,
-        created_at,
-        icon,
-        color_class
-    FROM notifications 
-    WHERE user_id = :user_id";
-
-    // Activity logs query
-    $logQuery = "SELECT 
+    // Debug logging
+    error_log("Fetching notifications for student: " . $_SESSION['srcode']);
+    
+    // First, prepare the query
+    $query = "SELECT 
         'activity_log' as source,
         log_id as id,
         'activity' as type,
@@ -97,23 +102,88 @@ try {
         'edit_note' as icon,
         'bg-info' as color_class
     FROM activity_logs 
-    WHERE srcode = :srcode";
+    WHERE srcode = CAST(:srcode1 AS VARCHAR(20))  -- Cast to match the column type
+        AND action IN ('LOGIN', 'LOGOUT', 'Account Reactivation', 'Account Deactivation', 
+                      'Profile Update', 'Password Update', 'Email Update')
 
-    // Combine both queries with proper ordering
-    $query = "($notifQuery) UNION ($logQuery) ORDER BY created_at DESC LIMIT 20";
+    UNION 
+
+    SELECT 
+        'mood_log' as source,
+        moodlog_id as id,
+        'mood' as type,
+        'Mood Log Added' as header,
+        CONCAT('Logged mood: ', mood_name) as message,
+        log_date as created_at,
+        'mood' as icon,
+        'bg-success' as color_class
+    FROM moodlog 
+    WHERE srcode = CAST(:srcode2 AS VARCHAR(20))  -- Cast to match the column type
+
+    UNION
+
+    SELECT 
+        'notification' as source,
+        id,
+        type,
+        title as header,
+        message,
+        created_at,
+        icon,
+        color_class
+    FROM notifications 
+    WHERE user_id = :user_id
+
+    ORDER BY created_at DESC 
+    LIMIT 20";
     
+    // Then bind the parameters with unique names
     $stmt = $pdo->prepare($query);
     $stmt->execute([
-        'user_id' => $_SESSION['user_id'],
-        'srcode' => $_SESSION['user_id']
+        'srcode1' => (string)$_SESSION['srcode'],    // Convert to string to match varchar
+        'srcode2' => (string)$_SESSION['srcode'],    // Convert to string to match varchar
+        'user_id' => $_SESSION['user_id']
     ]);
     
+    // Add debug information
+    error_log("Query parameters: " . print_r([
+        'srcode1' => $_SESSION['srcode'],
+        'srcode2' => $_SESSION['srcode'],
+        'user_id' => $_SESSION['user_id']
+    ], true));
+    
     $allNotifications = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+    
+    if (empty($allNotifications)) {
+        error_log("No notifications found for user: " . $_SESSION['user_id']);
+        // Debug the actual SQL query
+        error_log("SQL Query: " . $query);
+    } else {
+        error_log("Found " . count($allNotifications) . " notifications");
+        // Log the first few notifications for debugging
+        error_log("First few notifications: " . print_r(array_slice($allNotifications, 0, 3), true));
+    }
 } catch (PDOException $e) {
     error_log("Error fetching notifications: " . $e->getMessage());
+    error_log("SQL State: " . $e->errorInfo[0]);
+    error_log("Error Code: " . $e->errorInfo[1]);
+    error_log("Error Message: " . $e->errorInfo[2]);
     $allNotifications = [];
 }
+
+// Add this debug query
+$debugQuery = "SELECT COUNT(*) as count FROM activity_logs WHERE srcode = :srcode";
+$debugStmt = $pdo->prepare($debugQuery);
+$debugStmt->execute(['srcode' => $_SESSION['srcode']]);
+$logCount = $debugStmt->fetch(PDO::FETCH_ASSOC)['count'];
+error_log("Number of activity logs in database for srcode {$_SESSION['srcode']}: $logCount");
+
+// Add this debug query after your main query
+$debugQuery = "SELECT DISTINCT action FROM activity_logs WHERE srcode = :srcode";
+$debugStmt = $pdo->prepare($debugQuery);
+$debugStmt->execute(['srcode' => $_SESSION['srcode']]);
+$actions = $debugStmt->fetchAll(PDO::FETCH_COLUMN);
+error_log("Available actions in database for srcode {$_SESSION['srcode']}: " . print_r($actions, true));
 ?>
 
 <!DOCTYPE html>
@@ -145,210 +215,236 @@ try {
 </head>
 
 <body class="g-sidenav-show bg-gray-100">
-    <!-- Aside Navigation -->
-    <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-radius-lg fixed-start ms-2 bg-white my-2" id="sidenav-main">
-        <div class="sidenav-header">
-            <i class="fas fa-times p-3 cursor-pointer text-dark opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
-            <a class="navbar-brand px-4 py-3 m-0" href="student.php">
-                <img src="../../assets/img/logo-space.png" class="navbar-brand-img" width="26" height="26" alt="main_logo">
-                <span class="ms-1 font-weight-bold lead text-dark">SPACE</span>
+<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-radius-lg fixed-start ms-2 bg-white my-2" id="sidenav-main">
+    <!-- Header -->
+    <div class="sidenav-header">
+        <i class="fas fa-times p-3 cursor-pointer text-dark opacity-5 position-absolute end-0 top-0 d-xl-none" aria-hidden="true" id="iconSidenav"></i>
+        <a class="navbar-brand px-4 py-3 m-0" href="student.php">
+            <img src="../../assets/img/logo-space.png" class="navbar-brand-img" width="26" height="26" alt="main_logo">
+            <span class="ms-1 font-weight-bold lead text-dark">SPACE</span>
+        </a>
+    </div>
+    <hr class="horizontal dark mt-0 mb-2">
+
+    <!-- Main Navigation -->
+    <div class="collapse navbar-collapse w-auto h-auto" id="sidenav-collapse-main">
+        <ul class="navbar-nav">
+            <!-- User Profile -->
+            <li class="nav-item mb-2 mt-0">
+                <a href="#ProfileNav" class="nav-link text-dark" aria-controls="ProfileNav">
+                    <img src="../../admin_operations/get_profile_picture.php?user_id=<?php echo $_SESSION['user_id']; ?>&user_type=<?php echo $_SESSION['role']; ?>" 
+                         class="avatar"
+                         onerror="this.src='../../assets/img/default-avatar.png';">
+                    <span class="nav-link-text ms-2 ps-1">
+                        <?php 
+                        if (isset($_SESSION['user_id'])) {
+                            if (isset($_SESSION['firstname']) && isset($_SESSION['lastname'])) {
+                                echo htmlspecialchars($_SESSION['firstname'] . ' ' . $_SESSION['lastname']);
+                            } else {
+                                try {
+                                    require_once '../../configs/config.php';
+                                    $stmt = $pdo->prepare("SELECT firstname, lastname FROM students WHERE srcode = ?");
+                                    $stmt->execute([$_SESSION['user_id']]);
+                                    if ($user = $stmt->fetch()) {
+                                        $_SESSION['firstname'] = $user['firstname'];
+                                        $_SESSION['lastname'] = $user['lastname'];
+                                        echo htmlspecialchars($user['firstname'] . ' ' . $user['lastname']);
+                                    } else {
+                                        echo 'User Name';
+                                    }
+                                } catch (PDOException $e) {
+                                    echo 'User Name';
+                                }
+                            }
+                        } else {
+                            header("Location: ../signin.php");
+                            exit();
+                        }
+                        ?>
+                    </span>
+                </a>
+            </li>
+            <hr class="horizontal dark mt-0">
+
+            <!-- Menu Items -->
+            <?php foreach ($menu_items as $link => $item): ?>
+                <?php if (isset($item['type']) && $item['type'] === 'divider'): ?>
+                    <hr class="horizontal dark mt-0">
+                <?php else: ?>
+                    <li class="nav-item">
+                        <?php if (isset($item['submenu'])): ?>
+                            <!-- Submenu item -->
+                            <a data-bs-toggle="collapse" 
+                               href="#<?= $link ?>" 
+                               class="nav-link text-dark <?= array_key_exists($current_page, $item['submenu']) ? 'active' : ''; ?>"
+                               aria-controls="<?= $link ?>" 
+                               role="button" 
+                               aria-expanded="<?= array_key_exists($current_page, $item['submenu']) ? 'true' : 'false'; ?>">
+                                <i class="material-symbols-rounded opacity-5"><?= $item['icon'] ?></i>
+                                <span class="nav-link-text ms-1 ps-1"><?= $item['text'] ?></span>
+                            </a>
+                            <div class="collapse <?= array_key_exists($current_page, $item['submenu']) ? 'show' : ''; ?>" id="<?= $link ?>">
+                                <ul class="nav">
+                                    <?php foreach ($item['submenu'] as $sublink => $subitem): ?>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark <?= $current_page == $sublink ? 'active' : ''; ?>" 
+                                               href="<?= $sublink ?>">
+                                                <span class="sidenav-mini-icon"><?= $subitem['mini'] ?></span>
+                                                <span class="sidenav-normal ms-1 ps-1"><?= $subitem['text'] ?></span>
+                                            </a>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
+                        <?php else: ?>
+                            <!-- Regular item -->
+                            <a class="nav-link text-dark <?= $current_page == $link ? 'active' : ''; ?>" 
+                               href="<?= $link ?>">
+                                <i class="material-symbols-rounded opacity-5"><?= $item['icon'] ?></i>
+                                <span class="nav-link-text ms-1 ps-1"><?= $item['text'] ?></span>
+                            </a>
+                        <?php endif; ?>
+                    </li>
+                <?php endif; ?>
+            <?php endforeach; ?>
+
+            <!-- Space Support Button -->
+            <hr class="horizontal dark mt-0">
+            <div class="d-flex justify-content-center">
+                <button type="button" class="btn bg-gradient-info w-85 mx-auto" onclick="showSupportDialog()">
+                    <i class="material-symbols-rounded opacity-5 me-2">support_agent</i>
+                    <span class="nav-link-text">Space Support</span>
+                </button>
+            </div>
+
+            <!-- Sign Out Button -->
+            <div class="d-flex justify-content-center mt-auto">
+                <button type="button" class="btn bg-gradient-primary w-85 mx-auto" onclick="handleSignOut()">
+                    <i class="material-symbols-rounded opacity-5 me-2">logout</i>
+                    <span class="nav-link-text">Sign Out</span>
+                </button>
+            </div>
+        </ul>
+    </div>
+</aside>
+
+<main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+<nav class="navbar navbar-main navbar-expand-lg position-sticky mt-2 top-1 px-0 py-1 mx-3 shadow-none border-radius-lg z-index-sticky" id="navbarBlur" data-scroll="true">
+    <div class="container-fluid py-1 px-2">
+    <div class="sidenav-toggler sidenav-toggler-inner d-xl-block d-none">
+            <a href="javascript:;" class="nav-link text-body p-0" id="iconSidenavDesktop">
+                <div class="sidenav-toggler-inner">
+                    <i class="sidenav-toggler-line"></i>
+                    <i class="sidenav-toggler-line"></i>
+                    <i class="sidenav-toggler-line"></i>
+                </div>
             </a>
         </div>
-        <hr class="horizontal dark mt-0 mb-2">
+        <nav aria-label="breadcrumb" class="ps-2">
+            <ol class="breadcrumb bg-transparent mb-0 p-0">
+                <li class="breadcrumb-item text-sm">
+                    <a class="opacity-5 text-dark" href="javascript:;">&nbsp;&nbsp;<?php echo htmlspecialchars($current_info['parent']); ?></a>
+                </li>
+                <li class="breadcrumb-item text-sm text-dark active font-weight-bold" aria-current="page">
+                    <?php echo htmlspecialchars($current_info['title']); ?>
+                </li>
+            </ol>
+        </nav>
+        <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+            <div class="ms-md-auto pe-md-3 d-flex align-items-center position-relative">
+                <div class="input-group input-group-outline">
+                    <input type="text" class="form-control" id="searchInput" placeholder="Type to search..." oninput="searchMenu()">
+                </div>
+                <div id="searchResults" class="position-absolute bg-white rounded-3 shadow-lg p-2 mt-2 d-none" style="top: 100%; left: 0; right: 0; z-index: 1000;">
+                </div>
+            </div>
+            <ul class="navbar-nav justify-content-end">
+                <?php
+                // Define navbar items
+                $navbar_items = [
+                    [
+                        'href' => 'Space/pages/authentication/signin/illustration.html',
+                        'icon' => 'account_circle',
+                        'target' => '_blank'
+                    ],
+                    [
+                        'href' => 'javascript:;',
+                        'icon' => 'settings',
+                        'class' => 'fixed-plugin-button-nav'
+                    ],
+                    [
+                        'href' => 'javascript:;',
+                        'icon' => 'notifications',
+                        'badge' => '11',
+                        'dropdown' => [
+                            [
+                                'icon' => 'email',
+                                'text' => 'Check new messages'
+                            ],
+                            [
+                                'icon' => 'podcasts',
+                                'text' => 'Manage podcast session'
+                            ],
+                            [
+                                'icon' => 'shopping_cart',
+                                'text' => 'Payment successfully completed'
+                            ]
+                        ]
+                    ]
+                ];
 
-        <div class="collapse navbar-collapse w-auto h-auto" id="sidenav-collapse-main">
-            <ul class="navbar-nav">
-                <!-- User Profile -->
-                <li class="nav-item mb-2 mt-0">
-                    <a data-bs-toggle="collapse" href="#ProfileNav" class="nav-link text-dark" aria-controls="ProfileNav" role="button" aria-expanded="false">
-                        <img src="../../admin_operations/get_profile_picture.php?user_id=<?php echo $_SESSION['user_id']; ?>&user_type=<?php echo $_SESSION['role']; ?>" class="avatar" onerror="this.src='../../assets/img/default-avatar.png';">
-                        <span class="nav-link-text ms-2 ps-1">
-                            <?php echo htmlspecialchars($_SESSION['firstname'] . ' ' . $_SESSION['lastname']); ?>
-                        </span>
-                    </a>
-                    <div class="collapse" id="ProfileNav">
-                        <ul class="nav">
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" href="profile.php">
-                                    <span class="sidenav-mini-icon">P</span>
-                                    <span class="sidenav-normal ms-3 ps-1">Profile</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <hr class="horizontal dark mt-0">
+                // Loop through navbar items
+                foreach ($navbar_items as $item): ?>
+                    <li class="nav-item<?php echo isset($item['dropdown']) ? ' dropdown py-0 pe-3' : ''; ?>">
+                        <a href="<?php echo $item['href']; ?>" 
+                           class="<?php echo isset($item['dropdown']) ? 'nav-link py-0 px-1 position-relative line-height-0' : 'px-1 py-0 nav-link line-height-0'; ?>"
+                           <?php echo isset($item['target']) ? 'target="' . $item['target'] . '"' : ''; ?>
+                           <?php echo isset($item['dropdown']) ? 'id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"' : ''; ?>>
+                            <i class="material-symbols-rounded <?php echo isset($item['class']) ? $item['class'] : ''; ?>">
+                                <?php echo $item['icon']; ?>
+                            </i>
+                            <?php if (isset($item['badge'])): ?>
+                                <span class="position-absolute top-5 start-100 translate-middle badge rounded-pill bg-danger border border-white small py-1 px-2">
+                                    <span class="small"><?php echo $item['badge']; ?></span>
+                                    <span class="visually-hidden">unread notifications</span>
+                                </span>
+                            <?php endif; ?>
+                        </a>
+                        <?php if (isset($item['dropdown'])): ?>
+                            <ul class="dropdown-menu dropdown-menu-end p-2 me-sm-n4" aria-labelledby="dropdownMenuButton">
+                                <?php foreach ($item['dropdown'] as $index => $dropdownItem): ?>
+                                    <li class="<?php echo $index < count($item['dropdown']) - 1 ? 'mb-2' : ''; ?>">
+                                        <a class="dropdown-item border-radius-md" href="javascript:;">
+                                            <div class="d-flex align-items-center py-1">
+                                                <span class="material-symbols-rounded"><?php echo $dropdownItem['icon']; ?></span>
+                                                <div class="ms-2">
+                                                    <h6 class="text-sm font-weight-normal my-auto">
+                                                        <?php echo $dropdownItem['text']; ?>
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        <?php endif; ?>
+                    </li>
+                <?php endforeach; ?>
 
-                <!-- Dashboard -->
-                <li class="nav-item">
-                    <a data-bs-toggle="collapse" href="#dashboardsExamples" class="nav-link text-dark active" aria-controls="dashboardsExamples" role="button" aria-expanded="true">
-                        <i class="material-symbols-rounded opacity-5">space_dashboard</i>
-                        <span class="nav-link-text ms-1 ps-1">Dashboard</span>
-                    </a>
-                    <div class="collapse show" id="dashboardsExamples">
-                        <ul class="nav">
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" href="student.php">
-                                    <span class="sidenav-mini-icon">A</span>
-                                    <span class="sidenav-normal ms-1 ps-1">Analytics</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" href="mood-tracker.php">
-                                    <span class="sidenav-mini-icon">MT</span>
-                                    <span class="sidenav-normal ms-1 ps-1">Mood Tracker</span>
-                                </a>
-                            </li>
-                            <li class="nav-item active">
-                                <a class="nav-link text-dark active" href="notifications.php">
-                                    <span class="sidenav-mini-icon">N</span>
-                                    <span class="sidenav-normal ms-1 ps-1">Notifications</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-
-                <!-- MENU -->
-                <li class="nav-item mt-3">
-                    <h6 class="ps-3 ms-2 text-uppercase text-xs font-weight-bolder text-dark">MENU</h6>
-                </li>
-                <li class="nav-item">
-                    <a data-bs-toggle="collapse" href="#account" class="nav-link text-dark" aria-controls="selfCareExamples" role="button" aria-expanded="false">
-                        <i class="material-symbols-rounded opacity-5">account_circle</i>
-                        <span class="nav-link-text ms-1 ps-1">Account</span>
-                    </a>
-                    <div class="collapse" id="account">
-                        <ul class="nav">
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" href="account-settings.php">
-                                    <span class="sidenav-mini-icon">S</span>
-                                    <span class="sidenav-normal ms-1 ps-1">Settings</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" href="articles.php">
-                                    <span class="sidenav-mini-icon">A</span>
-                                    <span class="sidenav-normal ms-1 ps-1">Articles</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" href="journal.php">
-                                    <span class="sidenav-mini-icon">J</span>
-                                    <span class="sidenav-normal ms-1 ps-1">Journal</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-
-                <!-- Calendar -->
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href="calendar.php">
-                        <i class="material-symbols-rounded opacity-5">calendar_month</i>
-                        <span class="nav-link-text ms-1 ps-1">Calendar</span>
-                    </a>
-                </li>
-
-                <!-- Bottom Buttons -->
-                <li class="nav-item mt-3">
-                    <hr class="horizontal dark mt-0">
-                    <a href="support.php" class="btn bg-gradient-info w-90 mb-2 ms-2">
-                        <i class="material-symbols-rounded opacity-5 me-2">support_agent</i> Space Support
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <button type="button" class="btn bg-gradient-primary w-90 mb-2 ms-2" onclick="handleSignOut()">
-                        <i class="material-symbols-rounded opacity-5 me-2">logout</i> Sign Out
-                    </button>
-                </li>
-            </ul>
-        </div>
-    </aside>
-
-    <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
-        <!-- Navbar -->
-        <nav class="navbar navbar-main navbar-expand-lg position-sticky mt-2 top-1 px-0 py-1 mx-3 shadow-none border-radius-lg z-index-sticky" id="navbarBlur" data-scroll="true">
-            <div class="container-fluid py-1 px-2">
-                <div class="sidenav-toggler sidenav-toggler-inner d-xl-block d-none">
-                    <a href="javascript:;" class="nav-link text-body p-0">
+                <!-- Mobile menu toggle -->
+                <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+                    <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
                         <div class="sidenav-toggler-inner">
                             <i class="sidenav-toggler-line"></i>
                             <i class="sidenav-toggler-line"></i>
                             <i class="sidenav-toggler-line"></i>
                         </div>
                     </a>
-                </div>
-                <nav aria-label="breadcrumb" class="ps-2">
-                    <ol class="breadcrumb bg-transparent mb-0 p-0">
-                        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-                        <li class="breadcrumb-item text-sm text-dark active font-weight-bold" aria-current="page">Notifications</li>
-                    </ol>
-                </nav>
-                <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
-                    <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-                        <div class="input-group input-group-outline">
-                            <label class="form-label">Search here</label>
-                            <input type="text" class="form-control" id="searchNotifications">
-                        </div>
-                    </div>
-                    <ul class="navbar-nav justify-content-end">
-                        <li class="nav-item">
-                            <a href="javascript:;" class="nav-link text-body p-0 position-relative" target="_blank">
-                                <i class="material-symbols-rounded">account_circle</i>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="javascript:;" class="nav-link text-body p-0 position-relative">
-                                <i class="material-symbols-rounded">settings</i>
-                            </a>
-                        </li>
-                        <li class="nav-item dropdown pe-2">
-                            <a href="javascript:;" class="nav-link text-body p-0 position-relative" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="material-symbols-rounded">notifications</i>
-                                <span class="position-absolute top-5 start-100 translate-middle badge rounded-pill bg-danger border border-white small py-1 px-2">
-                                    <span class="small">11</span>
-                                    <span class="visually-hidden">unread notifications</span>
-                                </span>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end p-2 me-sm-n4" aria-labelledby="dropdownMenuButton">
-                                <li class="mb-2">
-                                    <a class="dropdown-item border-radius-md" href="javascript:;">
-                                        <div class="d-flex align-items-center py-1">
-                                            <span class="material-symbols-rounded">email</span>
-                                            <div class="ms-2">
-                                                <h6 class="text-sm font-weight-normal my-auto">Check new messages</h6>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="mb-2">
-                                    <a class="dropdown-item border-radius-md" href="javascript:;">
-                                        <div class="d-flex align-items-center py-1">
-                                            <span class="material-symbols-rounded">podcasts</span>
-                                            <div class="ms-2">
-                                                <h6 class="text-sm font-weight-normal my-auto">Manage podcast session</h6>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item border-radius-md" href="javascript:;">
-                                        <div class="d-flex align-items-center py-1">
-                                            <span class="material-symbols-rounded">shopping_cart</span>
-                                            <div class="ms-2">
-                                                <h6 class="text-sm font-weight-normal my-auto">Payment successfully completed</h6>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
         <!-- Main Content -->
         <div class="container-fluid py-4">
             <div class="row justify-content-center">
@@ -359,15 +455,35 @@ try {
                             <p class="text-sm mb-0">
                                 Activity logs and important updates
                             </p>
+                            <div class="d-flex align-items-center justify-content-center mt-2">
+                                <span id="date" class="text-sm text-secondary me-2"></span>
+                                <span id="time" class="text-sm text-secondary"></span>
+                            </div>
                         </div>
                         <div class="card-body pt-4 ps-5">
+                            <?php
+                            try {
+                                if (empty($allNotifications)) {
+                                    error_log("No notifications found");
+                                } else {
+                                    error_log("Found " . count($allNotifications) . " notifications");
+                                }
+                            } catch (PDOException $e) {
+                                error_log("Error displaying notifications: " . $e->getMessage());
+                            }
+                            ?>
                             <div id="searchResults" class="timeline timeline-one-side" data-timeline-axis-style="dotted">
                                 <?php if (empty($allNotifications)): ?>
-                                    <div class="text-center text-muted">
+                                    <div class="text-center text-muted py-4">
                                         <p>No notifications yet</p>
+                                        <?php if (isset($_SESSION['srcode'])): ?>
+                                            <p class="text-xs">Debug: Searching for srcode: <?php echo htmlspecialchars($_SESSION['srcode']); ?></p>
+                                        <?php endif; ?>
                                     </div>
                                 <?php else: 
-                                    foreach ($allNotifications as $notification): ?>
+                                    foreach ($allNotifications as $notification): 
+                                        error_log("Displaying notification: " . print_r($notification, true));
+                                    ?>
                                         <div class="timeline-block mb-3 notification-item">
                                             <span class="timeline-step <?php echo htmlspecialchars($notification['color_class']); ?> p-2">
                                                 <i class="material-symbols-rounded text-white opacity-10">
@@ -401,6 +517,9 @@ try {
     <script src="../../assets/js/core/bootstrap.min.js"></script>
     <script src="../../assets/js/plugins/perfect-scrollbar.min.js"></script>
     <script src="../../assets/js/plugins/smooth-scrollbar.min.js"></script>
+    <script src="../../assets/js/signout.js"></script>
+    <script src="../../assets/js/support.js"></script>
+
 
     <script>
         var win = navigator.platform.indexOf('Win') > -1;
@@ -442,59 +561,6 @@ try {
         window.onpopstate = function() {
             window.history.pushState(null, null, window.location.href);
         };
-
-        // Handle sign out
-        function handleSignOut() {
-            Swal.fire({
-                title: 'Sign Out',
-                text: 'Are you sure you want to sign out?',
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonText: 'Yes, sign out',
-                cancelButtonText: 'No, cancel',
-                reverseButtons: true,
-                customClass: {
-                    confirmButton: 'btn bg-gradient-primary btn-sm mx-2',
-                    cancelButton: 'btn btn-outline-primary btn-sm mx-2',
-                    actions: 'justify-content-center'
-                },
-                buttonsStyling: false,
-                allowOutsideClick: false
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    Swal.fire({
-                        title: 'Signing out...',
-                        text: 'Please wait',
-                        icon: 'info',
-                        allowOutsideClick: false,
-                        showConfirmButton: false,
-                        willOpen: () => {
-                            Swal.showLoading();
-                        }
-                    });
-                    setTimeout(() => {
-                        window.location.href = '../../admin_operations/logout.php';
-                    }, 1000);
-                }
-            });
-        }
-
-        // Check login status
-        function checkLoginStatus() {
-            fetch('../../admin_operations/check_session.php')
-                .then(response => response.json())
-                .then(data => {
-                    if (!data.logged_in) {
-                        window.location.href = '../signin.php';
-                    }
-                });
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            checkLoginStatus();
-        });
-
-        setInterval(checkLoginStatus, 30000);
     </script>
 
     <script>
@@ -542,6 +608,40 @@ try {
             }
         });
     });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add auto-refresh for notifications
+            function refreshNotifications() {
+                fetch('../../admin_operations/get_notifications.php')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.html) {
+                            const container = document.getElementById('searchResults');
+                            container.innerHTML = data.html;
+                            // Reinitialize search functionality
+                            const searchInput = document.getElementById('searchNotifications');
+                            const notificationItems = document.querySelectorAll('.notification-item');
+                            if (searchInput.value) {
+                                // Trigger search if there's an existing search term
+                                searchInput.dispatchEvent(new Event('input'));
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error refreshing notifications:', error);
+                        // Log the full error for debugging
+                        console.log('Full error:', error);
+                    });
+            }
+
+            // Initial refresh
+            refreshNotifications();
+
+            // Refresh notifications every 30 seconds
+            setInterval(refreshNotifications, 30000);
+        });
     </script>
 </body>
 

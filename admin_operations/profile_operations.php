@@ -230,6 +230,21 @@ class ProfileOperations {
                 error_log('PDO Error Info: ' . print_r($stmt->errorInfo(), true));
             }
 
+            if($result) {
+                // Log the activity
+                $sessionLogger = new SessionLogger($this->pdo);
+                $sessionLogger->logActivity(
+                    $_SESSION['user_id'],
+                    null,
+                    null,
+                    'Updated Profile',
+                    'Profile information updated',
+                    $_SERVER['REMOTE_ADDR']
+                );
+                
+                return ['success' => true, 'message' => 'Profile updated successfully'];
+            }
+
             return $result;
         } catch (PDOException $e) {
             error_log('Database error in updateStudentProfile: ' . $e->getMessage());
@@ -283,15 +298,22 @@ class ProfileOperations {
     }
 
     public function getProfilePicture($userId, $userType) {
-        $stmt = $this->pdo->prepare("
-            SELECT file_type, file_data 
-            FROM profile_pictures 
-            WHERE user_id = ? AND user_type = ? AND status = 'active' 
-            ORDER BY upload_date DESC 
-            LIMIT 1
-        ");
-        $stmt->execute([$userId, $userType]);
-        return $stmt->fetch();
+        try {
+            $stmt = $this->pdo->prepare("
+                SELECT file_type, file_data 
+                FROM profile_pictures 
+                WHERE user_id = ? 
+                AND user_type = ? 
+                AND status = 'active' 
+                ORDER BY created_at DESC 
+                LIMIT 1
+            ");
+            $stmt->execute([$userId, $userType]);
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error fetching profile picture: " . $e->getMessage());
+            return null;
+        }
     }
 
     // Add new helper method
