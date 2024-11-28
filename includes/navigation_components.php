@@ -9,7 +9,6 @@ $menu_items = [
         'text' => 'Dashboard',
         'submenu' => [
             'student.php' => ['text' => 'Analytics', 'mini' => 'A'],
-            'moodtracker.php' => ['text' => 'Mood Tracker', 'mini' => 'MT'],
             'notifications.php' => ['text' => 'Notifications', 'mini' => 'N']
         ]
     ],
@@ -18,14 +17,57 @@ $menu_items = [
         'text' => 'Account',
         'submenu' => [
             'account-settings.php' => ['text' => 'Settings', 'mini' => 'S'],
-            'articles.php' => ['text' => 'Articles', 'mini' => 'A'],
-            'journal.php' => ['text' => 'Journal', 'mini' => 'J'],
         ]
+    ],
+    'moodtracker.php' => [
+        'icon' => 'mood',
+        'text' => 'Mood Tracker'
+    ],
+    'selfCareTools' => [
+        'icon' => 'self_improvement',
+        'text' => 'Self-Care Tools',
+        'submenu' => [
+            'meditation.php' => [
+                'mini' => 'M',
+                'text' => 'Meditation'
+            ],
+            'breathing.php' => [
+                'mini' => 'B',
+                'text' => 'Breathing Exercises'
+            ],
+            'journal.php' => [
+                'mini' => 'J',
+                'text' => 'Journal'
+            ]
+        ]
+    ],
+    'therapyNav' => [
+        'icon' => 'calendar_month',
+        'text' => 'Therapy Sessions',
+        'submenu' => [
+            'schedule-session.php' => [
+                'mini' => 'S',
+                'text' => 'Schedule Session'
+            ],
+            'upcoming-sessions.php' => [
+                'mini' => 'U',
+                'text' => 'Upcoming Sessions'
+            ],
+            'session-feedback.php' => [
+                'mini' => 'F',
+                'text' => 'Session Feedback'
+            ]
+        ]
+    ],
+    'community.php' => [
+        'icon' => 'groups',
+        'text' => 'Community'
     ],
     'generate-reports.php' => [
         'icon' => 'report',
         'text' => 'Generate Reports'
-    ]
+    ],
+    'divider_1' => ['type' => 'divider']
 ];
 
 // Navbar items array (for top navigation)

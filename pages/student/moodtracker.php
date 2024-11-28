@@ -1,11 +1,17 @@
 <?php
+// Start the session if it hasn't been started yet
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
+    error_log("DEBUG TRACKER - Session started");
 }
+
+error_log("DEBUG TRACKER - Script accessed");
+error_log("DEBUG TRACKER - Session: " . print_r($_SESSION, true));
+error_log("DEBUG TRACKER - GET params: " . print_r($_GET, true));
 
 // Session check
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['role']) || $_SESSION['role'] !== 'student') {
-    error_log("Session check failed: " . print_r($_SESSION, true));
+    error_log("DEBUG TRACKER - Session check failed, redirecting to signin");
     header("Location: ../signin.php");
     exit();
 }
@@ -89,7 +95,7 @@ header("Pragma: no-cache");
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="apple-touch-icon" sizes="76x76" href="../../assets/img/logo-space.png">
     <link rel="icon" type="image/png" href="../../assets/img/logo-space.png">
-    <title>Space</title>
+    <title>Mood Tracker</title>
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,900" />
     <link href="../../assets/css/nucleo-icons.css" rel="stylesheet" />
     <link href="../../assets/css/nucleo-svg.css" rel="stylesheet" />
@@ -396,6 +402,8 @@ header("Pragma: no-cache");
             fill: #344767 !important;
             padding: 5px !important;
         }
+
+
     </style>
 </head>
 
@@ -814,9 +822,32 @@ header("Pragma: no-cache");
 
     </div
 </div>
+<div class="row mt-4">
+    <div class="col-lg-12 col-12">
+        <div class="card z-index-2">
+            <div class="card-header p-3 pt-2">
+                <div class="icon icon-lg icon-shape bg-gradient-info shadow-info text-center border-radius-xl mt-n4 me-3 float-start">
+                    <i class="material-symbols-rounded opacity-10">insights</i>
+                </div>
+                <div class="d-block d-md-flex">
+                    <div class="me-auto">
+                        <h6 class="mb-0">Feel-O-Meter</h6>
+                        <p class="mb-0 text-sm">Your mood patterns over time</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body p-3">
+                <div class="chart">
+                    <canvas id="line-chart" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+                    
 
     </main>
-        <!-- Core JS Files -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="../../assets/js/core/popper.min.js"></script>
 <script src="../../assets/js/core/bootstrap.min.js"></script>
 <script src="../../assets/js/plugins/perfect-scrollbar.min.js"></script>
@@ -825,107 +856,19 @@ header("Pragma: no-cache");
 <script src="../../assets/js/material-dashboard.min.js?v=3.2.0"></script>
 <script src="../../assets/js/signout.js"></script>
 <script src="../../assets/js/support.js"></script>
- 
+<script src="../../assets/js/line-chart.js"></script>
+<script src="../../assets/js/line-chart.js"></script>
 <script>
-var ctx3 = document.getElementById("chart-line-widgets").getContext("2d");
-
-var gradientStroke3 = ctx3.createLinearGradient(0, 230, 0, 50);
-
-gradientStroke3.addColorStop(1, 'rgba(33,82,255,0.1)');
-gradientStroke3.addColorStop(0.2, 'rgba(33,82,255,0.0)');
-gradientStroke3.addColorStop(0, 'rgba(33,82,255,0)'); //purple colors
-
-new Chart(ctx3, {
-  type: "line",
-  data: {
-    labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-    datasets: [{
-      label: "Tasks",
-      tension: 0,
-      pointRadius: 5,
-      pointBackgroundColor: "#E91E63",
-      pointBorderColor: "transparent",
-      borderColor: "#E91E63",
-      borderWidth: 4,
-      backgroundColor: "transparent",
-      data: [40, 45, 42, 41, 40, 43, 40, 42, 39],
-      maxBarThickness: 6,
-      fill: true
-    }],
-  },
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        display: false,
-      }
-    },
-    interaction: {
-      intersect: false,
-      mode: 'index',
-    },
-    scales: {
-      y: {
-        grid: {
-          drawBorder: false,
-          display: false,
-          drawOnChartArea: true,
-          drawTicks: false,
-          borderDash: [5, 5]
-        },
-        ticks: {
-          display: true,
-          padding: 10,
-          color: '#9ca2b7',
-          font: {
-            size: 14,
-            weight: 300,
-            family: "Roboto",
-            style: 'normal',
-            lineHeight: 2
-          },
-        }
-      },
-      x: {
-        grid: {
-          drawBorder: false,
-          display: true,
-          drawOnChartArea: true,
-          drawTicks: false,
-          borderDash: [5, 5],
-          color: '#c1c4ce5c'
-        },
-        ticks: {
-          display: true,
-          padding: 10,
-          color: '#9ca2b7',
-          font: {
-            size: 14,
-            weight: 300,
-            family: "Roboto",
-            style: 'normal',
-            lineHeight: 2
-          },
-        }
-      },
-    },
-  },
-});
-        </script>
-
-        <script>
-
-          // Initialize perfect scrollbar
-          var win = navigator.platform.indexOf('Win') > -1;
-          if (win && document.querySelector('#sidenav-scrollbar')) {
-            var options = {
-              damping: '0.5'
-            }
-            Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
-          }
-       </script>
-        <script>
+// Initialize perfect scrollbar
+var win = navigator.platform.indexOf('Win') > -1;
+if (win && document.querySelector('#sidenav-scrollbar')) {
+    var options = {
+        damping: '0.5'
+    }
+    Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+}
+</script>
+<script>
 document.addEventListener('DOMContentLoaded', function() {
     console.log("Initializing flatpickr..."); // Debug log
     
@@ -1109,6 +1052,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 });
 </script>
+
         </body>
         </html>
 

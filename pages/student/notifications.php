@@ -194,7 +194,7 @@ error_log("Available actions in database for srcode {$_SESSION['srcode']}: " . p
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="apple-touch-icon" sizes="76x76" href="../../assets/img/logo-space.png">
     <link rel="icon" type="image/png" href="../../assets/img/logo-space.png">
-    <title>Space - Notifications</title>
+    <title>Notifications</title>
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,900" />
     <link href="../../assets/css/nucleo-icons.css" rel="stylesheet" />
     <link href="../../assets/css/nucleo-svg.css" rel="stylesheet" />

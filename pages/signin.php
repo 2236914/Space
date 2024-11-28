@@ -13,6 +13,7 @@ echo "<!-- Session data: " . print_r($_SESSION, true) . " -->";
 require __DIR__ . '/../configs/config.php';
 ?>
 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -111,6 +112,7 @@ require __DIR__ . '/../configs/config.php';
   <script src="../assets/js/core/bootstrap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="../assets/js/scrollreveal.min.js"></script>
+  <script src="../assets/js/authAnimations.js"></script>
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <script src="../assets/js/material-dashboard.min.js?v=3.2.0"></script>
   <script>
@@ -183,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         }
                     }).then((sweetAlertResult) => {
                         if (sweetAlertResult.isConfirmed) {
-                            window.location.replace('/Space' + result.redirect);
+                            window.location.href = '/Space' + result.redirect;
                         }
                     });
                 } else {

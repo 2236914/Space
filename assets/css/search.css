@@ -1,0 +1,38 @@
+/* Search Results Styling */
+#searchResults {
+    max-height: 300px;
+    overflow-y: auto;
+    width: 100%;
+    z-index: 1050;
+}
+
+#searchResults a {
+    transition: background-color 0.3s;
+}
+
+#searchResults a:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.hover-bg-light:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Custom scrollbar for search results */
+#searchResults::-webkit-scrollbar {
+    width: 6px;
+}
+
+#searchResults::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+#searchResults::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+}
+
+#searchResults::-webkit-scrollbar-thumb:hover {
+    background: #555;
+} 

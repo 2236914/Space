@@ -49,765 +49,104 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'therapist') {
 
 <body class="g-sidenav-show  bg-gray-100">
     
-  <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-radius-lg fixed-start ms-2  bg-white my-2" id="sidenav-main">
+<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-radius-lg fixed-start ms-2 bg-white my-2" id="sidenav-main">
+    <!-- Header -->
     <div class="sidenav-header">
-      <i class="fas fa-times p-3 cursor-pointer text-dark opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
-      <a class="navbar-brand px-4 py-3 m-0" href="index.html" target="_blank">
-        <img src="../../assets/img/logo-ct-dark.png" class="navbar-brand-img" width="26" height="26" alt="main_logo">
-        <span class="ms-1 text-sm text-dark">Creative Tim</span>
-      </a>
+        <i class="fas fa-times p-3 cursor-pointer text-dark opacity-5 position-absolute end-0 top-0 d-xl-none" aria-hidden="true" id="iconSidenav"></i>
+        <a class="navbar-brand px-4 py-3 m-0" href="therapist.php">
+            <img src="../../assets/img/logo-space.png" class="navbar-brand-img" width="26" height="26" alt="main_logo">
+            <span class="ms-1 font-weight-bold lead text-dark">SPACE</span>
+        </a>
     </div>
     <hr class="horizontal dark mt-0 mb-2">
-    <div class="collapse navbar-collapse  w-auto h-auto" id="sidenav-collapse-main">
-      <ul class="navbar-nav">
-        <li class="nav-item mb-2 mt-0">
-          <a data-bs-toggle="collapse" href="#ProfileNav" class="nav-link text-dark" aria-controls="ProfileNav" role="button" aria-expanded="false">
-            <img src="../../assets/img/team-3.jpg" class="avatar">
-            <span class="nav-link-text ms-2 ps-1"><?php echo $_SESSION['firstname'] . ' ' . $_SESSION['lastname']; ?></span>
-          </a>
-          <div class="collapse" id="ProfileNav" style="">
-            <ul class="nav ">
-              <li class="nav-item">
-                <a class="nav-link text-dark" href="../../pages/profile/overview.php">
-                  <span class="sidenav-mini-icon"> MP </span>
-                  <span class="sidenav-normal  ms-3  ps-1"> My Profile </span>
+
+    <!-- Main Navigation -->
+    <div class="collapse navbar-collapse w-auto h-auto" id="sidenav-collapse-main">
+        <ul class="navbar-nav">
+            <!-- User Profile -->
+            <li class="nav-item mb-2 mt-0">
+                <a href="#ProfileNav" class="nav-link text-dark" aria-controls="ProfileNav">
+                    <img src="../../assets/img/default-avatar.png" class="avatar">
+                    <span class="nav-link-text ms-2 ps-1">Dr. John Doe</span>
                 </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link text-dark " href="Space/pages/pages/account/settings.html">
-                  <span class="sidenav-mini-icon"> S </span>
-                  <span class="sidenav-normal  ms-3  ps-1"> Settings </span>
+            </li>
+            <hr class="horizontal dark mt-0">
+
+            <!-- Dashboard -->
+            <li class="nav-item">
+                <a class="nav-link text-dark active" href="dashboard.php">
+                    <i class="material-symbols-rounded opacity-5">dashboard</i>
+                    <span class="nav-link-text ms-1 ps-1">Dashboard</span>
                 </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link text-dark " href="Space/pages/authentication/signin/basic.html">
-                  <span class="sidenav-mini-icon"> L </span>
-                  <span class="sidenav-normal  ms-3  ps-1"> Logout </span>
+            </li>
+
+            <!-- Student Mood Tracking -->
+            <li class="nav-item">
+                <a class="nav-link text-dark" href="mood-tracking.php">
+                    <i class="material-symbols-rounded opacity-5">mood</i>
+                    <span class="nav-link-text ms-1 ps-1">Mood Tracking</span>
                 </a>
-              </li>
-            </ul>
-          </div>
-        </li>
-        <hr class="horizontal dark mt-0">
-        <li class="nav-item">
-          <a data-bs-toggle="collapse" href="#dashboardsExamples" class="nav-link text-dark active" aria-controls="dashboardsExamples" role="button" aria-expanded="false">
-            <i class="material-symbols-rounded opacity-5">space_dashboard</i>
-            <span class="nav-link-text ms-1 ps-1">Dashboards</span>
-          </a>
-          <div class="collapse  show " id="dashboardsExamples">
-            <ul class="nav ">
-              <li class="nav-item active">
-                <a class="nav-link text-dark active" href="index.html">
-                  <span class="sidenav-mini-icon"> A </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Analytics </span>
+            </li>
+
+            <!-- Video Sessions -->
+            <li class="nav-item">
+                <a class="nav-link text-dark" href="video-sessions.php">
+                    <i class="material-symbols-rounded opacity-5">videocam</i>
+                    <span class="nav-link-text ms-1 ps-1">Video Sessions</span>
                 </a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark" href="pages/dashboards/discover.html">
-                  <span class="sidenav-mini-icon"> D </span>
-                  <span class="sidenav-normal ms-1 ps-1"> Discover </span>
-              </a>              
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="Space/pages/dashboards/sales.html">
-                  <span class="sidenav-mini-icon"> S </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Sales </span>
+            </li>
+
+            <!-- Appointments -->
+            <li class="nav-item">
+                <a class="nav-link text-dark" href="appointments.php">
+                    <i class="material-symbols-rounded opacity-5">calendar_month</i>
+                    <span class="nav-link-text ms-1 ps-1">Appointments</span>
                 </a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="Space/pages/dashboards/automotive.html">
-                  <span class="sidenav-mini-icon"> A </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Automotive </span>
+            </li>
+
+            <!-- Community -->
+            <li class="nav-item">
+                <a class="nav-link text-dark" href="community.php">
+                    <i class="material-symbols-rounded opacity-5">forum</i>
+                    <span class="nav-link-text ms-1 ps-1">Community</span>
                 </a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="Space/pages/dashboards/smart-home.html">
-                  <span class="sidenav-mini-icon"> S </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Smart Home </span>
+            </li>
+
+            <!-- Feedback -->
+            <li class="nav-item">
+                <a class="nav-link text-dark" href="feedback.php">
+                    <i class="material-symbols-rounded opacity-5">rate_review</i>
+                    <span class="nav-link-text ms-1 ps-1">Session Feedback</span>
                 </a>
-              </li>
-            </ul>
-          </div>
-        </li>
-        <li class="nav-item mt-3">
-          <h6 class="ps-3  ms-2 text-uppercase text-xs font-weight-bolder text-dark">PAGES</h6>
-        </li>
-        <li class="nav-item">
-          <a data-bs-toggle="collapse" href="#pagesExamples" class="nav-link text-dark " aria-controls="pagesExamples" role="button" aria-expanded="false">
-            <i class="material-symbols-rounded opacity-5 {% if page.brand == 'RTL' %}ms-2{% else %} me-2{% endif %}">contract</i>
-            <span class="nav-link-text ms-1 ps-1">Pages</span>
-          </a>
-          <div class="collapse " id="pagesExamples">
-            <ul class="nav ">
-              <li class="nav-item ">
-                <a class="nav-link text-dark " data-bs-toggle="collapse" aria-expanded="false" href="#vrExamples">
-                  <span class="sidenav-mini-icon"> V </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Virtual Reality <b class="caret"></b></span>
+            </li>
+
+            <!-- Reports -->
+            <li class="nav-item">
+                <a class="nav-link text-dark" href="reports.php">
+                    <i class="material-symbols-rounded opacity-5">monitoring</i>
+                    <span class="nav-link-text ms-1 ps-1">Reports</span>
                 </a>
-                <div class="collapse " id="vrExamples">
-                  <ul class="nav nav-sm flex-column">
-                    <li class="nav-item">
-                      <a class="nav-link text-dark " href="Space/pages/pages/vr/vr-default.html">
-                        <span class="sidenav-mini-icon"> V </span>
-                        <span class="sidenav-normal  ms-1  ps-1"> VR Default </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link text-dark " href="Space/pages/pages/vr/vr-info.html">
-                        <span class="sidenav-mini-icon"> V </span>
-                        <span class="sidenav-normal  ms-1  ps-1"> VR Info </span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="Space/pages/pages/pricing-page.html">
-                  <span class="sidenav-mini-icon"> P </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Pricing Page </span>
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="Space/pages/pages/rtl-page.html">
-                  <span class="sidenav-mini-icon"> R </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> RTL </span>
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="Space/pages/pages/widgets.html">
-                  <span class="sidenav-mini-icon"> W </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Widgets </span>
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="Space/pages/pages/charts.html">
-                  <span class="sidenav-mini-icon"> C </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Charts </span>
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="Space/pages/pages/sweet-alerts.html">
-                  <span class="sidenav-mini-icon"> S </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Sweet Alerts </span>
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="Space/pages/pages/notifications.html">
-                  <span class="sidenav-mini-icon"> N </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Notifications </span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a data-bs-toggle="collapse" href="#accountExamples" class="nav-link text-dark " aria-controls="accountExamples" role="button" aria-expanded="false">
-            <i class="material-symbols-rounded opacity-5 {% if page.brand == 'RTL' %}ms-2{% else %} me-2{% endif %}">account_circle</i>
-            <span class="nav-link-text ms-1 ps-1">Account</span>
-          </a>
-          <div class="collapse " id="accountExamples">
-            <ul class="nav ">
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="Space/pages/account/settings.html">
-                  <span class="sidenav-mini-icon"> S </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Settings </span>
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="Space/pages/account/billing.html">
-                  <span class="sidenav-mini-icon"> B </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Billing </span>
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="Space/pages/account/invoice.html">
-                  <span class="sidenav-mini-icon"> I </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Invoice </span>
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="Space/pages/account/security.html">
-                  <span class="sidenav-mini-icon"> S </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Security </span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a data-bs-toggle="collapse" href="#applicationsExamples" class="nav-link text-dark " aria-controls="applicationsExamples" role="button" aria-expanded="false">
-            <i class="material-symbols-rounded opacity-5 {% if page.brand == 'RTL' %}ms-2{% else %} me-2{% endif %}">apps</i>
-            <span class="nav-link-text ms-1 ps-1">Applications</span>
-          </a>
-          <div class="collapse " id="applicationsExamples">
-            <ul class="nav ">
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="Space/pages/applications/crm.html">
-                  <span class="sidenav-mini-icon"> C </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> CRM </span>
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="Space/pages/applications/kanban.html">
-                  <span class="sidenav-mini-icon"> K </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Kanban </span>
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="Space/pages/applications/wizard.html">
-                  <span class="sidenav-mini-icon"> W </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Wizard </span>
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="Space/pages/applications/datatables.html">
-                  <span class="sidenav-mini-icon"> D </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> DataTables </span>
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="Space/pages/applications/calendar.html">
-                  <span class="sidenav-mini-icon"> C </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Calendar </span>
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="Space/pages/applications/stats.html">
-                  <span class="sidenav-mini-icon"> S </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Stats </span>
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="Space/pages/applications/validation.html">
-                  <span class="sidenav-mini-icon"> V </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Validation </span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a data-bs-toggle="collapse" href="#ecommerceExamples" class="nav-link text-dark " aria-controls="ecommerceExamples" role="button" aria-expanded="false">
-            <i class="material-symbols-rounded opacity-5 {% if page.brand == 'RTL' %}ms-2{% else %} me-2{% endif %}">storefront</i>
-            <span class="nav-link-text ms-1 ps-1">Ecommerce</span>
-          </a>
-          <div class="collapse " id="ecommerceExamples">
-            <ul class="nav ">
-              <li class="nav-item ">
-                <a class="nav-link text-dark " data-bs-toggle="collapse" aria-expanded="false" href="#productsExample">
-                  <span class="sidenav-mini-icon"> P </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Products <b class="caret"></b></span>
-                </a>
-                <div class="collapse " id="productsExample">
-                  <ul class="nav nav-sm flex-column">
-                    <li class="nav-item">
-                      <a class="nav-link text-dark " href="Space/pages/ecommerce/products/new-product.html">
-                        <span class="sidenav-mini-icon"> N </span>
-                        <span class="sidenav-normal  ms-1  ps-1"> New Product </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link text-dark " href="Space/pages/ecommerce/products/edit-product.html">
-                        <span class="sidenav-mini-icon"> E </span>
-                        <span class="sidenav-normal  ms-1  ps-1"> Edit Product </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link text-dark " href="Space/pages/ecommerce/products/product-page.html">
-                        <span class="sidenav-mini-icon"> P </span>
-                        <span class="sidenav-normal  ms-1  ps-1"> Product Page </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link text-dark " href="Space/pages/ecommerce/products/products-list.html">
-                        <span class="sidenav-mini-icon"> P </span>
-                        <span class="sidenav-normal  ms-1  ps-1"> Products List </span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " data-bs-toggle="collapse" aria-expanded="false" href="#ordersExample">
-                  <span class="sidenav-mini-icon"> O </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Orders <b class="caret"></b></span>
-                </a>
-                <div class="collapse " id="ordersExample">
-                  <ul class="nav nav-sm flex-column">
-                    <li class="nav-item">
-                      <a class="nav-link text-dark " href="Space/pages/ecommerce/orders/list.html">
-                        <span class="sidenav-mini-icon"> O </span>
-                        <span class="sidenav-normal  ms-1  ps-1"> Order List </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link text-dark " href="Space/pages/ecommerce/orders/details.html">
-                        <span class="sidenav-mini-icon"> O </span>
-                        <span class="sidenav-normal  ms-1  ps-1"> Order Details </span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="Space/pages/ecommerce/referral.html">
-                  <span class="sidenav-mini-icon"> R </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Referral </span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a data-bs-toggle="collapse" href="#profileExamples" class="nav-link text-dark " aria-controls="profileExamples" role="button" aria-expanded="false">
-            <i class="material-symbols-rounded opacity-5 {% if page.brand == 'RTL' %}ms-2{% else %} me-2{% endif %}">group</i>
-            <span class="nav-link-text ms-1 ps-1">Team</span>
-          </a>
-          <div class="collapse " id="profileExamples">
-            <ul class="nav ">
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="Space/pages/team/all-projects.html">
-                  <span class="sidenav-mini-icon"> A </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> All Projects </span>
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="Space/pages/team/messages.html">
-                  <span class="sidenav-mini-icon"> M </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Messages </span>
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="Space/pages/team/new-user.html">
-                  <span class="sidenav-mini-icon"> N </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> New User </span>
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="Space/pages/team/profile-overview.html">
-                  <span class="sidenav-mini-icon"> P </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Profile Overview </span>
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="Space/pages/team/reports.html">
-                  <span class="sidenav-mini-icon"> R </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Reports </span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a data-bs-toggle="collapse" href="#projectsExamples" class="nav-link text-dark " aria-controls="projectsExamples" role="button" aria-expanded="false">
-            <i class="material-symbols-rounded opacity-5 {% if page.brand == 'RTL' %}ms-2{% else %} me-2{% endif %}">widgets</i>
-            <span class="nav-link-text ms-1 ps-1">Projects</span>
-          </a>
-          <div class="collapse " id="projectsExamples">
-            <ul class="nav ">
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="Space/pages/projects/general.html">
-                  <span class="sidenav-mini-icon"> G </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> General </span>
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="Space/pages/projects/timeline.html">
-                  <span class="sidenav-mini-icon"> T </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Timeline </span>
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="Space/pages/projects/new-project.html">
-                  <span class="sidenav-mini-icon"> N </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> New Project </span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a data-bs-toggle="collapse" href="#authExamples" class="nav-link text-dark " aria-controls="authExamples" role="button" aria-expanded="false">
-            <i class="material-symbols-rounded opacity-5 {% if page.brand == 'RTL' %}ms-2{% else %} me-2{% endif %}">tv_signin</i>
-            <span class="nav-link-text ms-1 ps-1">Authentication</span>
-          </a>
-          <div class="collapse " id="authExamples">
-            <ul class="nav ">
-              <li class="nav-item ">
-                <a class="nav-link text-dark " data-bs-toggle="collapse" aria-expanded="false" href="#signinExample">
-                  <span class="sidenav-mini-icon"> S </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Sign In <b class="caret"></b></span>
-                </a>
-                <div class="collapse " id="signinExample">
-                  <ul class="nav nav-sm flex-column">
-                    <li class="nav-item">
-                      <a class="nav-link text-dark " href="Space/pages/authentication/signin/basic.html">
-                        <span class="sidenav-mini-icon"> B </span>
-                        <span class="sidenav-normal  ms-1  ps-1"> Basic </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link text-dark " href="Space/pages/authentication/signin/cover.html">
-                        <span class="sidenav-mini-icon"> C </span>
-                        <span class="sidenav-normal  ms-1  ps-1"> Cover </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link text-dark " href="Space/pages/authentication/signin/illustration.html">
-                        <span class="sidenav-mini-icon"> I </span>
-                        <span class="sidenav-normal  ms-1  ps-1"> Illustration </span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " data-bs-toggle="collapse" aria-expanded="false" href="#signupExample">
-                  <span class="sidenav-mini-icon"> S </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Sign Up <b class="caret"></b></span>
-                </a>
-                <div class="collapse " id="signupExample">
-                  <ul class="nav nav-sm flex-column">
-                    <li class="nav-item">
-                      <a class="nav-link text-dark " href="Space/pages/authentication/signup/basic.html">
-                        <span class="sidenav-mini-icon"> B </span>
-                        <span class="sidenav-normal  ms-1  ps-1"> Basic </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link text-dark " href="Space/pages/authentication/signup/cover.html">
-                        <span class="sidenav-mini-icon"> C </span>
-                        <span class="sidenav-normal  ms-1  ps-1"> Cover </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link text-dark " href="Space/pages/authentication/signup/illustration.html">
-                        <span class="sidenav-mini-icon"> I </span>
-                        <span class="sidenav-normal  ms-1  ps-1"> Illustration </span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " data-bs-toggle="collapse" aria-expanded="false" href="#resetExample">
-                  <span class="sidenav-mini-icon"> R </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Reset Password <b class="caret"></b></span>
-                </a>
-                <div class="collapse " id="resetExample">
-                  <ul class="nav nav-sm flex-column">
-                    <li class="nav-item">
-                      <a class="nav-link text-dark " href="Space/pages/authentication/reset/basic.html">
-                        <span class="sidenav-mini-icon"> B </span>
-                        <span class="sidenav-normal  ms-1  ps-1"> Basic </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link text-dark " href="Space/pages/authentication/reset/cover.html">
-                        <span class="sidenav-mini-icon"> C </span>
-                        <span class="sidenav-normal  ms-1  ps-1"> Cover </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link text-dark " href="Space/pages/authentication/reset/illustration.html">
-                        <span class="sidenav-mini-icon"> I </span>
-                        <span class="sidenav-normal  ms-1  ps-1"> Illustration </span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " data-bs-toggle="collapse" aria-expanded="false" href="#lockExample">
-                  <span class="sidenav-mini-icon"> L </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Lock <b class="caret"></b></span>
-                </a>
-                <div class="collapse " id="lockExample">
-                  <ul class="nav nav-sm flex-column">
-                    <li class="nav-item">
-                      <a class="nav-link text-dark " href="Space/pages/authentication/lock/basic.html">
-                        <span class="sidenav-mini-icon"> B </span>
-                        <span class="sidenav-normal  ms-1  ps-1"> Basic </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link text-dark " href="Space/pages/authentication/lock/cover.html">
-                        <span class="sidenav-mini-icon"> C </span>
-                        <span class="sidenav-normal  ms-1  ps-1"> Cover </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link text-dark " href="Space/pages/authentication/lock/illustration.html">
-                        <span class="sidenav-mini-icon"> I </span>
-                        <span class="sidenav-normal  ms-1  ps-1"> Illustration </span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " data-bs-toggle="collapse" aria-expanded="false" href="#StepExample">
-                  <span class="sidenav-mini-icon"> 2 </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> 2-Step Verification <b class="caret"></b></span>
-                </a>
-                <div class="collapse " id="StepExample">
-                  <ul class="nav nav-sm flex-column">
-                    <li class="nav-item">
-                      <a class="nav-link text-dark " href="Space/pages/authentication/verification/basic.html">
-                        <span class="sidenav-mini-icon"> B </span>
-                        <span class="sidenav-normal  ms-1  ps-1"> Basic </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link text-dark " href="Space/pages/authentication/verification/cover.html">
-                        <span class="sidenav-mini-icon"> C </span>
-                        <span class="sidenav-normal  ms-1  ps-1"> Cover </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link text-dark " href="Space/pages/authentication/verification/illustration.html">
-                        <span class="sidenav-mini-icon"> I </span>
-                        <span class="sidenav-normal  ms-1  ps-1"> Illustration </span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " data-bs-toggle="collapse" aria-expanded="false" href="#errorExample">
-                  <span class="sidenav-mini-icon"> E </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Error <b class="caret"></b></span>
-                </a>
-                <div class="collapse " id="errorExample">
-                  <ul class="nav nav-sm flex-column">
-                    <li class="nav-item">
-                      <a class="nav-link text-dark " href="Space/pages/authentication/error/404.html">
-                        <span class="sidenav-mini-icon"> E </span>
-                        <span class="sidenav-normal  ms-1  ps-1"> Error 404 </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link text-dark " href="Space/pages/authentication/error/500.html">
-                        <span class="sidenav-mini-icon"> E </span>
-                        <span class="sidenav-normal  ms-1  ps-1"> Error 500 </span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </li>
-        <li class="nav-item">
-          <hr class="horizontal dark" />
-          <h6 class="ps-3  ms-2 text-uppercase text-xs font-weight-bolder text-dark">DOCS</h6>
-        </li>
-        <li class="nav-item">
-          <a data-bs-toggle="collapse" href="#basicExamples" class="nav-link text-dark " aria-controls="basicExamples" role="button" aria-expanded="false">
-            <i class="material-symbols-rounded opacity-5 {% if page.brand == 'RTL' %}ms-2{% else %} me-2{% endif %}">upcoming</i>
-            <span class="nav-link-text ms-1 ps-1">Basic</span>
-          </a>
-          <div class="collapse " id="basicExamples">
-            <ul class="nav ">
-              <li class="nav-item ">
-                <a class="nav-link text-dark " data-bs-toggle="collapse" aria-expanded="false" href="#gettingStartedExample">
-                  <span class="sidenav-mini-icon"> G </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Getting Started <b class="caret"></b></span>
-                </a>
-                <div class="collapse " id="gettingStartedExample">
-                  <ul class="nav nav-sm flex-column">
-                    <li class="nav-item">
-                      <a class="nav-link text-dark " href="https://www.creative-tim.com/learning-lab/bootstrap/quick-start/material-dashboard" target="_blank">
-                        <span class="sidenav-mini-icon"> Q </span>
-                        <span class="sidenav-normal  ms-1  ps-1"> Quick Start </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link text-dark " href="https://www.creative-tim.com/learning-lab/bootstrap/license/material-dashboard" target="_blank">
-                        <span class="sidenav-mini-icon"> L </span>
-                        <span class="sidenav-normal  ms-1  ps-1"> License </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link text-dark " href="https://www.creative-tim.com/learning-lab/bootstrap/overview/material-dashboard" target="_blank">
-                        <span class="sidenav-mini-icon"> C </span>
-                        <span class="sidenav-normal  ms-1  ps-1"> Contents </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link text-dark " href="https://www.creative-tim.com/learning-lab/bootstrap/build-tools/material-dashboard" target="_blank">
-                        <span class="sidenav-mini-icon"> B </span>
-                        <span class="sidenav-normal  ms-1  ps-1"> Build Tools </span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " data-bs-toggle="collapse" aria-expanded="false" href="#foundationExample">
-                  <span class="sidenav-mini-icon"> F </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Foundation <b class="caret"></b></span>
-                </a>
-                <div class="collapse " id="foundationExample">
-                  <ul class="nav nav-sm flex-column">
-                    <li class="nav-item">
-                      <a class="nav-link text-dark " href="https://www.creative-tim.com/learning-lab/bootstrap/colors/material-dashboard" target="_blank">
-                        <span class="sidenav-mini-icon"> C </span>
-                        <span class="sidenav-normal  ms-1  ps-1"> Colors </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link text-dark " href="https://www.creative-tim.com/learning-lab/bootstrap/grid/material-dashboard" target="_blank">
-                        <span class="sidenav-mini-icon"> G </span>
-                        <span class="sidenav-normal  ms-1  ps-1"> Grid </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link text-dark " href="https://www.creative-tim.com/learning-lab/bootstrap/typography/material-dashboard" target="_blank">
-                        <span class="sidenav-mini-icon"> T </span>
-                        <span class="sidenav-normal  ms-1  ps-1"> Typography </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link text-dark " href="https://www.creative-tim.com/learning-lab/bootstrap/icons/material-dashboard" target="_blank">
-                        <span class="sidenav-mini-icon"> I </span>
-                        <span class="sidenav-normal  ms-1  ps-1"> Icons </span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a data-bs-toggle="collapse" href="#componentsExamples" class="nav-link text-dark " aria-controls="componentsExamples" role="button" aria-expanded="false">
-            <i class="material-symbols-rounded opacity-5 {% if page.brand == 'RTL' %}ms-2{% else %} me-2{% endif %}">view_in_ar</i>
-            <span class="nav-link-text ms-1 ps-1">Components</span>
-          </a>
-          <div class="collapse " id="componentsExamples">
-            <ul class="nav ">
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="https://www.creative-tim.com/learning-lab/bootstrap/alerts/material-dashboard" target="_blank">
-                  <span class="sidenav-mini-icon"> A </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Alerts </span>
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="https://www.creative-tim.com/learning-lab/bootstrap/badge/material-dashboard" target="_blank">
-                  <span class="sidenav-mini-icon"> B </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Badge </span>
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="https://www.creative-tim.com/learning-lab/bootstrap/buttons/material-dashboard" target="_blank">
-                  <span class="sidenav-mini-icon"> B </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Buttons </span>
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="https://www.creative-tim.com/learning-lab/bootstrap/cards/material-dashboard" target="_blank">
-                  <span class="sidenav-mini-icon"> C </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Card </span>
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="https://www.creative-tim.com/learning-lab/bootstrap/carousel/material-dashboard" target="_blank">
-                  <span class="sidenav-mini-icon"> C </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Carousel </span>
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="https://www.creative-tim.com/learning-lab/bootstrap/collapse/material-dashboard" target="_blank">
-                  <span class="sidenav-mini-icon"> C </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Collapse </span>
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="https://www.creative-tim.com/learning-lab/bootstrap/dropdowns/material-dashboard" target="_blank">
-                  <span class="sidenav-mini-icon"> D </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Dropdowns </span>
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="https://www.creative-tim.com/learning-lab/bootstrap/forms/material-dashboard" target="_blank">
-                  <span class="sidenav-mini-icon"> F </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Forms </span>
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="https://www.creative-tim.com/learning-lab/bootstrap/modal/material-dashboard" target="_blank">
-                  <span class="sidenav-mini-icon"> M </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Modal </span>
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="https://www.creative-tim.com/learning-lab/bootstrap/navs/material-dashboard" target="_blank">
-                  <span class="sidenav-mini-icon"> N </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Navs </span>
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="https://www.creative-tim.com/learning-lab/bootstrap/navbar/material-dashboard" target="_blank">
-                  <span class="sidenav-mini-icon"> N </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Navbar </span>
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="https://www.creative-tim.com/learning-lab/bootstrap/pagination/material-dashboard" target="_blank">
-                  <span class="sidenav-mini-icon"> P </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Pagination </span>
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="https://www.creative-tim.com/learning-lab/bootstrap/popovers/material-dashboard" target="_blank">
-                  <span class="sidenav-mini-icon"> P </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Popovers </span>
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="https://www.creative-tim.com/learning-lab/bootstrap/progress/material-dashboard" target="_blank">
-                  <span class="sidenav-mini-icon"> P </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Progress </span>
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="https://www.creative-tim.com/learning-lab/bootstrap/spinners/material-dashboard" target="_blank">
-                  <span class="sidenav-mini-icon"> S </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Spinners </span>
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="https://www.creative-tim.com/learning-lab/bootstrap/tables/material-dashboard" target="_blank">
-                  <span class="sidenav-mini-icon"> T </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Tables </span>
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="https://www.creative-tim.com/learning-lab/bootstrap/tooltips/material-dashboard" target="_blank">
-                  <span class="sidenav-mini-icon"> T </span>
-                  <span class="sidenav-normal  ms-1  ps-1"> Tooltips </span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-dark" href="https://github.com/creativetimofficial/ct-Space/blob/master/CHANGELOG.md" target="_blank">
-            <i class="material-symbols-rounded opacity-5 {% if page.brand == 'RTL' %}ms-2{% else %} me-2{% endif %}">receipt_long</i>
-            <span class="nav-link-text ms-1 ps-1">Changelog</span>
-          </a>
-        </li>
-      </ul>
+            </li>
+
+            <!-- Space Support Button -->
+            <hr class="horizontal dark mt-0">
+            <div class="d-flex justify-content-center">
+                <button type="button" class="btn bg-gradient-info w-85 mx-auto" onclick="showSupportDialog()">
+                    <i class="material-symbols-rounded opacity-5 me-2">support_agent</i>
+                    <span class="nav-link-text">Space Support</span>
+                </button>
+            </div>
+
+            <!-- Sign Out Button -->
+            <div class="d-flex justify-content-center mt-auto">
+                <button type="button" class="btn bg-gradient-primary w-85 mx-auto" onclick="handleSignOut()">
+                    <i class="material-symbols-rounded opacity-5 me-2">logout</i>
+                    <span class="nav-link-text">Sign Out</span>
+                </button>
+            </div>
+        </ul>
     </div>
-    <div class="sidenav-footer position-absolute w-100 bottom-0">
-    <div class="mx-3">
-        <button type="button" class="btn bg-gradient-primary mt-4 w-100" onclick="handleSignOut()">
-            <i class="material-symbols-rounded opacity-5 me-2">logout</i> Sign Out
-        </button>
-      </div>
-    </div>
-  </aside>
+</aside>
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
     <!-- Navbar -->
     <nav class="navbar navbar-main navbar-expand-lg position-sticky mt-2 top-1 px-0 py-1 mx-3 shadow-none border-radius-lg z-index-sticky" id="navbarBlur" data-scroll="true">

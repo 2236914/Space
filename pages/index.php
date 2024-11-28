@@ -65,7 +65,7 @@
                             <li class="nav-item mx-2">
                                 <a href="#contact" class="nav-link ps-2 d-flex cursor-pointer align-items-center">
                                     <i class="material-symbols-rounded opacity-6 me-2 text-md">call</i>
-                                    Contact
+                                    Contact Us
                                 </a>
                             </li>
                             <li class="nav-item ms-lg-auto my-auto ms-3 ms-lg-0">
@@ -274,7 +274,9 @@
                           <p class="mb-0">
                               We're expanding our network of licensed therapists to better serve our students. Collaborate with us to make a meaningful impact in the field of mental health.
                           </p>
-                          <button type="button" class="btn bg-gradient-primary btn-sm mb-0 mt-3" onclick="window.location.href='therapist-application.html'">Apply Now</button>
+                          <button type="button" class="btn bg-gradient-primary btn-sm mb-0 mt-3" onclick="showTherapistApplicationForm()">
+                            Apply Now
+                          </button>
                       </div>
                   </div>
               </div>
@@ -736,8 +738,10 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="../assets/js/scrollreveal.min.js"></script>
+  <script src="../assets/js/applytherapy.js"></script>
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <script src="../assets/js/material-dashboard.min.js?v=3.2.0"></script>
+  <script src="../assets/js/animations.js"></script>
   <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize modal with new ID

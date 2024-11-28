@@ -46,7 +46,7 @@ if (isset($_POST['login'])) {
             if ($has_mood_today) {
                 header("Location: ../pages/student/student.php");
             } else {
-                header("Location: ../pages/student/moodtracker.php?prompt=daily_log");
+                header("Location: ../pages/student/moodlog.php");
             }
             exit();
         } else {

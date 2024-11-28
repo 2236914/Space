@@ -2,3 +2,10 @@ UPDATE admins
 SET password = SHA2('spaceadmin1@', 256) 
 WHERE email = 'space.admin@g.batstate-u.edu.ph';
 
+UPDATE student 
+SET password = SHA2('spaceadmin2@', 256) 
+WHERE email = '22-36914@g.batstate-u.edu.ph';
+
+UPDATE students 
+SET password = SHA2('spaceadmin2@', 256) 
+WHERE email = '22-36914@g.batstate-u.edu.ph';

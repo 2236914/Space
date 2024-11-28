@@ -32,7 +32,7 @@ try {
     $has_mood_today = $mood_stmt->fetchColumn() > 0;
 
     if (!$has_mood_today) {
-        header("Location: moodtracker.php?prompt=daily_log");
+        header("Location: moodlog.php");
         exit();
     }
 } catch (PDOException $e) {
@@ -604,6 +604,7 @@ ob_start();
                     </div>
                   </div>
       </div>
+      <!-- Today's Mood Card -->
       <div class="col-lg-4 col-md-7 d-flex my-3">
           <div class="card w-100">
             <div class="card-header p-3 pb-0">
@@ -1266,7 +1267,7 @@ function checkMoodLogStatus() {
         .then(response => response.json())
         .then(data => {
             if (!data.has_mood_today) {
-                window.location.href = 'moodtracker.php?prompt=daily_log';
+                window.location.href = 'moodlog.php';
             }
         });
 }

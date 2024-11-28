@@ -5964,3 +5964,735 @@ Stack trace:
 )
 
 [27-Nov-2024 14:40:25 Europe/Berlin] Activity logged successfully. ID: 161
+[27-Nov-2024 21:16:58 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 222222
+    [firstname] => Faith
+    [lastname] => Creotech
+    [phonenum] => 09618817440
+    [email] => 22-2222@g.batstate-u.edu.ph
+    [course] => juskopo
+    [year] => 
+    [section] => 
+    [department] => 
+    [personality] => 
+    [address] => 
+)
+
+[27-Nov-2024 21:16:58 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Faith
+    [lastname] => Creotech
+    [phonenum] => 09618817440
+    [email] => 22-2222@g.batstate-u.edu.ph
+    [department] => 
+    [course] => juskopo
+    [year] => 
+    [section] => 
+    [address] => 
+    [personality] => 
+    [srcode] => 222222
+)
+
+[27-Nov-2024 21:16:58 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Faith
+    [:lastname] => Creotech
+    [:phonenum] => 09618817440
+    [:email] => 22-2222@g.batstate-u.edu.ph
+    [:department] => 
+    [:course] => juskopo
+    [:year] => 
+    [:section] => 
+    [:address] => 
+    [:personality] => 
+    [:srcode] => 222222
+)
+
+[27-Nov-2024 21:16:58 Europe/Berlin] Update result: true, Rows affected: 1
+[27-Nov-2024 21:16:58 Europe/Berlin] === Activity Logging Start ===
+[27-Nov-2024 21:16:58 Europe/Berlin] SR Code: 222222
+[27-Nov-2024 21:16:58 Europe/Berlin] Action: Updated Profile
+[27-Nov-2024 21:16:58 Europe/Berlin] Action Details: Profile information updated
+[27-Nov-2024 21:16:58 Europe/Berlin] IP: ::1
+[27-Nov-2024 21:16:58 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                    (srcode, action, action_details, ip_address) 
+                    VALUES 
+                    (?, ?, ?, ?)
+[27-Nov-2024 21:16:58 Europe/Berlin] Activity log inserted successfully. ID: 201
+[27-Nov-2024 21:16:58 Europe/Berlin] === Activity Logging End ===
+[27-Nov-2024 21:16:58 Europe/Berlin] Attempting to log activity:
+[27-Nov-2024 21:16:58 Europe/Berlin] Array
+(
+    [srcode] => 222222
+    [action] => PROFILE_UPDATE
+    [action_details] => Updated profile information: email, phone number, course
+)
+
+[27-Nov-2024 21:16:58 Europe/Berlin] Activity logged successfully. ID: 202
+[28-Nov-2024 01:48:10 Europe/Berlin] PHP Warning:  Undefined array key "user_id" in C:\xampp\htdocs\Space\pages\student\account-settings.php on line 21
+[28-Nov-2024 01:48:10 Europe/Berlin] PHP Warning:  Undefined array key "user_id" in C:\xampp\htdocs\Space\pages\student\account-settings.php on line 67
+[28-Nov-2024 01:48:10 Europe/Berlin] PHP Warning:  Undefined array key "role" in C:\xampp\htdocs\Space\pages\student\account-settings.php on line 67
+[28-Nov-2024 01:55:28 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 222222
+    [firstname] => Faith
+    [lastname] => Creotech
+    [phonenum] => 09618817440
+    [email] => 22-2222@g.batstate-u.edu.ph
+    [course] => juskopo
+    [year] => 
+    [section] => 
+    [department] => 
+    [personality] => 
+    [address] => Sabang, Lipa
+)
+
+[28-Nov-2024 01:55:28 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Faith
+    [lastname] => Creotech
+    [phonenum] => 09618817440
+    [email] => 22-2222@g.batstate-u.edu.ph
+    [department] => 
+    [course] => juskopo
+    [year] => 
+    [section] => 
+    [address] => Sabang, Lipa
+    [personality] => 
+    [srcode] => 222222
+)
+
+[28-Nov-2024 01:55:28 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Faith
+    [:lastname] => Creotech
+    [:phonenum] => 09618817440
+    [:email] => 22-2222@g.batstate-u.edu.ph
+    [:department] => 
+    [:course] => juskopo
+    [:year] => 
+    [:section] => 
+    [:address] => Sabang, Lipa
+    [:personality] => 
+    [:srcode] => 222222
+)
+
+[28-Nov-2024 01:55:28 Europe/Berlin] Update result: true, Rows affected: 1
+[28-Nov-2024 01:55:28 Europe/Berlin] === Activity Logging Start ===
+[28-Nov-2024 01:55:28 Europe/Berlin] SR Code: 222222
+[28-Nov-2024 01:55:28 Europe/Berlin] Action: Updated Profile
+[28-Nov-2024 01:55:28 Europe/Berlin] Action Details: Profile information updated
+[28-Nov-2024 01:55:28 Europe/Berlin] IP: ::1
+[28-Nov-2024 01:55:28 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                    (srcode, action, action_details, ip_address) 
+                    VALUES 
+                    (?, ?, ?, ?)
+[28-Nov-2024 01:55:28 Europe/Berlin] Activity log inserted successfully. ID: 210
+[28-Nov-2024 01:55:28 Europe/Berlin] === Activity Logging End ===
+[28-Nov-2024 01:55:28 Europe/Berlin] Attempting to log activity:
+[28-Nov-2024 01:55:28 Europe/Berlin] Array
+(
+    [srcode] => 222222
+    [action] => PROFILE_UPDATE
+    [action_details] => Updated profile information: email, phone number, course, address
+)
+
+[28-Nov-2024 01:55:28 Europe/Berlin] Activity logged successfully. ID: 211
+[28-Nov-2024 01:56:15 Europe/Berlin] 
+=== New Upload Request (2024-11-28 01:56:15) ===
+[28-Nov-2024 01:56:15 Europe/Berlin] Remote IP: ::1
+[28-Nov-2024 01:56:15 Europe/Berlin] User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36
+[28-Nov-2024 01:56:15 Europe/Berlin] Session Data: Array
+(
+    [user_id] => 222222
+    [srcode] => 222222
+    [firstname] => Faith
+    [lastname] => Creotech
+    [role] => student
+    [session_log_id] => 81
+)
+
+[28-Nov-2024 01:56:15 Europe/Berlin] POST Data: Array
+(
+)
+
+[28-Nov-2024 01:56:15 Europe/Berlin] FILES Data: Array
+(
+    [profile_picture] => Array
+        (
+            [name] => ffe0682265d47adb1af7114ff1593ab9.jpg
+            [full_path] => ffe0682265d47adb1af7114ff1593ab9.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php9D92.tmp
+            [error] => 0
+            [size] => 22371
+        )
+
+)
+
+[28-Nov-2024 01:56:15 Europe/Berlin] Loading required files...
+[28-Nov-2024 01:56:15 Europe/Berlin] Required files loaded successfully
+[28-Nov-2024 01:56:15 Europe/Berlin] Session validated successfully
+[28-Nov-2024 01:56:15 Europe/Berlin] File details: Array
+(
+    [name] => ffe0682265d47adb1af7114ff1593ab9.jpg
+    [full_path] => ffe0682265d47adb1af7114ff1593ab9.jpg
+    [type] => image/jpeg
+    [tmp_name] => C:\xampp\tmp\php9D92.tmp
+    [error] => 0
+    [size] => 22371
+)
+
+[28-Nov-2024 01:56:15 Europe/Berlin] Reading file data...
+[28-Nov-2024 01:56:15 Europe/Berlin] File data read successfully. Size: 22371 bytes
+[28-Nov-2024 01:56:15 Europe/Berlin] Starting database transaction...
+[28-Nov-2024 01:56:15 Europe/Berlin] Deactivating old profile pictures...
+[28-Nov-2024 01:56:15 Europe/Berlin] Old pictures deactivated successfully
+[28-Nov-2024 01:56:15 Europe/Berlin] Inserting new profile picture...
+[28-Nov-2024 01:56:15 Europe/Berlin] New picture inserted successfully
+[28-Nov-2024 01:56:15 Europe/Berlin] Initializing SessionLogger...
+[28-Nov-2024 01:56:15 Europe/Berlin] Processing user role: student, ID: 222222
+[28-Nov-2024 01:56:15 Europe/Berlin] Attempting to log activity...
+[28-Nov-2024 01:56:15 Europe/Berlin] SR Code: 222222
+[28-Nov-2024 01:56:15 Europe/Berlin] Therapist ID: null
+[28-Nov-2024 01:56:15 Europe/Berlin] Admin ID: null
+[28-Nov-2024 01:56:15 Europe/Berlin] Description: Profile picture updated: ffe0682265d47adb1af7114ff1593ab9.jpg (Type: image/jpeg, Size: 22371 bytes)
+[28-Nov-2024 01:56:15 Europe/Berlin] === Activity Logging Start ===
+[28-Nov-2024 01:56:15 Europe/Berlin] SR Code: 222222
+[28-Nov-2024 01:56:15 Europe/Berlin] Action: UPDATE_PROFILE_PICTURE
+[28-Nov-2024 01:56:15 Europe/Berlin] Action Details: Profile picture updated: ffe0682265d47adb1af7114ff1593ab9.jpg (Type: image/jpeg, Size: 22371 bytes)
+[28-Nov-2024 01:56:15 Europe/Berlin] IP: ::1
+[28-Nov-2024 01:56:15 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                    (srcode, action, action_details, ip_address) 
+                    VALUES 
+                    (?, ?, ?, ?)
+[28-Nov-2024 01:56:15 Europe/Berlin] Activity log inserted successfully. ID: 212
+[28-Nov-2024 01:56:15 Europe/Berlin] === Activity Logging End ===
+[28-Nov-2024 01:56:15 Europe/Berlin] Activity logged successfully
+[28-Nov-2024 01:56:15 Europe/Berlin] Transaction committed successfully
+[28-Nov-2024 01:56:15 Europe/Berlin] Sending success response: {"status":"success","message":"Profile picture updated successfully"}
+[28-Nov-2024 01:56:15 Europe/Berlin] === Request Complete (2024-11-28 01:56:15) ===
+
+[28-Nov-2024 02:45:50 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'emoji_used' in 'field list' in C:\xampp\htdocs\Space\pages\student\moodtracker.php:864
+Stack trace:
+#0 C:\xampp\htdocs\Space\pages\student\moodtracker.php(864): PDO->prepare('\r\n             ...')
+#1 {main}
+  thrown in C:\xampp\htdocs\Space\pages\student\moodtracker.php on line 864
+[28-Nov-2024 02:46:03 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'emoji_used' in 'field list' in C:\xampp\htdocs\Space\pages\student\moodtracker.php:864
+Stack trace:
+#0 C:\xampp\htdocs\Space\pages\student\moodtracker.php(864): PDO->prepare('\r\n             ...')
+#1 {main}
+  thrown in C:\xampp\htdocs\Space\pages\student\moodtracker.php on line 864
+[28-Nov-2024 02:46:14 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'emoji_used' in 'field list' in C:\xampp\htdocs\Space\pages\student\moodtracker.php:864
+Stack trace:
+#0 C:\xampp\htdocs\Space\pages\student\moodtracker.php(864): PDO->prepare('\r\n             ...')
+#1 {main}
+  thrown in C:\xampp\htdocs\Space\pages\student\moodtracker.php on line 864
+[28-Nov-2024 02:48:57 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'emoji_used' in 'field list' in C:\xampp\htdocs\Space\pages\student\moodtracker.php:864
+Stack trace:
+#0 C:\xampp\htdocs\Space\pages\student\moodtracker.php(864): PDO->prepare('\r\n             ...')
+#1 {main}
+  thrown in C:\xampp\htdocs\Space\pages\student\moodtracker.php on line 864
+[28-Nov-2024 02:49:17 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'emoji_used' in 'field list' in C:\xampp\htdocs\Space\pages\student\moodtracker.php:864
+Stack trace:
+#0 C:\xampp\htdocs\Space\pages\student\moodtracker.php(864): PDO->prepare('\r\n             ...')
+#1 {main}
+  thrown in C:\xampp\htdocs\Space\pages\student\moodtracker.php on line 864
+[28-Nov-2024 03:18:36 Europe/Berlin] PHP Warning:  Undefined variable $conn in C:\xampp\htdocs\Space\pages\student\moodtracker.php on line 94
+[28-Nov-2024 03:18:36 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in C:\xampp\htdocs\Space\pages\student\moodtracker.php:94
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\Space\pages\student\moodtracker.php on line 94
+[28-Nov-2024 03:20:21 Europe/Berlin] Mood Data: Array
+(
+    [Happy] => Array
+        (
+            [emoji] => 😊
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Sad] => Array
+        (
+            [emoji] => ☹️
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Angry] => Array
+        (
+            [emoji] => 😠
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Calm] => Array
+        (
+            [emoji] => 😌
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Fearful] => Array
+        (
+            [emoji] => 😨
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Love] => Array
+        (
+            [emoji] => 😍
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Disappointed] => Array
+        (
+            [emoji] => 😔
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Confused] => Array
+        (
+            [emoji] => 😕
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Tired / Sleepy] => Array
+        (
+            [emoji] => 😴
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Thoughtful/Reflective] => Array
+        (
+            [emoji] => 🤔
+            [count] => 0
+            [percentage] => 0
+        )
+
+)
+
+[28-Nov-2024 03:22:55 Europe/Berlin] Mood Data: Array
+(
+    [Happy] => Array
+        (
+            [emoji] => 😊
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Sad] => Array
+        (
+            [emoji] => ☹️
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Angry] => Array
+        (
+            [emoji] => 😠
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Calm] => Array
+        (
+            [emoji] => 😌
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Fearful] => Array
+        (
+            [emoji] => 😨
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Love] => Array
+        (
+            [emoji] => 😍
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Disappointed] => Array
+        (
+            [emoji] => 😔
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Confused] => Array
+        (
+            [emoji] => 😕
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Tired / Sleepy] => Array
+        (
+            [emoji] => 😴
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Thoughtful/Reflective] => Array
+        (
+            [emoji] => 🤔
+            [count] => 0
+            [percentage] => 0
+        )
+
+)
+
+[28-Nov-2024 03:25:48 Europe/Berlin] Mood Data: Array
+(
+    [Happy] => Array
+        (
+            [emoji] => 😊
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Sad] => Array
+        (
+            [emoji] => ☹️
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Angry] => Array
+        (
+            [emoji] => 😠
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Calm] => Array
+        (
+            [emoji] => 😌
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Fearful] => Array
+        (
+            [emoji] => 😨
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Love] => Array
+        (
+            [emoji] => 😍
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Disappointed] => Array
+        (
+            [emoji] => 😔
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Confused] => Array
+        (
+            [emoji] => 😕
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Tired / Sleepy] => Array
+        (
+            [emoji] => 😴
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Thoughtful/Reflective] => Array
+        (
+            [emoji] => 🤔
+            [count] => 0
+            [percentage] => 0
+        )
+
+)
+
+[28-Nov-2024 03:26:45 Europe/Berlin] Mood Data: Array
+(
+    [Happy] => Array
+        (
+            [emoji] => 😊
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Sad] => Array
+        (
+            [emoji] => ☹️
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Angry] => Array
+        (
+            [emoji] => 😠
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Calm] => Array
+        (
+            [emoji] => 😌
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Fearful] => Array
+        (
+            [emoji] => 😨
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Love] => Array
+        (
+            [emoji] => 😍
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Disappointed] => Array
+        (
+            [emoji] => 😔
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Confused] => Array
+        (
+            [emoji] => 😕
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Tired / Sleepy] => Array
+        (
+            [emoji] => 😴
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Thoughtful/Reflective] => Array
+        (
+            [emoji] => 🤔
+            [count] => 0
+            [percentage] => 0
+        )
+
+)
+
+[28-Nov-2024 03:29:39 Europe/Berlin] Raw mood data from DB: Array
+(
+    [0] => Array
+        (
+            [mood_name] => Angry,Love,Confused,Calm,Fearful
+            [count] => 1
+            [percentage] => 50.00000
+        )
+
+    [1] => Array
+        (
+            [mood_name] => Sad,Sad,Angry,Love,Disappointed
+            [count] => 1
+            [percentage] => 50.00000
+        )
+
+)
+
+[28-Nov-2024 03:29:39 Europe/Berlin] Final mood data structure: Array
+(
+    [Happy] => Array
+        (
+            [emoji] => 😊
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Sad] => Array
+        (
+            [emoji] => ☹️
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Angry] => Array
+        (
+            [emoji] => 😠
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Calm] => Array
+        (
+            [emoji] => 😌
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Fearful] => Array
+        (
+            [emoji] => 😨
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Love] => Array
+        (
+            [emoji] => 😍
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Disappointed] => Array
+        (
+            [emoji] => 😔
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Confused] => Array
+        (
+            [emoji] => 😕
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Tired / Sleepy] => Array
+        (
+            [emoji] => 😴
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Thoughtful/Reflective] => Array
+        (
+            [emoji] => 🤔
+            [count] => 0
+            [percentage] => 0
+        )
+
+)
+
+[28-Nov-2024 03:29:39 Europe/Berlin] Mood Data: Array
+(
+    [Happy] => Array
+        (
+            [emoji] => 😊
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Sad] => Array
+        (
+            [emoji] => ☹️
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Angry] => Array
+        (
+            [emoji] => 😠
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Calm] => Array
+        (
+            [emoji] => 😌
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Fearful] => Array
+        (
+            [emoji] => 😨
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Love] => Array
+        (
+            [emoji] => 😍
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Disappointed] => Array
+        (
+            [emoji] => 😔
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Confused] => Array
+        (
+            [emoji] => 😕
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Tired / Sleepy] => Array
+        (
+            [emoji] => 😴
+            [count] => 0
+            [percentage] => 0
+        )
+
+    [Thoughtful/Reflective] => Array
+        (
+            [emoji] => 🤔
+            [count] => 0
+            [percentage] => 0
+        )
+
+)
+
+[28-Nov-2024 03:32:20 Europe/Berlin] Error in mood query: SQLSTATE[HY093]: Invalid parameter number
+[28-Nov-2024 03:32:20 Europe/Berlin] Final allMoods array: Array
+(
+)
+
+[28-Nov-2024 03:32:20 Europe/Berlin] Mood Data: Array
+(
+)
+
+[28-Nov-2024 03:34:25 Europe/Berlin] Error in mood query: SQLSTATE[HY093]: Invalid parameter number
+[28-Nov-2024 03:34:25 Europe/Berlin] Final allMoods array: Array
+(
+)
+
+[28-Nov-2024 03:34:25 Europe/Berlin] Mood Data: Array
+(
+)
+
+[28-Nov-2024 03:36:36 Europe/Berlin] Error in mood query: SQLSTATE[HY093]: Invalid parameter number
+[28-Nov-2024 03:36:36 Europe/Berlin] Final allMoods array: Array
+(
+)
+
+[28-Nov-2024 03:36:36 Europe/Berlin] Mood Data: Array
+(
+)
+
+[28-Nov-2024 03:49:18 Europe/Berlin] CSV Export Error: SQLSTATE[HY093]: Invalid parameter number: mixed named and positional parameters
+[28-Nov-2024 03:49:24 Europe/Berlin] CSV Export Error: SQLSTATE[HY093]: Invalid parameter number: mixed named and positional parameters
+[28-Nov-2024 03:49:28 Europe/Berlin] CSV Export Error: SQLSTATE[HY093]: Invalid parameter number: mixed named and positional parameters

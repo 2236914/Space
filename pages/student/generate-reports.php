@@ -47,11 +47,48 @@ function exportMoodLogsToCSV($moodLogs) {
 
 // Handle CSV export if requested
 if (isset($_POST['export_csv'])) {
-    $query = "SELECT * FROM moodlog WHERE srcode = :srcode ORDER BY log_date DESC";
-    $stmt = $pdo->prepare($query);
-    $stmt->execute(['srcode' => $_SESSION['srcode']]);
-    $moodLogs = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    exportMoodLogsToCSV($moodLogs);
+    try {
+        // Get all mood entries for the user
+        $query = "SELECT moodlog_id, srcode, mood_name, description, 
+                        DATE_FORMAT(log_date, '%M %d, %Y %h:%i %p') as formatted_date 
+                 FROM moodlog 
+                 WHERE srcode = ? 
+                 ORDER BY log_date DESC";
+        
+        $stmt = $pdo->prepare($query);
+        $stmt->execute([$_SESSION['user_id']]);
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Set headers for CSV download
+        header('Content-Type: text/csv');
+        header('Content-Disposition: attachment; filename="mood_entries_' . date('Y-m-d_His') . '.csv"');
+        header('Pragma: no-cache');
+        header('Expires: 0');
+
+        // Create output stream
+        $output = fopen('php://output', 'w');
+
+        // Add CSV headers
+        fputcsv($output, ['Mood Log ID', 'Student ID', 'Moods', 'Description', 'Date']);
+
+        // Add data rows
+        foreach ($results as $row) {
+            fputcsv($output, [
+                $row['moodlog_id'],
+                $row['srcode'],
+                $row['mood_name'],
+                $row['description'],
+                $row['formatted_date']
+            ]);
+        }
+
+        fclose($output);
+        exit();
+
+    } catch (Exception $e) {
+        error_log("CSV Export Error: " . $e->getMessage());
+        $_SESSION['error'] = "Failed to export data. Please try again.";
+    }
 }
 
 // Pagination setup
@@ -95,7 +132,7 @@ $moodLogs = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="apple-touch-icon" sizes="76x76" href="../../assets/img/logo-space.png">
     <link rel="icon" type="image/png" href="../../assets/img/logo-space.png">
-    <title>Space</title>
+    <title>Generate Reports</title>
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,900" />
     <link href="../../assets/css/nucleo-icons.css" rel="stylesheet" />
     <link href="../../assets/css/nucleo-svg.css" rel="stylesheet" />
@@ -416,19 +453,19 @@ $moodLogs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                                     <div class="card-body px-4 pt-2">
                                         <div class="table-responsive">
-                                            <table class="table table-flush" id="moodLogsTable">
+                                            <table class="table align-items-center mb-0">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 40px;">
+                                                        <th>
                                                             <div class="form-check">
-                                                                <input class="form-check-input" type="checkbox" id="selectAll" onclick="toggleSelectAll(this)">
+                                                                <input class="form-check-input" type="checkbox" id="selectAll">
                                                             </div>
                                                         </th>
                                                         <th>Date</th>
                                                         <th>Emoji</th>
                                                         <th>Mood</th>
                                                         <th>Description</th>
-                                                        <th style="width: 60px;">Action</th>
+                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -447,7 +484,9 @@ $moodLogs = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                                             <tr>
                                                                 <td>
                                                                     <div class="form-check">
-                                                                        <input class="form-check-input row-checkbox" type="checkbox" value="<?php echo $log['moodlog_id']; ?>">
+                                                                        <input class="form-check-input mood-checkbox" 
+                                                                               type="checkbox" 
+                                                                               value="<?php echo $log['moodlog_id']; ?>">
                                                                     </div>
                                                                 </td>
                                                                 <td class="text-sm"><?php echo date('M d, Y h:i A', strtotime($log['log_date'])); ?></td>
@@ -1018,5 +1057,96 @@ $moodLogs = $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
   });
   </script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const selectAll = document.getElementById('selectAll');
+    const moodCheckboxes = document.querySelectorAll('.mood-checkbox');
+    const exportForm = document.getElementById('exportForm');
+    const selectedIdsInput = document.getElementById('selectedIds');
+
+    // Handle "Select All" checkbox
+    selectAll.addEventListener('change', function() {
+        moodCheckboxes.forEach(checkbox => {
+            checkbox.checked = this.checked;
+        });
+    });
+
+    // Handle individual checkboxes
+    moodCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            const allChecked = Array.from(moodCheckboxes).every(cb => cb.checked);
+            selectAll.checked = allChecked;
+        });
+    });
+
+    // Handle form submission
+    exportForm.addEventListener('submit', function(e) {
+        e.preventDefault(); // Prevent default form submission
+
+        // Get all checked checkboxes
+        const checkedBoxes = Array.from(moodCheckboxes).filter(cb => cb.checked);
+        
+        // Get their values
+        const selectedIds = checkedBoxes.map(cb => cb.value);
+
+        // If nothing is selected, set to 'all'
+        selectedIdsInput.value = selectedIds.length > 0 ? JSON.stringify(selectedIds) : 'all';
+
+        // Submit the form
+        this.submit();
+    });
+  });
+  </script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('moodSearchInput');
+    const tableRows = document.querySelectorAll('table tbody tr');
+
+    searchInput.addEventListener('keyup', function() {
+        const searchTerm = this.value.toLowerCase();
+
+        tableRows.forEach(row => {
+            // Get text content from each cell except the action column
+            const date = row.cells[1].textContent.toLowerCase();
+            const mood = row.cells[3].textContent.toLowerCase();
+            const description = row.cells[4].textContent.toLowerCase();
+
+            // Check if any cell contains the search term
+            const matches = 
+                date.includes(searchTerm) || 
+                mood.includes(searchTerm) || 
+                description.includes(searchTerm);
+
+            // Show/hide row based on match
+            row.style.display = matches ? '' : 'none';
+        });
+    });
+
+    // Add clear search functionality
+    searchInput.addEventListener('search', function() {
+        if (this.value === '') {
+            tableRows.forEach(row => {
+                row.style.display = '';
+            });
+        }
+    });
+  });
+  </script>
+  <style>
+  /* Optional: Add transition for smooth hiding/showing of rows */
+  table tbody tr {
+      transition: all 0.3s ease;
+  }
+
+  /* Optional: Style for no results */
+  table tbody:not(:has(tr[style*="display: table-row"], tr:not([style*="display: none"])))::after {
+      content: "No matching records found";
+      display: block;
+      text-align: center;
+      padding: 1rem;
+      color: #666;
+      font-style: italic;
+  }
+  </style>
 </body>
 </html>

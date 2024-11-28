@@ -8,6 +8,23 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 require_once '../../configs/config.php';
+if (!isset($pdo)) {
+    error_log('PDO is not set');
+}
+
+// Check if user is logged in
+if (!isset($_SESSION['user_id'])) {
+    header('Location: signin.php');
+    exit;
+}
+
+// Check if mood has been logged today
+$srcode = $_SESSION['srcode'];
+$today = date('Y-m-d');
+$moodCheckStmt = $pdo->prepare("SELECT * FROM moodlog WHERE srcode = ? AND DATE(log_date) = ?");
+$moodCheckStmt->execute([$srcode, $today]);
+$todaysMoodLog = $moodCheckStmt->fetch();
+
 
 // Add this debug section temporarily
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'student') {
