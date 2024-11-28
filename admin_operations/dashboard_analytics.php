@@ -108,5 +108,46 @@ class DashboardAnalytics {
             return 0;
         }
     }
+
+    public function getUserPostCount($userId) {
+        try {
+            $stmt = $this->pdo->prepare("
+                SELECT COUNT(*) 
+                FROM posts 
+                WHERE username = (
+                    SELECT username 
+                    FROM students 
+                    WHERE srcode = ?
+                )
+                AND status = 'active'
+            ");
+            $stmt->execute([$userId]);
+            return $stmt->fetchColumn();
+        } catch (PDOException $e) {
+            error_log("Error getting user post count: " . $e->getMessage());
+            return 0;
+        }
+    }
+
+    public function getUserYesterdayPostCount($userId) {
+        try {
+            $stmt = $this->pdo->prepare("
+                SELECT COUNT(*) 
+                FROM posts 
+                WHERE username = (
+                    SELECT username 
+                    FROM students 
+                    WHERE srcode = ?
+                )
+                AND DATE(created_at) = DATE(NOW() - INTERVAL 1 DAY)
+                AND status = 'active'
+            ");
+            $stmt->execute([$userId]);
+            return $stmt->fetchColumn();
+        } catch (PDOException $e) {
+            error_log("Error getting yesterday's post count: " . $e->getMessage());
+            return 0;
+        }
+    }
 }
 ?>

@@ -31,7 +31,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'therapist') {
   <link rel="apple-touch-icon" sizes="76x76" href="../../assets/img/logo-space.png">
   <link rel="icon" type="image/png" href="../../assets/img/logo-space.png">
   <title>
-    Space - Admin
+    Space
   </title>
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,900" />
   <link href="../../assets/css/nucleo-icons.css" rel="stylesheet" />

@@ -1,0 +1,580 @@
+-- 1. Base Tables First
+CREATE TABLE students (
+    srcode INT PRIMARY KEY,
+    firstname VARCHAR(100) NOT NULL,
+    lastname VARCHAR(100) NOT NULL,
+    phonenum CHAR(11) NOT NULL UNIQUE CHECK (phonenum LIKE '09%' AND LENGTH(phonenum) = 11),
+    email VARCHAR(150) UNIQUE NOT NULL,
+    password CHAR(64) NOT NULL,
+    department VARCHAR(100),
+    year INT,
+    section VARCHAR(10),
+    course VARCHAR(100),
+    address TEXT,
+    personality TEXT,
+    status ENUM('active', 'deactivated', 'suspended') DEFAULT 'active',
+    created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    username VARCHAR(150) UNIQUE
+);
+
+CREATE TABLE therapists (
+    therapist_id VARCHAR(10) PRIMARY KEY,
+    firstname VARCHAR(100) NOT NULL,
+    lastname VARCHAR(100) NOT NULL,
+    email VARCHAR(150) UNIQUE NOT NULL,
+    password CHAR(64) NOT NULL,
+    specialization VARCHAR(255),
+    license_number VARCHAR(50) UNIQUE NOT NULL,
+    contact_number CHAR(11) UNIQUE NOT NULL CHECK (contact_number LIKE '09%' AND LENGTH(contact_number) = 11),
+    dob DATE NOT NULL,
+    age INT GENERATED ALWAYS AS (YEAR(CURDATE()) - YEAR(dob)) VIRTUAL,
+    status ENUM('active', 'inactive', 'suspended') DEFAULT 'active',
+    created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    username VARCHAR(255) UNIQUE
+);
+
+CREATE TABLE admins (
+    admin_id VARCHAR(10) PRIMARY KEY,
+    firstname VARCHAR(100) NOT NULL,
+    lastname VARCHAR(100) NOT NULL,
+    email VARCHAR(150) UNIQUE NOT NULL,
+    password CHAR(64) NOT NULL,
+    contact_number CHAR(11) UNIQUE NOT NULL CHECK (contact_number LIKE '09%' AND LENGTH(contact_number) = 11),
+    role ENUM('superadmin', 'moderator') DEFAULT 'moderator',
+    created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE contacts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    message TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 2. Dependent Tables
+CREATE TABLE moodlog (
+    moodlog_id VARCHAR(10) PRIMARY KEY,
+    srcode INT NOT NULL,
+    selected_emoji VARCHAR(10) NOT NULL,
+    mood_name VARCHAR(50) NOT NULL,
+    description TEXT,
+    log_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (srcode) REFERENCES students(srcode) ON DELETE CASCADE
+);
+
+ALTER TABLE moodlog 
+MODIFY COLUMN selected_emoji VARCHAR(50) NOT NULL,
+MODIFY COLUMN mood_name VARCHAR(100) NOT NULL;
+
+ALTER TABLE moodlog 
+MODIFY COLUMN selected_emoji VARCHAR(50) NOT NULL,
+MODIFY COLUMN mood_name VARCHAR(100) NOT NULL;
+
+
+
+CREATE TABLE notifications (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id VARCHAR(50) NOT NULL,
+    type VARCHAR(50) NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    message TEXT NOT NULL,
+    icon VARCHAR(50) NOT NULL,
+    color_class VARCHAR(50) NOT NULL,
+    is_read BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_user_created (user_id, created_at)
+);
+
+CREATE TABLE quotes (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    content TEXT NOT NULL,
+    author VARCHAR(255) NOT NULL,
+    category VARCHAR(100) DEFAULT 'mental health',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE journal_entries (
+    entry_id INT AUTO_INCREMENT PRIMARY KEY,
+    srcode INT NOT NULL,
+    content TEXT NOT NULL,
+    mood_id INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (srcode) REFERENCES students(srcode) ON DELETE CASCADE
+);
+
+CREATE TABLE mood_streaks (
+    streak_id INT AUTO_INCREMENT PRIMARY KEY,
+    srcode INT NOT NULL,
+    current_streak INT DEFAULT 0,
+    FOREIGN KEY (srcode) REFERENCES students(srcode) ON DELETE CASCADE
+);
+
+
+
+-- 3. Triggers
+DELIMITER //
+
+CREATE TRIGGER GenerateStudentUsername
+BEFORE INSERT ON students
+FOR EACH ROW
+BEGIN
+    DECLARE creation_date CHAR(8);
+    DECLARE base_username VARCHAR(150);
+    DECLARE existing_count INT;
+    SET creation_date = DATE_FORMAT(NEW.created_date, '%Y%m%d');
+    SET base_username = CONCAT('space_', LOWER(NEW.lastname), '_', creation_date);
+    SELECT COUNT(*) INTO existing_count FROM students WHERE username LIKE CONCAT(base_username, '%');
+    SET NEW.username = CONCAT(base_username, existing_count + 1);
+END//
+
+CREATE TRIGGER GenerateTherapistIDAndUsername
+BEFORE INSERT ON therapists
+FOR EACH ROW
+BEGIN
+    DECLARE count_id INT;
+    DECLARE new_id VARCHAR(10);
+    SELECT COUNT(*) + 1 INTO count_id FROM therapists;
+    SET new_id = CONCAT('THR-', LPAD(count_id, 3, '0'));
+    SET NEW.therapist_id = new_id;
+    SET NEW.username = CONCAT('space_', new_id);
+END//
+
+CREATE TRIGGER GenerateAdminID
+BEFORE INSERT ON admins
+FOR EACH ROW
+BEGIN
+    DECLARE new_id VARCHAR(10);
+    DECLARE count_id INT;
+    SELECT COUNT(*) + 1 INTO count_id FROM admins;
+    SET new_id = CONCAT('ADM-', LPAD(count_id, 4, '0'));
+    SET NEW.admin_id = new_id;
+END//
+
+CREATE TRIGGER GenerateMoodLogID
+BEFORE INSERT ON moodlog
+FOR EACH ROW
+BEGIN
+    DECLARE count_id INT;
+    DECLARE new_id VARCHAR(10);
+    SELECT COUNT(*) + 1 INTO count_id FROM moodlog;
+    SET new_id = CONCAT('MOOD-', LPAD(count_id, 4, '0'));
+    SET NEW.moodlog_id = new_id;
+END//
+
+DELIMITER ;
+
+
+CREATE TABLE IF NOT EXISTS students (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    srcode VARCHAR(50) UNIQUE NOT NULL,
+    firstname VARCHAR(100) NOT NULL,
+    lastname VARCHAR(100) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    contact VARCHAR(20),
+    address TEXT,
+    course VARCHAR(100),
+    year VARCHAR(20),
+    section VARCHAR(20),
+    profile_picture VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE system_errors (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    error_message TEXT NOT NULL,
+    error_context TEXT,
+    stack_trace TEXT,
+    severity VARCHAR(20) NOT NULL DEFAULT 'ERROR',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    resolved_at TIMESTAMP NULL,
+    resolution_notes TEXT,
+    INDEX idx_severity (severity),
+    INDEX idx_created_at (created_at)
+);
+
+
+CREATE TABLE admin_session_logs (
+    session_id INT AUTO_INCREMENT PRIMARY KEY,
+    admin_id VARCHAR(10),
+    login_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    logout_time TIMESTAMP NULL,
+    ip_address VARCHAR(45),
+    session_status ENUM('active', 'inactive') DEFAULT 'active',
+    FOREIGN KEY (admin_id) REFERENCES admins(admin_id) ON DELETE CASCADE
+);
+
+
+CREATE TABLE therapist_session_logs (
+    session_id INT AUTO_INCREMENT PRIMARY KEY,
+    therapist_id VARCHAR(10),
+    login_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    logout_time TIMESTAMP NULL,
+    ip_address VARCHAR(45),
+    session_status ENUM('active', 'inactive') DEFAULT 'active',
+    FOREIGN KEY (therapist_id) REFERENCES therapists(therapist_id) ON DELETE CASCADE
+);
+CREATE TABLE therapist_activity_logs (
+    log_id INT AUTO_INCREMENT PRIMARY KEY,
+    therapist_id VARCHAR(10),
+    action VARCHAR(255) NOT NULL,
+    action_details TEXT,
+    ip_address VARCHAR(45),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (therapist_id) REFERENCES therapists(therapist_id) ON DELETE CASCADE
+);
+CREATE TABLE admin_activity_logs (
+    log_id INT AUTO_INCREMENT PRIMARY KEY,
+    admin_id VARCHAR(10),
+    action VARCHAR(255) NOT NULL,
+    action_details TEXT,
+    ip_address VARCHAR(45),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (admin_id) REFERENCES admins(admin_id) ON DELETE CASCADE
+);
+
+CREATE TABLE activity_logs (
+    log_id INT AUTO_INCREMENT PRIMARY KEY,
+    srcode INT NOT NULL,
+    action VARCHAR(255) NOT NULL,
+    action_details TEXT,
+    ip_address VARCHAR(45),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (srcode) REFERENCES students(srcode) ON DELETE CASCADE,
+);
+
+CREATE TABLE session_logs (
+    session_id INT AUTO_INCREMENT PRIMARY KEY,
+    srcode INT,
+    login_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    logout_time TIMESTAMP NULL,
+    ip_address VARCHAR(45),
+    session_status ENUM('active', 'inactive') DEFAULT 'active',
+    FOREIGN KEY (srcode) REFERENCES students(srcode) ON DELETE CASCADE,
+);
+
+
+CREATE TABLE support_messages (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    srcode VARCHAR(10) NOT NULL,  -- Match the exact data type from students table
+    email VARCHAR(255) NOT NULL,
+    message TEXT NOT NULL,
+    attachment_data LONGBLOB DEFAULT NULL,  -- Store file directly in database
+    attachment_name VARCHAR(255) DEFAULT NULL,  -- Store original filename
+    attachment_type VARCHAR(100) DEFAULT NULL,  -- Store file mime type
+    status ENUM('pending', 'in_progress', 'resolved') DEFAULT 'pending',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+CREATE TABLE therapist_applications (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    phone VARCHAR(50) NOT NULL,
+    license_number VARCHAR(100) NOT NULL,
+    specialization VARCHAR(100) NOT NULL,
+    experience TEXT NOT NULL,
+    profile_picture MEDIUMBLOB,
+    profile_picture_type VARCHAR(50),
+    license_file MEDIUMBLOB,
+    license_file_type VARCHAR(50),
+    resume MEDIUMBLOB,
+    resume_file_type VARCHAR(50),
+    status ENUM('pending', 'approved', 'rejected') DEFAULT 'pending',
+    application_date DATETIME NOT NULL,
+    review_date DATETIME,
+    review_notes TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Table for storing reports
+CREATE TABLE reports (
+    report_id INT PRIMARY KEY AUTO_INCREMENT,
+    reporter_srcode INT,                 -- Student reporter (references students)
+    reporter_therapist_id VARCHAR(10),   -- Therapist reporter (references therapists)
+    reported_srcode INT,                 -- Reported student
+    reported_therapist_id VARCHAR(10),   -- Reported therapist
+    post_id INT,                         -- NULL if it's a user report
+    report_type ENUM('inappropriate', 'harassment', 'spam', 'hate', 'user', 'violence', 'self_harm', 'misinformation', 'other') NOT NULL,
+    reason TEXT,                         -- Detailed reason from reporter
+    evidence_path VARCHAR(255),          -- Path to screenshot/evidence file
+    evidence_name VARCHAR(255),          -- Original filename of evidence
+    status ENUM('pending', 'investigating', 'escalated', 'resolved', 'dismissed') DEFAULT 'pending',
+    priority ENUM('low', 'medium', 'high', 'urgent') DEFAULT 'medium',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    assigned_therapist_id VARCHAR(10),   -- Therapist assigned to handle report
+    therapist_notes TEXT,                -- Notes from therapist about the report
+    resolution_date TIMESTAMP NULL,      -- When the report was resolved
+    resolution_action TEXT,              -- What action was taken
+    resolution_type ENUM('warning', 'post_removed', 'account_suspended', 'no_action', 'referred_to_guidance', 'other') NULL,
+    
+    FOREIGN KEY (reporter_srcode) REFERENCES students(srcode),
+    FOREIGN KEY (reporter_therapist_id) REFERENCES therapists(therapist_id),
+    FOREIGN KEY (reported_srcode) REFERENCES students(srcode),
+    FOREIGN KEY (reported_therapist_id) REFERENCES therapists(therapist_id),
+    FOREIGN KEY (post_id) REFERENCES posts(post_id),
+    FOREIGN KEY (assigned_therapist_id) REFERENCES therapists(therapist_id),
+    
+    CHECK (
+        (reporter_srcode IS NOT NULL AND reporter_therapist_id IS NULL) OR
+        (reporter_therapist_id IS NOT NULL AND reporter_srcode IS NULL)
+    ),
+    CHECK (
+        (reported_srcode IS NOT NULL AND reported_therapist_id IS NULL) OR
+        (reported_therapist_id IS NOT NULL AND reported_srcode IS NULL)
+    )
+);
+CREATE TABLE posts (
+    post_id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(255),
+    content TEXT NOT NULL,
+    image_file MEDIUMBLOB,
+    image_name VARCHAR(255),
+    post_type ENUM('student', 'therapist') NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    status ENUM('active', 'hidden', 'deleted') DEFAULT 'active',
+    CONSTRAINT `fk_student_posts` FOREIGN KEY (username) REFERENCES students(username) ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT `fk_therapist_posts` FOREIGN KEY (username) REFERENCES therapists(username) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+-- Add trigger to enforce post type check
+DELIMITER //
+CREATE TRIGGER check_post_type_insert BEFORE INSERT ON posts
+FOR EACH ROW
+BEGIN
+    IF NEW.post_type = 'student' AND NEW.username NOT IN (SELECT username FROM students)
+    THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Invalid student username';
+    ELSEIF NEW.post_type = 'therapist' AND NEW.username NOT IN (SELECT username FROM therapists)
+    THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Invalid therapist username';
+    END IF;
+END//
+DELIMITER ;
+
+-- Comments Table
+CREATE TABLE comments (
+    comment_id INT PRIMARY KEY AUTO_INCREMENT,
+    post_id INT NOT NULL,
+    username VARCHAR(255) NOT NULL,
+    comment_text TEXT NOT NULL,
+    commenter_type ENUM('student', 'therapist') NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    status ENUM('active', 'hidden', 'deleted') DEFAULT 'active',
+    FOREIGN KEY (post_id) REFERENCES posts(post_id) ON DELETE CASCADE,
+    CONSTRAINT `fk_student_comments` FOREIGN KEY (username) REFERENCES students(username) ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT `fk_therapist_comments` FOREIGN KEY (username) REFERENCES therapists(username) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+-- Likes Table
+CREATE TABLE likes (
+    like_id INT PRIMARY KEY AUTO_INCREMENT,
+    post_id INT NOT NULL,
+    username VARCHAR(255) NOT NULL,
+    liker_type ENUM('student', 'therapist') NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (post_id) REFERENCES posts(post_id) ON DELETE CASCADE,
+    CONSTRAINT `fk_student_likes` FOREIGN KEY (username) REFERENCES students(username) ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT `fk_therapist_likes` FOREIGN KEY (username) REFERENCES therapists(username) ON UPDATE CASCADE ON DELETE CASCADE,
+    -- Prevent duplicate likes
+    UNIQUE KEY `unique_like` (post_id, username, liker_type)
+);
+
+-- Add trigger to enforce commenter type check
+DELIMITER //
+CREATE TRIGGER check_commenter_type_insert BEFORE INSERT ON comments
+FOR EACH ROW
+BEGIN
+    IF NEW.commenter_type = 'student' AND NEW.username NOT IN (SELECT username FROM students)
+    THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Invalid student username for comment';
+    ELSEIF NEW.commenter_type = 'therapist' AND NEW.username NOT IN (SELECT username FROM therapists)
+    THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Invalid therapist username for comment';
+    END IF;
+END//
+DELIMITER ;
+
+-- Add trigger to enforce liker type check
+DELIMITER //
+CREATE TRIGGER check_liker_type_insert BEFORE INSERT ON likes
+FOR EACH ROW
+BEGIN
+    IF NEW.liker_type = 'student' AND NEW.username NOT IN (SELECT username FROM students)
+    THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Invalid student username for like';
+    ELSEIF NEW.liker_type = 'therapist' AND NEW.username NOT IN (SELECT username FROM therapists)
+    THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Invalid therapist username for like';
+    END IF;
+END//
+DELIMITER ;
+
+
+
+-- Check if username exists in students/therapists table before inserting
+DELIMITER //
+CREATE TRIGGER before_post_insert
+BEFORE INSERT ON posts
+FOR EACH ROW
+BEGIN
+    IF NEW.post_type = 'student' AND NOT EXISTS (
+        SELECT 1 FROM students WHERE username = NEW.username
+    ) THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Invalid student username';
+    ELSEIF NEW.post_type = 'therapist' AND NOT EXISTS (
+        SELECT 1 FROM therapists WHERE username = NEW.username
+    ) THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Invalid therapist username';
+    END IF;
+END//
+DELIMITER ;
+
+-- Drop tables in correct order due to foreign key dependencies
+DROP TABLE IF EXISTS likes;
+DROP TABLE IF EXISTS comments;
+DROP TABLE IF EXISTS posts;
+
+-- Recreate posts table with correct username field length
+CREATE TABLE posts (
+    post_id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(150),  -- Match students table length
+    content TEXT NOT NULL,
+    image_file MEDIUMBLOB,
+    image_name VARCHAR(255),
+    post_type ENUM('student', 'therapist') NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    status ENUM('active', 'hidden', 'deleted') DEFAULT 'active',
+    CONSTRAINT `fk_student_posts` FOREIGN KEY (username) REFERENCES students(username) ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT `fk_therapist_posts` FOREIGN KEY (username) REFERENCES therapists(username) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+-- Recreate comments table
+CREATE TABLE comments (
+    comment_id INT PRIMARY KEY AUTO_INCREMENT,
+    post_id INT NOT NULL,
+    username VARCHAR(150) NOT NULL,  -- Match students table length
+    comment_text TEXT NOT NULL,
+    commenter_type ENUM('student', 'therapist') NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    status ENUM('active', 'hidden', 'deleted') DEFAULT 'active',
+    FOREIGN KEY (post_id) REFERENCES posts(post_id) ON DELETE CASCADE,
+    CONSTRAINT `fk_student_comments` FOREIGN KEY (username) REFERENCES students(username) ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT `fk_therap
+
+    -- Then modify the posts table structure
+ALTER TABLE posts
+ADD CONSTRAINT fk_posts_username
+FOREIGN KEY (username, post_type)
+REFERENCES (
+    SELECT username, 'student' as user_type FROM students
+    UNION
+    SELECT username, 'therapist' as user_type FROM therapists
+) (username, user_type);
+
+CREATE TABLE IF NOT EXISTS likes (
+    like_id int(11) NOT NULL AUTO_INCREMENT,
+    post_id int(11) NOT NULL,
+    username varchar(150) NOT NULL,
+    liker_type enum('student','therapist') NOT NULL,
+    created_at timestamp NOT NULL DEFAULT current_timestamp(),
+    PRIMARY KEY (like_id),
+    KEY post_id (post_id),
+    KEY username (username)
+);
+-- First, drop existing foreign key constraints
+ALTER TABLE likes
+DROP FOREIGN KEY IF EXISTS fk_student_likes,
+DROP FOREIGN KEY IF EXISTS fk_therapist_likes;
+
+-- Add new trigger-based validation instead of foreign keys
+DELIMITER //
+
+CREATE TRIGGER before_like_insert 
+BEFORE INSERT ON likes
+FOR EACH ROW
+BEGIN
+    IF NEW.liker_type = 'student' AND NOT EXISTS (
+        SELECT 1 FROM students WHERE username = NEW.username
+    ) THEN
+        SIGNAL SQLSTATE '45000' 
+        SET MESSAGE_TEXT = 'Invalid student username';
+    ELSEIF NEW.liker_type = 'therapist' AND NOT EXISTS (
+        SELECT 1 FROM therapists WHERE username = NEW.username
+    ) THEN
+        SIGNAL SQLSTATE '45000' 
+        SET MESSAGE_TEXT = 'Invalid therapist username';
+    END IF;
+END//
+
+CREATE TRIGGER before_like_update
+BEFORE UPDATE ON likes
+FOR EACH ROW
+BEGIN
+    IF NEW.liker_type = 'student' AND NOT EXISTS (
+        SELECT 1 FROM students WHERE username = NEW.username
+
+        -- First, drop existing foreign key constraints from comments table
+ALTER TABLE comments
+DROP FOREIGN KEY IF EXISTS fk_student_comments,
+DROP FOREIGN KEY IF EXISTS fk_therapist_comments;
+
+-- Add trigger-based validation for comments
+DELIMITER //
+
+CREATE TRIGGER before_comment_insert 
+BEFORE INSERT ON comments
+FOR EACH ROW
+BEGIN
+    IF NEW.commenter_type = 'student' AND NOT EXISTS (
+        SELECT 1 FROM students WHERE username = NEW.username
+    ) THEN
+        SIGNAL SQLSTATE '45000' 
+        SET MESSAGE_TEXT = 'Invalid student username';
+    ELSEIF NEW.commenter_type = 'therapist' AND NOT EXISTS (
+        SELECT 1 FROM therapists WHERE username = NEW.username
+    ) THEN
+        SIGNAL SQLSTATE '45000' 
+        SET MESSAGE_TEXT = 'Invalid therapist username';
+    END IF;
+END//
+
+CREATE TRIGGER before_comment_update
+BEFORE UPDATE ON comments
+FOR EACH ROW
+BEGIN
+    IF NEW.commenter_type = 'student' AND NOT EXISTS (
+        SELECT 1 FROM students WHERE username = NEW.username
+    ) THEN
+        SIGNAL SQLSTATE '45000' 
+        SET MESSAGE_TEXT = 'Invalid student username';
+    ELSEIF NEW.commenter_type = 'therapist' AND NOT EXISTS (
+        SELECT 1 FROM therapists WHERE username = NEW.username
+    ) THEN
+        SIGNAL SQLSTATE '45000' 
+        SET MESSAGE_TEXT = 'Invalid therapist username';
+    END IF;
+END//
+
+DELIMITER ;
+
+   CREATE TABLE IF NOT EXISTS reports (
+       report_id INT PRIMARY KEY AUTO_INCREMENT,
+       reporter_username VARCHAR(150) NOT NULL,
+       reporter_type ENUM('student', 'therapist') NOT NULL,
+       reported_type ENUM('post', 'user') NOT NULL,
+       reported_id VARCHAR(150) NOT NULL,
+       reason TEXT NOT NULL,
+       status ENUM('pending', 'reviewed', 'resolved') DEFAULT 'pending',
+       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+   );

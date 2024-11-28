@@ -25,6 +25,14 @@ $moodCheckStmt = $pdo->prepare("SELECT * FROM moodlog WHERE srcode = ? AND DATE(
 $moodCheckStmt->execute([$srcode, $today]);
 $todaysMoodLog = $moodCheckStmt->fetch();
 
+// If mood is already logged, redirect to student dashboard
+if ($todaysMoodLog && !isset($_SESSION['first_login_today'])) {
+    header("Location: student.php");
+    exit();
+}
+
+// Remove the first login flag
+unset($_SESSION['first_login_today']);
 
 // Add this debug section temporarily
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'student') {

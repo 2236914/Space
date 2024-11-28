@@ -27,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['firstname'] = $student['firstname'];
             $_SESSION['lastname'] = $student['lastname'];
             $_SESSION['role'] = 'student';
+            $_SESSION['first_login_today'] = true;
             
             // Check if account needs reactivation
             if ($student['status'] === 'deactivated') {

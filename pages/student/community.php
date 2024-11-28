@@ -32,6 +32,90 @@ try {
     error_log("Mood check error: " . $e->getMessage());
     $has_mood_today = true;
 }
+
+// Fetch posts with like counts
+try {
+    $posts_stmt = $pdo->prepare("
+        SELECT 
+            p.*,
+            CASE 
+                WHEN p.post_type = 'student' THEN s.firstname
+                ELSE t.firstname
+            END as firstname,
+            CASE 
+                WHEN p.post_type = 'student' THEN s.lastname
+                ELSE t.lastname
+            END as lastname,
+            CASE 
+                WHEN p.post_type = 'student' THEN s.srcode
+                ELSE t.therapist_id
+            END as user_id,
+            COUNT(DISTINCT l.like_id) as like_count,
+            COUNT(DISTINCT c.comment_id) as comment_count,
+            EXISTS(
+                SELECT 1 
+                FROM likes l2 
+                WHERE l2.post_id = p.post_id 
+                AND l2.username = :current_user
+            ) as user_has_liked
+        FROM posts p
+        LEFT JOIN students s ON p.username = s.username AND p.post_type = 'student'
+        LEFT JOIN therapists t ON p.username = t.username AND p.post_type = 'therapist'
+        LEFT JOIN likes l ON p.post_id = l.post_id
+        LEFT JOIN comments c ON p.post_id = c.post_id
+        WHERE p.status = 'active'
+        GROUP BY p.post_id
+        ORDER BY p.created_at DESC
+    ");
+    
+    // Get current user's username
+    if ($_SESSION['role'] === 'student') {
+        $username_stmt = $pdo->prepare("SELECT username FROM students WHERE srcode = ?");
+    } else {
+        $username_stmt = $pdo->prepare("SELECT username FROM therapists WHERE therapist_id = ?");
+    }
+    $username_stmt->execute([$_SESSION['user_id']]);
+    $current_username = $username_stmt->fetchColumn();
+    
+    $posts_stmt->execute([':current_user' => $current_username]);
+    $posts = $posts_stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    error_log("Error fetching posts: " . $e->getMessage());
+    $posts = [];
+}
+
+// Add the getTimeAgo function here
+function getTimeAgo($datetime) {
+    $timestamp = strtotime($datetime);
+    $current_time = time();
+    $time_difference = $current_time - $timestamp;
+
+    // Add debugging
+    error_log("Current time: " . date('Y-m-d H:i:s', $current_time));
+    error_log("Post time: " . date('Y-m-d H:i:s', $timestamp));
+    error_log("Difference: " . $time_difference . " seconds");
+
+    if ($time_difference < 30) {
+        return "Just now";
+    } elseif ($time_difference < 60) {
+        return $time_difference . " seconds ago";
+    } elseif ($time_difference < 3600) {
+        $minutes = floor($time_difference / 60);
+        return $minutes . " minute" . ($minutes != 1 ? "s" : "") . " ago";
+    } elseif ($time_difference < 86400) {
+        $hours = floor($time_difference / 3600);
+        return $hours . " hour" . ($hours != 1 ? "s" : "") . " ago";
+    } elseif ($time_difference < 604800) {
+        $days = floor($time_difference / 86400);
+        return $days . " day" . ($days != 1 ? "s" : "") . " ago";
+    } elseif ($time_difference < 2592000) {
+        $weeks = floor($time_difference / 604800);
+        return $weeks . " week" . ($weeks != 1 ? "s" : "") . " ago";
+    } else {
+        return date('F j, Y', $timestamp);
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,9 +136,45 @@ try {
   <!-- Main CSS -->
   <link id="pagestyle" href="../../assets/css/material-dashboard.css?v=3.2.0" rel="stylesheet" />
   <link href="../../assets/css/navigation.css" rel="stylesheet" />
-  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+       .hover-bg-light:hover {
+        background-color: #f8f9fa;
+    }
+    .cursor-pointer {
+        cursor: pointer;
+    }
+    .highlight-post {
+        animation: highlight 2s;
+    }
+    @keyframes highlight {
+        0% { background-color: #fff3cd; }
+        100% { background-color: transparent; }
+    }
+    #searchResults::-webkit-scrollbar {
+        width: 8px;
+    }
+    #searchResults::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 4px;
+    }
+    #searchResults::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 4px;
+    }
+    #searchResults::-webkit-scrollbar-thumb:hover {
+        background: #666;
+    }
+    .search-result {
+        transition: background-color 0.2s;
+        border-radius: 8px;
+        margin: 4px 0;
+    }
+    .search-result:last-child {
+        border-bottom: none !important;
+    }
+  </style>
 </head>
 
 <body class="g-sidenav-show bg-gray-100">
@@ -194,11 +314,18 @@ try {
             </ol>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
-            <div class="ms-md-auto pe-md-3 d-flex align-items-center position-relative">
+        <div class="ms-md-auto pe-md-3 d-flex align-items-center position-relative">
                 <div class="input-group input-group-outline">
-                    <input type="text" class="form-control" id="searchInput" placeholder="Type to search..." oninput="searchMenu()">
+                    <input type="text" 
+                        class="form-control" 
+                        id="searchInput" 
+                        placeholder="Search posts..." 
+                        oninput="searchMenu()"
+                        autocomplete="off">
                 </div>
-                <div id="searchResults" class="position-absolute bg-white rounded-3 shadow-lg p-2 mt-2 d-none" style="top: 100%; left: 0; right: 0; z-index: 1000;">
+                <div id="searchResults" 
+                    class="position-absolute bg-white rounded-3 shadow-lg p-2 mt-2 d-none" 
+                    style="top: 100%; left: 0; right: 0; z-index: 1000; max-height: 400px; overflow-y: auto;">
                 </div>
             </div>
             <ul class="navbar-nav justify-content-end">
@@ -312,32 +439,30 @@ try {
                     <div class="card-body">
                         <div class="d-flex">
                             <div class="flex-shrink-0">
-                                <img alt="Profile picture" class="avatar rounded-circle me-3" src="../../admin_operations/get_profile_picture.php?user_id=<?php echo $_SESSION['user_id']; ?>&user_type=<?php echo $_SESSION['role']; ?>" onerror="this.src='../../assets/img/default-avatar.png';">
+                                <img alt="Profile picture" class="avatar rounded-circle me-3" 
+                                     src="../../admin_operations/get_profile_picture.php?user_id=<?php echo $_SESSION['user_id']; ?>&user_type=student"
+                                     onerror="this.src='../../assets/img/default-avatar.png'">
                             </div>
                             <div class="flex-grow-1">
-                                <div class="input-group input-group-static">
-                                    <label>What's on your mind?</label>
-                                    <textarea class="form-control" name="content" placeholder="Share your thoughts..." rows="4" spellcheck="false"></textarea>
-                                </div>
+                                <textarea name="content" class="form-control border-0" rows="4" 
+                                          placeholder="Share your thoughts..."></textarea>
                                 <div class="d-flex justify-content-between align-items-center mt-3">
                                     <div>
-                                        <button class="btn btn-link px-1 py-0" type="button" onclick="document.getElementById('imageInput').click()">
+                                        <input type="file" id="imageInput" accept="image/*" 
+                                               onchange="previewImage(this)" style="display: none;">
+                                        <button type="button" class="btn btn-link p-0" 
+                                                onclick="document.getElementById('imageInput').click()">
                                             <i class="material-symbols-rounded">image</i>
                                         </button>
-                                        <input type="file" id="imageInput" accept="image/*" style="display: none;" onchange="previewImage(this)">
-                                        <!-- Add image preview container -->
-                                        <div id="imagePreview" class="mt-2" style="display: none;">
-                                            <div class="position-relative">
-                                                <img id="preview" src="#" alt="Preview" style="max-height: 200px; max-width: 100%; border-radius: 8px;">
-                                                <button type="button" class="btn btn-link text-danger position-absolute top-0 end-0 p-0" 
-                                                        onclick="removeImage()">
-                                                    <i class="material-symbols-rounded">close</i>
-                                                </button>
-                                            </div>
-                                        </div>
                                     </div>
-                                    <button class="btn bg-gradient-dark mb-0" type="button" onclick="createPost()">
-                                        Post
+                                    <button type="button" class="btn bg-gradient-dark mb-0" 
+                                            onclick="createPost()">Post</button>
+                                </div>
+                                <div id="imagePreview" style="display: none;" class="mt-3">
+                                    <img id="preview" src="#" alt="Preview" class="img-fluid rounded">
+                                    <button type="button" class="btn btn-link text-danger p-0 mt-2" 
+                                            onclick="removeImage()">
+                                        <i class="material-symbols-rounded">delete</i> Remove Image
                                     </button>
                                 </div>
                             </div>
@@ -349,179 +474,84 @@ try {
 
             <!-- Main Content Area -->
     <div class="col-lg-7">
-      <div class="row">
-        <div class="col-12">
-          <div class="card px-4 mb-4">
-            <!-- Post Header -->
-            <div class="card-header d-flex align-items-center py-3">
-              <div class="d-block d-md-flex align-items-center">
-                <a href="javascript:;">
-                  <img src="../../assets/img/team-4.jpg" class="avatar" alt="profile-image">
-                </a>
-                <div class="mx-0 mx-md-3">
-                  <a href="javascript:;" class="text-dark font-weight-600 text-sm">John Snow</a>
-                  <small class="d-block text-muted">3 days ago</small>
-                </div>
-              </div>
-              <div class="text-end ms-auto">
-                <div class="dropdown">
-                  <button type="button" class="btn btn-link text-secondary mb-0" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="material-symbols-rounded">more_vert</i>
-                  </button>
-                  <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#" onclick="reportPost()">Report Post</a></li>
-                    <li><a class="dropdown-item" href="#" onclick="reportUser()">Report User</a></li>
-                  </ul>
-                </div>
-              </div>
+        <div class="row">
+            <div class="col-12">
+                <?php foreach ($posts as $post): ?>
+                    <div class="card px-4 mb-4">
+                        <!-- Post Header -->
+                        <div class="card-header d-flex align-items-center py-3">
+                            <div class="d-block d-md-flex align-items-center">
+                                <a href="javascript:;">
+                                    <img src="../../admin_operations/get_profile_picture.php?user_id=<?php echo htmlspecialchars($post['user_id']); ?>&user_type=<?php echo htmlspecialchars($post['post_type']); ?>" 
+                                        class="avatar" 
+                                        alt="profile-image"
+                                        onerror="this.src='../../assets/img/default-avatar.png';">
+                                </a>
+                                <div class="d-flex px-2 py-1">
+                                    <div>
+                                        <h6 class="mb-0 text-sm"><?php echo htmlspecialchars($post['username']); ?></h6>
+                                        <p class="text-xs text-secondary mb-0"><?php echo getTimeAgo($post['created_at']); ?></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-end ms-auto">
+                                <div class="dropdown">
+                                    <button type="button" class="btn btn-link text-secondary mb-0" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="material-symbols-rounded">more_vert</i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#" onclick="reportPost(<?php echo $post['post_id']; ?>)">Report Post</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="reportUser('<?php echo htmlspecialchars($post['username']); ?>')">Report User</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="dark horizontal">
+                        <!-- Post Content -->
+                        <div class="card-body pt-3 px-4 mb-4">
+                            <p class="mb-4">
+                                <?php echo nl2br(htmlspecialchars($post['content'])); ?>
+                            </p>
+                            <?php if ($post['image_file']): ?>
+                                <img alt="Post image" 
+                                    src="../../admin_operations/get_post_image.php?post_id=<?php echo $post['post_id']; ?>" 
+                                    class="img-fluid border-radius-lg shadow-lg">
+                            <?php endif; ?>
+
+                             <!-- Interaction Counts -->
+                            <div class="row align-items-center px-2 mt-4 mb-2">
+                                <div class="col-sm-6">
+                                    <div class="d-flex">
+                                        <div class="d-flex align-items-center">
+                                        <button type="button" 
+                                                class="btn btn-link p-0 me-2 <?php echo $post['user_has_liked'] ? 'liked' : ''; ?>" 
+                                                onclick="handleLike(this, <?php echo $post['post_id']; ?>)">
+                                                <i class="material-symbols-rounded text-sm me-1"
+                                                style="font-variation-settings: <?php echo $post['user_has_liked'] ? '\'FILL\' 1' : ''; ?>">
+                                                    thumb_up
+                                                </i>
+                                                <span class="text-sm"><?php echo $post['like_count']; ?></span>
+                                            </button>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                        <button type="button" 
+                                                class="btn btn-link p-0 me-2" 
+                                                onclick="showComments(this, <?php echo $post['post_id']; ?>)"
+                                                data-post-id="<?php echo $post['post_id']; ?>">
+                                            <i class="material-symbols-rounded text-sm me-1">mode_comment</i>
+                                            <span class="text-sm"><?php echo $post['comment_count']; ?></span>
+                                        </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
             </div>
-
-            <hr class="dark horizontal">
-       <!-- Post Content -->
-       <div class="card-body pt-3 px-4 mb-4">
-              <p class="mb-4">
-                Personal profiles are the perfect way for you to grab their attention and persuade recruiters to continue reading your CV because you're telling them from the off exactly why they should hire you.
-              </p>
-              <img alt="Image placeholder" src="https://images.unsplash.com/photo-1578271887552-5ac3a72752bc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80" class="img-fluid border-radius-lg shadow-lg">
-
-              <!-- Interaction Counts -->
-              <div class="row align-items-center px-2 mt-4 mb-2">
-                <!-- Like, Comment, Share counts -->
-                <div class="col-sm-6">
-                  <div class="d-flex">
-                    <div class="d-flex align-items-center">
-                      <i class="material-symbols-rounded text-sm me-1 cursor-pointer">thumb_up</i>
-                      <span class="text-sm me-3">150</span>
-                    </div>
-                    <div class="d-flex align-items-center">
-                      <i class="material-symbols-rounded text-sm me-1 cursor-pointer">mode_comment</i>
-                      <span class="text-sm me-3">36</span>
-                    </div>
-                    <div class="d-flex align-items-center">
-                      <i class="material-symbols-rounded text-sm me-1 cursor-pointer">forward</i>
-                      <span class="text-sm me-2">12</span>
-                    </div>
-                  </div>
-                </div>
-                 <!-- User Avatars -->
-                 <div class="col-sm-6 d-none d-sm-block">
-                  <div class="d-flex align-items-center justify-content-sm-end">
-                    <div class="d-flex align-items-center">
-                      <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-toggle="tooltip" data-original-title="Jessica Rowland">
-                        <img alt="Image placeholder" src="../../assets/img/team-5.jpg">
-                      </a>
-                      <!-- More avatars -->
-                    </div>
-                    <small class="ps-2 font-weight-bold">and 30+ more</small>
-                  </div>
-                </div>
-                <hr class="horizontal dark my-3">
-              </div>
-               <!-- Comments Section -->
-               <div class="mb-1">
-                <!-- Existing comments -->
-                <div class="d-flex mt-4">
-                  <div class="flex-shrink-0">
-                    <img alt="Image placeholder" class="avatar rounded-circle me-3" src="../../assets/img/team-4.jpg">
-                  </div>
-                  <div class="flex-grow-1 my-auto">
-                    <div class="input-group input-group-static">
-                      <textarea class="form-control" placeholder="Write your comment" rows="4" spellcheck="false"></textarea>
-                    </div>
-                  </div>
-                  <button class="btn bg-gradient-dark btn-sm mt-auto mb-0 ms-2" type="button" name="button">
-                    <i class="material-symbols-rounded text-sm">send</i>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="card px-4">
-            <!-- Post Header -->
-            <div class="card-header d-flex align-items-center py-3">
-              <div class="d-block d-md-flex align-items-center">
-                <a href="javascript:;">
-                  <img src="../../assets/img/team-4.jpg" class="avatar" alt="profile-image">
-                </a>
-                <div class="mx-0 mx-md-3">
-                  <a href="javascript:;" class="text-dark font-weight-600 text-sm">John Snow</a>
-                  <small class="d-block text-muted">3 days ago</small>
-                </div>
-              </div>
-              <div class="text-end ms-auto">
-                <button type="button" class="btn bg-gradient-dark mb-0">
-                  <i class="material-symbols-rounded text-white pe-2 text-lg">add</i>Follow
-                </button>
-              </div>
-            </div>
-
-            <hr class="dark horizontal">
-          <!-- Post Content -->
-             <div class="card-body pt-3 px-4">
-              <p class="mb-4">
-                Personal profiles are the perfect way for you to grab their attention and persuade recruiters to continue reading your CV because you're telling them from the off exactly why they should hire you.
-              </p>
-              <img alt="Image placeholder" src="https://images.unsplash.com/photo-1578271887552-5ac3a72752bc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80" class="img-fluid border-radius-lg shadow-lg">
-
-              <!-- Interaction Counts -->
-              <div class="row align-items-center px-2 mt-4 mb-2">
-                <!-- Like, Comment, Share counts -->
-                <div class="col-sm-6">
-                  <div class="d-flex">
-                    <div class="d-flex align-items-center">
-                      <i class="material-symbols-rounded text-sm me-1 cursor-pointer">thumb_up</i>
-                      <span class="text-sm me-3">150</span>
-                    </div>
-                    <div class="d-flex align-items-center">
-                      <i class="material-symbols-rounded text-sm me-1 cursor-pointer">mode_comment</i>
-                      <span class="text-sm me-3">36</span>
-                    </div>
-                    <div class="d-flex align-items-center">
-                      <i class="material-symbols-rounded text-sm me-1 cursor-pointer">forward</i>
-                      <span class="text-sm me-2">12</span>
-                    </div>
-                  </div>
-                </div>
-                 <!-- User Avatars -->
-                 <div class="col-sm-6 d-none d-sm-block">
-                  <div class="d-flex align-items-center justify-content-sm-end">
-                    <div class="d-flex align-items-center">
-                      <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-toggle="tooltip" data-original-title="Jessica Rowland">
-                        <img alt="Image placeholder" src="../../assets/img/team-5.jpg">
-                      </a>
-                      <!-- More avatars -->
-                    </div>
-                    <small class="ps-2 font-weight-bold">and 30+ more</small>
-                  </div>
-                </div>
-                <hr class="horizontal dark my-3">
-              </div>
-               <!-- Comments Section -->
-               <div class="mb-1">
-                <!-- Existing comments -->
-                <div class="d-flex mt-4">
-                  <div class="flex-shrink-0">
-                    <img alt="Image placeholder" class="avatar rounded-circle me-3" src="../../assets/img/team-4.jpg">
-                  </div>
-                  <div class="flex-grow-1 my-auto">
-                    <div class="input-group input-group-static">
-                      <textarea class="form-control" placeholder="Write your comment" rows="4" spellcheck="false"></textarea>
-                    </div>
-                  </div>
-                  <button class="btn bg-gradient-dark btn-sm mt-auto mb-0 ms-2" type="button" name="button">
-                    <i class="material-symbols-rounded text-sm">send</i>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
     </div>
-
-
-
       </div>
     </div>
   </main>
@@ -531,12 +561,36 @@ try {
   <script src="../../assets/js/core/bootstrap.min.js"></script>
   <script src="../../assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../../assets/js/plugins/smooth-scrollbar.min.js"></script>
-  <script src="../../assets/js/material-dashboard.min.js?v=3.2.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   
-  <!-- Custom Scripts -->
-  <script src="../../assets/js/signout.js"></script>
-  <script src="../../assets/js/support.js"></script>
 
+  <!-- Custom Scripts -->
+  <script src="../../assets/js/search.js"></script>
+  <script src="../../assets/js/signout.js"></script>
+  <script src="../../assets/js/createpost.js"></script>
+  <script src="../../assets/js/likepost.js"></script>
+  <script src="../../assets/js/comments.js"></script>
+  <script src="../../assets/js/report.js"></script>
+  <script src="../../assets/js/material-dashboard.min.js?v=3.2.0"></script>
+  <!-- Initialize Material Dashboard -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize perfect scrollbar only if element exists
+      var sidenav = document.querySelector('#sidenav-scrollbar');
+      if (sidenav) {
+        var options = {
+          damping: '0.5'
+        };
+        Scrollbar.init(sidenav, options);
+      }
+
+      // Material Dashboard Initialization
+      if (typeof MaterialDashboard !== 'undefined') {
+        window.materialDashboard = new MaterialDashboard();
+        window.materialDashboard.initSidebar();
+      }
+    });
+  </script>
   <script>
     // Initialize perfect scrollbar
     var win = navigator.platform.indexOf('Win') > -1;
@@ -547,143 +601,59 @@ try {
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
   </script>
-
   <script>
-    let selectedImage = null;
-
-    function previewImage(input) {
-        const file = input.files[0];
-        if (file) {
-            // Validate file type
-            if (!file.type.startsWith('image/')) {
-                Swal.fire({
-                    title: 'Invalid File',
-                    text: 'Please upload only image files.',
-                    icon: 'error',
-                    customClass: {
-                        confirmButton: 'btn bg-gradient-primary'
-                    },
-                    buttonsStyling: false
-                });
-                input.value = '';
-                return;
-            }
-
-            // Validate file size (5MB)
-            if (file.size > 5 * 1024 * 1024) {
-                Swal.fire({
-                    title: 'File Too Large',
-                    text: 'Please upload an image smaller than 5MB.',
-                    icon: 'error',
-                    customClass: {
-                        confirmButton: 'btn bg-gradient-primary'
-                    },
-                    buttonsStyling: false
-                });
-                input.value = '';
-                return;
-            }
-
-            selectedImage = file;
-            
-            // Show preview
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                document.getElementById('preview').src = e.target.result;
-                document.getElementById('imagePreview').style.display = 'block';
-            }
-            reader.readAsDataURL(file);
-            
-            // Update icon color to indicate image selected
-            const imageButton = document.querySelector('.btn.btn-link i');
-            imageButton.style.color = '#344767';
-        }
-    }
-
-    function removeImage() {
-        selectedImage = null;
-        document.getElementById('imageInput').value = '';
-        document.getElementById('imagePreview').style.display = 'none';
-        document.getElementById('preview').src = '#';
-        const imageButton = document.querySelector('.btn.btn-link i');
-        imageButton.style.color = '';
-    }
-
-    function createPost() {
-        const content = document.querySelector('textarea').value.trim();
-        
-        if (!content) {
-            Swal.fire({
-                title: 'Empty Post',
-                text: 'Please write something before posting.',
-                icon: 'warning',
-                customClass: {
-                    confirmButton: 'btn bg-gradient-primary'
-                },
-                buttonsStyling: false
-            });
-            return;
-        }
-
-        const formData = new FormData();
-        formData.append('content', content);
-        formData.append('action', 'create_post');
-        
-        // Only append image if one was selected
-        if (selectedImage) {
-            formData.append('image', selectedImage);
-        }
-
-        // Disable post button and show loading state
-        const postButton = document.querySelector('button.bg-gradient-dark');
-        const originalText = postButton.innerHTML;
-        postButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Posting...';
-        postButton.disabled = true;
-
-        fetch('../../admin_operations/post_handlers.php', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                // Clear form and preview
-                document.querySelector('textarea').value = '';
-                removeImage();
-
-                // Show success message
-                Swal.fire({
-                    title: 'Posted!',
-                    text: 'Your post has been shared successfully.',
-                    icon: 'success',
-                    customClass: {
-                        confirmButton: 'btn bg-gradient-success'
-                    },
-                    buttonsStyling: false
-                }).then(() => {
-                    location.reload();
-                });
-            } else {
-                throw new Error(data.message || 'Failed to create post');
-            }
-        })
-        .catch(error => {
-            Swal.fire({
-                title: 'Error',
-                text: error.message,
-                icon: 'error',
-                customClass: {
-                    confirmButton: 'btn bg-gradient-danger'
-                },
-                buttonsStyling: false
-            });
-        })
-        .finally(() => {
-            // Restore button state
-            postButton.innerHTML = originalText;
-            postButton.disabled = false;
-        });
-    }
+    // Add this to verify scripts are loaded
+    console.log('Scripts loaded');
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('DOM fully loaded');
+    });
   </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Test like functionality
+        const likeButtons = document.querySelectorAll('button[onclick^="handleLike"]');
+        console.log('Found like buttons:', likeButtons.length);
+        
+        // Verify event handlers
+        likeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                console.log('Like button clicked via event listener');
+            });
+        });
+    });
+  </script>
+  <script>
+    // Debug code to verify scripts and elements
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('DOM loaded');
+        
+        // Check if SweetAlert2 is loaded
+        if (typeof Swal !== 'undefined') {
+            console.log('SweetAlert2 is loaded');
+        } else {
+            console.error('SweetAlert2 is not loaded');
+        }
+        
+        // Check if signout button exists
+        const signoutBtn = document.getElementById('signout');
+        if (signoutBtn) {
+            console.log('Signout button found');
+            // Test click handler
+            signoutBtn.addEventListener('click', function() {
+                console.log('Signout button clicked');
+            });
+        } else {
+            console.error('Signout button not found');
+        }
+    });
+  </script>
+  <script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Checking timestamps...');
+    document.querySelectorAll('.text-xs.text-secondary.mb-0').forEach(el => {
+        console.log('Post time:', el.textContent);
+    });
+});
+</script>
 </body>
 </html>

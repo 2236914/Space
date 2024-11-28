@@ -6696,3 +6696,229 @@ Stack trace:
 [28-Nov-2024 03:49:18 Europe/Berlin] CSV Export Error: SQLSTATE[HY093]: Invalid parameter number: mixed named and positional parameters
 [28-Nov-2024 03:49:24 Europe/Berlin] CSV Export Error: SQLSTATE[HY093]: Invalid parameter number: mixed named and positional parameters
 [28-Nov-2024 03:49:28 Europe/Berlin] CSV Export Error: SQLSTATE[HY093]: Invalid parameter number: mixed named and positional parameters
+[28-Nov-2024 10:13:20 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 2236914
+    [firstname] => Cheesyyyyyyyyy
+    [lastname] => Lasagna
+    [phonenum] => 09267075697
+    [email] => 22-36914@g.batstate-u.edu.ph
+    [course] => ofcourse juskopo
+    [year] => 
+    [section] => hatdog
+    [department] => 
+    [personality] => ESFP
+    [address] => 
+)
+
+[28-Nov-2024 10:13:20 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Cheesyyyyyyyyy
+    [lastname] => Lasagna
+    [phonenum] => 09267075697
+    [email] => 22-36914@g.batstate-u.edu.ph
+    [department] => 
+    [course] => ofcourse juskopo
+    [year] => 
+    [section] => hatdog
+    [address] => 
+    [personality] => ESFP
+    [srcode] => 2236914
+)
+
+[28-Nov-2024 10:13:20 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Cheesyyyyyyyyy
+    [:lastname] => Lasagna
+    [:phonenum] => 09267075697
+    [:email] => 22-36914@g.batstate-u.edu.ph
+    [:department] => 
+    [:course] => ofcourse juskopo
+    [:year] => 
+    [:section] => hatdog
+    [:address] => 
+    [:personality] => ESFP
+    [:srcode] => 2236914
+)
+
+[28-Nov-2024 10:13:20 Europe/Berlin] Update result: true, Rows affected: 1
+[28-Nov-2024 10:13:20 Europe/Berlin] === Activity Logging Start ===
+[28-Nov-2024 10:13:20 Europe/Berlin] SR Code: 2236914
+[28-Nov-2024 10:13:20 Europe/Berlin] Action: Updated Profile
+[28-Nov-2024 10:13:20 Europe/Berlin] Action Details: Profile information updated
+[28-Nov-2024 10:13:20 Europe/Berlin] IP: ::1
+[28-Nov-2024 10:13:20 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                    (srcode, action, action_details, ip_address) 
+                    VALUES 
+                    (?, ?, ?, ?)
+[28-Nov-2024 10:13:20 Europe/Berlin] Activity log inserted successfully. ID: 222
+[28-Nov-2024 10:13:20 Europe/Berlin] === Activity Logging End ===
+[28-Nov-2024 10:13:20 Europe/Berlin] Attempting to log activity:
+[28-Nov-2024 10:13:20 Europe/Berlin] Array
+(
+    [srcode] => 2236914
+    [action] => PROFILE_UPDATE
+    [action_details] => Updated profile information: email, phone number, course, section, personality
+)
+
+[28-Nov-2024 10:13:20 Europe/Berlin] Activity logged successfully. ID: 223
+[28-Nov-2024 10:19:10 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[28-Nov-2024 10:19:25 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[28-Nov-2024 10:23:46 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[28-Nov-2024 10:23:49 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[28-Nov-2024 10:23:53 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[28-Nov-2024 10:25:50 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[28-Nov-2024 10:26:53 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[28-Nov-2024 10:28:23 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[28-Nov-2024 10:28:40 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[28-Nov-2024 10:28:53 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[28-Nov-2024 12:17:01 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 2236914
+    [firstname] => Cheesyyyyyyyyy
+    [lastname] => Lasagna
+    [phonenum] => 09267075697
+    [email] => 22-36914@g.batstate-u.edu.ph
+    [course] => ofcourse juskopo
+    [year] => 
+    [section] => hatdog
+    [department] => CICS
+    [personality] => ESFP
+    [address] => 
+)
+
+[28-Nov-2024 12:17:01 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Cheesyyyyyyyyy
+    [lastname] => Lasagna
+    [phonenum] => 09267075697
+    [email] => 22-36914@g.batstate-u.edu.ph
+    [department] => CICS
+    [course] => ofcourse juskopo
+    [year] => 
+    [section] => hatdog
+    [address] => 
+    [personality] => ESFP
+    [srcode] => 2236914
+)
+
+[28-Nov-2024 12:17:01 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Cheesyyyyyyyyy
+    [:lastname] => Lasagna
+    [:phonenum] => 09267075697
+    [:email] => 22-36914@g.batstate-u.edu.ph
+    [:department] => CICS
+    [:course] => ofcourse juskopo
+    [:year] => 
+    [:section] => hatdog
+    [:address] => 
+    [:personality] => ESFP
+    [:srcode] => 2236914
+)
+
+[28-Nov-2024 12:17:01 Europe/Berlin] Update result: true, Rows affected: 1
+[28-Nov-2024 12:17:01 Europe/Berlin] === Activity Logging Start ===
+[28-Nov-2024 12:17:01 Europe/Berlin] SR Code: 2236914
+[28-Nov-2024 12:17:01 Europe/Berlin] Action: Updated Profile
+[28-Nov-2024 12:17:01 Europe/Berlin] Action Details: Profile information updated
+[28-Nov-2024 12:17:01 Europe/Berlin] IP: ::1
+[28-Nov-2024 12:17:01 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                    (srcode, action, action_details, ip_address) 
+                    VALUES 
+                    (?, ?, ?, ?)
+[28-Nov-2024 12:17:01 Europe/Berlin] Activity log inserted successfully. ID: 224
+[28-Nov-2024 12:17:01 Europe/Berlin] === Activity Logging End ===
+[28-Nov-2024 12:17:01 Europe/Berlin] Attempting to log activity:
+[28-Nov-2024 12:17:01 Europe/Berlin] Array
+(
+    [srcode] => 2236914
+    [action] => PROFILE_UPDATE
+    [action_details] => Updated profile information: email, phone number, department, course, section, personality
+)
+
+[28-Nov-2024 12:17:01 Europe/Berlin] Activity logged successfully. ID: 225
+[28-Nov-2024 12:43:16 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[28-Nov-2024 12:43:31 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[28-Nov-2024 12:43:35 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[28-Nov-2024 12:43:39 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[28-Nov-2024 12:47:41 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[28-Nov-2024 12:55:01 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[28-Nov-2024 12:55:05 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[28-Nov-2024 12:55:05 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[28-Nov-2024 12:55:35 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[28-Nov-2024 12:55:35 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[28-Nov-2024 13:05:50 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[28-Nov-2024 13:18:09 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[28-Nov-2024 13:18:17 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[28-Nov-2024 13:18:17 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[28-Nov-2024 13:19:53 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[28-Nov-2024 13:19:56 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[28-Nov-2024 13:25:06 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[28-Nov-2024 13:25:19 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[28-Nov-2024 14:20:16 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 222222
+    [firstname] => Faith
+    [lastname] => Creotech
+    [phonenum] => 09618817440
+    [email] => 22-2222@g.batstate-u.edu.ph
+    [course] => juskopo
+    [year] => 4
+    [section] => 
+    [department] => 
+    [personality] => 
+    [address] => Sabang, Lipa
+)
+
+[28-Nov-2024 14:20:16 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Faith
+    [lastname] => Creotech
+    [phonenum] => 09618817440
+    [email] => 22-2222@g.batstate-u.edu.ph
+    [department] => 
+    [course] => juskopo
+    [year] => 4
+    [section] => 
+    [address] => Sabang, Lipa
+    [personality] => 
+    [srcode] => 222222
+)
+
+[28-Nov-2024 14:20:16 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Faith
+    [:lastname] => Creotech
+    [:phonenum] => 09618817440
+    [:email] => 22-2222@g.batstate-u.edu.ph
+    [:department] => 
+    [:course] => juskopo
+    [:year] => 4
+    [:section] => 
+    [:address] => Sabang, Lipa
+    [:personality] => 
+    [:srcode] => 222222
+)
+
+[28-Nov-2024 14:20:16 Europe/Berlin] Update result: true, Rows affected: 1
+[28-Nov-2024 14:20:16 Europe/Berlin] === Activity Logging Start ===
+[28-Nov-2024 14:20:16 Europe/Berlin] SR Code: 222222
+[28-Nov-2024 14:20:16 Europe/Berlin] Action: Updated Profile
+[28-Nov-2024 14:20:16 Europe/Berlin] Action Details: Profile information updated
+[28-Nov-2024 14:20:16 Europe/Berlin] IP: ::1
+[28-Nov-2024 14:20:16 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                    (srcode, action, action_details, ip_address) 
+                    VALUES 
+                    (?, ?, ?, ?)
+[28-Nov-2024 14:20:16 Europe/Berlin] Activity log inserted successfully. ID: 229
+[28-Nov-2024 14:20:16 Europe/Berlin] === Activity Logging End ===
+[28-Nov-2024 14:20:16 Europe/Berlin] Attempting to log activity:
+[28-Nov-2024 14:20:16 Europe/Berlin] Array
+(
+    [srcode] => 222222
+    [action] => PROFILE_UPDATE
+    [action_details] => Updated profile information: email, phone number, course, year, address
+)
+
+[28-Nov-2024 14:20:16 Europe/Berlin] Activity logged successfully. ID: 230

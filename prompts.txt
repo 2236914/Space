@@ -9,3 +9,61 @@ WHERE email = '22-36914@g.batstate-u.edu.ph';
 UPDATE students 
 SET password = SHA2('spaceadmin2@', 256) 
 WHERE email = '22-36914@g.batstate-u.edu.ph';
+
+-- Table for posts in community
+CREATE TABLE posts (
+    post_id INT PRIMARY KEY AUTO_INCREMENT,
+    srcode INT,                          -- For student posts (references students)
+    therapist_id VARCHAR(10),            -- For therapist posts (references therapists)
+    content TEXT NOT NULL,
+    image_file MEDIUMBLOB,              -- Store image data directly in database
+    image_name VARCHAR(255),             -- Original filename
+    post_type ENUM('student', 'therapist') NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    status ENUM('active', 'hidden', 'deleted') DEFAULT 'active',
+    FOREIGN KEY (srcode) REFERENCES students(srcode),
+    FOREIGN KEY (therapist_id) REFERENCES therapists(therapist_id),
+    CHECK (
+        (post_type = 'student' AND srcode IS NOT NULL AND therapist_id IS NULL) OR
+        (post_type = 'therapist' AND therapist_id IS NOT NULL AND srcode IS NULL)
+    )
+);
+
+
+-- Table for posts in community
+CREATE TABLE posts (
+    post_id INT PRIMARY KEY AUTO_INCREMENT,
+    srcode INT,                          -- For student posts (references students)
+    therapist_id VARCHAR(10),            -- For therapist posts (references therapists)
+    content TEXT NOT NULL,
+    image_path MEDIUMBLOB,              -- Store image data directly in database
+    image_name VARCHAR(255),             -- Original filename
+    post_type ENUM('student', 'therapist') NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    status ENUM('active', 'hidden', 'deleted') DEFAULT 'active',
+    FOREIGN KEY (srcode) REFERENCES students(srcode),
+    FOREIGN KEY (therapist_id) REFERENCES therapists(therapist_id),
+    CHECK (
+        (post_type = 'student' AND srcode IS NOT NULL AND therapist_id IS NULL) OR
+        (post_type = 'therapist' AND therapist_id IS NOT NULL AND srcode IS NULL)
+    )
+);
+
+-- Modify posts table to use image_path instead of image_file
+ALTER TABLE posts
+DROP COLUMN image_file,
+ADD COLUMN image_path MEDIUMBLOB AFTER content;
+
+can i impelemet like this for therapist and student.
+
+student will select from the list of of therapist then it will show a calendar where students can select date. once the user select the date it will the available time the therapist is can be for session? then in students will have a page she can see her appointment details (this is when also the video conferencing will happen.) also for video conferencing. each therapist haveassigned video call tokens from admin. this is where their each sessions will happen. its like using the same tokens to other meetings ? just how the gmeet wworks>???
+
+Key Points About Token System:
+Admin assigns a pool of reusable video tokens to each therapist
+When a session is booked, one token is marked as "in use"
+After the session ends, the token is released back to the pool
+This system is efficient as it allows token reuse, similar to how Google Meet works
+Tokens can be managed through the admin panel
+Would you like me to elaborate on any specific part or provide more details about a particular component?

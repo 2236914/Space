@@ -22,24 +22,31 @@ $analytics = new DashboardAnalytics($pdo);
 
 // Check if student has logged mood today
 try {
-    $mood_stmt = $pdo->prepare("
-        SELECT COUNT(*) 
-        FROM moodlog 
-        WHERE srcode = ? 
-        AND DATE(log_date) = CURRENT_DATE()
-    ");
-    $mood_stmt->execute([$_SESSION['user_id']]);
-    $has_mood_today = $mood_stmt->fetchColumn() > 0;
+    // Skip mood check if we're already on moodlog page or coming from moodlog
+    if (basename($_SERVER['PHP_SELF']) !== 'moodlog.php' && !isset($_SESSION['from_moodlog'])) {
+        $mood_stmt = $pdo->prepare("
+            SELECT COUNT(*) 
+            FROM moodlog 
+            WHERE srcode = ? 
+            AND DATE(log_date) = CURRENT_DATE()
+        ");
+        $mood_stmt->execute([$_SESSION['user_id']]);
+        $has_mood_today = $mood_stmt->fetchColumn() > 0;
 
-    if (!$has_mood_today) {
-        header("Location: moodlog.php");
-        exit();
+        if (!$has_mood_today) {
+            $_SESSION['from_moodlog'] = true;
+            header("Location: moodlog.php");
+            exit();
+        }
     }
 } catch (PDOException $e) {
     error_log("Mood check error: " . $e->getMessage());
     // Continue without mood check if there's an error
     $has_mood_today = true;
 }
+
+// Remove the from_moodlog flag after check
+unset($_SESSION['from_moodlog']);
 
 // Prevent caching
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
@@ -399,13 +406,32 @@ ob_start();
               </div>
               <div>
                 <p class="text-sm mb-0 text-capitalize">My Community Post</p>
-                <h4 class="mb-0">2</h4>
+                <h4 class="mb-0"><?php echo $analytics->getUserPostCount($_SESSION['user_id']); ?></h4>
               </div>
             </div>
           </div>
           <hr class="dark horizontal my-0">
           <div class="card-footer p-2 ps-3">
-            <p class="mb-0 text-sm"><span class="text-success font-weight-bolder">+2% </span>from yesterday</p>
+            <?php
+            $postCount = $analytics->getUserPostCount($_SESSION['user_id']);
+            $yesterdayCount = $analytics->getUserYesterdayPostCount($_SESSION['user_id']);
+            
+            // Calculate percentage change
+            $percentChange = 0;
+            if ($yesterdayCount > 0) {
+                $percentChange = (($postCount - $yesterdayCount) / $yesterdayCount) * 100;
+            }
+            
+            // Determine style based on change
+            $changeClass = $percentChange >= 0 ? 'text-success' : 'text-danger';
+            $changeSymbol = $percentChange >= 0 ? '+' : '';
+            ?>
+            <p class="mb-0 text-sm">
+                <span class="<?php echo $changeClass; ?> font-weight-bolder">
+                    <?php echo $changeSymbol . number_format($percentChange, 1) . '%'; ?>
+                </span> 
+                from yesterday
+            </p>
           </div>
         </div>
       </div>

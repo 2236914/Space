@@ -1,38 +1,44 @@
 const ActivityTracker = {
     init() {
+        if (!document.getElementById("chart-bars")) {
+            console.warn('Chart element not found');
+            return;
+        }
         this.initChart();
         this.initWebSocket();
-        this.startAutoUpdate(); // Fallback
+        this.listenForActivities();
     },
 
     initWebSocket() {
-        // For local development
-        this.ws = new WebSocket('ws://localhost:8080');
-        
-        this.ws.onopen = () => {
-            console.log('WebSocket Connected');
-        };
+        try {
+            this.ws = new WebSocket('ws://localhost:8080');
+            
+            this.ws.onopen = () => {
+                console.log('WebSocket Connected');
+            };
 
-        this.ws.onmessage = (event) => {
-            console.log('Received update:', event.data);
-            this.updateChart(); // Update chart when message received
-        };
+            this.ws.onmessage = (event) => {
+                console.log('Received update:', event.data);
+                this.updateChart();
+            };
 
-        this.ws.onerror = (error) => {
-            console.error('WebSocket Error:', error);
-            // Fallback to polling if WebSocket fails
+            this.ws.onerror = (error) => {
+                console.error('WebSocket Error:', error);
+                this.startAutoUpdate();
+            };
+
+            this.ws.onclose = () => {
+                console.log('WebSocket Closed');
+                setTimeout(() => this.initWebSocket(), 5000);
+            };
+        } catch (error) {
+            console.error('WebSocket initialization failed:', error);
             this.startAutoUpdate();
-        };
-
-        this.ws.onclose = () => {
-            console.log('WebSocket Closed');
-            // Try to reconnect
-            setTimeout(() => this.initWebSocket(), 5000);
-        };
+        }
     },
 
     initChart() {
-        var ctx = document.getElementById("chart-bars").getContext("2d");
+        const ctx = document.getElementById("chart-bars").getContext("2d");
         this.activityChart = new Chart(ctx, {
             type: 'bar',
             data: {
@@ -69,15 +75,24 @@ const ActivityTracker = {
     },
 
     updateChart() {
+        if (typeof BASE_URL === 'undefined') {
+            console.error('BASE_URL is not defined');
+            return;
+        }
+
         fetch(`${BASE_URL}/admin_operations/get_weekly_activities.php`)
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
             .then(data => {
                 if(this.activityChart) {
                     this.activityChart.data.labels = data.days;
                     this.activityChart.data.datasets[0].data = data.counts;
                     this.activityChart.update('active');
 
-                    // Update last activity text
                     const lastActivityEl = document.getElementById('last-activity');
                     if(lastActivityEl && data.last_activity) {
                         lastActivityEl.textContent = data.last_activity;
@@ -90,23 +105,24 @@ const ActivityTracker = {
     },
 
     startAutoUpdate() {
-        setInterval(() => this.updateChart(), 5000);
+        if (this._updateInterval) {
+            clearInterval(this._updateInterval);
+        }
+        this._updateInterval = setInterval(() => this.updateChart(), 5000);
     },
 
     listenForActivities() {
-        // Listen for custom activity events
         document.addEventListener('spaceActivity', () => {
             this.updateChart();
         });
     },
 
     logActivity() {
-        // Trigger update when any activity occurs
         document.dispatchEvent(new Event('spaceActivity'));
     },
 
     triggerImmediateUpdate() {
-        this.updateChart();  // Update immediately when called
+        this.updateChart();
     }
 };
 
@@ -115,13 +131,20 @@ document.addEventListener('DOMContentLoaded', () => {
     ActivityTracker.init();
 });
 
-// Use in your forms/actions
-document.querySelector('form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    // ... your form submission code ...
-    .then(response => {
-        if(response.success) {
-            ActivityTracker.triggerImmediateUpdate();  // Immediate update
-        }
+// Form submission handling
+document.querySelectorAll('form').forEach(form => {
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form)
+        })
+        .then(response => response.json())
+        .then(response => {
+            if(response.success) {
+                ActivityTracker.triggerImmediateUpdate();
+            }
+        })
+        .catch(error => console.error('Form submission error:', error));
     });
 });

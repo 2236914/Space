@@ -56,6 +56,5 @@ document.addEventListener('DOMContentLoaded', function() {
         ActivityTracker.init();
     }
 });
-
 // Periodically check login status
 setInterval(checkLoginStatus, 30000); // Check every 30 seconds
