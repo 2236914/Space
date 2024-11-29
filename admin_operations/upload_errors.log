@@ -6922,3 +6922,799 @@ Stack trace:
 )
 
 [28-Nov-2024 14:20:16 Europe/Berlin] Activity logged successfully. ID: 230
+[29-Nov-2024 08:07:03 Europe/Berlin] Error fetching profile picture: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'file_type' in 'field list'
+[29-Nov-2024 08:07:03 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[29-Nov-2024 08:07:13 Europe/Berlin] Error fetching profile picture: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'file_type' in 'field list'
+[29-Nov-2024 08:07:13 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[29-Nov-2024 08:07:13 Europe/Berlin] Error fetching profile picture: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'file_type' in 'field list'
+[29-Nov-2024 08:07:13 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[29-Nov-2024 08:07:22 Europe/Berlin] 
+=== New Upload Request (2024-11-29 08:07:22) ===
+[29-Nov-2024 08:07:22 Europe/Berlin] Remote IP: ::1
+[29-Nov-2024 08:07:22 Europe/Berlin] User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 OPR/114.0.0.0
+[29-Nov-2024 08:07:22 Europe/Berlin] Session Data: Array
+(
+    [user_id] => 2236914
+    [srcode] => 2236914
+    [firstname] => Faith
+    [lastname] => Anne
+    [role] => student
+    [session_log_id] => 2
+)
+
+[29-Nov-2024 08:07:22 Europe/Berlin] POST Data: Array
+(
+)
+
+[29-Nov-2024 08:07:22 Europe/Berlin] FILES Data: Array
+(
+    [profile_picture] => Array
+        (
+            [name] => susbeeee.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\phpF9CB.tmp
+            [error] => 0
+            [size] => 9021
+        )
+
+)
+
+[29-Nov-2024 08:07:22 Europe/Berlin] Loading required files...
+[29-Nov-2024 08:07:22 Europe/Berlin] Required files loaded successfully
+[29-Nov-2024 08:07:22 Europe/Berlin] Session validated successfully
+[29-Nov-2024 08:07:22 Europe/Berlin] File details: Array
+(
+    [name] => susbeeee.jpg
+    [type] => image/jpeg
+    [tmp_name] => C:\xampp\tmp\phpF9CB.tmp
+    [error] => 0
+    [size] => 9021
+)
+
+[29-Nov-2024 08:07:22 Europe/Berlin] Reading file data...
+[29-Nov-2024 08:07:22 Europe/Berlin] File data read successfully. Size: 9021 bytes
+[29-Nov-2024 08:07:22 Europe/Berlin] Starting database transaction...
+[29-Nov-2024 08:07:22 Europe/Berlin] Deactivating old profile pictures...
+[29-Nov-2024 08:07:22 Europe/Berlin] Transaction error occurred: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'where clause'
+[29-Nov-2024 08:07:22 Europe/Berlin] Stack trace: #0 C:\xampp\htdocs\Space\admin_operations\update_profile_picture.php(103): PDO->prepare('\r\n            U...')
+#1 {main}
+[29-Nov-2024 08:07:22 Europe/Berlin] Rolling back transaction
+[29-Nov-2024 08:07:22 Europe/Berlin] Fatal error occurred: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'where clause'
+[29-Nov-2024 08:07:22 Europe/Berlin] Stack trace: #0 C:\xampp\htdocs\Space\admin_operations\update_profile_picture.php(103): PDO->prepare('\r\n            U...')
+#1 {main}
+[29-Nov-2024 08:07:22 Europe/Berlin] Sending error response: {"status":"error","message":"Failed to update profile picture: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'where clause'","debug_info":{"file":"C:\\xampp\\htdocs\\Space\\admin_operations\\update_profile_picture.php","line":103}}
+[29-Nov-2024 08:07:22 Europe/Berlin] === Request Complete (2024-11-29 08:07:22) ===
+
+[29-Nov-2024 08:09:22 Europe/Berlin] Error fetching profile picture: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'file_type' in 'field list'
+[29-Nov-2024 08:09:22 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[29-Nov-2024 08:09:23 Europe/Berlin] Error fetching profile picture: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'file_type' in 'field list'
+[29-Nov-2024 08:09:23 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[29-Nov-2024 08:09:29 Europe/Berlin] Error fetching profile picture: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'file_type' in 'field list'
+[29-Nov-2024 08:09:29 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[29-Nov-2024 08:14:01 Europe/Berlin] Error fetching profile picture: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'file_type' in 'field list'
+[29-Nov-2024 08:14:01 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[29-Nov-2024 08:14:06 Europe/Berlin] Error fetching profile picture: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'file_type' in 'field list'
+[29-Nov-2024 08:14:06 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[29-Nov-2024 08:14:06 Europe/Berlin] Error fetching profile picture: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'file_type' in 'field list'
+[29-Nov-2024 08:14:06 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[29-Nov-2024 08:14:24 Europe/Berlin] 
+=== New Upload Request (2024-11-29 08:14:24) ===
+[29-Nov-2024 08:14:24 Europe/Berlin] Remote IP: ::1
+[29-Nov-2024 08:14:24 Europe/Berlin] User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 OPR/114.0.0.0
+[29-Nov-2024 08:14:24 Europe/Berlin] Session Data: Array
+(
+    [user_id] => 2236914
+    [srcode] => 2236914
+    [firstname] => Faith
+    [lastname] => Anne
+    [role] => student
+    [session_log_id] => 3
+)
+
+[29-Nov-2024 08:14:24 Europe/Berlin] POST Data: Array
+(
+)
+
+[29-Nov-2024 08:14:24 Europe/Berlin] FILES Data: Array
+(
+    [profile_picture] => Array
+        (
+            [name] => susbeeee.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php6914.tmp
+            [error] => 0
+            [size] => 9021
+        )
+
+)
+
+[29-Nov-2024 08:14:24 Europe/Berlin] Loading required files...
+[29-Nov-2024 08:14:24 Europe/Berlin] Required files loaded successfully
+[29-Nov-2024 08:14:24 Europe/Berlin] Session validated successfully
+[29-Nov-2024 08:14:24 Europe/Berlin] File details: Array
+(
+    [name] => susbeeee.jpg
+    [type] => image/jpeg
+    [tmp_name] => C:\xampp\tmp\php6914.tmp
+    [error] => 0
+    [size] => 9021
+)
+
+[29-Nov-2024 08:14:24 Europe/Berlin] Reading file data...
+[29-Nov-2024 08:14:24 Europe/Berlin] File data read successfully. Size: 9021 bytes
+[29-Nov-2024 08:14:24 Europe/Berlin] Starting database transaction...
+[29-Nov-2024 08:14:24 Europe/Berlin] Deactivating old profile pictures...
+[29-Nov-2024 08:14:24 Europe/Berlin] Old pictures deactivated successfully
+[29-Nov-2024 08:14:24 Europe/Berlin] Inserting new profile picture...
+[29-Nov-2024 08:14:24 Europe/Berlin] Transaction error occurred: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'file_name' in 'field list'
+[29-Nov-2024 08:14:24 Europe/Berlin] Stack trace: #0 C:\xampp\htdocs\Space\admin_operations\update_profile_picture.php(113): PDO->prepare('\r\n            I...')
+#1 {main}
+[29-Nov-2024 08:14:24 Europe/Berlin] Rolling back transaction
+[29-Nov-2024 08:14:24 Europe/Berlin] Fatal error occurred: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'file_name' in 'field list'
+[29-Nov-2024 08:14:24 Europe/Berlin] Stack trace: #0 C:\xampp\htdocs\Space\admin_operations\update_profile_picture.php(113): PDO->prepare('\r\n            I...')
+#1 {main}
+[29-Nov-2024 08:14:24 Europe/Berlin] Sending error response: {"status":"error","message":"Failed to update profile picture: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'file_name' in 'field list'","debug_info":{"file":"C:\\xampp\\htdocs\\Space\\admin_operations\\update_profile_picture.php","line":113}}
+[29-Nov-2024 08:14:24 Europe/Berlin] === Request Complete (2024-11-29 08:14:24) ===
+
+[29-Nov-2024 08:18:07 Europe/Berlin] Error fetching profile picture: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'file_type' in 'field list'
+[29-Nov-2024 08:18:07 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[29-Nov-2024 08:18:08 Europe/Berlin] Error fetching profile picture: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'file_type' in 'field list'
+[29-Nov-2024 08:18:08 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[29-Nov-2024 08:18:37 Europe/Berlin] 
+=== New Upload Request (2024-11-29 08:18:37) ===
+[29-Nov-2024 08:18:37 Europe/Berlin] Remote IP: ::1
+[29-Nov-2024 08:18:37 Europe/Berlin] User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 OPR/114.0.0.0
+[29-Nov-2024 08:18:37 Europe/Berlin] Session Data: Array
+(
+    [user_id] => 2236914
+    [srcode] => 2236914
+    [firstname] => Faith
+    [lastname] => Anne
+    [role] => student
+    [session_log_id] => 3
+)
+
+[29-Nov-2024 08:18:37 Europe/Berlin] POST Data: Array
+(
+)
+
+[29-Nov-2024 08:18:37 Europe/Berlin] FILES Data: Array
+(
+    [profile_picture] => Array
+        (
+            [name] => susbeeee.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php4639.tmp
+            [error] => 0
+            [size] => 9021
+        )
+
+)
+
+[29-Nov-2024 08:18:37 Europe/Berlin] Loading required files...
+[29-Nov-2024 08:18:37 Europe/Berlin] Required files loaded successfully
+[29-Nov-2024 08:18:37 Europe/Berlin] Session validated successfully
+[29-Nov-2024 08:18:37 Europe/Berlin] File details: Array
+(
+    [name] => susbeeee.jpg
+    [type] => image/jpeg
+    [tmp_name] => C:\xampp\tmp\php4639.tmp
+    [error] => 0
+    [size] => 9021
+)
+
+[29-Nov-2024 08:18:37 Europe/Berlin] Reading file data...
+[29-Nov-2024 08:18:37 Europe/Berlin] File data read successfully. Size: 9021 bytes
+[29-Nov-2024 08:18:37 Europe/Berlin] Starting database transaction...
+[29-Nov-2024 08:18:37 Europe/Berlin] Deactivating old profile pictures...
+[29-Nov-2024 08:18:37 Europe/Berlin] Old pictures deactivated successfully
+[29-Nov-2024 08:18:37 Europe/Berlin] Inserting new profile picture...
+[29-Nov-2024 08:18:37 Europe/Berlin] New picture inserted successfully
+[29-Nov-2024 08:18:37 Europe/Berlin] Initializing SessionLogger...
+[29-Nov-2024 08:18:37 Europe/Berlin] Processing user role: student, ID: 2236914
+[29-Nov-2024 08:18:37 Europe/Berlin] Attempting to log activity...
+[29-Nov-2024 08:18:37 Europe/Berlin] SR Code: 2236914
+[29-Nov-2024 08:18:37 Europe/Berlin] Therapist ID: null
+[29-Nov-2024 08:18:37 Europe/Berlin] Admin ID: null
+[29-Nov-2024 08:18:37 Europe/Berlin] Description: Profile picture updated: susbeeee.jpg (Type: image/jpeg, Size: 9021 bytes)
+[29-Nov-2024 08:18:37 Europe/Berlin] === Activity Logging Start ===
+[29-Nov-2024 08:18:37 Europe/Berlin] SR Code: 2236914
+[29-Nov-2024 08:18:37 Europe/Berlin] Action: UPDATE_PROFILE_PICTURE
+[29-Nov-2024 08:18:37 Europe/Berlin] Action Details: Profile picture updated: susbeeee.jpg (Type: image/jpeg, Size: 9021 bytes)
+[29-Nov-2024 08:18:37 Europe/Berlin] IP: ::1
+[29-Nov-2024 08:18:37 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                    (srcode, action, action_details, ip_address) 
+                    VALUES 
+                    (?, ?, ?, ?)
+[29-Nov-2024 08:18:37 Europe/Berlin] Activity log inserted successfully. ID: 4
+[29-Nov-2024 08:18:37 Europe/Berlin] === Activity Logging End ===
+[29-Nov-2024 08:18:37 Europe/Berlin] Activity logged successfully
+[29-Nov-2024 08:18:37 Europe/Berlin] Transaction committed successfully
+[29-Nov-2024 08:18:37 Europe/Berlin] Sending success response: {"status":"success","message":"Profile picture updated successfully"}
+[29-Nov-2024 08:18:37 Europe/Berlin] === Request Complete (2024-11-29 08:18:37) ===
+
+[29-Nov-2024 08:18:39 Europe/Berlin] Error fetching profile picture: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'file_type' in 'field list'
+[29-Nov-2024 08:18:39 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[29-Nov-2024 08:18:39 Europe/Berlin] Error fetching profile picture: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'file_type' in 'field list'
+[29-Nov-2024 08:18:39 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[29-Nov-2024 08:18:42 Europe/Berlin] Error fetching profile picture: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'file_type' in 'field list'
+[29-Nov-2024 08:18:42 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[29-Nov-2024 08:18:42 Europe/Berlin] Error fetching profile picture: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'file_type' in 'field list'
+[29-Nov-2024 08:18:42 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[29-Nov-2024 08:20:06 Europe/Berlin] Error fetching profile picture: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'file_type' in 'field list'
+[29-Nov-2024 08:20:06 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[29-Nov-2024 08:20:22 Europe/Berlin] Error fetching profile picture: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'file_type' in 'field list'
+[29-Nov-2024 08:20:22 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[29-Nov-2024 08:20:22 Europe/Berlin] Error fetching profile picture: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'file_type' in 'field list'
+[29-Nov-2024 08:20:22 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[29-Nov-2024 08:20:35 Europe/Berlin] Error fetching profile picture: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'file_type' in 'field list'
+[29-Nov-2024 08:20:35 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[29-Nov-2024 08:20:35 Europe/Berlin] Error fetching profile picture: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'file_type' in 'field list'
+[29-Nov-2024 08:20:35 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[29-Nov-2024 08:21:15 Europe/Berlin] Error fetching profile picture: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'file_type' in 'field list'
+[29-Nov-2024 08:21:15 Europe/Berlin] PHP Warning:  file_get_contents(../assets/img/default-avatar.jpg): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\get_profile_picture.php on line 25
+[29-Nov-2024 08:23:26 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 2236914
+    [firstname] => Faith
+    [lastname] => Anne
+    [phonenum] => 09267075697
+    [email] => 22-36914@g.batstate-u.edu.ph
+    [course] => BSIT
+    [year] => 4
+    [section] => SM-3102
+    [department] => 
+    [personality] => ISFJ
+    [address] => 
+)
+
+[29-Nov-2024 08:23:26 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Faith
+    [lastname] => Anne
+    [phonenum] => 09267075697
+    [email] => 22-36914@g.batstate-u.edu.ph
+    [department] => 
+    [course] => BSIT
+    [year] => 4
+    [section] => SM-3102
+    [address] => 
+    [personality] => ISFJ
+    [srcode] => 2236914
+)
+
+[29-Nov-2024 08:23:26 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Faith
+    [:lastname] => Anne
+    [:phonenum] => 09267075697
+    [:email] => 22-36914@g.batstate-u.edu.ph
+    [:department] => 
+    [:course] => BSIT
+    [:year] => 4
+    [:section] => SM-3102
+    [:address] => 
+    [:personality] => ISFJ
+    [:srcode] => 2236914
+)
+
+[29-Nov-2024 08:23:26 Europe/Berlin] Update result: true, Rows affected: 1
+[29-Nov-2024 08:23:26 Europe/Berlin] === Activity Logging Start ===
+[29-Nov-2024 08:23:26 Europe/Berlin] SR Code: 2236914
+[29-Nov-2024 08:23:26 Europe/Berlin] Action: Updated Profile
+[29-Nov-2024 08:23:26 Europe/Berlin] Action Details: Profile information updated
+[29-Nov-2024 08:23:26 Europe/Berlin] IP: ::1
+[29-Nov-2024 08:23:26 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                    (srcode, action, action_details, ip_address) 
+                    VALUES 
+                    (?, ?, ?, ?)
+[29-Nov-2024 08:23:26 Europe/Berlin] Activity log inserted successfully. ID: 5
+[29-Nov-2024 08:23:26 Europe/Berlin] === Activity Logging End ===
+[29-Nov-2024 08:23:26 Europe/Berlin] Attempting to log activity:
+[29-Nov-2024 08:23:26 Europe/Berlin] Array
+(
+    [srcode] => 2236914
+    [action] => PROFILE_UPDATE
+    [action_details] => Updated profile information: email, phone number, course, year, section, personality
+)
+
+[29-Nov-2024 08:23:26 Europe/Berlin] Activity logged successfully. ID: 6
+[29-Nov-2024 08:23:37 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 2236914
+    [firstname] => Faith
+    [lastname] => Anne
+    [phonenum] => 09267075697
+    [email] => 22-36914@g.batstate-u.edu.ph
+    [course] => BSIT
+    [year] => 4
+    [section] => SM-3102
+    [department] => CICS
+    [personality] => ISFJ
+    [address] => defende the tower
+)
+
+[29-Nov-2024 08:23:37 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Faith
+    [lastname] => Anne
+    [phonenum] => 09267075697
+    [email] => 22-36914@g.batstate-u.edu.ph
+    [department] => CICS
+    [course] => BSIT
+    [year] => 4
+    [section] => SM-3102
+    [address] => defende the tower
+    [personality] => ISFJ
+    [srcode] => 2236914
+)
+
+[29-Nov-2024 08:23:37 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Faith
+    [:lastname] => Anne
+    [:phonenum] => 09267075697
+    [:email] => 22-36914@g.batstate-u.edu.ph
+    [:department] => CICS
+    [:course] => BSIT
+    [:year] => 4
+    [:section] => SM-3102
+    [:address] => defende the tower
+    [:personality] => ISFJ
+    [:srcode] => 2236914
+)
+
+[29-Nov-2024 08:23:37 Europe/Berlin] Update result: true, Rows affected: 1
+[29-Nov-2024 08:23:37 Europe/Berlin] === Activity Logging Start ===
+[29-Nov-2024 08:23:37 Europe/Berlin] SR Code: 2236914
+[29-Nov-2024 08:23:37 Europe/Berlin] Action: Updated Profile
+[29-Nov-2024 08:23:37 Europe/Berlin] Action Details: Profile information updated
+[29-Nov-2024 08:23:37 Europe/Berlin] IP: ::1
+[29-Nov-2024 08:23:37 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                    (srcode, action, action_details, ip_address) 
+                    VALUES 
+                    (?, ?, ?, ?)
+[29-Nov-2024 08:23:37 Europe/Berlin] Activity log inserted successfully. ID: 7
+[29-Nov-2024 08:23:37 Europe/Berlin] === Activity Logging End ===
+[29-Nov-2024 08:23:37 Europe/Berlin] Attempting to log activity:
+[29-Nov-2024 08:23:37 Europe/Berlin] Array
+(
+    [srcode] => 2236914
+    [action] => PROFILE_UPDATE
+    [action_details] => Updated profile information: email, phone number, department, course, year, section, address, personality
+)
+
+[29-Nov-2024 08:23:37 Europe/Berlin] Activity logged successfully. ID: 8
+[29-Nov-2024 09:29:41 Europe/Berlin] 
+=== New Upload Request (2024-11-29 09:29:41) ===
+[29-Nov-2024 09:29:41 Europe/Berlin] Remote IP: ::1
+[29-Nov-2024 09:29:41 Europe/Berlin] User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36
+[29-Nov-2024 09:29:41 Europe/Berlin] Session Data: Array
+(
+    [user_id] => 220000
+    [srcode] => 220000
+    [firstname] => Space
+    [lastname] => Creotech
+    [role] => student
+    [session_log_id] => 1
+)
+
+[29-Nov-2024 09:29:41 Europe/Berlin] POST Data: Array
+(
+)
+
+[29-Nov-2024 09:29:41 Europe/Berlin] FILES Data: Array
+(
+    [profile_picture] => Array
+        (
+            [name] => tumblr_c1f8849fefffd8f2c54220cd48ff5469_c61b20d6_500.png
+            [full_path] => tumblr_c1f8849fefffd8f2c54220cd48ff5469_c61b20d6_500.png
+            [type] => image/png
+            [tmp_name] => C:\xampp\tmp\php54F3.tmp
+            [error] => 0
+            [size] => 87392
+        )
+
+)
+
+[29-Nov-2024 09:29:41 Europe/Berlin] Loading required files...
+[29-Nov-2024 09:29:41 Europe/Berlin] Required files loaded successfully
+[29-Nov-2024 09:29:41 Europe/Berlin] Session validated successfully
+[29-Nov-2024 09:29:41 Europe/Berlin] File details: Array
+(
+    [name] => tumblr_c1f8849fefffd8f2c54220cd48ff5469_c61b20d6_500.png
+    [full_path] => tumblr_c1f8849fefffd8f2c54220cd48ff5469_c61b20d6_500.png
+    [type] => image/png
+    [tmp_name] => C:\xampp\tmp\php54F3.tmp
+    [error] => 0
+    [size] => 87392
+)
+
+[29-Nov-2024 09:29:41 Europe/Berlin] Reading file data...
+[29-Nov-2024 09:29:41 Europe/Berlin] File data read successfully. Size: 87392 bytes
+[29-Nov-2024 09:29:41 Europe/Berlin] Starting database transaction...
+[29-Nov-2024 09:29:41 Europe/Berlin] Deactivating old profile pictures...
+[29-Nov-2024 09:29:41 Europe/Berlin] Old pictures deactivated successfully
+[29-Nov-2024 09:29:41 Europe/Berlin] Inserting new profile picture...
+[29-Nov-2024 09:29:41 Europe/Berlin] New picture inserted successfully
+[29-Nov-2024 09:29:41 Europe/Berlin] Initializing SessionLogger...
+[29-Nov-2024 09:29:41 Europe/Berlin] Processing user role: student, ID: 220000
+[29-Nov-2024 09:29:41 Europe/Berlin] Attempting to log activity...
+[29-Nov-2024 09:29:41 Europe/Berlin] SR Code: 220000
+[29-Nov-2024 09:29:41 Europe/Berlin] Therapist ID: null
+[29-Nov-2024 09:29:41 Europe/Berlin] Admin ID: null
+[29-Nov-2024 09:29:41 Europe/Berlin] Description: Profile picture updated: tumblr_c1f8849fefffd8f2c54220cd48ff5469_c61b20d6_500.png (Type: image/png, Size: 87392 bytes)
+[29-Nov-2024 09:29:41 Europe/Berlin] === Activity Logging Start ===
+[29-Nov-2024 09:29:41 Europe/Berlin] SR Code: 220000
+[29-Nov-2024 09:29:41 Europe/Berlin] Action: UPDATE_PROFILE_PICTURE
+[29-Nov-2024 09:29:41 Europe/Berlin] Action Details: Profile picture updated: tumblr_c1f8849fefffd8f2c54220cd48ff5469_c61b20d6_500.png (Type: image/png, Size: 87392 bytes)
+[29-Nov-2024 09:29:41 Europe/Berlin] IP: ::1
+[29-Nov-2024 09:29:41 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                    (srcode, action, action_details, ip_address) 
+                    VALUES 
+                    (?, ?, ?, ?)
+[29-Nov-2024 09:29:41 Europe/Berlin] Activity log inserted successfully. ID: 3
+[29-Nov-2024 09:29:41 Europe/Berlin] === Activity Logging End ===
+[29-Nov-2024 09:29:41 Europe/Berlin] Activity logged successfully
+[29-Nov-2024 09:29:41 Europe/Berlin] Transaction committed successfully
+[29-Nov-2024 09:29:41 Europe/Berlin] Sending success response: {"status":"success","message":"Profile picture updated successfully"}
+[29-Nov-2024 09:29:41 Europe/Berlin] === Request Complete (2024-11-29 09:29:41) ===
+
+[29-Nov-2024 09:29:57 Europe/Berlin] 
+=== New Upload Request (2024-11-29 09:29:57) ===
+[29-Nov-2024 09:29:57 Europe/Berlin] Remote IP: ::1
+[29-Nov-2024 09:29:57 Europe/Berlin] User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36
+[29-Nov-2024 09:29:57 Europe/Berlin] Session Data: Array
+(
+    [user_id] => 220000
+    [srcode] => 220000
+    [firstname] => Space
+    [lastname] => Creotech
+    [role] => student
+    [session_log_id] => 1
+)
+
+[29-Nov-2024 09:29:57 Europe/Berlin] POST Data: Array
+(
+)
+
+[29-Nov-2024 09:29:57 Europe/Berlin] FILES Data: Array
+(
+    [profile_picture] => Array
+        (
+            [name] => GMwu11wWIAA7TwB.jpg
+            [full_path] => GMwu11wWIAA7TwB.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php9549.tmp
+            [error] => 0
+            [size] => 51636
+        )
+
+)
+
+[29-Nov-2024 09:29:57 Europe/Berlin] Loading required files...
+[29-Nov-2024 09:29:57 Europe/Berlin] Required files loaded successfully
+[29-Nov-2024 09:29:57 Europe/Berlin] Session validated successfully
+[29-Nov-2024 09:29:57 Europe/Berlin] File details: Array
+(
+    [name] => GMwu11wWIAA7TwB.jpg
+    [full_path] => GMwu11wWIAA7TwB.jpg
+    [type] => image/jpeg
+    [tmp_name] => C:\xampp\tmp\php9549.tmp
+    [error] => 0
+    [size] => 51636
+)
+
+[29-Nov-2024 09:29:57 Europe/Berlin] Reading file data...
+[29-Nov-2024 09:29:57 Europe/Berlin] File data read successfully. Size: 51636 bytes
+[29-Nov-2024 09:29:57 Europe/Berlin] Starting database transaction...
+[29-Nov-2024 09:29:57 Europe/Berlin] Deactivating old profile pictures...
+[29-Nov-2024 09:29:57 Europe/Berlin] Old pictures deactivated successfully
+[29-Nov-2024 09:29:57 Europe/Berlin] Inserting new profile picture...
+[29-Nov-2024 09:29:57 Europe/Berlin] Transaction error occurred: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '220000-student' for key 'unique_user_picture'
+[29-Nov-2024 09:29:57 Europe/Berlin] Stack trace: #0 C:\xampp\htdocs\Space\admin_operations\update_profile_picture.php(118): PDOStatement->execute(Array)
+#1 {main}
+[29-Nov-2024 09:29:57 Europe/Berlin] Rolling back transaction
+[29-Nov-2024 09:29:57 Europe/Berlin] Fatal error occurred: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '220000-student' for key 'unique_user_picture'
+[29-Nov-2024 09:29:57 Europe/Berlin] Stack trace: #0 C:\xampp\htdocs\Space\admin_operations\update_profile_picture.php(118): PDOStatement->execute(Array)
+#1 {main}
+[29-Nov-2024 09:29:57 Europe/Berlin] Sending error response: {"status":"error","message":"Failed to update profile picture: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '220000-student' for key 'unique_user_picture'","debug_info":{"file":"C:\\xampp\\htdocs\\Space\\admin_operations\\update_profile_picture.php","line":118}}
+[29-Nov-2024 09:29:57 Europe/Berlin] === Request Complete (2024-11-29 09:29:57) ===
+
+[29-Nov-2024 09:30:09 Europe/Berlin] 
+=== New Upload Request (2024-11-29 09:30:09) ===
+[29-Nov-2024 09:30:09 Europe/Berlin] Remote IP: ::1
+[29-Nov-2024 09:30:09 Europe/Berlin] User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36
+[29-Nov-2024 09:30:09 Europe/Berlin] Session Data: Array
+(
+    [user_id] => 220000
+    [srcode] => 220000
+    [firstname] => Space
+    [lastname] => Creotech
+    [role] => student
+    [session_log_id] => 1
+)
+
+[29-Nov-2024 09:30:09 Europe/Berlin] POST Data: Array
+(
+)
+
+[29-Nov-2024 09:30:09 Europe/Berlin] FILES Data: Array
+(
+    [profile_picture] => Array
+        (
+            [name] => GMwu11wWIAA7TwB.jpg
+            [full_path] => GMwu11wWIAA7TwB.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\phpC330.tmp
+            [error] => 0
+            [size] => 51636
+        )
+
+)
+
+[29-Nov-2024 09:30:09 Europe/Berlin] Loading required files...
+[29-Nov-2024 09:30:09 Europe/Berlin] Required files loaded successfully
+[29-Nov-2024 09:30:09 Europe/Berlin] Session validated successfully
+[29-Nov-2024 09:30:09 Europe/Berlin] File details: Array
+(
+    [name] => GMwu11wWIAA7TwB.jpg
+    [full_path] => GMwu11wWIAA7TwB.jpg
+    [type] => image/jpeg
+    [tmp_name] => C:\xampp\tmp\phpC330.tmp
+    [error] => 0
+    [size] => 51636
+)
+
+[29-Nov-2024 09:30:09 Europe/Berlin] Reading file data...
+[29-Nov-2024 09:30:09 Europe/Berlin] File data read successfully. Size: 51636 bytes
+[29-Nov-2024 09:30:09 Europe/Berlin] Starting database transaction...
+[29-Nov-2024 09:30:09 Europe/Berlin] Deactivating old profile pictures...
+[29-Nov-2024 09:30:09 Europe/Berlin] Old pictures deactivated successfully
+[29-Nov-2024 09:30:09 Europe/Berlin] Inserting new profile picture...
+[29-Nov-2024 09:30:09 Europe/Berlin] Transaction error occurred: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '220000-student' for key 'unique_user_picture'
+[29-Nov-2024 09:30:09 Europe/Berlin] Stack trace: #0 C:\xampp\htdocs\Space\admin_operations\update_profile_picture.php(118): PDOStatement->execute(Array)
+#1 {main}
+[29-Nov-2024 09:30:09 Europe/Berlin] Rolling back transaction
+[29-Nov-2024 09:30:09 Europe/Berlin] Fatal error occurred: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '220000-student' for key 'unique_user_picture'
+[29-Nov-2024 09:30:09 Europe/Berlin] Stack trace: #0 C:\xampp\htdocs\Space\admin_operations\update_profile_picture.php(118): PDOStatement->execute(Array)
+#1 {main}
+[29-Nov-2024 09:30:09 Europe/Berlin] Sending error response: {"status":"error","message":"Failed to update profile picture: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '220000-student' for key 'unique_user_picture'","debug_info":{"file":"C:\\xampp\\htdocs\\Space\\admin_operations\\update_profile_picture.php","line":118}}
+[29-Nov-2024 09:30:09 Europe/Berlin] === Request Complete (2024-11-29 09:30:09) ===
+
+[29-Nov-2024 09:40:14 Europe/Berlin] 
+=== New Upload Request (2024-11-29 09:40:14) ===
+[29-Nov-2024 09:40:14 Europe/Berlin] Remote IP: ::1
+[29-Nov-2024 09:40:14 Europe/Berlin] User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36
+[29-Nov-2024 09:40:14 Europe/Berlin] Session Data: Array
+(
+    [user_id] => 220000
+    [srcode] => 220000
+    [firstname] => Space
+    [lastname] => Creotech
+    [role] => student
+    [session_log_id] => 1
+)
+
+[29-Nov-2024 09:40:14 Europe/Berlin] POST Data: Array
+(
+)
+
+[29-Nov-2024 09:40:14 Europe/Berlin] FILES Data: Array
+(
+    [profile_picture] => Array
+        (
+            [name] => GMwu11wWIAA7TwB.jpg
+            [full_path] => GMwu11wWIAA7TwB.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\phpFED3.tmp
+            [error] => 0
+            [size] => 51636
+        )
+
+)
+
+[29-Nov-2024 09:40:14 Europe/Berlin] Loading required files...
+[29-Nov-2024 09:40:14 Europe/Berlin] Required files loaded successfully
+[29-Nov-2024 09:40:14 Europe/Berlin] Session validated successfully
+[29-Nov-2024 09:40:14 Europe/Berlin] File details: Array
+(
+    [name] => GMwu11wWIAA7TwB.jpg
+    [full_path] => GMwu11wWIAA7TwB.jpg
+    [type] => image/jpeg
+    [tmp_name] => C:\xampp\tmp\phpFED3.tmp
+    [error] => 0
+    [size] => 51636
+)
+
+[29-Nov-2024 09:40:14 Europe/Berlin] Reading file data...
+[29-Nov-2024 09:40:14 Europe/Berlin] File data read successfully. Size: 51636 bytes
+[29-Nov-2024 09:40:14 Europe/Berlin] Starting database transaction...
+[29-Nov-2024 09:40:14 Europe/Berlin] Updating profile picture...
+[29-Nov-2024 09:40:14 Europe/Berlin] Profile picture updated successfully
+[29-Nov-2024 09:40:14 Europe/Berlin] === Request Complete (2024-11-29 09:40:14) ===
+
+[29-Nov-2024 09:42:45 Europe/Berlin] 
+=== New Upload Request (2024-11-29 09:42:45) ===
+[29-Nov-2024 09:42:45 Europe/Berlin] Remote IP: ::1
+[29-Nov-2024 09:42:45 Europe/Berlin] User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36
+[29-Nov-2024 09:42:45 Europe/Berlin] Session Data: Array
+(
+    [user_id] => 220000
+    [srcode] => 220000
+    [firstname] => Space
+    [lastname] => Creotech
+    [role] => student
+    [session_log_id] => 1
+)
+
+[29-Nov-2024 09:42:45 Europe/Berlin] POST Data: Array
+(
+)
+
+[29-Nov-2024 09:42:45 Europe/Berlin] FILES Data: Array
+(
+    [profile_picture] => Array
+        (
+            [name] => ffe0682265d47adb1af7114ff1593ab9.jpg
+            [full_path] => ffe0682265d47adb1af7114ff1593ab9.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php4D29.tmp
+            [error] => 0
+            [size] => 22371
+        )
+
+)
+
+[29-Nov-2024 09:42:45 Europe/Berlin] Loading required files...
+[29-Nov-2024 09:42:45 Europe/Berlin] Required files loaded successfully
+[29-Nov-2024 09:42:45 Europe/Berlin] Session validated successfully
+[29-Nov-2024 09:42:45 Europe/Berlin] File details: Array
+(
+    [name] => ffe0682265d47adb1af7114ff1593ab9.jpg
+    [full_path] => ffe0682265d47adb1af7114ff1593ab9.jpg
+    [type] => image/jpeg
+    [tmp_name] => C:\xampp\tmp\php4D29.tmp
+    [error] => 0
+    [size] => 22371
+)
+
+[29-Nov-2024 09:42:45 Europe/Berlin] Reading file data...
+[29-Nov-2024 09:42:45 Europe/Berlin] File data read successfully. Size: 22371 bytes
+[29-Nov-2024 09:42:45 Europe/Berlin] Starting database transaction...
+[29-Nov-2024 09:42:45 Europe/Berlin] Updating profile picture...
+[29-Nov-2024 09:42:45 Europe/Berlin] Profile picture updated successfully
+[29-Nov-2024 09:42:45 Europe/Berlin] === Request Complete (2024-11-29 09:42:45) ===
+
+[29-Nov-2024 09:43:08 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 220000
+    [firstname] => Space
+    [lastname] => Creotech
+    [phonenum] => 09000000000
+    [email] => space.creotech@g.batstate-u.edu.ph
+    [course] => 
+    [year] => 4
+    [section] => SM-4102
+    [department] => 
+    [personality] => 
+    [address] => 
+)
+
+[29-Nov-2024 09:43:08 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Space
+    [lastname] => Creotech
+    [phonenum] => 09000000000
+    [email] => space.creotech@g.batstate-u.edu.ph
+    [department] => 
+    [course] => 
+    [year] => 4
+    [section] => SM-4102
+    [address] => 
+    [personality] => 
+    [srcode] => 220000
+)
+
+[29-Nov-2024 09:43:08 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Space
+    [:lastname] => Creotech
+    [:phonenum] => 09000000000
+    [:email] => space.creotech@g.batstate-u.edu.ph
+    [:department] => 
+    [:course] => 
+    [:year] => 4
+    [:section] => SM-4102
+    [:address] => 
+    [:personality] => 
+    [:srcode] => 220000
+)
+
+[29-Nov-2024 09:43:08 Europe/Berlin] Update result: true, Rows affected: 1
+[29-Nov-2024 09:43:08 Europe/Berlin] === Activity Logging Start ===
+[29-Nov-2024 09:43:08 Europe/Berlin] SR Code: 220000
+[29-Nov-2024 09:43:08 Europe/Berlin] Action: Updated Profile
+[29-Nov-2024 09:43:08 Europe/Berlin] Action Details: Profile information updated
+[29-Nov-2024 09:43:08 Europe/Berlin] IP: ::1
+[29-Nov-2024 09:43:08 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                    (srcode, action, action_details, ip_address) 
+                    VALUES 
+                    (?, ?, ?, ?)
+[29-Nov-2024 09:43:08 Europe/Berlin] Activity log inserted successfully. ID: 4
+[29-Nov-2024 09:43:08 Europe/Berlin] === Activity Logging End ===
+[29-Nov-2024 09:43:08 Europe/Berlin] Attempting to log activity:
+[29-Nov-2024 09:43:08 Europe/Berlin] Array
+(
+    [srcode] => 220000
+    [action] => PROFILE_UPDATE
+    [action_details] => Updated profile information: email, phone number, year, section
+)
+
+[29-Nov-2024 09:43:08 Europe/Berlin] Activity logged successfully. ID: 5
+[29-Nov-2024 10:03:08 Europe/Berlin] Received POST data: Array
+(
+    [srcode] => 220000
+    [firstname] => Space
+    [lastname] => Creotech
+    [phonenum] => 09000000000
+    [email] => space.creotech@g.batstate-u.edu.ph
+    [course] => BSIT
+    [year] => 4
+    [section] => SM-4102
+    [department] => 
+    [personality] => 
+    [address] => 
+)
+
+[29-Nov-2024 10:03:08 Europe/Berlin] Starting updateStudentProfile with data: Array
+(
+    [firstname] => Space
+    [lastname] => Creotech
+    [phonenum] => 09000000000
+    [email] => space.creotech@g.batstate-u.edu.ph
+    [department] => 
+    [course] => BSIT
+    [year] => 4
+    [section] => SM-4102
+    [address] => 
+    [personality] => 
+    [srcode] => 220000
+)
+
+[29-Nov-2024 10:03:08 Europe/Berlin] Executing SQL with params: Array
+(
+    [:firstname] => Space
+    [:lastname] => Creotech
+    [:phonenum] => 09000000000
+    [:email] => space.creotech@g.batstate-u.edu.ph
+    [:department] => 
+    [:course] => BSIT
+    [:year] => 4
+    [:section] => SM-4102
+    [:address] => 
+    [:personality] => 
+    [:srcode] => 220000
+)
+
+[29-Nov-2024 10:03:08 Europe/Berlin] Update result: true, Rows affected: 1
+[29-Nov-2024 10:03:08 Europe/Berlin] === Activity Logging Start ===
+[29-Nov-2024 10:03:08 Europe/Berlin] SR Code: 220000
+[29-Nov-2024 10:03:08 Europe/Berlin] Action: Updated Profile
+[29-Nov-2024 10:03:08 Europe/Berlin] Action Details: Profile information updated
+[29-Nov-2024 10:03:08 Europe/Berlin] IP: ::1
+[29-Nov-2024 10:03:08 Europe/Berlin] Executing SQL: INSERT INTO activity_logs 
+                    (srcode, action, action_details, ip_address) 
+                    VALUES 
+                    (?, ?, ?, ?)
+[29-Nov-2024 10:03:08 Europe/Berlin] Activity log inserted successfully. ID: 6
+[29-Nov-2024 10:03:08 Europe/Berlin] === Activity Logging End ===
+[29-Nov-2024 10:03:08 Europe/Berlin] Attempting to log activity:
+[29-Nov-2024 10:03:08 Europe/Berlin] Array
+(
+    [srcode] => 220000
+    [action] => PROFILE_UPDATE
+    [action_details] => Updated profile information: email, phone number, course, year, section
+)
+
+[29-Nov-2024 10:03:08 Europe/Berlin] Activity logged successfully. ID: 7

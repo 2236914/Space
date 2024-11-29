@@ -1,4 +1,9 @@
+// Add console log to verify the function is defined
+console.log('Signout.js loaded');
+
 function handleSignOut() {
+    console.log('handleSignOut function called');
+    
     Swal.fire({
         title: 'Are you sure you want to sign out?',
         text: "You will be logged out of your account",
@@ -16,6 +21,8 @@ function handleSignOut() {
         allowOutsideClick: false
     }).then((result) => {
         if (result.isConfirmed) {
+            console.log('Sign out confirmed');
+            
             // Show loading state
             Swal.fire({
                 title: 'Signing out...',
@@ -30,6 +37,7 @@ function handleSignOut() {
 
             // Redirect to logout script after a brief delay
             setTimeout(() => {
+                console.log('Redirecting to logout');
                 window.location.href = '../../admin_operations/logout.php';
             }, 1000);
         }
@@ -56,5 +64,6 @@ document.addEventListener('DOMContentLoaded', function() {
         ActivityTracker.init();
     }
 });
+
 // Periodically check login status
 setInterval(checkLoginStatus, 30000); // Check every 30 seconds

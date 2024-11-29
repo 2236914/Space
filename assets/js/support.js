@@ -49,12 +49,16 @@ function showSupportDialog() {
             })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Failed to send message');
+                    return response.text().then(text => {
+                        console.error('Server response:', text);
+                        throw new Error('Failed to send message');
+                    });
                 }
                 return response.json();
             })
             .catch(error => {
-                Swal.showValidationMessage(error.message);
+                console.error('Error:', error);
+                Swal.showValidationMessage(`Request failed: ${error.message}`);
             });
         },
         allowOutsideClick: () => !Swal.isLoading()

@@ -38,26 +38,44 @@ try {
         $attachment_name = $_FILES['attachment']['name'];
         $attachment_type = $_FILES['attachment']['type'];
         
-        // Insert into database with attachment
+        // Insert into database with attachment - matching the exact table structure
         $stmt = $pdo->prepare("
-            INSERT INTO support_messages (srcode, email, message, attachment_data, attachment_name, attachment_type)
-            VALUES (?, ?, ?, ?, ?, ?)
+            INSERT INTO support_messages 
+            (srcode, email, message, attachment_data, attachment_name, attachment_type, status) 
+            VALUES (?, ?, ?, ?, ?, ?, 'pending')
         ");
-        $stmt->execute([
-            $srcode,
-            $email,
-            $message,
-            $attachment_data,
-            $attachment_name,
-            $attachment_type
-        ]);
+        
+        try {
+            $stmt->execute([
+                (int)$srcode,  // Cast to int since srcode is int(11)
+                $email,
+                $message,
+                $attachment_data,
+                $attachment_name,
+                $attachment_type
+            ]);
+        } catch (PDOException $e) {
+            error_log("Database error: " . $e->getMessage());
+            throw new Exception('Failed to save support message with attachment');
+        }
     } else {
         // Insert into database without attachment
         $stmt = $pdo->prepare("
-            INSERT INTO support_messages (srcode, email, message)
-            VALUES (?, ?, ?)
+            INSERT INTO support_messages 
+            (srcode, email, message, status) 
+            VALUES (?, ?, ?, 'pending')
         ");
-        $stmt->execute([$srcode, $email, $message]);
+        
+        try {
+            $stmt->execute([
+                (int)$srcode,  // Cast to int since srcode is int(11)
+                $email,
+                $message
+            ]);
+        } catch (PDOException $e) {
+            error_log("Database error: " . $e->getMessage());
+            throw new Exception('Failed to save support message');
+        }
     }
 
     // Initialize PHPMailer
@@ -69,7 +87,7 @@ try {
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
         $mail->Username = 'space.creotech@gmail.com';
-        $mail->Password = 'ocqlnjhicvemknon';
+        $mail->Password = 'jzznacwskhtqprzg';
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
 

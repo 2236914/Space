@@ -1,36 +1,46 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 require_once '../configs/config.php';
-require_once 'profile_operations.php';
 
-if (isset($_GET['user_id']) && isset($_GET['user_type'])) {
-    try {
-        $profileOps = new ProfileOperations($pdo);
-        
-        // Convert role to user_type if needed
-        $user_type = $_GET['user_type'];
-        if ($user_type === 'superadmin' || $user_type === 'moderator') {
-            $user_type = 'admin';
-        }
+try {
+    // Get parameters
+    $user_id = $_GET['user_id'] ?? null;
+    $user_type = $_GET['user_type'] ?? null;
 
-        $picture = $profileOps->getProfilePicture($_GET['user_id'], $user_type);
-        
-        if ($picture) {
-            header("Content-Type: " . $picture['file_type']);
-            echo $picture['file_data'];
-        } else {
-            // Return default image
-            $default_image_path = '../assets/img/default-avatar.jpg';
-            header("Content-Type: image/jpeg");
-            echo file_get_contents($default_image_path);
-        }
-    } catch (Exception $e) {
-        error_log("Error fetching profile picture: " . $e->getMessage());
-        // Return default image on error
-        $default_image_path = '../assets/img/default-avatar.jpg';
-        header("Content-Type: image/jpeg");
-        echo file_get_contents($default_image_path);
+    if (!$user_id || !$user_type) {
+        throw new Exception('Missing parameters');
     }
-    exit;
+
+    // Get the most recent active profile picture
+    $stmt = $pdo->prepare("
+        SELECT image_data, mime_type 
+        FROM profile_pictures 
+        WHERE user_id = ? 
+        AND user_type = ? 
+        AND status = 'active' 
+        ORDER BY upload_date DESC 
+        LIMIT 1
+    ");
+    
+    $stmt->execute([$user_id, $user_type]);
+    $picture = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($picture) {
+        // Set proper content type header
+        header('Content-Type: ' . $picture['mime_type']);
+        // Output image data
+        echo $picture['image_data'];
+    } else {
+        // If no profile picture found, redirect to default avatar
+        header('Location: ../assets/img/default-avatar.png');
+    }
+
+} catch (Exception $e) {
+    error_log("Profile picture retrieval error: " . $e->getMessage());
+    // Redirect to default avatar on error
+    header('Location: ../assets/img/default-avatar.png');
 }
 ?>

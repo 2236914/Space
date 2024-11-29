@@ -578,3 +578,12 @@ DELIMITER ;
        status ENUM('pending', 'reviewed', 'resolved') DEFAULT 'pending',
        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
    );
+
+
+
+
+
+-- Add missing indexes
+ALTER TABLE activity_logs MODIFY COLUMN srcode INT;
+ALTER TABLE activity_logs ADD CONSTRAINT activity_logs_ibfk_1 
+    FOREIGN KEY (srcode) REFERENCES students(srcode) ON DELETE CASCADE;

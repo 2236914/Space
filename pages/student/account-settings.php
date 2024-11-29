@@ -66,7 +66,9 @@ header("Pragma: no-cache");
                 <a href="#ProfileNav" class="nav-link text-dark" aria-controls="ProfileNav">
                     <img src="../../admin_operations/get_profile_picture.php?user_id=<?php echo $_SESSION['user_id']; ?>&user_type=<?php echo $_SESSION['role']; ?>" 
                          class="avatar"
-                         onerror="this.src='../../assets/img/default-avatar.png';">
+                         id="previewImage"
+                         onerror="this.src='../../assets/img/default-avatar.png';"
+                         alt="Profile Picture">
                     <span class="nav-link-text ms-2 ps-1">
                         <?php 
                         if (isset($_SESSION['user_id'])) {
@@ -823,87 +825,115 @@ header("Pragma: no-cache");
     });
   </script>
   <script>
-// Image preview and upload functionality
 document.getElementById('profilePictureInput').addEventListener('change', async function(e) {
     const file = e.target.files[0];
     if (!file) return;
     
-    const reader = new FileReader();
-    reader.onload = async function(event) {
-        try {
-            const result = await Swal.fire({
-                title: 'Upload Profile Picture?',
-                text: 'Do you want to upload this image as your profile picture?',
-                imageUrl: event.target.result,
-                imageWidth: 200,
-                imageHeight: 200,
-                imageAlt: 'Profile picture preview',
-                showCancelButton: true,
-                confirmButtonText: 'Yes, upload it!',
-                cancelButtonText: 'Cancel',
-                buttonsStyling: false,
-                customClass: {
-                    confirmButton: 'btn bg-gradient-primary btn-sm mx-2',
-                    cancelButton: 'btn btn-outline-secondary btn-sm mx-2'
-                }
-            });
-
-            if (result.isConfirmed) {
-                // Show loading state
-                Swal.fire({
-                    title: 'Uploading...',
-                    text: 'Please wait while we process your image.',
-                    allowOutsideClick: false,
-                    didOpen: () => {
-                        Swal.showLoading();
-                    }
-                });
-
-                const formData = new FormData();
-                formData.append('profile_picture', file);
-
-                const response = await fetch('../../admin_operations/update_profile_picture.php', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                const data = await response.json();
-
-                if (data.status === 'success') {
-                    // Show success message
-                    await Swal.fire({
-                        icon: 'success',
-                        title: 'Success!',
-                        text: data.message,
-                        confirmButtonText: 'OK',
-                        buttonsStyling: false,
-                        customClass: {
-                            confirmButton: 'btn bg-gradient-primary btn-sm mx-2'
-                        }
-                    });
-                    
-                    // Reload the page after clicking OK
-                    window.location.reload();
-                    
-                } else {
-                    throw new Error(data.message || 'Failed to update profile picture');
-                }
+    // Validate file type
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+    if (!allowedTypes.includes(file.type)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Invalid File Type',
+            text: 'Please upload only JPG, JPEG, or PNG images.',
+            confirmButtonText: 'OK',
+            buttonsStyling: false,
+            customClass: {
+                confirmButton: 'btn bg-gradient-primary btn-sm mx-2'
             }
-        } catch (error) {
-            console.error('Upload error:', error);
+        });
+        this.value = ''; // Reset file input
+        return;
+    }
+
+    // Create preview URL
+    const previewURL = URL.createObjectURL(file);
+
+    // Show confirmation dialog with preview
+    const willUpdate = await Swal.fire({
+        title: 'Update Profile Picture?',
+        text: 'Are you sure you want to update your profile picture?',
+        imageUrl: previewURL,
+        imageWidth: 200,
+        imageHeight: 200,
+        imageAlt: 'Profile Picture Preview',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, update it!',
+        cancelButtonText: 'Cancel',
+        customClass: {
+            confirmButton: 'btn bg-gradient-primary btn-sm mb-0 mx-2',
+            cancelButton: 'btn bg-gradient-secondary btn-sm mb-0 mx-2',
+            image: 'rounded-3 shadow-sm'
+        },
+        buttonsStyling: false
+    });
+
+    // Clean up the preview URL
+    URL.revokeObjectURL(previewURL);
+
+    if (!willUpdate.isConfirmed) {
+        this.value = ''; // Reset file input if cancelled
+        return;
+    }
+
+    // Create FormData and proceed with upload
+    const formData = new FormData();
+    formData.append('profile_picture', file);
+
+    try {
+        // Show loading state
+        const loadingAlert = Swal.fire({
+            title: 'Uploading...',
+            text: 'Please wait while we update your profile picture.',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+
+        // Upload the image
+        const response = await fetch('../../admin_operations/update_profile_picture.php', {
+            method: 'POST',
+            body: formData
+        });
+
+        const result = await response.json();
+
+        if (result.status === 'success') {
+            // Update preview immediately
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('previewImage').src = e.target.result;
+                // Update all instances of the profile picture on the page
+                document.querySelectorAll('.avatar').forEach(img => {
+                    img.src = e.target.result;
+                });
+            };
+            reader.readAsDataURL(file);
+
             Swal.fire({
-                icon: 'error',
-                title: 'Upload Failed',
-                text: error.message || 'An error occurred while uploading the image.',
-                confirmButtonText: 'OK',
-                buttonsStyling: false,
+                icon: 'success',
+                title: 'Success!',
+                text: 'Profile picture updated successfully.',
                 customClass: {
-                    confirmButton: 'btn bg-gradient-primary btn-sm mx-2'
-                }
+                    confirmButton: 'btn bg-gradient-primary btn-sm mb-0'
+                },
+                buttonsStyling: false
             });
+        } else {
+            throw new Error(result.message);
         }
-    };
-    reader.readAsDataURL(file);
+    } catch (error) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Upload Failed',
+            text: error.message || 'Failed to update profile picture. Please try again.',
+            customClass: {
+                confirmButton: 'btn bg-gradient-primary btn-sm mb-0'
+            },
+            buttonsStyling: false
+        });
+    }
 });
 </script>
   <script>

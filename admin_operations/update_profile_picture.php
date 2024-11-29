@@ -98,123 +98,42 @@ try {
     $pdo->beginTransaction();
 
     try {
-        // Deactivate old pictures
-        error_log("Deactivating old profile pictures...");
+        // Simple REPLACE INTO query to update/insert the profile picture
+        error_log("Updating profile picture...");
         $stmt = $pdo->prepare("
-            UPDATE profile_pictures 
-            SET status = 'inactive' 
-            WHERE user_id = ? AND user_type = ? AND status = 'active'
+            REPLACE INTO profile_pictures 
+            (user_id, user_type, image_data, mime_type) 
+            VALUES (?, ?, ?, ?)
         ");
-        $stmt->execute([$_SESSION['user_id'], $_SESSION['role']]);
-        error_log("Old pictures deactivated successfully");
-
-        // Insert new picture
-        error_log("Inserting new profile picture...");
-        $stmt = $pdo->prepare("
-            INSERT INTO profile_pictures 
-            (user_id, user_type, file_name, file_type, file_data) 
-            VALUES (?, ?, ?, ?, ?)
-        ");
+        
         $stmt->execute([
             $_SESSION['user_id'],
             $_SESSION['role'],
-            $file['name'],
-            $file['type'],
-            $fileData
+            $fileData,
+            $file['type']
         ]);
-        error_log("New picture inserted successfully");
-
-        // Activity logging
-        try {
-            error_log("Initializing SessionLogger...");
-            $sessionLogger = new SessionLogger($pdo);
-            
-            // Determine user type
-            $srcode = null;
-            $therapist_id = null;
-            $admin_id = null;
-            
-            $role = strtolower($_SESSION['role']);
-            $userId = $_SESSION['user_id'];
-            
-            error_log("Processing user role: $role, ID: $userId");
-            
-            switch($role) {
-                case 'student':
-                    $srcode = $userId;
-                    break;
-                case 'therapist':
-                    $therapist_id = $userId;
-                    break;
-                case 'admin':
-                case 'superadmin':
-                case 'moderator':
-                    $admin_id = $userId;
-                    break;
-            }
-            
-            $description = "Profile picture updated: {$file['name']} (Type: {$file['type']}, Size: {$file['size']} bytes)";
-            
-            error_log("Attempting to log activity...");
-            error_log("SR Code: " . ($srcode ?? 'null'));
-            error_log("Therapist ID: " . ($therapist_id ?? 'null'));
-            error_log("Admin ID: " . ($admin_id ?? 'null'));
-            error_log("Description: " . $description);
-            
-            $logged = $sessionLogger->logActivity(
-                $srcode,
-                $therapist_id,
-                $admin_id,
-                'UPDATE_PROFILE_PICTURE',
-                $description,
-                $_SERVER['REMOTE_ADDR']
-            );
-            
-            if (!$logged) {
-                throw new Exception('Failed to log activity');
-            }
-            
-            error_log("Activity logged successfully");
-            
-        } catch (Exception $e) {
-            error_log("Activity logging error: " . $e->getMessage());
-            error_log("Stack trace: " . $e->getTraceAsString());
-            // Continue with the upload even if logging fails
-        }
+        error_log("Profile picture updated successfully");
 
         $pdo->commit();
-        error_log("Transaction committed successfully");
-
+        
         $response = [
             'status' => 'success',
             'message' => 'Profile picture updated successfully'
         ];
-        error_log("Sending success response: " . json_encode($response));
         echo json_encode($response);
 
     } catch (Exception $e) {
-        error_log("Transaction error occurred: " . $e->getMessage());
-        error_log("Stack trace: " . $e->getTraceAsString());
         if ($pdo->inTransaction()) {
-            error_log("Rolling back transaction");
             $pdo->rollBack();
         }
         throw $e;
     }
 
 } catch (Exception $e) {
-    error_log("Fatal error occurred: " . $e->getMessage());
-    error_log("Stack trace: " . $e->getTraceAsString());
-    
     $response = [
         'status' => 'error',
-        'message' => 'Failed to update profile picture: ' . $e->getMessage(),
-        'debug_info' => [
-            'file' => $e->getFile(),
-            'line' => $e->getLine()
-        ]
+        'message' => 'Failed to update profile picture: ' . $e->getMessage()
     ];
-    error_log("Sending error response: " . json_encode($response));
     echo json_encode($response);
 }
 

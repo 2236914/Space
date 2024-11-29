@@ -43,13 +43,23 @@ try {
 
     $stmt = $pdo->prepare("
         INSERT INTO therapist_applications (
-            first_name, last_name, email, phone, 
-            license_number, specialization, experience,
-            profile_picture, profile_picture_type,
-            license_file, license_file_type,
-            resume, resume_file_type,
+            first_name,
+            last_name,
+            email,
+            phone,
+            license_number,
+            specialization,
+            experience,
+            license_file,
+            license_file_type,
+            resume,
+            resume_file_type,
+            profile_picture,
+            profile_picture_type,
             application_date
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())
+        ) VALUES (
+            ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW()
+        )
     ");
 
     // Handle file data
@@ -65,12 +75,12 @@ try {
         $_POST['licenseNumber'],
         $_POST['specialization'],
         $_POST['experience'],
-        $profilePicture,
-        $_FILES['profilePicture']['type'] ?? null,
         $licenseFile,
         $_FILES['licenseFile']['type'] ?? null,
         $resume,
-        $_FILES['resume']['type'] ?? null
+        $_FILES['resume']['type'] ?? null,
+        $profilePicture,
+        $_FILES['profilePicture']['type'] ?? null
     ]);
 
     if (!$result) {

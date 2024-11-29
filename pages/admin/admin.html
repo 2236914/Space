@@ -1,11 +1,10 @@
 <?php
 session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-// Check if user is logged in and is an admin
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
-    header('Location: ../../signin.php');
-    exit();
-}
+// Add logging
+error_log("Session data: " . print_r($_SESSION, true));
 
 // Required files
 require_once '../../configs/config.php';
@@ -28,18 +27,21 @@ try {
     $totalUsers = 0;
 }
 
-// Get current page for navigation highlighting
-$current_page = basename($_SERVER['PHP_SELF']);
+// Prevent caching
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
 
-// Get current page info for breadcrumb
-$current_info = [
-    'parent' => 'Admin',
-    'title' => 'Dashboard'
-];
+// Check if user is logged in and is an admin
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+    error_log("Auth failed - User ID: " . ($_SESSION['user_id'] ?? 'not set') . ", Role: " . ($_SESSION['role'] ?? 'not set'));
+    header('Location: ../../signin.php');
+    exit;
+}
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -58,7 +60,8 @@ $current_info = [
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-<body class="g-sidenav-show bg-gray-200">
+
+<body class="g-sidenav-show bg-gray-100">
 <!-- Admin Aside -->
 <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-radius-lg fixed-start ms-2 bg-white my-2">
     <!-- Header -->
@@ -364,33 +367,59 @@ $current_info = [
 </div>
 </main>
 
-    <!-- Core JS Files -->
-    <script src="../../assets/js/core/popper.min.js"></script>
-    <script src="../../assets/js/core/bootstrap.min.js"></script>
-    <script src="../../assets/js/plugins/perfect-scrollbar.min.js"></script>
-    <script src="../../assets/js/plugins/smooth-scrollbar.min.js"></script>
-    <script src="../../assets/js/material-dashboard.min.js"></script>
-
-    <!-- Custom Scripts -->
-    <script>
-        // Handle sign out
-        function handleSignOut() {
-            window.location.href = '../../auth/logout.php';
+<!--   Core JS Files   -->
+<script src="../../assets/js/core/popper.min.js"></script>
+<script src="../../assets/js/core/bootstrap.min.js"></script>
+<script src="../../assets/js/plugins/perfect-scrollbar.min.js"></script>
+<script src="../../assets/js/plugins/smooth-scrollbar.min.js"></script>
+<script src="../../assets/js/signout.js"></script>
+<script>
+    var win = navigator.platform.indexOf('Win') > -1;
+    if (win && document.querySelector('#sidenav-scrollbar')) {
+        var options = {
+            damping: '0.5'
         }
-
-        // Search functionality
-        function searchMenu() {
-            // Implement search functionality here
-        }
-
-        // Initialize perfect scrollbar
-        var win = navigator.platform.indexOf('Win') > -1;
-        if (win && document.querySelector('#sidenav-scrollbar')) {
-            var options = {
-                damping: '0.5'
+        Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+    }
+</script>
+<!-- Github buttons -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+<!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+<script src="../../assets/js/material-dashboard.min.js?v=3.2.0"></script>
+<!-- Handle sign out with SweetAlert2 confirmation -->
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Page loaded');
+            // Test if handleSignOut function exists
+            console.log('handleSignOut function exists:', typeof handleSignOut === 'function');
+            
+            // Add click event listener directly
+            const signOutBtn = document.querySelector('.sidenav-footer button');
+            if (signOutBtn) {
+                signOutBtn.addEventListener('click', function() {
+                    console.log('Sign out button clicked');
+                    handleSignOut();
+                });
+            } else {
+                console.log('Sign out button not found');
             }
-            Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
-        }
+        });
     </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Page loaded');
+    // Check if required elements exist
+    console.log('Sidenav exists:', !!document.getElementById('sidenav-main'));
+    console.log('Main content exists:', !!document.querySelector('.main-content'));
+    
+    // Log any JavaScript errors
+    window.onerror = function(msg, url, lineNo, columnNo, error) {
+        console.error('Error: ' + msg + '\nURL: ' + url + '\nLine: ' + lineNo + '\nColumn: ' + columnNo + '\nError object: ' + JSON.stringify(error));
+        return false;
+    };
+});
+</script>
 </body>
+
 </html>

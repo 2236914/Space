@@ -7,13 +7,31 @@ require_once 'SessionLogger.php';
 require_once 'Logger.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Add header to ensure JSON response
+    header('Content-Type: application/json');
+    
     $response = array('status' => 'error', 'message' => '', 'role' => '', 'redirect' => '');
+    
+    // Add check for empty POST data
+    if (!isset($_POST['email']) || !isset($_POST['password'])) {
+        $response['message'] = 'Email and password are required';
+        echo json_encode($response);
+        exit;
+    }
+
     $sessionLogger = new SessionLogger($pdo);
     $logger = new Logger($pdo);
 
     try {
         $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
         $password = $_POST['password'];
+        
+        // Add validation for empty values
+        if (empty($email) || empty($password)) {
+            $response['message'] = 'Email and password cannot be empty';
+            echo json_encode($response);
+            exit;
+        }
         
         // Check students table first
         $stmt = $pdo->prepare("SELECT srcode, password, firstname, lastname, status FROM students WHERE email = ?");
@@ -108,10 +126,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['email'] = $admin['email'];
             $_SESSION['role'] = 'admin';
 
-            // Log session and activity
+            // 1. Log to admin_session_logs
+            try {
+                $stmt = $pdo->prepare("INSERT INTO admin_session_logs 
+                    (admin_id, login_time, ip_address, session_status) 
+                    VALUES (?, NOW(), ?, 'active')");
+                $stmt->execute([$admin['admin_id'], $_SERVER['REMOTE_ADDR']]);
+            } catch (PDOException $e) {
+                error_log("Admin session log error: " . $e->getMessage());
+            }
+
+            // 2. Log to session_logs (via SessionLogger)
             $sessionId = $sessionLogger->logUserSession('admin', $admin['admin_id'], 'login');
             $_SESSION['session_log_id'] = $sessionId;
             
+            // 3. Log to activity_logs
             $logger->logActivity([
                 'srcode' => null,
                 'therapist_id' => null,
