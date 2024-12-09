@@ -1,0 +1,156 @@
+<?php
+session_start();
+
+// Check if user is logged in and is a therapist
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'therapist') {
+    header('Location: ../../signin.php');
+    exit();
+}
+
+require_once '../../configs/config.php';
+require_once '../../includes/therapist_navigation_components.php';
+
+// Get therapist's basic information
+$stmt = $pdo->prepare("SELECT * FROM therapists WHERE therapist_id = ?");
+$stmt->execute([$_SESSION['user_id']]);
+$therapist = $stmt->fetch();
+
+// Get therapy sessions count
+$stmt = $pdo->prepare("SELECT COUNT(*) as total_sessions FROM therapy_sessions WHERE therapist_id = ?");
+$stmt->execute([$_SESSION['user_id']]);
+$sessions_count = $stmt->fetchColumn();
+
+// Get feedback count
+$stmt = $pdo->prepare("SELECT COUNT(*) as total_feedback FROM session_feedback WHERE therapist_id = ?");
+$stmt->execute([$_SESSION['user_id']]);
+$feedback_count = $stmt->fetchColumn();
+
+// Get average mood from moodlog
+$stmt = $pdo->prepare("SELECT AVG(mood_level) as avg_mood FROM moodlog WHERE log_date >= DATE_SUB(CURRENT_DATE, INTERVAL 30 DAY)");
+$stmt->execute();
+$avg_mood = $stmt->fetchColumn();
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="apple-touch-icon" sizes="76x76" href="../../assets/img/logo-space.png">
+    <link rel="icon" type="image/png" href="../../assets/img/logo-space.png">
+    <title>Therapist Dashboard - SPACE</title>
+    <!-- Fonts and icons -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+    <!-- Nucleo Icons -->
+    <link href="../../assets/css/nucleo-icons.css" rel="stylesheet" />
+    <link href="../../assets/css/nucleo-svg.css" rel="stylesheet" />
+    <!-- Font Awesome Icons -->
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <!-- CSS Files -->
+    <link id="pagestyle" href="../../assets/css/material-dashboard.css?v=3.0.0" rel="stylesheet" />
+</head>
+
+<body class="g-sidenav-show bg-gray-200">
+    <?php include '../../includes/therapist_navigation_components.php'; ?>
+
+    <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
+        <!-- Navbar -->
+        <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur">
+            <div class="container-fluid py-1 px-3">
+                <nav aria-label="breadcrumb">
+                    <h6 class="font-weight-bolder mb-0">Dashboard</h6>
+                </nav>
+                <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+                    <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+                        <div class="input-group input-group-outline">
+                            <label class="form-label">Search...</label>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <ul class="navbar-nav justify-content-end">
+                        <li class="nav-item d-flex align-items-center">
+                            <a href="../../admin_operations/logout.php" class="nav-link text-body font-weight-bold px-0">
+                                <i class="fa fa-sign-out me-sm-1"></i>
+                                <span class="d-sm-inline d-none">Logout</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Dashboard Content -->
+        <div class="container-fluid py-4">
+            <!-- Stats Cards Row -->
+            <div class="row">
+                <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+                    <div class="card">
+                        <div class="card-header p-3 pt-2">
+                            <div class="icon icon-lg icon-shape bg-gradient-primary shadow-primary text-center border-radius-xl mt-n4 position-absolute">
+                                <i class="material-icons opacity-10">people</i>
+                            </div>
+                            <div class="text-end pt-1">
+                                <p class="text-sm mb-0 text-capitalize">Total Sessions</p>
+                                <h4 class="mb-0"><?php echo $sessions_count ?? 0; ?></h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+                    <div class="card">
+                        <div class="card-header p-3 pt-2">
+                            <div class="icon icon-lg icon-shape bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
+                                <i class="material-icons opacity-10">psychology</i>
+                            </div>
+                            <div class="text-end pt-1">
+                                <p class="text-sm mb-0 text-capitalize">Feedback Received</p>
+                                <h4 class="mb-0"><?php echo $feedback_count ?? 0; ?></h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+                    <div class="card">
+                        <div class="card-header p-3 pt-2">
+                            <div class="icon icon-lg icon-shape bg-gradient-info shadow-info text-center border-radius-xl mt-n4 position-absolute">
+                                <i class="material-icons opacity-10">mood</i>
+                            </div>
+                            <div class="text-end pt-1">
+                                <p class="text-sm mb-0 text-capitalize">Avg Student Mood</p>
+                                <h4 class="mb-0"><?php echo number_format($avg_mood ?? 0, 1); ?>/5</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6">
+                    <div class="card">
+                        <div class="card-header p-3 pt-2">
+                            <div class="icon icon-lg icon-shape bg-gradient-warning shadow-warning text-center border-radius-xl mt-n4 position-absolute">
+                                <i class="material-icons opacity-10">rate_review</i>
+                            </div>
+                            <div class="text-end pt-1">
+                                <p class="text-sm mb-0 text-capitalize">Status</p>
+                                <h4 class="mb-0"><?php echo ucfirst($therapist['status']); ?></h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts will go here -->
+            <!-- Add your chart sections as needed -->
+
+        </div>
+    </main>
+
+    <!-- Core JS Files -->
+    <script src="../../assets/js/core/popper.min.js"></script>
+    <script src="../../assets/js/core/bootstrap.min.js"></script>
+    <script src="../../assets/js/plugins/perfect-scrollbar.min.js"></script>
+    <script src="../../assets/js/plugins/smooth-scrollbar.min.js"></script>
+    <script src="../../assets/js/plugins/chartjs.min.js"></script>
+</body>
+</html>
+</html>

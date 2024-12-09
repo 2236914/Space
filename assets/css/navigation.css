@@ -1,0 +1,15 @@
+/* Search Results Styling */
+.search-result-item {
+    transition: background-color 0.3s;
+}
+
+.search-result-item:hover {
+    background-color: #f8f9fa;
+}
+
+#searchResults {
+    max-height: 300px;
+    overflow-y: auto;
+    width: 100%;
+    border: 1px solid #dee2e6;
+} 

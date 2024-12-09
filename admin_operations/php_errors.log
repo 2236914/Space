@@ -1,0 +1,352 @@
+[26-Nov-2024 12:20:31 Europe/Berlin] PHP Warning:  require_once(../../configs/config.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\save_mood.php on line 47
+[26-Nov-2024 12:20:31 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required '../../configs/config.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\Space\admin_operations\save_mood.php:47
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\Space\admin_operations\save_mood.php on line 47
+[27-Nov-2024 02:38:20 Europe/Berlin] PHP Warning:  require_once(../../configs/config.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\save_mood.php on line 47
+[27-Nov-2024 02:38:20 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required '../../configs/config.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\Space\admin_operations\save_mood.php:47
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\Space\admin_operations\save_mood.php on line 47
+[27-Nov-2024 02:41:32 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\Space\admin_operations/../../configs/config.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\save_mood.php on line 47
+[27-Nov-2024 02:41:32 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\Space\admin_operations/../../configs/config.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\Space\admin_operations\save_mood.php:47
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\Space\admin_operations\save_mood.php on line 47
+[27-Nov-2024 02:43:04 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\Space\admin_operations../configs/config.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\save_mood.php on line 47
+[27-Nov-2024 02:43:04 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\Space\admin_operations../configs/config.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\Space\admin_operations\save_mood.php:47
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\Space\admin_operations\save_mood.php on line 47
+[27-Nov-2024 02:43:23 Europe/Berlin] PHP Warning:  require_once(C:\xampp\htdocs\Space\admin_operations../configs/config.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\admin_operations\save_mood.php on line 47
+[27-Nov-2024 02:43:23 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\Space\admin_operations../configs/config.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\Space\admin_operations\save_mood.php:47
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\Space\admin_operations\save_mood.php on line 47
+[27-Nov-2024 02:46:46 Europe/Berlin] Received request: Array
+(
+    [selected_emoji] => 😊,😠,😠,😌,😨
+    [mood_name] => Happy,Angry,Angry,Calm,Fearful
+    [description] => At sa paglisan ng araw, akala'y 'di ka mahal
+At ang nadarama'y hindi magtatagal
+Malay ko bang hindi magpapagal
+Iibigin kita kahit ga'no pa katagal
+Tumingin ka sa 'king mga mata
+At hindi mo na kailangan pang
+Magtanong nang paulit-ulit
+Ikaw lang ang iniibig .... At sa paglisan ng araw, akala'y 'di ka mahal
+At ang nadarama'y hindi magtatagal
+Malay ko bang hindi magpapagal
+Iibigin kita kahit ga'no pa katagal
+Tumingin ka sa 'king mga mata
+At hindi mo na kailangan pang
+Magtanong nang paulit-ulit
+Ikaw lang ang iniibig....
+)
+
+[27-Nov-2024 02:46:46 Europe/Berlin] Session data: Array
+(
+    [user_id] => 2236914
+    [srcode] => 2236914
+    [firstname] => Parmessan
+    [lastname] => cheese
+    [role] => student
+    [session_log_id] => 26
+)
+
+[27-Nov-2024 05:14:37 Europe/Berlin] Received request: Array
+(
+    [selected_emoji] => ☹️,☹️,😠,😍,😔
+    [mood_name] => Sad,Sad,Angry,Love,Disappointed
+    [description] => 'Today was an absolutely fantastic day. I woke up feeling refreshed and ready to tackle any challenges that came my way. The sun was shining brightly, and there was a gentle breeze that made the weather perfect. I spent the morning working on a project that I am truly passionate about, and everything seemed to flow effortlessly. In the afternoon, I met up with some friends for lunch, and we had a great time catching up and sharing stories. The food was delicious, and the company was even better. Later in the evening, I went for a walk in the park, enjoying the beautiful scenery and reflecting on how grateful I am for all the positive things in my life. Overall, it was a day filled with joy, laughter, and meaningful moments that I will cherish.
+)
+
+[27-Nov-2024 05:14:37 Europe/Berlin] Session data: Array
+(
+    [user_id] => 222222
+    [srcode] => 222222
+    [firstname] => Faith
+    [lastname] => Creotech
+    [role] => student
+    [session_log_id] => 28
+)
+
+[28-Nov-2024 01:52:04 Europe/Berlin] Received request: Array
+(
+    [selected_emoji] => ☹️,😊,😊,😌,😨
+    [mood_name] => Sad,Happy,Happy,Calm,Fearful
+    [description] => jusko pooooooooo ........... jusko pooooooooo ........... jusko pooooooooo ........... jusko pooooooooo ........... jusko pooooooooo ........... jusko pooooooooo ........... jusko pooooooooo ........... jusko pooooooooo ........... jusko pooooooooo ........... jusko pooooooooo ........... jusko pooooooooo ........... jusko pooooooooo ........... jusko pooooooooo ........... 
+)
+
+[28-Nov-2024 01:52:04 Europe/Berlin] Session data: Array
+(
+    [user_id] => 2236914
+    [srcode] => 2236914
+    [firstname] => Cheesy
+    [lastname] => Lasagna
+    [role] => student
+    [session_log_id] => 80
+)
+
+[28-Nov-2024 01:54:58 Europe/Berlin] Received request: Array
+(
+    [selected_emoji] => 😠,😍,😕,😌,😨
+    [mood_name] => Angry,Love,Confused,Calm,Fearful
+    [description] => Today didn\'t go as I had planned. I woke up feeling a bit under the weather, and things just seemed to spiral from there. I had an important meeting scheduled, but due to unforeseen circumstances, it got canceled at the last minute. I had prepared extensively for it, so it was quite disheartening. In the afternoon, I tried to catch up on some work, but I found it hard to focus. My mind kept wandering, and I couldn\'t shake off this lingering sense of disappointment. I wanted to be productive, but it felt like everything was working against me. Later, I decided to take a break and go for a walk, hoping it would clear my head. While the fresh air helped a bit, I still couldn\'t fully shake off the feeling. I\'m hoping tomorrow will be a better day, and that I\'ll find the motivation to move past today\'s setbacks.
+)
+
+[28-Nov-2024 01:54:58 Europe/Berlin] Session data: Array
+(
+    [user_id] => 222222
+    [srcode] => 222222
+    [firstname] => Faith
+    [lastname] => Creotech
+    [role] => student
+    [session_log_id] => 81
+)
+
+[29-Nov-2024 08:07:00 Europe/Berlin] Received request: Array
+(
+    [selected_emoji] => 😊,☹️,😠,😌,😨
+    [mood_name] => Happy,Sad,Angry,Calm,Fearful
+    [description] => 'Today was an absolutely fantastic day. I woke up feeling refreshed and ready to tackle any challenges that came my way. The sun was shining brightly, and there was a gentle breeze that made the weather perfect. I spent the morning working on a project that I am truly passionate about, and everything seemed to flow effortlessly. In the afternoon, I met up with some friends for lunch, and we had a great time catching up and sharing stories. The food was delicious, and the company was even better. Later in the evening, I went for a walk in the park, enjoying the beautiful scenery and reflecting on how grateful I am for all the positive things in my life. Overall, it was a day filled with joy, laughter, and meaningful moments that I will cherish.
+)
+
+[29-Nov-2024 08:07:00 Europe/Berlin] Session data: Array
+(
+    [user_id] => 2236914
+    [srcode] => 2236914
+    [firstname] => Faith
+    [lastname] => Anne
+    [role] => student
+    [session_log_id] => 2
+)
+
+[29-Nov-2024 09:29:26 Europe/Berlin] Received request: Array
+(
+    [selected_emoji] => 😊,☹️,😔,😕,😴
+    [mood_name] => Happy,Sad,Disappointed,Confused,Tired
+    [description] => Today was an absolutely fantastic day. I woke up feeling refreshed and ready to tackle any challenges that came my way. The sun was shining brightly, and there was a gentle breeze that made the weather perfect. I spent the morning working on a project that I am truly passionate about, and everything seemed to flow effortlessly. In the afternoon, I met up with some friends for lunch, and we had a great time catching up and sharing stories. The food was delicious, and the company was even better. Later in the evening, I went for a walk in the park, enjoying the beautiful scenery and reflecting on how grateful I am for all the positive things in my life. Overall, it was a day filled with joy, laughter, and meaningful moments that I will cherish
+)
+
+[29-Nov-2024 09:29:26 Europe/Berlin] Session data: Array
+(
+    [user_id] => 220000
+    [srcode] => 220000
+    [firstname] => Space
+    [lastname] => Creotech
+    [role] => student
+    [session_log_id] => 1
+)
+
+[30-Nov-2024 02:55:11 Europe/Berlin] Received request: Array
+(
+    [selected_emoji] => ☹️,😠,😍,😊,😕
+    [mood_name] => Sad,Angry,Love,Happy,Confused
+    [description] => Today didn\'t go as I had planned. I woke up feeling a bit under the weather, and things just seemed to spiral from there. I had an important meeting scheduled, but due to unforeseen circumstances, it got canceled at the last minute. I had prepared extensively for it, so it was quite disheartening. In the afternoon, I tried to catch up on some work, but I found it hard to focus. My mind kept wandering, and I couldn\'t shake off this lingering sense of disappointment. I wanted to be productive, but it felt like everything was working against me. Later, I decided to take a break and go for a walk, hoping it would clear my head. While the fresh air helped a bit, I still couldn\'t fully shake off the feeling. I\'m hoping tomorrow will be a better day, and that I\'ll find the motivation to move past today\'s setbacks.
+)
+
+[30-Nov-2024 02:55:11 Europe/Berlin] Session data: Array
+(
+    [user_id] => 220001
+    [srcode] => 220001
+    [firstname] => Red
+    [lastname] => Paimon
+    [role] => student
+    [session_log_id] => 8
+)
+
+[30-Nov-2024 10:01:08 Europe/Berlin] Received request: Array
+(
+    [selected_emoji] => ☹️,😠,😌,😨,😍
+    [mood_name] => Sad,Angry,Calm,Fearful,Love
+    [description] => Today was a day of deep reflection for me. I spent a significant amount of time pondering over some of the big questions in life. I revisited some of my past decisions, considering how they have shaped my current path. Reading an insightful book in the morning sparked a chain of thoughts about my personal growth and the direction I want to take moving forward. In the afternoon, I sat by the window, watching the world go by, and contemplated the interconnectedness of our experiences. The evening was filled with quiet meditation, allowing me to process my thoughts and emotions. I feel that this introspective day has provided me with clarity and a renewed sense of purpose. It\'s incredible how taking the time to think deeply can lead to personal revelations and a better understanding of oneself
+)
+
+[30-Nov-2024 10:01:08 Europe/Berlin] Session data: Array
+(
+    [user_id] => 220000
+    [srcode] => 220000
+    [firstname] => Space
+    [lastname] => Creotech
+    [role] => student
+    [session_log_id] => 10
+)
+
+[01-Dec-2024 01:46:52 Asia/Manila] Received request: Array
+(
+    [selected_emoji] => 😍,☹️,😨,😕,🤔
+    [mood_name] => Love,Sad,Fearful,Confused,Thoughtful
+    [description] => Today was filled with warmth and affection. I reconnected with an old friend, and we spent hours reminiscing about the good old days. It reminded me of how valuable deep connections are. Later, I spent time with family, sharing stories and laughter over a homemade meal. The love and support from my loved ones made me feel incredibly fortunate. In the evening, I watched a heartfelt movie that touched me deeply, reinforcing the importance of love in our lives. Moments like these make me appreciate the relationships I have and inspire me to nurture them further. I am ending the day with a full heart, grateful for the love that surrounds me
+)
+
+[01-Dec-2024 01:46:52 Asia/Manila] Session data: Array
+(
+    [user_id] => 220000
+    [srcode] => 220000
+    [firstname] => Space
+    [lastname] => Creotech
+    [role] => student
+    [session_log_id] => 15
+    [from_moodlog] => 1
+)
+
+[01-Dec-2024 22:28:20 Asia/Manila] Received request: Array
+(
+    [selected_emoji] => 😠,😔,😌,🤔,😔
+    [mood_name] => Angry,Disappointed,Calm,Thoughtful,Disappointed
+    [description] => 'Today was exhausting, both mentally and physically. Work was particularly demanding, with tight deadlines and an overwhelming amount of tasks to complete. I had back-to-back meetings that left little time for breaks, and by the afternoon, I could feel my energy levels depleting. Despite the fatigue, I pushed through to finish my responsibilities. On my way home, I could barely keep my eyes open on the bus. Once I arrived, I skipped dinner and headed straight to bed. I recognize that I\'ve been overexerting myself lately and need to prioritize rest. Hopefully, a good night\'s sleep will restore my energy, and I can approach tomorrow with renewed vigor
+
+)
+
+[01-Dec-2024 22:28:20 Asia/Manila] Session data: Array
+(
+    [user_id] => 220001
+    [srcode] => 220001
+    [firstname] => Red
+    [lastname] => Paimon
+    [role] => student
+    [session_log_id] => 17
+)
+
+[02-Dec-2024 09:50:08 Asia/Manila] Received request: Array
+(
+    [selected_emoji] => 😠,😔,😕,😨,🤔
+    [mood_name] => Angry,Disappointed,Confused,Fearful,Thoughtful
+    [description] => Today left me feeling quite perplexed. I was presented with a decision at work that has significant implications for my future, and I\'m not sure which path to take. Both options have their pros and cons, and I\'ve been weighing them all day without coming any closer to a conclusion. I sought advice from colleagues and friends, but their opinions were just as varied, leaving me even more uncertain. In the evening, I tried to distract myself by watching a movie, but my mind kept drifting back to the dilemma. I know I need to make a choice soon, but I\'m hoping that sleeping on it will provide some clarity. Decisions like these are never easy, and I want to make sure I consider all factors before proceeding.
+)
+
+[02-Dec-2024 09:50:08 Asia/Manila] Session data: Array
+(
+    [user_id] => 220000
+    [srcode] => 220000
+    [firstname] => Space
+    [lastname] => Creotech
+    [role] => student
+    [session_log_id] => 18
+)
+
+[02-Dec-2024 14:14:32 Asia/Manila] Received request: Array
+(
+    [selected_emoji] => 😌,😔,😠,😴,😕
+    [mood_name] => Calm,Disappointed,Angry,Tired,Confused
+    [description] => To tackle the concerns stated at the summary, the "Space" platform aims to offer a comprehensive web-based mental health therapy system explicitly tailored for BSU Lipa Campus students. This platform incorporates features that facilitate convenient, secure, and confidential access to mental health support, empowering students to effectively manage their mental health needs. 
+)
+
+[02-Dec-2024 14:14:32 Asia/Manila] Session data: Array
+(
+    [user_id] => 220001
+    [srcode] => 220001
+    [firstname] => Ponyo
+    [lastname] => Orange
+    [role] => student
+    [session_log_id] => 20
+)
+
+[02-Dec-2024 17:00:47 Asia/Manila] Received request: Array
+(
+    [selected_emoji] => 😠,😕,😌,😕,😌
+    [mood_name] => Angry,Confused,Calm,Confused,Calm
+    [description] =>  SAMPLE .............. SAMPLE .............. SAMPLE .............. SAMPLE .............. SAMPLE .............. SAMPLE .............. SAMPLE .............. SAMPLE .............. SAMPLE .............. SAMPLE .............. SAMPLE .............. SAMPLE .............. SAMPLE .............. SAMPLE .............. SAMPLE .............. SAMPLE .............. SAMPLE .............. SAMPLE .............. SAMPLE .............. SAMPLE .............. SAMPLE .............. SAMPLE .............. SAMPLE .............. SAMPLE .............. SAMPLE .............. SAMPLE .............. SAMPLE .............. 
+)
+
+[02-Dec-2024 17:00:47 Asia/Manila] Session data: Array
+(
+    [user_id] => 2236910
+    [srcode] => 2236910
+    [firstname] => Eli
+    [lastname] => Melorcia
+    [role] => student
+    [session_log_id] => 27
+)
+
+[03-Dec-2024 21:02:07 Asia/Manila] Received request: Array
+(
+    [selected_emoji] => ☹️,😊,😠,😌,😨
+    [mood_name] => Sad,Happy,Angry,Calm,Fearful
+    [description] => luhhhhhhhhhhhhhhhhhhhhhhhhh .... luhhhhhhhhhhhhhhhhhhhhhhhhh .... luhhhhhhhhhhhhhhhhhhhhhhhhh .... luhhhhhhhhhhhhhhhhhhhhhhhhh .... luhhhhhhhhhhhhhhhhhhhhhhhhh .... luhhhhhhhhhhhhhhhhhhhhhhhhh .... luhhhhhhhhhhhhhhhhhhhhhhhhh .... luhhhhhhhhhhhhhhhhhhhhhhhhh .... luhhhhhhhhhhhhhhhhhhhhhhhhh .... luhhhhhhhhhhhhhhhhhhhhhhhhh .... luhhhhhhhhhhhhhhhhhhhhhhhhh .... luhhhhhhhhhhhhhhhhhhhhhhhhh .... 
+)
+
+[03-Dec-2024 21:02:07 Asia/Manila] Session data: Array
+(
+    [user_id] => 2236914
+    [srcode] => 2236914
+    [firstname] => Faith
+    [lastname] => Anne
+    [role] => student
+    [session_log_id] => 28
+)
+
+[04-Dec-2024 23:03:46 Asia/Manila] Received request: Array
+(
+    [selected_emoji] => 😊
+    [mood_name] => Happy
+    [description] => nice very nice............... skdjsafdhkshfh nice very nice............... skdjsafdhkshfh nice very nice............... skdjsafdhkshfh 
+)
+
+[04-Dec-2024 23:03:46 Asia/Manila] Session data: Array
+(
+    [user_id] => 2236914
+    [firstname] => Faith
+    [lastname] => Banares
+    [email] => admin@g.batstate-u.edu.ph
+    [role] => student
+    [session_log_id] => 29
+    [reset_email] => 22-36914@g.batstate-u.edu.ph
+    [reset_token] => e9a3955d0ec1cee35a3fe11036255e56f6eab8df0f52117f9242ec113cd5afbd
+    [reset_expires] => 1733325209
+    [srcode] => 2236914
+)
+
+[05-Dec-2024 22:58:27 Asia/Manila] Received request: Array
+(
+    [selected_emoji] => 😠
+    [mood_name] => Angry
+    [description] =>  jusko ........... jusko ........... jusko ........... jusko ........... jusko ........... jusko ........... jusko ........... jusko ........... jusko ........... jusko ........... jusko ........... 
+)
+
+[05-Dec-2024 22:58:27 Asia/Manila] Session data: Array
+(
+    [user_id] => 2236914
+    [firstname] => Faith
+    [lastname] => Banares
+    [email] => admin@g.batstate-u.edu.ph
+    [role] => student
+    [session_log_id] => 30
+    [srcode] => 2236914
+)
+
+[06-Dec-2024 23:06:29 Asia/Manila] Received request: Array
+(
+    [selected_emoji] => 😠
+    [mood_name] => Angry
+    [description] => hahahah ...... hahahah ...... hahahah ...... hahahah ...... hahahah ...... hahahah ...... hahahah ...... hahahah ...... hahahah ...... hahahah ...... hahahah ...... hahahah ...... 
+)
+
+[06-Dec-2024 23:06:29 Asia/Manila] Session data: Array
+(
+    [user_id] => 2236914
+    [srcode] => 2236914
+    [firstname] => Faith
+    [lastname] => Banares
+    [role] => student
+    [session_log_id] => 32
+)
+
+[07-Dec-2024 18:15:35 Asia/Manila] Received request: Array
+(
+    [selected_emoji] => 😊
+    [mood_name] => Happy
+    [description] => nice ..........nice ..........nice ..........nice ..........nice ..........nice ..........nice ..........nice ..........nice ..........nice ..........
+)
+
+[07-Dec-2024 18:15:35 Asia/Manila] Session data: Array
+(
+    [user_id] => 2236914
+    [srcode] => 2236914
+    [firstname] => Faith
+    [lastname] => Banares
+    [role] => student
+    [session_log_id] => 33
+)
+

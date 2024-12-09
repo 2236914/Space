@@ -1,0 +1,53 @@
+[02-Dec-2024 03:17:46 Asia/Manila] Request received: {"session_id":2,"status":"confirmed"}
+[02-Dec-2024 03:17:46 Asia/Manila] PHP Warning:  require_once(HTTP/Request2.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\api\helpers\SMSHelper.php on line 8
+[02-Dec-2024 03:17:46 Asia/Manila] PHP Fatal error:  Uncaught Error: Failed opening required 'HTTP/Request2.php' (include_path='C:\xampp\htdocs\Space\vendor/pear/net_url2;C:\xampp\htdocs\Space\vendor/pear/pear_exception;C:\xampp\php\PEAR') in C:\xampp\htdocs\Space\api\helpers\SMSHelper.php:8
+Stack trace:
+#0 C:\xampp\htdocs\Space\api\helpers\SMSHelper.php(96): SMSHelper::sendSMS('639267075697', 'Nov 30, 2024\n3:...')
+#1 C:\xampp\htdocs\Space\admin_operations\update_appointment.php(99): SMSHelper::sendStatusUpdateNotification(2)
+#2 {main}
+  thrown in C:\xampp\htdocs\Space\api\helpers\SMSHelper.php on line 8
+[02-Dec-2024 03:36:28 Asia/Manila] Received data: Array
+(
+    [session_id] => 2
+    [status] => cancelled
+)
+
+[02-Dec-2024 03:36:28 Asia/Manila] PHP Warning:  require_once(HTTP/Request2.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\api\helpers\SMSHelper.php on line 8
+[02-Dec-2024 03:36:28 Asia/Manila] PHP Fatal error:  Uncaught Error: Failed opening required 'HTTP/Request2.php' (include_path='C:\xampp\htdocs\Space\vendor/pear/net_url2;C:\xampp\htdocs\Space\vendor/pear/pear_exception;C:\xampp\php\PEAR') in C:\xampp\htdocs\Space\api\helpers\SMSHelper.php:8
+Stack trace:
+#0 C:\xampp\htdocs\Space\api\helpers\SMSHelper.php(84): SMSHelper::sendSMS('639267075697', 'SPACE: Session ...')
+#1 C:\xampp\htdocs\Space\admin_operations\update_appointment.php(85): SMSHelper::sendStatusUpdateNotification(2)
+#2 {main}
+  thrown in C:\xampp\htdocs\Space\api\helpers\SMSHelper.php on line 8
+[02-Dec-2024 03:39:11 Asia/Manila] Received data: Array
+(
+    [session_id] => 2
+    [status] => confirmed
+)
+
+[02-Dec-2024 03:39:11 Asia/Manila] PHP Warning:  require_once(HTTP/Request2.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\api\helpers\SMSHelper.php on line 8
+[02-Dec-2024 03:39:11 Asia/Manila] PHP Fatal error:  Uncaught Error: Failed opening required 'HTTP/Request2.php' (include_path='C:\xampp\htdocs\Space\vendor/pear/net_url2;C:\xampp\htdocs\Space\vendor/pear/pear_exception;C:\xampp\php\PEAR') in C:\xampp\htdocs\Space\api\helpers\SMSHelper.php:8
+Stack trace:
+#0 C:\xampp\htdocs\Space\api\helpers\SMSHelper.php(84): SMSHelper::sendSMS('639267075697', 'SPACE: Session ...')
+#1 C:\xampp\htdocs\Space\admin_operations\update_appointment.php(85): SMSHelper::sendStatusUpdateNotification(2)
+#2 {main}
+  thrown in C:\xampp\htdocs\Space\api\helpers\SMSHelper.php on line 8
+[02-Dec-2024 03:43:08 Asia/Manila] Received data: Array
+(
+    [session_id] => 2
+    [status] => pending
+)
+
+[02-Dec-2024 03:43:18 Asia/Manila] Received data: Array
+(
+    [session_id] => 2
+    [status] => confirmed
+)
+
+[02-Dec-2024 03:43:18 Asia/Manila] PHP Warning:  require_once(HTTP/Request2.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\Space\api\helpers\SMSHelper.php on line 8
+[02-Dec-2024 03:43:18 Asia/Manila] PHP Fatal error:  Uncaught Error: Failed opening required 'HTTP/Request2.php' (include_path='C:\xampp\htdocs\Space\vendor/pear/net_url2;C:\xampp\htdocs\Space\vendor/pear/pear_exception;C:\xampp\php\PEAR') in C:\xampp\htdocs\Space\api\helpers\SMSHelper.php:8
+Stack trace:
+#0 C:\xampp\htdocs\Space\api\helpers\SMSHelper.php(84): SMSHelper::sendSMS('639267075697', 'SPACE: Session ...')
+#1 C:\xampp\htdocs\Space\admin_operations\update_appointment.php(68): SMSHelper::sendStatusUpdateNotification(2)
+#2 {main}
+  thrown in C:\xampp\htdocs\Space\api\helpers\SMSHelper.php on line 8

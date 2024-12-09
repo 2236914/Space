@@ -1,0 +1,463 @@
+.table thead th {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 0.75rem 1.5rem;
+}
+
+.table tbody td {
+    font-size: 0.875rem;
+    padding: 0.75rem 1.5rem;
+    color: #67748e;
+}
+
+.table-flush tbody tr:first-child td {
+    border-top: 0;
+}
+
+.avatar-sm {
+    width: 32px !important;
+    height: 32px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.avatar-sm span {
+    font-size: 0.75rem !important;
+    line-height: 1 !important;
+}
+
+.badge {
+    text-transform: uppercase;
+    padding: 0.55em 0.9em;
+    font-size: 0.75em;
+}
+
+.table td .btn {
+    margin: 0;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background: var(--bs-1stgreen) !important;
+    color: white !important;
+    border-radius: 8px;
+    border: none;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: var(--bs-2ndgreen) !important;
+    color: white !important;
+    border-radius: 8px;
+    border: none;
+}
+
+.dataTables_wrapper .dataTables_filter input {
+    border: 1px solid #d2d6da;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+}
+
+.badge-sm {
+    font-size: 0.65rem !important;
+    padding: 0.35em 0.6em !important;
+    text-transform: capitalize;
+}
+
+/* Specific styling for status badges in table */
+td .badge-sm {
+    min-width: 65px;
+}
+
+/* Pagination container */
+.dataTables_paginate {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 1rem;
+}
+
+/* All pagination buttons */
+.paginate_button .page-link {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0 3px;
+    border-radius: 50% !important;
+    border: none !important;
+    background-color: transparent !important;
+    color: #7b809a;
+    font-size: 0.875rem;
+    font-weight: 400;
+    transition: all 0.2s ease;
+}
+
+/* Active state */
+.paginate_button.active .page-link {
+    background: linear-gradient(310deg, #e91e63, #f33084) !important;
+    color: white !important;
+    box-shadow: 0 3px 5px -1px rgb(233 30 99 / 30%);
+}
+
+/* Previous/Next buttons */
+.paginate_button.previous .page-link,
+.paginate_button.next .page-link {
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+
+/* Hover states */
+.paginate_button:not(.active):hover .page-link {
+    background-color: rgba(123, 128, 154, 0.1) !important;
+    color: #7b809a;
+}
+
+/* Previous/Next hover states */
+.paginate_button.previous:hover .page-link,
+.paginate_button.next:hover .page-link {
+    background-color: transparent !important;
+}
+
+/* Material icons */
+.page-link .material-symbols-rounded {
+    font-size: 20px;
+    line-height: 1;
+}
+
+/* Disabled state */
+.paginate_button.disabled .page-link {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Header section spacing */
+.header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+/* Title and subtitle */
+.title-section {
+    margin-bottom: 0.5rem;
+}
+
+h1 {
+    margin-bottom: 0.25rem !important;
+}
+
+.subtitle {
+    margin-bottom: 1rem;
+    color: #67748e;
+    font-size: 0.875rem;
+}
+
+/* Search box */
+.dataTables_filter {
+    margin-bottom: 1rem;
+}
+
+.dataTables_filter input {
+    margin-top: 0 !important;
+}
+
+/* Button spacing */
+.btn-new-student {
+    margin-left: 0.5rem;
+}
+
+/* Remove extra table spacing */
+.table {
+    margin-top: 0.5rem !important;
+    margin-bottom: 0 !important;
+}
+
+/* Table container with scroll */
+.table-responsive {
+    max-height: 70vh;  /* Adjust height as needed */
+    overflow-y: auto;
+    scrollbar-width: thin;  /* For Firefox */
+}
+
+/* Modern scrollbar for Chrome/Safari/Edge */
+.table-responsive::-webkit-scrollbar {
+    width: 6px;
+}
+
+.table-responsive::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+    background-color: rgba(123, 128, 154, 0.3);
+    border-radius: 3px;
+    transition: all 0.2s ease;
+}
+
+.table-responsive::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(123, 128, 154, 0.5);
+}
+
+/* Keep header visible */
+.table thead th {
+    position: sticky;
+    top: 0;
+    background: white;  /* Or match your background color */
+    z-index: 1;
+}
+
+/* Add shadow to header when scrolling */
+.table thead::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
+}
+
+/* Name styling */
+.table td h6 {
+    font-size: 0.75rem !important;
+    margin: 0 !important;
+    line-height: 1.2 !important;
+}
+
+/* Email text */
+.table td p.text-secondary {
+    font-size: 0.7rem !important;
+    margin: 0 !important;
+    line-height: 1.2 !important;
+}
+
+/* Regular cell text */
+.table td p.text-xs {
+    font-size: 0.7rem !important;
+    margin: 0 !important;
+    line-height: 1.2 !important;
+}
+
+/* Status badge */
+.table td .badge {
+    font-size: 0.65rem !important;
+    padding: 4px 8px !important;
+}
+
+/* Avatar sizing */
+.table .avatar {
+    width: 32px !important;
+    height: 32px !important;
+    margin-right: 12px !important;
+}
+
+/* Year and section text */
+.table td.year-section {
+    font-size: 0.7rem !important;
+}
+
+/* Action buttons */
+.table td .btn-link {
+    padding: 4px !important;
+    margin: 0 2px !important;
+}
+
+.table td .material-symbols-rounded {
+    font-size: 18px !important;
+}
+
+/* SweetAlert2 animations */
+.animate__faster {
+    animation-duration: 0.15s !important;
+}
+
+.swal2-popup {
+    transition: none !important;
+}
+
+.swal2-backdrop-show {
+    transition: none !important;
+}
+
+/* Profile View Styles */
+.swal2-popup .card {
+    background: transparent;
+    box-shadow: none;
+    margin: 0;
+    padding: 0;
+}
+
+.swal2-popup .object-fit-cover {
+    object-fit: cover;
+}
+
+.swal2-popup .text-primary {
+    color: #344767 !important;
+}
+
+.swal2-popup .text-muted {
+    color: #67748e !important;
+}
+
+.swal2-popup .font-weight-bolder {
+    font-weight: 700 !important;
+}
+
+.swal2-popup .font-weight-normal {
+    font-weight: 500 !important;
+}
+
+/* Ensure proper modal width on mobile */
+@media (max-width: 600px) {
+    .swal2-popup {
+        width: 95% !important;
+    }
+}
+
+/* Compact Profile View Styles */
+.swal2-popup .fs-6 {
+    font-size: 0.75rem !important;
+}
+
+.swal2-popup .text-xs {
+    font-size: 0.65rem !important;
+}
+
+.swal2-popup .small {
+    font-size: 0.75rem !important;
+}
+
+.swal2-popup .badge {
+    font-size: 0.65rem !important;
+}
+
+/* Remove default modal title padding */
+.swal2-popup.swal2-modal {
+    padding-top: 1rem;
+}
+
+/* Remove title space */
+.swal2-popup .swal2-title {
+    display: none;
+}
+
+/* Smaller close button */
+.swal2-popup .swal2-close {
+    font-size: 1.5rem !important;  /* Reduced from default 2rem */
+    padding: 0 !important;
+    width: 1.5em !important;       /* Match with font-size */
+    height: 1.5em !important;      /* Match with font-size */
+    margin-right: 4px !important;  /* Adjust position */
+    margin-top: 4px !important;    /* Adjust position */
+}
+
+/* Hover effect for close button */
+.swal2-popup .swal2-close:hover {
+    color: #344767 !important;
+    transform: none !important;     /* Remove default hover animation */
+}
+
+/* Form styling */
+.input-group-static {
+    margin-bottom: 0.5rem;
+}
+
+.input-group-static label {
+    margin-bottom: 0.25rem;
+}
+
+.form-control-sm {
+    height: calc(1.5em + 0.5rem + 2px);
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    border-radius: 0.25rem;
+}
+
+/* Modal form specific */
+.swal2-popup .form-control {
+    border: 1px solid #d2d6da;
+    padding: 0.5rem;
+    font-size: 0.75rem;
+    transition: all 0.2s ease;
+}
+
+.swal2-popup .form-control:focus {
+    border-color: #35d1f5;
+    box-shadow: 0 0 0 2px rgba(53, 209, 245, 0.2);
+}
+
+.swal2-popup select.form-control {
+    padding-right: 1.5rem;
+}
+
+/* Table Styles */
+.dataTables_wrapper .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.dataTables_filter {
+    width: 300px;
+    margin-left: auto;
+}
+
+.table > :not(caption) > * > * {
+    padding: 1rem 1rem;
+}
+
+.table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+/* Avatar Styles */
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Make table more compact */
+.table > :not(caption) > * > * {
+    padding: 0.5rem 1rem;
+}
+
+.table td {
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+/* Compact text */
+.text-xs {
+    font-size: 0.75rem !important;
+    line-height: 1.25;
+}
+
+/* Action buttons */
+.action-buttons a {
+    padding: 0.25rem;
+    margin: 0 0.125rem;
+}
+
+/* Status badge */
+.badge {
+    padding: 0.35em 0.65em;
+    font-size: 0.75em;
+} 
