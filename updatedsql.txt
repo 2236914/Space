@@ -798,3 +798,10 @@ ADD COLUMN delete_details TEXT NULL;
 -- Modify status ENUM to include 'deleted'
 ALTER TABLE students
 MODIFY COLUMN status ENUM('active', 'deactivated', 'suspended', 'deleted') DEFAULT 'active';
+
+CREATE TABLE login_attempts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) NOT NULL,
+    attempt_time DATETIME NOT NULL,
+    ip_address VARCHAR(45) NOT NULL
+);

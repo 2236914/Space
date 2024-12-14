@@ -282,18 +282,6 @@
     z-index: 999 !important;
 }
 
-/* Profile picture styles */
-.avatar {
-    width: 40px !important;
-    height: 40px !important;
-    border-radius: 50% !important;
-    object-fit: cover !important;
-}
-
-.avatar-sm {
-    width: 36px !important;
-    height: 36px !important;
-}
 
 .me-3 {
     margin-right: 1rem !important;

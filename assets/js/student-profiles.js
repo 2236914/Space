@@ -10,7 +10,7 @@ $(document).ready(function() {
             dataSrc: function(json) {
                 console.log('Received data:', json);
                 return json.data || [];
-            }
+             }
         },
         columns: [
             {
@@ -152,8 +152,8 @@ $(document).ready(function() {
                                 </div>
                             </div>
 
-                             
-                            <!-- Personal Information -->
+                            <!-- Required Fields Section -->
+                            <h6 class="text-primary mb-3">Required Information</h6>
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <div class="input-group input-group-outline">
@@ -165,16 +165,14 @@ $(document).ready(function() {
                                         <input type="text" class="form-control" name="lastname" placeholder="Last Name" required>
                                     </div>
                                 </div>
-                            </div
+                            </div>
 
-                             <!-- Contact Information -->
                             <div class="row g-3 mt-2">
                                 <div class="col-md-6">
                                     <div class="input-group input-group-outline">
                                         <input type="email" class="form-control" name="email" placeholder="Email" required>
                                     </div>
                                 </div>
-
                                 <div class="col-md-6">
                                     <div class="input-group input-group-outline">
                                         <input type="tel" 
@@ -190,7 +188,6 @@ $(document).ready(function() {
                                 </div>
                             </div>
 
-                            <!-- Academic Information -->
                             <div class="row g-3 mt-2">
                                 <div class="col-md-6">
                                     <div class="input-group input-group-outline">
@@ -199,34 +196,45 @@ $(document).ready(function() {
                                 </div>
                                 <div class="col-md-6">
                                     <div class="input-group input-group-outline">
-                                        <input type="text" class="form-control" name="course" placeholder="Course" required>
+                                        <div class="position-relative w-100">
+                                            <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
+                                            <span class="position-absolute top-50 end-0 translate-middle-y pe-3" style="cursor: pointer;">
+                                                <i class="fas fa-eye toggle-password" data-target="password"></i>
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="row g-3 mt-2">
-                                <div class="col-md-4">
-                                    <div class="input-group input-group-outline">
-                                        <input type="number" class="form-control" name="year" placeholder="Year" min="1" max="5" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="input-group input-group-outline">
-                                        <input type="text" class="form-control" name="section" placeholder="Section" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="input-group input-group-outline">
-                                        <input type="text" class="form-control" name="department" placeholder="Department" required>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Password -->
-                            <div class="row g-3 mt-2">
+                            <!-- Optional Fields Section -->
+                            <h6 class="text-primary mb-3 mt-4">Additional Information</h6>
+                            <div class="row g-3">
                                 <div class="col-md-6">
                                     <div class="input-group input-group-outline">
-                                        <input type="password" class="form-control" name="password" placeholder="Password" required>
+                                        <input type="text" class="form-control" name="course" placeholder="Course">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group input-group-outline">
+                                        <input type="text" class="form-control" name="department" placeholder="Department">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row g-3 mt-2">
+                                <div class="col-md-4">
+                                    <div class="input-group input-group-outline">
+                                        <input type="number" class="form-control" name="year" placeholder="Year" min="1" max="5">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group input-group-outline">
+                                        <input type="text" class="form-control" name="section" placeholder="Section">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group input-group-outline">
+                                        <input type="text" class="form-control" name="address" placeholder="Address">
                                     </div>
                                 </div>
                             </div>
@@ -240,6 +248,21 @@ $(document).ready(function() {
             </div>`;
 
         $('#studentModal').html(modalContent).modal('show');
+
+        // Password visibility toggle
+        $('.toggle-password').click(function() {
+            const targetId = $(this).data('target');
+            const input = $(`#${targetId}`);
+            const icon = $(this);
+
+            if (input.attr('type') === 'password') {
+                input.attr('type', 'text');
+                icon.removeClass('fa-eye').addClass('fa-eye-slash');
+            } else {
+                input.attr('type', 'password');
+                icon.removeClass('fa-eye-slash').addClass('fa-eye');
+            }
+        });
     });
 
         // View Student Handler
@@ -277,7 +300,8 @@ $(document).ready(function() {
                                             
                                             <h6 class="mt-4">Academic Information</h6>
                                             <p><strong>Course:</strong> ${student.course}</p>
-                                            <p><strong>Year-Section:</strong> ${student.year_section}</p>
+                                            <p><strong>Year:</strong> ${student.year || ''}</p>
+                                            <p><strong>Section:</strong> ${student.section || ''}</p>
                                             <p><strong>Department:</strong> ${student.department}</p>
                                             <p><strong>Status:</strong> 
                                                 <span class="badge badge-sm bg-gradient-${getStatusClass(student.status)}">
@@ -359,16 +383,22 @@ $(document).ready(function() {
                                                 </div>
                                             </div>
                                             <div class="row g-3">
-                                                <div class="col-md-6">
+                                                <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label>Course</label>
-                                                        <input type="text" class="form-control" name="course" value="${student.course}">
+                                                        <input type="text" class="form-control" name="course" value="${student.course || ''}">
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label>Year-Section</label>
-                                                        <input type="text" class="form-control" name="year_section" value="${student.year_section}">
+                                                        <label>Year</label>
+                                                        <input type="number" class="form-control" name="year" value="${student.year || ''}" min="1" max="5">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Section</label>
+                                                        <input type="text" class="form-control" name="section" value="${student.section || ''}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -426,7 +456,7 @@ $(document).ready(function() {
         submitBtn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm"></span> Adding...');
 
         $.ajax({
-            url: '../../admin_operations/add_student.php',
+            url: '../../admin_operations/aadd_student.php',
             type: 'POST',
             data: formData,
             processData: false,
@@ -462,6 +492,14 @@ $(document).ready(function() {
         e.preventDefault();
         const formData = new FormData(this);
 
+        // Debug: Log form data
+        for (let pair of formData.entries()) {
+            console.log(pair[0] + ': ' + pair[1]);
+        }
+
+        const submitBtn = $(this).find('button[type="submit"]');
+        submitBtn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm"></span> Saving...');
+
         $.ajax({
             url: '../../admin_operations/update_student.php',
             type: 'POST',
@@ -469,6 +507,7 @@ $(document).ready(function() {
             processData: false,
             contentType: false,
             success: function(response) {
+                console.log('Server response:', response); // Add this debug line
                 if (response.success) {
                     $('#studentModal').modal('hide');
                     showSuccessAlert(response.message).then(() => {
@@ -477,6 +516,13 @@ $(document).ready(function() {
                 } else {
                     showErrorAlert(response.message);
                 }
+            },
+            error: function(xhr, status, error) {  // Add error handling
+                console.error('Ajax error:', {xhr, status, error});
+                showErrorAlert('An error occurred while updating the student.');
+            },
+            complete: function() {
+                submitBtn.prop('disabled', false).html('Save Changes');
             }
         });
     });

@@ -2,21 +2,15 @@
 session_start();
 require_once '../configs/config.php';
 
-// Check if user is logged in and is an admin
+header('Content-Type: application/json');
+
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
-    header('Content-Type: application/json');
     echo json_encode(['success' => false, 'message' => 'Unauthorized access']);
     exit();
 }
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    echo json_encode(['success' => false, 'message' => 'Invalid request method']);
-    exit();
-}
-
 try {
-    // Verify SR-Code exists (only required field)
-    if (!isset($_POST['srcode']) || empty($_POST['srcode'])) {
+    if (!isset($_POST['srcode'])) {
         echo json_encode(['success' => false, 'message' => 'Student SR-Code is required']);
         exit();
     }
@@ -31,98 +25,122 @@ try {
         exit();
     }
 
-    // Build update query dynamically based on provided fields
     $update_fields = [];
-    $params = ['srcode' => $_POST['srcode']]; // For WHERE clause
+    $params = ['srcode' => $_POST['srcode']];
 
     // Fields that can be updated
     $allowed_fields = [
         'firstname', 'lastname', 'email', 'phonenum',
-        'course', 'year', 'section', 'department', 'status'
+        'course', 'year', 'section', 'department', 'status',
+        'address', 'personality'
     ];
 
     foreach ($allowed_fields as $field) {
-        if (isset($_POST[$field]) && !empty($_POST[$field])) {
-            // Check if email is being changed and is already in use
+        if (isset($_POST[$field])) {
+            // Email validation
             if ($field === 'email' && $_POST['email'] !== $current_data['email']) {
                 $check_stmt = $pdo->prepare("SELECT srcode FROM students WHERE email = ? AND srcode != ?");
                 $check_stmt->execute([$_POST['email'], $_POST['srcode']]);
                 if ($check_stmt->rowCount() > 0) {
-                    echo json_encode(['success' => false, 'message' => 'Email is already in use by another student']);
+                    echo json_encode(['success' => false, 'message' => 'Email is already in use']);
                     exit();
                 }
             }
+
+            // Phone number validation
+            if ($field === 'phonenum' && !empty($_POST['phonenum'])) {
+                if (!preg_match('/^09[0-9]{9}$/', $_POST['phonenum'])) {
+                    echo json_encode(['success' => false, 'message' => 'Invalid phone number format']);
+                    exit();
+                }
+            }
+
+            // Year validation
+            if ($field === 'year' && !empty($_POST['year'])) {
+                if (!is_numeric($_POST['year']) || $_POST['year'] < 1 || $_POST['year'] > 5) {
+                    echo json_encode(['success' => false, 'message' => 'Year must be between 1 and 5']);
+                    exit();
+                }
+            }
+
             $update_fields[] = "$field = :$field";
             $params[$field] = $_POST[$field];
         }
     }
 
-    // Only proceed if there are fields to update
+    // Start transaction
+    $pdo->beginTransaction();
+
+    // Update student information if there are fields to update
     if (!empty($update_fields)) {
         $query = "UPDATE students SET " . implode(', ', $update_fields) . " WHERE srcode = :srcode";
         $stmt = $pdo->prepare($query);
-        $result = $stmt->execute($params);
-
-        if ($result) {
-            // Handle profile picture update if provided
-            if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] === 0) {
-                $upload_dir = '../uploads/profile_pictures/students/';
-                if (!file_exists($upload_dir)) {
-                    mkdir($upload_dir, 0777, true);
-                }
-                
-                $file_ext = strtolower(pathinfo($_FILES['profile_picture']['name'], PATHINFO_EXTENSION));
-                $file_name = $_POST['srcode'] . '.' . $file_ext;
-                
-                if (move_uploaded_file($_FILES['profile_picture']['tmp_name'], $upload_dir . $file_name)) {
-                    // Profile picture updated successfully
-                }
-            }
-
-            echo json_encode([
-                'success' => true, 
-                'message' => 'Student information updated successfully'
-            ]);
-        } else {
-            echo json_encode([
-                'success' => false, 
-                'message' => 'Failed to update student information'
-            ]);
-        }
-    } else {
-        // No fields to update but profile picture might have changed
-        if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] === 0) {
-            $upload_dir = '../uploads/profile_pictures/students/';
-            if (!file_exists($upload_dir)) {
-                mkdir($upload_dir, 0777, true);
-            }
-            
-            $file_ext = strtolower(pathinfo($_FILES['profile_picture']['name'], PATHINFO_EXTENSION));
-            $file_name = $_POST['srcode'] . '.' . $file_ext;
-            
-            if (move_uploaded_file($_FILES['profile_picture']['tmp_name'], $upload_dir . $file_name)) {
-                echo json_encode([
-                    'success' => true, 
-                    'message' => 'Profile picture updated successfully'
-                ]);
-            } else {
-                echo json_encode([
-                    'success' => false, 
-                    'message' => 'Failed to update profile picture'
-                ]);
-            }
-        } else {
-            echo json_encode([
-                'success' => true, 
-                'message' => 'No changes were made'
-            ]);
+        if (!$stmt->execute($params)) {
+            throw new PDOException("Failed to update student information");
         }
     }
 
-} catch (PDOException $e) {
+    // Handle profile picture
+    $profile_updated = false;
+    if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] === 0) {
+        $allowed_types = ['image/jpeg', 'image/png', 'image/jpg'];
+        $file_type = $_FILES['profile_picture']['type'];
+        
+        if (!in_array($file_type, $allowed_types)) {
+            throw new Exception('Invalid file type. Only JPG, JPEG, and PNG are allowed.');
+        }
+
+        // Read image file
+        $image_data = file_get_contents($_FILES['profile_picture']['tmp_name']);
+        
+        // Check if profile picture already exists
+        $check_stmt = $pdo->prepare("SELECT id FROM profile_pictures WHERE user_id = ? AND user_type = 'student'");
+        $check_stmt->execute([$_POST['srcode']]);
+        
+        if ($check_stmt->rowCount() > 0) {
+            // Update existing profile picture
+            $update_stmt = $pdo->prepare("UPDATE profile_pictures SET 
+                image_data = ?, 
+                mime_type = ?, 
+                upload_date = CURRENT_TIMESTAMP 
+                WHERE user_id = ? AND user_type = 'student'");
+            $profile_updated = $update_stmt->execute([$image_data, $file_type, $_POST['srcode']]);
+        } else {
+            // Insert new profile picture
+            $insert_stmt = $pdo->prepare("INSERT INTO profile_pictures 
+                (user_id, user_type, image_data, mime_type) 
+                VALUES (?, 'student', ?, ?)");
+            $profile_updated = $insert_stmt->execute([$_POST['srcode'], $image_data, $file_type]);
+        }
+
+        if (!$profile_updated) {
+            throw new PDOException("Failed to update profile picture");
+        }
+    }
+
+    // Commit transaction
+    $pdo->commit();
+
+    // Success response
+    $message = [];
+    if (!empty($update_fields)) $message[] = 'Student information updated';
+    if ($profile_updated) $message[] = 'Profile picture updated';
+    
+    echo json_encode([
+        'success' => true,
+        'message' => !empty($message) ? implode(' and ', $message) . ' successfully' : 'No changes were made'
+    ]);
+
+} catch (Exception $e) {
+    // Rollback transaction on error
+    if ($pdo->inTransaction()) {
+        $pdo->rollBack();
+    }
+    
     error_log("Error updating student: " . $e->getMessage());
     echo json_encode([
         'success' => false,
-        'message' => 'Database error occurred'
+        'message' => 'Error: ' . $e->getMessage()
     ]);
-} 
+}
+?> 

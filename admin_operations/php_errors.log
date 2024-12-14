@@ -367,3 +367,63 @@ Ikaw lang ang iniibig....
     [session_log_id] => 35
 )
 
+[14-Dec-2024 20:48:53 Asia/Manila] Received request: Array
+(
+    [selected_emoji] => 😊
+    [mood_name] => Happy
+    [description] => 755674
+755674
+755674
+755674
+755674
+755674
+755674
+755674
+755674
+755674
+755674
+755674
+755674
+755674
+755674
+
+)
+
+[14-Dec-2024 20:48:53 Asia/Manila] Session data: Array
+(
+    [temp_registration] => Array
+        (
+            [srcode] => 2200000
+            [phonenum] => 09267075696
+            [email] => 22-00000@g.batstate-u.edu.ph
+            [firstname] => Eli
+            [lastname] => Melorcia
+            [password] => 7df90e1ebcccd040bdc5169857f37d42175c8605a5ede63f38dd47f53f8dd8fc
+        )
+
+    [user_id] => 2237621
+    [firstname] => Gwyn
+    [lastname] => Maralit
+    [email] => admin@g.batstate-u.edu.ph
+    [role] => student
+    [session_log_id] => 36
+    [srcode] => 2237621
+)
+
+[14-Dec-2024 22:51:08 Asia/Manila] Received request: Array
+(
+    [selected_emoji] => 😍
+    [mood_name] => Love
+    [description] =>  nice ..... nice ..... nice ..... nice ..... nice ..... nice ..... nice ..... nice ..... nice ..... nice ..... 
+)
+
+[14-Dec-2024 22:51:08 Asia/Manila] Session data: Array
+(
+    [user_id] => 2236914
+    [srcode] => 2236914
+    [firstname] => Faith
+    [lastname] => Banares
+    [role] => student
+    [session_log_id] => 37
+)
+

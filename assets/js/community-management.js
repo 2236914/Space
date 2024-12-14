@@ -129,6 +129,7 @@ $(document).ready(function() {
 
     // Hide Post Function
     function hidePost(postId) {
+        // First show confirmation
         Swal.fire({
             title: 'Hide Post',
             text: 'Are you sure you want to hide this post?',
@@ -146,6 +147,22 @@ $(document).ready(function() {
             buttonsStyling: false
         }).then((result) => {
             if (result.isConfirmed) {
+                // Show loading state
+                Swal.fire({
+                    title: 'Hiding post...',
+                    html: 'Please wait while we process your request',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    },
+                    customClass: {
+                        popup: 'custom-swal-popup',
+                        title: 'custom-swal-title',
+                        content: 'custom-swal-content'
+                    }
+                });
+
+                // Make the AJAX call
                 $.ajax({
                     url: '../../admin_operations/update_post_status.php',
                     type: 'POST',
@@ -153,19 +170,20 @@ $(document).ready(function() {
                         post_id: postId,
                         status: 'hidden'
                     },
+                    dataType: 'json',
                     success: function(response) {
                         if (response.success) {
                             Swal.fire({
                                 icon: 'success',
-                                title: 'Success',
-                                text: 'Post has been hidden',
+                                title: 'Success!',
+                                text: 'Post has been hidden successfully',
+                                timer: 1500,
+                                showConfirmButton: false,
                                 customClass: {
                                     popup: 'custom-swal-popup',
                                     title: 'custom-swal-title',
-                                    content: 'custom-swal-content',
-                                    confirmButton: 'btn bg-gradient-success'
-                                },
-                                buttonsStyling: false
+                                    content: 'custom-swal-content'
+                                }
                             }).then(() => {
                                 location.reload();
                             });
@@ -173,7 +191,7 @@ $(document).ready(function() {
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Error',
-                                text: response.message,
+                                text: response.message || 'Failed to hide post',
                                 customClass: {
                                     popup: 'custom-swal-popup',
                                     title: 'custom-swal-title',
@@ -183,6 +201,20 @@ $(document).ready(function() {
                                 buttonsStyling: false
                             });
                         }
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Connection Error',
+                            text: 'Failed to connect to server. Please try again.',
+                            customClass: {
+                                popup: 'custom-swal-popup',
+                                title: 'custom-swal-title',
+                                content: 'custom-swal-content',
+                                confirmButton: 'btn bg-gradient-danger'
+                            },
+                            buttonsStyling: false
+                        });
                     }
                 });
             }

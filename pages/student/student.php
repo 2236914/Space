@@ -8,7 +8,6 @@ error_log("Session Data: " . print_r($_SESSION, true));
 
 // Required files
 require_once '../../configs/config.php';
-require_once '../../admin_operations/dashboard_analytics.php';
 require_once '../../includes/navigation_components.php';
 
 // Check if user is logged in and is a student
@@ -16,9 +15,6 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'student') {
     header("Location: ../signin.php");
     exit();
 }
-
-// Initialize analytics
-$analytics = new DashboardAnalytics($pdo);
 
 // Check if student has logged mood today
 try {
@@ -53,22 +49,163 @@ header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 
-// Only show debug info if needed (remove in production)
-if (isset($_GET['debug'])) {
-    echo '<div style="background-color: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; padding: 10px; margin: 10px; border-radius: 4px;">';
-    echo '<h3>Debug Information:</h3>';
-    echo '<pre>';
-    echo "Session Status:\n";
-    echo "Session ID: " . session_id() . "\n";
-    echo "Session Data: \n";
-    print_r($_SESSION);
-    echo "\nDatabase Connection:\n";
-    echo "PDO Connection: " . (isset($pdo) ? "Active" : "NOT ACTIVE") . "\n";
-    echo '</pre>';
-    echo '</div>';
+// Initialize arrays for mood data
+$months = [];
+$happy_moods = [];
+$neutral_moods = [];
+$sad_moods = [];
+
+// Dashboard Data Queries
+try {
+    // Get mood statistics for the last 6 months
+    $mood_stats = $pdo->prepare("
+        SELECT 
+            DATE_FORMAT(log_date, '%b') as month,
+            SUM(CASE 
+                WHEN (mood_name LIKE '%Happy%' OR mood_name LIKE '%Love%' OR 
+                      selected_emoji IN ('😊', '😍'))
+                THEN 1 ELSE 0 
+            END) as happy_moods,
+            SUM(CASE 
+                WHEN (mood_name LIKE '%Calm%' OR mood_name LIKE '%Thoughtful%' OR 
+                      selected_emoji IN ('😌', '🤔'))
+                THEN 1 ELSE 0 
+            END) as neutral_moods,
+            SUM(CASE 
+                WHEN (mood_name LIKE '%Sad%' OR mood_name LIKE '%Angry%' OR 
+                      mood_name LIKE '%Fearful%' OR mood_name LIKE '%Disappointed%' OR
+                      selected_emoji IN ('☹️', '😠', '😨', '😔'))
+                THEN 1 ELSE 0 
+            END) as sad_moods
+        FROM moodlog 
+        WHERE srcode = ? 
+        AND log_date >= DATE_SUB(NOW(), INTERVAL 6 MONTH)
+        GROUP BY MONTH(log_date), DATE_FORMAT(log_date, '%b')
+        ORDER BY MIN(log_date)
+    ");
+    
+    $mood_stats->execute([$_SESSION['user_id']]);
+    $mood_stats_data = $mood_stats->fetchAll(PDO::FETCH_ASSOC);
+
+    // Process the mood data
+    if (!empty($mood_stats_data)) {
+        foreach ($mood_stats_data as $data) {
+            $months[] = $data['month'];
+            $happy_moods[] = (int)($data['happy_moods'] ?? 0);
+            $neutral_moods[] = (int)($data['neutral_moods'] ?? 0);
+            $sad_moods[] = (int)($data['sad_moods'] ?? 0);
+        }
+    }
+
+    // 1. Check-ins Card Data
+    $checkin_query = "SELECT 
+        COUNT(*) as total_checkins,
+        COUNT(CASE WHEN log_date >= DATE_SUB(NOW(), INTERVAL 7 DAY) THEN 1 END) as weekly_checkins
+    FROM moodlog 
+    WHERE srcode = ?";
+
+    $stmt = $pdo->prepare($checkin_query);
+    $stmt->execute([$_SESSION['user_id']]);
+    $checkin_data = $stmt->fetch();
+
+    // 2. Journal Entries Card Data
+    $journal_query = "SELECT 
+        COUNT(*) as total_entries,
+        COUNT(CASE WHEN created_at >= DATE_SUB(NOW(), INTERVAL 7 DAY) THEN 1 END) as new_entries,
+        MAX(created_at) as last_entry
+    FROM journal_entries 
+    WHERE srcode = ?";
+
+    $stmt = $pdo->prepare($journal_query);
+    $stmt->execute([$_SESSION['user_id']]);
+    $journal_data = $stmt->fetch();
+
+    // 4. Journal Distribution Data
+    $journal_distribution_query = "SELECT 
+        CASE 
+            WHEN HOUR(created_at) BETWEEN 5 AND 11 THEN 'Morning'
+            WHEN HOUR(created_at) BETWEEN 12 AND 17 THEN 'Afternoon'
+            ELSE 'Evening'
+        END as time_of_day,
+        COUNT(*) as entry_count
+    FROM journal_entries 
+    WHERE srcode = ? 
+    AND created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)
+    GROUP BY time_of_day";
+
+    $stmt = $pdo->prepare($journal_distribution_query);
+    $stmt->execute([$_SESSION['user_id']]);
+    $journal_distribution = $stmt->fetchAll();
+
+    // Initialize journal chart data
+    $journal_chart_data = [
+        'morning' => 0,
+        'afternoon' => 0,
+        'evening' => 0
+    ];
+
+    // Process journal distribution
+    foreach ($journal_distribution as $record) {
+        $time_of_day = strtolower($record['time_of_day']);
+        if (isset($journal_chart_data[$time_of_day])) {
+            $journal_chart_data[$time_of_day] = (int)$record['entry_count'];
+        }
+    }
+
+    // 5. Therapy Sessions Data
+    $therapy_query = "SELECT 
+        COUNT(*) as total_sessions,
+        COUNT(CASE WHEN status = 'completed' THEN 1 END) as completed_sessions
+    FROM therapy_sessions 
+    WHERE srcode = ? 
+    AND session_date >= DATE_SUB(NOW(), INTERVAL 30 DAY)";
+
+    $stmt = $pdo->prepare($therapy_query);
+    $stmt->execute([$_SESSION['user_id']]);
+    $therapy_data = $stmt->fetch();
+
+    // Calculate attendance rate
+    $attendance_rate = $therapy_data['total_sessions'] > 0 ? 
+        round(($therapy_data['completed_sessions'] / $therapy_data['total_sessions']) * 100) : 0;
+
+    // Format last entry time
+    $last_entry_time = $journal_data['last_entry'] ? new DateTime($journal_data['last_entry']) : null;
+    $now = new DateTime();
+    $time_since_last = $last_entry_time ? $last_entry_time->diff($now) : null;
+    $last_entry_text = $last_entry_time ? formatTimeSince($time_since_last) : "No entries yet";
+
+} catch (PDOException $e) {
+    error_log("Dashboard data error: " . $e->getMessage());
+    // Initialize empty data in case of error
+    $checkin_data = ['total_checkins' => 0, 'weekly_checkins' => 0];
+    $journal_data = ['total_entries' => 0, 'new_entries' => 0];
+    $journal_chart_data = ['morning' => 0, 'afternoon' => 0, 'evening' => 0];
+    $last_entry_text = "Error loading data";
 }
 
-// Start output buffering to prevent header issues
+// Helper function to format time since last entry
+function formatTimeSince($interval) {
+    if ($interval->y > 0) return $interval->y . " year" . ($interval->y > 1 ? "s" : "") . " ago";
+    if ($interval->m > 0) return $interval->m . " month" . ($interval->m > 1 ? "s" : "") . " ago";
+    if ($interval->d > 0) return $interval->d . " day" . ($interval->d > 1 ? "s" : "") . " ago";
+    if ($interval->h > 0) return $interval->h . " hour" . ($interval->h > 1 ? "s" : "") . " ago";
+    if ($interval->i > 0) return $interval->i . " minute" . ($interval->i > 1 ? "s" : "") . " ago";
+    return "just now";
+}
+
+// Debug information
+if (isset($_GET['debug'])) {
+    echo '<pre>';
+    print_r([
+        'months' => $months,
+        'happy_moods' => $happy_moods,
+        'neutral_moods' => $neutral_moods,
+        'sad_moods' => $sad_moods
+    ]);
+    echo '</pre>';
+}
+
+// Start output buffering
 ob_start();
 ?>
 <!DOCTYPE html>
@@ -96,6 +233,47 @@ ob_start();
   <script src="<?php echo BASE_URL; ?>/assets/js/plugins/quotes.js"></script>
   <script src="../../assets/js/activity-tracker.js"></script>
   <link href="../../assets/css/custom-swal.css" rel="stylesheet" />
+  <style>
+.chart-canvas {
+    transition: all 0.4s ease-in-out;
+}
+
+.card:hover .chart-canvas {
+    transform: scale(1.02);
+}
+.insight-box {
+    padding: 15px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+}
+
+.insight-box:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.insight-box h6 {
+    color: var(--bs-1stgreen);
+    font-weight: 600;
+}
+
+.insight-box p {
+    color: var(--text-color);
+    font-size: 0.875rem;
+}
+
+.chart-container {
+    position: relative;
+    min-height: 220px;
+    width: 100%;
+}
+
+.chart-canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+  </style>
 </head>
 
 <body class="g-sidenav-show bg-gray-100">
@@ -316,597 +494,211 @@ ob_start();
     </div>
 </nav>
 
-<div class="container-fluid py-4">
-  <div class="row">
-    <div class="col-md-8">
-      <h3 class="mb-0 h4 font-weight-bolder">Space Dashboard</h3>
-      <p class="mb-4">Review check-ins, mood entries, and therapy appointments to support student well-being</p>
-    </div>
-    <div class="row mt-1">
-
-      <!-- My Check-ins Card -->
-      <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-        <div class="card">
-          <div class="card-header p-2 ps-3">
-            <div class="d-flex align-items-center">
-              <div class="icon icon-md icon-shape bg-gradient-primary shadow-dark shadow text-center border-radius-lg me-3">
-                <i class="material-symbols-outlined opacity-10">event_available</i>
-              </div>
-              <div>
-                <p class="text-sm mb-0 text-capitalize">My Check-ins</p>
-                <h4 class="mb-0"><?php echo $analytics->getUserTotalCheckins($_SESSION['user_id']); ?></h4>
-              </div>
-            </div>
-          </div>
-          <hr class="dark horizontal my-0">
-          <div class="card-footer p-2 ps-3">
-            <p class="mb-0 text-sm"><span class="text-success font-weight-bolder">+1 </span>from last week</p>
-          </div>
+<!-- End Navbar -->
+<div class="container-fluid py-2">
+    <div class="row">
+        <div class="ms-3">
+            <h3 class="mb-0 h4 font-weight-bolder">Student Dashboard</h3>
+            <p class="mb-4">Track your well-being, sessions, and self-care journey</p>
         </div>
-      </div>
 
-      <!-- Community Post Card -->
-      <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-        <div class="card">
-          <div class="card-header p-2 ps-3">
-            <div class="d-flex align-items-center">
-              <div class="icon icon-md icon-shape bg-gradient-primary shadow-dark shadow text-center border-radius-lg me-3">
-                <i class="material-symbols-outlined opacity-10">stylus</i>
-              </div>
-              <div>
-                <p class="text-sm mb-0 text-capitalize">Community Post</p>
-                <h4 class="mb-0"><?php echo $analytics->getUserPostCount($_SESSION['user_id']); ?></h4>
-              </div>
-            </div>
-          </div>
-          <hr class="dark horizontal my-0">
-          <div class="card-footer p-2 ps-3">
-            <?php
-            $postCount = $analytics->getUserPostCount($_SESSION['user_id']);
-            $yesterdayCount = $analytics->getUserYesterdayPostCount($_SESSION['user_id']);
-            
-            // Calculate percentage change
-            $percentChange = 0;
-            if ($yesterdayCount > 0) {
-                $percentChange = (($postCount - $yesterdayCount) / $yesterdayCount) * 100;
-            }
-            
-            // Determine style based on change
-            $changeClass = $percentChange >= 0 ? 'text-success' : 'text-danger';
-            $changeSymbol = $percentChange >= 0 ? '+' : '';
-            ?>
-            <p class="mb-0 text-sm">
-                <span class="<?php echo $changeClass; ?> font-weight-bolder">
-                    <?php echo $changeSymbol . number_format($percentChange, 1) . '%'; ?>
-                </span> 
-                from yesterday
-            </p>
-          </div>
-        </div>
-      </div>
-      <!-- Journal Entries Card -->
+        <!-- Check-ins Card -->
         <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
             <div class="card">
-                <div class="card-header p-2 ps-3">
-                    <div class="d-flex align-items-center">
-                        <div class="icon icon-md icon-shape bg-gradient-primary shadow-dark shadow text-center border-radius-lg me-3">
-                            <i class="material-symbols-outlined opacity-10">book</i>
+                <div class="card-header p-2 pe-3">
+                    <div class="d-flex justify-content-between">
+                        <div class="icon icon-md icon-shape bg-gradient-primary shadow-primary text-center border-radius-lg">
+                            <i class="material-symbols-rounded opacity-10">event_available</i>
                         </div>
                         <div>
-                            <p class="text-sm mb-0 text-capitalize">Journal Entries</p>
-                            <?php
-                            // Get total journal entries for current user only
-                            $stmt = $pdo->prepare("
-                                SELECT COUNT(*) as total 
-                                FROM journal_entries 
-                                WHERE srcode = ?
-                            ");
-                            $stmt->execute([$_SESSION['srcode']]);
-                            $totalEntries = $stmt->fetch()['total'];
-                            ?>
-                            <h4 class="mb-0"><?php echo $totalEntries; ?></h4>
+                            <p class="text-sm mb-0 text-capitalize">My Check-ins</p>
+                            <h4 class="mb-0"><?php echo $checkin_data['total_checkins']; ?></h4>
                         </div>
                     </div>
                 </div>
                 <hr class="dark horizontal my-0">
                 <div class="card-footer p-2 ps-3">
-                    <?php
-                    // Get today's entries for current user only
-                    $stmt = $pdo->prepare("
-                        SELECT COUNT(*) as today_count 
-                        FROM journal_entries 
-                        WHERE srcode = ? 
-                        AND DATE(created_at) = CURDATE()
-                    ");
-                    $stmt->execute([$_SESSION['srcode']]);
-                    $todayCount = $stmt->fetch()['today_count'];
-
-                    echo $todayCount > 0 
-                        ? "<p class='mb-0 text-sm'><span class='text-success font-weight-bolder'>+{$todayCount} </span>new entries today</p>"
-                        : "<p class='mb-0 text-sm'><span class='text-secondary'>No new entries today</span></p>";
-                    ?>
-                </div>
-            </div>
-        </div>
-
-      <!-- Sessions Card -->
-      <div class="col-xl-3 col-sm-6">
-        <div class="card">
-          <div class="card-header p-2 ps-3">
-            <div class="d-flex align-items-center">
-              <div class="icon icon-md icon-shape bg-gradient-primary shadow-dark shadow text-center border-radius-lg me-3">
-                <i class="material-symbols-outlined opacity-10">assignment_ind</i>
-              </div>
-              <div>
-                <p class="text-sm mb-0 text-capitalize">Sessions</p>
-                <h4 class="mb-0">
-                  <?php 
-                  // Get total sessions count
-                  $sessions_query = "SELECT COUNT(*) as total 
-                                   FROM therapy_sessions 
-                                   WHERE srcode = ? 
-                                   AND status IN ('completed', 'confirmed', 'pending')";
-                  $stmt = $pdo->prepare($sessions_query);
-                  $stmt->execute([$_SESSION['srcode']]);
-                  $result = $stmt->fetch(PDO::FETCH_ASSOC);
-                  echo $result['total'];
-                  ?>
-                </h4>
-              </div>
-            </div>
-          </div>
-          <hr class="dark horizontal my-0">
-          <div class="card-footer p-2 ps-3">
-            <?php
-            // Get last month's sessions count
-            $last_month_query = "SELECT COUNT(*) as last_month 
-                                FROM therapy_sessions 
-                                WHERE srcode = ? 
-                                AND status IN ('completed', 'confirmed', 'pending')
-                                AND MONTH(session_date) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)";
-            $stmt = $pdo->prepare($last_month_query);
-            $stmt->execute([$_SESSION['srcode']]);
-            $last_month = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            // Get this month's sessions count
-            $this_month_query = "SELECT COUNT(*) as this_month 
-                                FROM therapy_sessions 
-                                WHERE srcode = ? 
-                                AND status IN ('completed', 'confirmed', 'pending')
-                                AND MONTH(session_date) = MONTH(CURRENT_DATE)";
-            $stmt = $pdo->prepare($this_month_query);
-            $stmt->execute([$_SESSION['srcode']]);
-            $this_month = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            // Calculate percentage change
-            $percent_change = 0;
-            if ($last_month['last_month'] > 0) {
-                $percent_change = (($this_month['this_month'] - $last_month['last_month']) / $last_month['last_month']) * 100;
-            }
-
-            $change_class = $percent_change >= 0 ? 'text-success' : 'text-danger';
-            $change_symbol = $percent_change >= 0 ? '+' : '';
-            ?>
-            <p class="mb-0 text-sm">
-                <span class="<?php echo $change_class; ?> font-weight-bolder">
-                    <?php echo $change_symbol . number_format(abs($percent_change), 1) . '%'; ?>
-                </span>
-                than last month
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="container-fluid py-auto">
-      <div class="row align-items-stretch">
-      <div class="col-lg-12">
-          <div class="row">
-            <div class="col-lg-4 col-md-7 d-flex">
-            <div class="card bg-transparent shadow-xl"  style="height: 133px;">
-    <div class="overflow-hidden position-relative border-radius-xl">
-        <img src="../../assets/img/illustrations/pattern-tree.svg" class="position-absolute opacity-2 start-0 top-0 w-100 z-index-1 h-100" alt="pattern-tree">
-        <span class="mask bg-gradient-dark opacity-10"></span>
-        <div class="card-body position-relative z-index-1 p-3">
-            <!-- Profile Header -->
-            <div class="row mb-2">
-                <div class="col-3">
-                    <?php
-                    $profile_picture_url = "../../admin_operations/get_profile_picture.php?user_id=" . $_SESSION['user_id'] . "&user_type=student";
-                    ?>
-                    <img src="<?php echo $profile_picture_url; ?>" 
-                         alt="profile" 
-                         class="border-radius-lg shadow-sm w-100"
-                         onerror="this.src='../../assets/img/default-avatar.png';"
-                         id="studentProfilePic"
-                         style="cursor: pointer; max-width: 70px;">
-                </div>
-                <div class="col-6">
-                    <h6 class="text-white mb-0" style="font-size: 0.9rem;">
-                        <?php echo htmlspecialchars($_SESSION['firstname'] . ' ' . $_SESSION['lastname']); ?>
-                    </h6>
-                    <p class="text-white opacity-8 mb-0" style="font-size: 0.75rem;">
-                        @<?php echo strtolower(htmlspecialchars($_SESSION['firstname'])); ?>
+                    <p class="mb-0 text-sm">
+                        <span class="text-success font-weight-bolder">+<?php echo $checkin_data['weekly_checkins']; ?></span> this week
                     </p>
                 </div>
-                <div class="col-3 text-end">
-                    <img class="w-50" src="../../assets/img/logo-space.png" alt="logo">
+            </div>
+        </div>
+
+        <!-- Upcoming Sessions Card -->
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+            <div class="card">
+                <div class="card-header p-2 pe-3">
+                    <div class="d-flex justify-content-between">
+                        <div class="icon icon-md icon-shape bg-gradient-success shadow-success text-center border-radius-lg">
+                            <i class="material-symbols-rounded opacity-10">calendar_month</i>
+                        </div>
+                        <div>
+                            <p class="text-sm mb-0 text-capitalize">Next Session</p>
+                            <h4 class="mb-0">1</h4>
+                        </div>
+                    </div>
+                </div>
+                <hr class="dark horizontal my-0">
+                <div class="card-footer p-2 ps-3">
+                    <p class="mb-0 text-sm">Dec 15, 2023</p>
                 </div>
             </div>
+        </div>
 
-            <!-- Profile Details -->
-            <div class="row mt-2">
-                <div class="col-6">
-                    <p class="text-white opacity-8 mb-0" style="font-size: 0.7rem;">SR-Code</p>
-                    <h6 class="text-white mb-0" style="font-size: 0.8rem;">
-                        <?php echo htmlspecialchars($_SESSION['user_id']); ?>
-                    </h6>
+        <!-- Journal Entries Card -->
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+            <div class="card">
+                <div class="card-header p-2 pe-3">
+                    <div class="d-flex justify-content-between">
+                        <div class="icon icon-md icon-shape bg-gradient-info shadow-info text-center border-radius-lg">
+                            <i class="material-symbols-rounded opacity-10">book</i>
+                        </div>
+                        <div>
+                            <p class="text-sm mb-0 text-capitalize">Journal Entries</p>
+                            <h4 class="mb-0"><?php echo $journal_data['total_entries']; ?></h4>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-6">
-                    <p class="text-white opacity-8 mb-0" style="font-size: 0.7rem;">Status</p>
-                    <h6 class="text-white mb-0" style="font-size: 0.8rem;">
-                        <?php
-                        try {
-                            $status_stmt = $pdo->prepare("SELECT status FROM students WHERE srcode = ?");
-                            $status_stmt->execute([$_SESSION['user_id']]);
-                            $status = $status_stmt->fetchColumn();
-                            echo htmlspecialchars(ucfirst($status ?? 'Active'));
-                        } catch (PDOException $e) {
-                            error_log("Error fetching student status: " . $e->getMessage());
-                            echo 'Active';
-                        }
-                        ?>
-                    </h6>
+                <hr class="dark horizontal my-0">
+                <div class="card-footer p-2 ps-3">
+                    <p class="mb-0 text-sm">
+                        <span class="text-success font-weight-bolder">+<?php echo $journal_data['new_entries']; ?></span> new this week
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Session Feedback Card -->
+        <div class="col-xl-3 col-sm-6">
+            <div class="card">
+                <div class="card-header p-2 pe-3">
+                    <div class="d-flex justify-content-between">
+                        <div class="icon icon-md icon-shape bg-gradient-warning shadow-warning text-center border-radius-lg">
+                            <i class="material-symbols-rounded opacity-10">rate_review</i>
+                        </div>
+                        <div>
+                            <p class="text-sm mb-0 text-capitalize">Session Feedback</p>
+                            <h4 class="mb-0">5</h4>
+                        </div>
+                    </div>
+                </div>
+                <hr class="dark horizontal my-0">
+                <div class="card-footer p-2 ps-3">
+                    <p class="mb-0 text-sm">Reviews submitted</p>
                 </div>
             </div>
         </div>
     </div>
 </div>
-            </div>
-
-            <div class="col-lg-4 col-md-4 mb-3">
-    <div class="card" style="height: 133px;">
-        <div class="overflow-hidden position-relative border-radius-xl">
-            <div class="card-body position-relative z-index-1 p-2">
-                <!-- Header with Icon -->
-                <div class="row mb-2">
-                    <div class="col-2">
-                        <div class="icon icon-shape bg-gradient-dark shadow text-center border-radius-lg me-3">
-                            <i class="material-symbols-rounded text-white opacity-10">event_available</i>
+<!-- Charts Section -->
+<div class="container-fluid py-1">
+    <div class="row">
+        <!-- Mood Activity Chart -->
+        <div class="col-lg-8 col-md-6 mt-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body p-3">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="mb-0" style="color: var(--bs-1stgreen);">Mood Activity</h6>
+                            <p class="text-sm" style="color: var(--text-color-light);">Monthly Mood Overview</p>
                         </div>
                     </div>
-                    <div class="col-8">
-                    <h6 class="mb-0 text-capitalize font-weight-bold">Upcoming Session</h6>
+                    <div class="chart-container" style="position: relative; height: 220px; width: 100%;">
+                        <canvas id="moodChart" class="chart-canvas"></canvas>
                     </div>
-                </div>
-
-                <!-- Session Details -->
-                <?php
-                try {
-                    $session_stmt = $pdo->prepare("
-                        SELECT session_date, session_type, status 
-                        FROM therapy_sessions 
-                        WHERE srcode = ? 
-                        AND session_date >= CURRENT_DATE()
-                        AND status IN ('confirmed', 'pending')
-                        ORDER BY session_date ASC 
-                        LIMIT 1
-                    ");
-                    $session_stmt->execute([$_SESSION['user_id']]);
-                    $next_session = $session_stmt->fetch();
-
-                    if ($next_session) {
-                        $session_date = new DateTime($next_session['session_date']);
-                        ?>
-                        <div class="row">
-                            <div class="col-12">
-                                <p class="text-dark mb-0" style="font-size: 0.85rem;">
-                                    <?php echo $session_date->format('F j, Y - g:i A'); ?>
-                                </p>
-                                <p class="text-muted mb-0" style="font-size: 0.75rem;">
-                                    <?php echo ucfirst($next_session['session_type']); ?> Session
-                                    <span class="badge bg-<?php echo $next_session['status'] === 'confirmed' ? 'success' : 'warning'; ?> ms-2">
-                                        <?php echo ucfirst($next_session['status']); ?>
-                                    </span>
-                                </p>
-                            </div>
-                        </div>
-                        <?php
-                    } else {
-                        echo '<p class="text-muted mb-0">No upcoming sessions scheduled</p>';
-                    }
-                } catch (PDOException $e) {
-                    error_log("Error fetching next session: " . $e->getMessage());
-                    echo '<p class="text-muted mb-0">Unable to load session information</p>';
-                }
-                ?>
-            </div>
-        </div>
-    </div>
-            </div>
-
-            <div class="col-lg-4 col-md-4 mb-1">
-    <div class="card" style="height: 133px;">
-        <div class="overflow-hidden position-relative border-radius-xl">
-            <div class="card-body position-relative z-index-1 p-2">
-                <!-- Header with Icon -->
-                <div class="row mb-2">
-                    <div class="col-2">
-                        <div class="icon icon-shape bg-gradient-dark shadow text-center border-radius-lg me-3">
-                            <i class="material-symbols-rounded text-white opacity-10">schedule</i>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <h6 class="mb-0 text-capitalize font-weight-bold">Current Time</h6>
-                        <p class="text-muted mb-0" style="font-size: 0.75rem;">Daily Schedule</p>
-                    </div>
-                </div>
-
-                <!-- Time Details -->
-                <div class="row">
-                    <div class="col-12">
-                        <p class="text-dark mb-0" style="font-size: 0.85rem;">
-                            <?php echo date('F j, Y'); ?>
-                        </p>
+                    <hr class="dark horizontal my-2">
+                    <div class="d-flex justify-content-between align-items-center">
                         <div class="d-flex align-items-center">
-                            <span class="text-muted" style="font-size: 0.75rem;">
-                                <?php echo date('g:i A'); ?>
-                            </span>
+                            <i class="material-symbols-rounded text-sm my-auto me-1">schedule</i>
+                            <span class="text-sm" style="color: var(--text-color-light);">Updated today</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Journal Entry Progress Chart -->
+        <div class="col-lg-4 col-md-6 mt-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body p-3">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="mb-0" style="color: var(--bs-1stgreen);">Journal Progress</h6>
+                            <p class="text-sm" style="color: var(--text-color-light);">Weekly Entry Distribution</p>
+                        </div>
+                    </div>
+                    <div class="chart-container" style="position: relative; height: 220px; width: 100%; min-height: 220px;">
+                        <canvas id="journalChart" class="chart-canvas"></canvas>
+                    </div>
+                    <hr class="dark horizontal my-2">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center">
+                            <i class="material-symbols-rounded text-sm my-auto me-1">schedule</i>
+                            <span class="text-sm" style="color: var(--text-color-light);">Last entry 2 hours ago</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-            </div>
-          </div>
-
-          </div>
-      </div>
 </div>
-
-<div class="container-fluid py-auto">
-    <div class="row align-items-stretch">
-      <!-- Website Views Card -->
-      <div class="col-lg-4 col-md-7 d-flex">
-                  <div class="card w-100 my-3">
-                    <div class="card-header p-3 pb-0">
-                      <div class="d-flex align-items-center">
-                        <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                          <i class="material-symbols-rounded text-white opacity-10">activity_zone</i>
+<!-- Trends and Insights Section -->
+<div class="container-fluid py-1">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="mb-3" style="color: var(--bs-1stgreen);">Personal Insights & Progress</h6>
+                    <div class="row">
+                        <!-- Mood Pattern -->
+                        <div class="col-md-3">
+                            <div class="insight-box">
+                                <h6 class="text-sm mb-1">Monthly Mood Pattern</h6>
+                                <p class="mb-0 h5">
+                                    <span class="text-success">↑ Improving</span>
+                                </p>
+                            </div>
                         </div>
-                        <div class="ms-3">
-                          <h6 class="mb-0">Space Interactions</h6>
-                          <p class="text-sm mb-0">Weekly Activity</p>
-                        </div>
-                      </div>
-                    </div>
-                      <div class="card-body p-3">
-                          <div class="chart-container" style="position: relative; height:170px; width:100%">
-                              <canvas id="chart-bars" style="display: block; width: 100%; height: 100%;"></canvas>
-                          </div>
-                          <hr class="dark horizontal">
-                          <div class="d-flex justify-content-between align-items-center">
-                              <div class="d-flex align-items-center">
-                                  <i class="material-symbols-rounded text-sm my-auto me-1">update</i>
-                                  <p class="mb-0 text-sm" id="last-activity">
-                                      <?php
-                                      try {
-                                          // Get activities for the last 7 days
-                                          $query = "SELECT 
-                                              DATE_FORMAT(created_at, '%a') as day,
-                                              COUNT(*) as count,
-                                              created_at
-                                              FROM activity_logs 
-                                              WHERE srcode = :user_id 
-                                              AND created_at >= DATE_SUB(CURDATE(), INTERVAL 6 DAY)
-                                              AND action IN (
-                                                  'Logged In',
-                                                  'Liked Quote',
-                                                  'Refreshed Quote',
-                                                  'Updated Profile',
-                                                  'Logged Mood',
-                                                  'Viewed Resource'
-                                              )
-                                              GROUP BY DATE(created_at), day
-                                              ORDER BY created_at ASC";
-                                              
-                                          $stmt = $pdo->prepare($query);
-                                          $stmt->execute(['user_id' => $_SESSION['user_id']]);
-                                          $activities = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                                          
-                                          // Get the latest activity for "time ago" display
-                                          $latestQuery = "SELECT MAX(created_at) as latest_activity 
-                                                        FROM activity_logs 
-                                                        WHERE srcode = :user_id";
-                                          $latestStmt = $pdo->prepare($latestQuery);
-                                          $latestStmt->execute(['user_id' => $_SESSION['user_id']]);
-                                          $latest = $latestStmt->fetch(PDO::FETCH_ASSOC);
-
-                                          // Format the "time ago" text
-                                          if ($latest && $latest['latest_activity']) {
-                                              $timeAgo = time() - strtotime($latest['latest_activity']);
-                                              if ($timeAgo < 3600) {
-                                                  echo floor($timeAgo / 60) . " minutes ago";
-                                              } elseif ($timeAgo < 86400) {
-                                                  echo floor($timeAgo / 3600) . " hours ago";
-                                              } else {
-                                                  echo floor($timeAgo / 86400) . " days ago";
-                                              }
-                                          } else {
-                                              echo "No recent activity";
-                                          }
-
-                                          // Prepare data for chart
-                                          $chartData = [
-                                              'labels' => [],
-                                              'counts' => []
-                                          ];
-
-                                          // Get last 7 days including today
-                                          $days = [];
-                                          for ($i = 6; $i >= 0; $i--) {
-                                              $date = date('Y-m-d', strtotime("-$i days"));
-                                              $dayName = date('D', strtotime("-$i days"));
-                                              $days[$date] = ['day' => $dayName, 'count' => 0];
-                                          }
-
-                                          // Fill in actual counts
-                                          foreach ($activities as $activity) {
-                                              $activityDate = date('Y-m-d', strtotime($activity['created_at']));
-                                              if (isset($days[$activityDate])) {
-                                                  $days[$activityDate]['count'] = (int)$activity['count'];
-                                              }
-                                          }
-
-                                          // Prepare final arrays for chart
-                                          foreach ($days as $day) {
-                                              $chartData['labels'][] = $day['day'];
-                                              $chartData['counts'][] = $day['count'];
-                                          }
-
-                                          // Pass data to JavaScript
-                                          echo "<script>
-                                              var activityData = {
-                                                  labels: " . json_encode($chartData['labels']) . ",
-                                                  counts: " . json_encode($chartData['counts']) . "
-                                              };
-                                          </script>";
-
-                                      } catch (PDOException $e) {
-                                          error_log("Error fetching activity data: " . $e->getMessage());
-                                          echo "Error loading activity data";
-                                      }
-                                      ?>
-                                  </p>
-                              </div>
-                              <p class="mb-0 text-sm text-muted">
-                                  <i class="material-symbols-rounded text-sm">refresh</i>
-                                  Last 7 days
-                              </p>
-                          </div>
-                      </div>
-                  </div>
-      </div>
-      <!-- Today's Quote Card -->
-      <div class="col-lg-4 col-md-7 d-flex my-3">
-          <div class="card w-100" style="min-height: 250px;">
-                    <div class="card-header p-3 pb-0">
-                      <div class="d-flex align-items-center">
-                        <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                          <i class="material-symbols-rounded text-white opacity-10" aria-hidden="true">format_quote</i>
-                        </div>
-                        <div class="ms-3">
-                          <h6 class="mb-0">Today's Quote</h6>
-                          <p class="text-sm mb-0 text-capitalize font-weight-normal">Daily Inspiration</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="card-body p-3 d-flex flex-column justify-content-center align-items-center">
-                      <?php
-                      try {
-                          $today = date('Y-m-d');
-                          $seed = abs(crc32($today . $_SESSION['user_id']));
-                          mt_srand($seed);
-                          
-                          $query = "SELECT content, author FROM quotes ORDER BY RAND(" . $seed . ") LIMIT 1";
-                          $stmt = $pdo->prepare($query);
-                          $stmt->execute();
-                          
-                          if ($quote = $stmt->fetch()) {
-                              ?>
-                              <div class="text-center px-4">
-                                  <p class="quote-content mb-3" style="font-size: 1.15rem; line-height: 1.5; font-weight: 500;">
-                                      "<?php echo htmlspecialchars($quote['content']); ?>"
-                                  </p>
-                                  <p class="quote-author text-sm mb-0" style="font-style: italic; color: #666;">
-                                      - <?php echo htmlspecialchars($quote['author']); ?>
-                                  </p>
-                              </div>
-                              <?php
-                          }
-                      } catch (Exception $e) {
-                          error_log("Error loading quote: " . $e->getMessage());
-                          ?>
-                          <div class="text-center">
-                              <p class="text-muted mb-0">Error loading quote. Please try again later.</p>
-                          </div>
-                      <?php } ?>
-                    </div>
-                  </div>
-      </div>
-      <!-- Today's Mood Card -->
-      <div class="col-lg-4 col-md-7 d-flex my-3">
-          <div class="card w-100">
-            <div class="card-header p-3 pb-0">
-                      <div class="d-flex align-items-center">
-                        <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                          <i class="material-symbols-rounded text-white opacity-10">mood</i>
-                        </div>
-                        <div class="ms-3">
-                          <h6 class="mb-0">Today's Mood</h6>
-                          <p class="text-sm mb-0 text-capitalize font-weight-normal"><?php echo date('F j, Y'); ?></p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="card-body p-3">
-                      <?php
-                      try {
-                        $tableExists = $pdo->query("SHOW TABLES LIKE 'moodlog'")->rowCount() > 0;
                         
-                        if ($tableExists) {
-                          $query = "SELECT TRIM(selected_emoji) as selected_emoji 
-                                    FROM moodlog 
-                                    WHERE srcode = :srcode 
-                                    AND DATE(log_date) = CURDATE() 
-                                    ORDER BY log_date DESC 
-                                    LIMIT 5";
-                          
-                          $stmt = $pdo->prepare($query);
-                          $stmt->execute(['srcode' => $_SESSION['user_id']]);
-                          $moods = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-                          if (!empty($moods)): ?>
-                            <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 150px;">
-                              <?php foreach($moods as $mood): ?>
-                                <div class="mb-2">
-                                  <span style="font-size: 32px;"><?php echo str_replace(',', '', $mood['selected_emoji']); ?></span>
-                                </div>
-                              <?php endforeach; ?>
+                        <!-- Session Attendance -->
+                        <div class="col-md-3">
+                            <div class="insight-box">
+                                <h6 class="text-sm mb-1">Session Attendance</h6>
+                                <p class="mb-0">
+                                    100% Attendance Rate
+                                </p>
                             </div>
-                          <?php else: ?>
-                            <div class="text-center text-muted" style="min-height: 150px;">
-                              <p class="mb-3">No mood logged today</p>
-                              <a href="moodlog.php" class="btn btn-sm btn-outline-primary">Log Your Mood</a>
+                        </div>
+                        
+                        <!-- Self-Care Streak -->
+                        <div class="col-md-3">
+                            <div class="insight-box">
+                                <h6 class="text-sm mb-1">Self-Care Streak</h6>
+                                <p class="mb-0">
+                                    5 Days Continuous Practice
+                                </p>
                             </div>
-                          <?php endif;
-                        } else {
-                          echo '<div class="text-center text-muted" style="min-height: 150px;">';
-                          echo '<p class="mb-3">Mood tracking feature is not yet set up</p>';
-                          echo '<a href="moodlog.php" class="btn btn-sm btn-outline-primary">Log Your First Mood</a>';
-                          echo '</div>';
-                        }
-                      } catch (PDOException $e) {
-                        echo '<div class="text-center text-muted" style="min-height: 150px;">';
-                        echo '<p>Error accessing mood data</p>';
-                        echo '</div>';
-                        error_log("Mood tracking error: " . $e->getMessage());
-                      }
-                      ?>
+                        </div>
+                        
+                        <!-- Wellness Tips -->
+                        <div class="col-md-3">
+                            <div class="insight-box">
+                                <h6 class="text-sm mb-1">Personalized Tips</h6>
+                                <p class="mb-0">
+                                    Try mindfulness exercises during peak stress times
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                    <?php if (!empty($moods)): ?>
-                    <div class="card-footer p-3 text-center">
-                      <a href="moodtracker.php" class="btn btn-sm btn-primary">See More</a>
-                    </div>
-                    <?php endif; ?>
-                  </div>
-      </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
 <?php include_once('support_messages_modal.php'); ?>
+
 
 
   </main>
@@ -1291,7 +1083,10 @@ function likeQuote(quoteId) {
             user_id: userId // Send as string
         })
     })
-    .then(response => response.json())
+    .then(response => {
+        console.log('Raw response:', response);
+        return response.json();
+    })
     .then(data => {
         console.log('Response data:', data);
         if (data.success) {
@@ -1661,6 +1456,178 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 300000); // 5 minutes
 });
 </script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Mood Activity Chart
+    const moodCanvas = document.getElementById("moodChart");
+    if (moodCanvas) {
+        const ctx = moodCanvas.getContext('2d');
+        
+        // Create gradients using admin dashboard colors
+        const primaryGradient = ctx.createLinearGradient(0, 0, 0, 400);
+        primaryGradient.addColorStop(0, 'rgba(60, 100, 84, 0.8)');    // #3c6454
+        primaryGradient.addColorStop(1, 'rgba(60, 100, 84, 0.6)');
 
+        const secondaryGradient = ctx.createLinearGradient(0, 0, 0, 400);
+        secondaryGradient.addColorStop(0, 'rgba(147, 189, 170, 0.8)'); // #93bdaa
+        secondaryGradient.addColorStop(1, 'rgba(147, 189, 170, 0.6)');
+
+        const tertiaryGradient = ctx.createLinearGradient(0, 0, 0, 400);
+        tertiaryGradient.addColorStop(0, 'rgba(193, 196, 206, 0.8)'); // #c1c4ce
+        tertiaryGradient.addColorStop(1, 'rgba(193, 196, 206, 0.6)');
+
+        new Chart(moodCanvas, {
+            type: "bar",
+            data: {
+                labels: <?php echo json_encode($months); ?>,
+                datasets: [
+                    {
+                        label: "Happy",
+                        data: <?php echo json_encode($happy_moods); ?>,
+                        backgroundColor: primaryGradient,
+                        borderRadius: 4,
+                        maxBarThickness: 25,
+                        categoryPercentage: 0.8,
+                        barPercentage: 0.9
+                    },
+                    {
+                        label: "Neutral",
+                        data: <?php echo json_encode($neutral_moods); ?>,
+                        backgroundColor: secondaryGradient,
+                        borderRadius: 4,
+                        maxBarThickness: 25,
+                        categoryPercentage: 0.8,
+                        barPercentage: 0.9
+                    },
+                    {
+                        label: "Sad",
+                        data: <?php echo json_encode($sad_moods); ?>,
+                        backgroundColor: tertiaryGradient,
+                        borderRadius: 4,
+                        maxBarThickness: 25,
+                        categoryPercentage: 0.8,
+                        barPercentage: 0.9
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                        labels: {
+                            font: {
+                                size: 11,
+                                family: "Inter"
+                            },
+                            usePointStyle: true,
+                            padding: 15
+                        }
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                        padding: 10,
+                        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                        titleColor: '#344767',
+                        bodyColor: '#344767',
+                        borderColor: '#e9ecef',
+                        borderWidth: 1
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            display: false,
+                            drawBorder: false
+                        },
+                        ticks: {
+                            font: {
+                                size: 11,
+                                family: "Inter"
+                            }
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1,
+                            font: {
+                                size: 11,
+                                family: "Inter"
+                            }
+                        },
+                        grid: {
+                            borderDash: [5, 5],
+                            drawBorder: false
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // Journal Distribution Chart
+    const journalCanvas = document.getElementById("journalChart");
+    if (journalCanvas) {
+        new Chart(journalCanvas, {
+            type: 'doughnut',
+            data: {
+                labels: ['Morning', 'Afternoon', 'Evening'],
+                datasets: [{
+                    data: [
+                        <?php echo $journal_chart_data['morning']; ?>,
+                        <?php echo $journal_chart_data['afternoon']; ?>,
+                        <?php echo $journal_chart_data['evening']; ?>
+                    ],
+                    backgroundColor: [
+                        '#3c6454',  // Primary green
+                        '#93bdaa',  // Secondary green
+                        '#c1c4ce'   // Gray
+                    ],
+                    borderWidth: 0,
+                    borderRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '70%',
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom',
+                        labels: {
+                            color: '#344767',
+                            font: {
+                                size: 11,
+                                family: 'Inter'
+                            },
+                            usePointStyle: true,
+                            padding: 15
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                        titleColor: '#344767',
+                        bodyColor: '#344767',
+                        borderColor: '#e9ecef',
+                        borderWidth: 1,
+                        padding: 10,
+                        usePointStyle: true,
+                        callbacks: {
+                            label: function(context) {
+                                return context.label + ': ' + context.parsed + ' entries';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+});
+</script>
 </body>
 </html>
