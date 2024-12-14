@@ -1258,3 +1258,73 @@ Trace: [
 ]
 --------------------------------------------------------------------------------
 [2024-12-07 18:15:35] DATABASE_ERROR: Failed to log to database: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'user_id' in 'field list'
+[2024-12-13 23:17:15] DEBUG: Database connection established
+Context: []
+Trace: [
+    {
+        "file": "C:\\xampp\\htdocs\\Space\\admin_operations\\error_logger.php",
+        "line": 76,
+        "function": "logError",
+        "class": "ErrorLogger",
+        "type": "->"
+    },
+    {
+        "file": "C:\\xampp\\htdocs\\Space\\admin_operations\\save_mood.php",
+        "line": 82,
+        "function": "logDebug",
+        "class": "ErrorLogger",
+        "type": "->"
+    }
+]
+--------------------------------------------------------------------------------
+[2024-12-13 23:17:15] DATABASE_ERROR: Failed to log to database: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'user_id' in 'field list'
+[2024-12-13 23:17:15] DEBUG: Preparing insert
+Context: {
+    "moodlog_id": "MOOD-0013",
+    "data": {
+        "selected_emoji": "\ud83d\ude0a",
+        "mood_name": "Happy",
+        "description": " nice ............ nice ............ nice ............ nice ............ nice ............ nice ............ nice ............ nice ............ nice ............ "
+    }
+}
+Trace: [
+    {
+        "file": "C:\\xampp\\htdocs\\Space\\admin_operations\\error_logger.php",
+        "line": 76,
+        "function": "logError",
+        "class": "ErrorLogger",
+        "type": "->"
+    },
+    {
+        "file": "C:\\xampp\\htdocs\\Space\\admin_operations\\save_mood.php",
+        "line": 105,
+        "function": "logDebug",
+        "class": "ErrorLogger",
+        "type": "->"
+    }
+]
+--------------------------------------------------------------------------------
+[2024-12-13 23:17:15] DATABASE_ERROR: Failed to log to database: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'user_id' in 'field list'
+[2024-12-13 23:17:15] INFO: Insert successful
+Context: {
+    "moodlog_id": "MOOD-0013",
+    "rows_affected": 1
+}
+Trace: [
+    {
+        "file": "C:\\xampp\\htdocs\\Space\\admin_operations\\error_logger.php",
+        "line": 80,
+        "function": "logError",
+        "class": "ErrorLogger",
+        "type": "->"
+    },
+    {
+        "file": "C:\\xampp\\htdocs\\Space\\admin_operations\\save_mood.php",
+        "line": 130,
+        "function": "logInfo",
+        "class": "ErrorLogger",
+        "type": "->"
+    }
+]
+--------------------------------------------------------------------------------
+[2024-12-13 23:17:15] DATABASE_ERROR: Failed to log to database: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'user_id' in 'field list'

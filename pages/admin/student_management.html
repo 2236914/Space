@@ -1,11 +1,55 @@
 <?php
-require_once '../../configs/auth_check.php';
-checkAdminAuth();
+session_start();
+
+// Check if user is logged in and is an admin
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+    header('Location: ../../signin.php');
+    exit();
+}
 
 // Required files
 require_once '../../configs/config.php';
 require_once '../../admin_operations/dashboard_analytics.php';
 require_once '../../includes/admin_navigation_components.php';
+
+// Get students from database
+try {
+    $query = "
+        SELECT 
+            s.srcode,
+            s.firstname,
+            s.lastname,
+            s.phonenum,
+            s.email,
+            s.department,
+            s.year,
+            s.section,
+            s.course,
+            CONCAT(s.year, '-', s.section) as year_section,
+            s.status,
+            DATE_FORMAT(s.created_date, '%d/%m/%y') as created_date
+        FROM 
+            students s
+        ORDER BY 
+            s.created_date DESC
+    ";
+    
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
+    $students = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    error_log("Error fetching students: " . $e->getMessage());
+    $students = [];
+}
+// Status badge helper function
+function getStatusClass($status) {
+    return match(strtolower($status)) {
+        'active' => 'success',
+        'inactive' => 'secondary',
+        'suspended' => 'warning',
+        default => 'secondary'
+    };
+}
 
 // Get current page for navigation highlighting
 $current_page = basename($_SERVER['PHP_SELF']);
@@ -15,6 +59,7 @@ $current_info = [
     'parent' => 'Student Management',
     'title' => 'Student Profiles'
 ];
+
 ?>
 
 <!DOCTYPE html>
@@ -160,88 +205,89 @@ $current_info = [
         </nav>
     </div>
 </nav>
+<div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-12">
+          <div class="card my-4">
+            <!-- Card Header with Title -->
+            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+              <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                <div class="d-flex justify-content-between align-items-center px-3">
+                  <div>
+                    <h6 class="text-white text-capitalize ps-3">Student Management</h6>
+                    <p class="text-white text-sm ps-3 mb-0">Manage and monitor student profiles</p>
+                  </div>
+                  <div>
+                    <button class="btn btn-sm bg-gradient-dark me-2" id="exportCSV">
+                      <i class="fas fa-file-csv me-2"></i>Export CSV
+                    </button>
+                    <button class="btn btn-sm bg-gradient-dark" id="addNewStudent">
+                      <i class="fas fa-plus me-2"></i>New Student
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-        <!-- Main Content -->
-        <div class="container-fluid py-4">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card my-4">
-                        <!-- Card Header with Title -->
-                        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                            <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                                <div class="d-flex justify-content-between align-items-center px-3">
-                                    <div>
-                                        <h6 class="text-white text-capitalize ps-3">Student Profiles</h6>
-                                        <p class="text-white text-sm ps-3 mb-0">View and manage student profiles</p>
-                                    </div>
-                                    <div>
-                                        <button class="btn btn-sm bg-gradient-dark me-2" id="exportCSV">
-                                            <i class="fas fa-file-csv me-2"></i>Export CSV
-                                        </button>
-                                        <button class="btn btn-sm bg-gradient-dark" id="addNewStudent">
-                                            <i class="fas fa-plus me-2"></i>New Student
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+            <!-- Search Bar -->
+            <div class="card-header pb-0">
+              <div class="row">
+                <div class="col-lg-6 col-md-8 col-sm-12">
+                  <div class="input-group input-group-outline my-3">
+                    <label class="form-label">Search Students...</label>
+                    <input type="text" class="form-control" id="searchStudents" aria-label="Search Students">
+                  </div>
+                </div>
+                <div class="col-lg-6 col-md-4 col-sm-12 text-end">
+                  <div class="dropdown d-inline">
+                    <button class="btn bg-gradient-info dropdown-toggle mb-3" type="button" id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                      <i class="fas fa-filter me-2"></i>Filter
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="filterDropdown">
+                      <li><a class="dropdown-item" href="#" data-filter="all">All Students</a></li>
+                      <li><a class="dropdown-item" href="#" data-filter="active">Active</a></li>
+                      <li><a class="dropdown-item" href="#" data-filter="deactivated">Deactivated</a></li>
+                      <li><a class="dropdown-item" href="#" data-filter="suspended">Suspended</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-                        <!-- Search and Filter -->
-                        <div class="card-header pb-0">
-                            <div class="row">
-                                <div class="col-lg-6 col-md-8 col-sm-12">
-                                    
-                                </div>
-                                <div class="col-lg-6 col-md-4 col-sm-12 text-end">
-                                    <div class="dropdown d-inline">
-                                        <button class="btn bg-gradient-info dropdown-toggle mb-3" type="button" id="filterDropdown" data-bs-toggle="dropdown">
-                                            <i class="fas fa-filter me-2"></i>Filter
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="#" data-filter="all">All Students</a></li>
-                                            <li><a class="dropdown-item" href="#" data-filter="active">Active</a></li>
-                                            <li><a class="dropdown-item" href="#" data-filter="deactivated">Deactivated</a></li>
-                                            <li><a class="dropdown-item" href="#" data-filter="suspended">Suspended</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Table -->
-                        <div class="card-body px-0 pb-2">
-                            <div class="table-responsive p-0">
-                                <table class="table align-items-center mb-0" id="studentsProfileTable">
-                                    <thead>
-                                        <tr>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Student</th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Academic Info</th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Contact</th>
-                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
-                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Created Date</th>
-                                            <th class="text-secondary opacity-7">Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <!-- DataTables will fill this -->
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+            <!-- Table -->
+            <div class="card-body px-0 pb-2">
+                <div class="table-responsive p-0" style="max-height: 400px;">
+                    <table class="table align-items-center mb-0" id="studentsTable">
+                        <thead>
+                            <tr>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Student</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Academic Info</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Contact</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Created Date</th>
+                                <th class="text-secondary opacity-7">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- DataTables will fill this -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
+          </div>
         </div>
+      </div>
+    </div>
+
+<!-- Add this at the bottom of your file, before closing body tag -->
+<div class="modal fade" id="studentModal" tabindex="-1" role="dialog" aria-labelledby="studentModalLabel" aria-hidden="true"></div>
+
     </main>
 
-    <!-- Modal -->
-    <div class="modal fade" id="studentModal" tabindex="-1" aria-hidden="true"></div>
-
-    <!-- Core JS Files -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   <!-- Core JS -->
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../../assets/js/core/popper.min.js"></script>
     <script src="../../assets/js/core/bootstrap.min.js"></script>
-    <script src="../../assets/js/student-profiles.js"></script>
 
     <!-- DataTables JS -->
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
@@ -254,11 +300,33 @@ $current_info = [
     <!-- Plugin JS -->
     <script src="../../assets/js/plugins/perfect-scrollbar.min.js"></script>
     <script src="../../assets/js/plugins/smooth-scrollbar.min.js"></script>
-    <script src="https://kit.fontawesome.com/ddc03e77c7.js"></script>
+    <script src="https://kit.fontawesome.com/ddc03e77c7.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Custom JS -->
     <script src="../../assets/js/material-dashboard.min.js?v=3.2.0"></script>
     <script src="../../assets/js/sign-out.js"></script>
+    <script src="../../assets/js/student-management.js"></script>
+        <!-- Initialize DataTable -->
+        <script>
+        $(document).ready(function() {
+            $('#studentsTable').DataTable({
+                responsive: true,
+                dom: 'Bfrtip',
+                buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+            });
+        });
+
+        // Windows specific scrollbar
+        var win = navigator.platform.indexOf('Win') > -1;
+        if (win && document.querySelector('#sidenav-scrollbar')) {
+            var options = {
+                damping: '0.5'
+            }
+            Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+        }
+    </script>
+    
 </body>
-</html>
+
+</html> 

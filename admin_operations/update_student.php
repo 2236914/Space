@@ -1,98 +1,128 @@
 <?php
-header('Content-Type: application/json');
+session_start();
 require_once '../configs/config.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    try {
-        // Validate srcode (only required field)
-        if (empty($_POST['srcode'])) {
-            throw new Exception("Student ID is required");
-        }
+// Check if user is logged in and is an admin
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+    header('Content-Type: application/json');
+    echo json_encode(['success' => false, 'message' => 'Unauthorized access']);
+    exit();
+}
 
-        // Get current student data
-        $stmt = $pdo->prepare("SELECT * FROM students WHERE srcode = ?");
-        $stmt->execute([$_POST['srcode']]);
-        $currentData = $stmt->fetch(PDO::FETCH_ASSOC);
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    echo json_encode(['success' => false, 'message' => 'Invalid request method']);
+    exit();
+}
 
-        if (!$currentData) {
-            throw new Exception("Student not found");
-        }
+try {
+    // Verify SR-Code exists (only required field)
+    if (!isset($_POST['srcode']) || empty($_POST['srcode'])) {
+        echo json_encode(['success' => false, 'message' => 'Student SR-Code is required']);
+        exit();
+    }
 
-        // Build update query dynamically based on provided fields
-        $updateFields = [];
-        $params = ['srcode' => $_POST['srcode']]; // Always include srcode
+    // Get current student data
+    $get_current = $pdo->prepare("SELECT * FROM students WHERE srcode = ?");
+    $get_current->execute([$_POST['srcode']]);
+    $current_data = $get_current->fetch(PDO::FETCH_ASSOC);
 
-        $fields = [
-            'firstname', 'lastname', 'phonenum', 'email',
-            'department', 'year', 'section', 'course', 'status'
-        ];
+    if (!$current_data) {
+        echo json_encode(['success' => false, 'message' => 'Student not found']);
+        exit();
+    }
 
-        foreach ($fields as $field) {
-            if (isset($_POST[$field]) && !empty($_POST[$field])) {
-                // Validate phone number if it's being updated
-                if ($field === 'phonenum' && !preg_match('/^09\d{9}$/', $_POST[$field])) {
-                    throw new Exception("Invalid phone number format");
+    // Build update query dynamically based on provided fields
+    $update_fields = [];
+    $params = ['srcode' => $_POST['srcode']]; // For WHERE clause
+
+    // Fields that can be updated
+    $allowed_fields = [
+        'firstname', 'lastname', 'email', 'phonenum',
+        'course', 'year', 'section', 'department', 'status'
+    ];
+
+    foreach ($allowed_fields as $field) {
+        if (isset($_POST[$field]) && !empty($_POST[$field])) {
+            // Check if email is being changed and is already in use
+            if ($field === 'email' && $_POST['email'] !== $current_data['email']) {
+                $check_stmt = $pdo->prepare("SELECT srcode FROM students WHERE email = ? AND srcode != ?");
+                $check_stmt->execute([$_POST['email'], $_POST['srcode']]);
+                if ($check_stmt->rowCount() > 0) {
+                    echo json_encode(['success' => false, 'message' => 'Email is already in use by another student']);
+                    exit();
                 }
-
-                // Validate email uniqueness if it's being updated
-                if ($field === 'email' && $_POST[$field] !== $currentData['email']) {
-                    $stmt = $pdo->prepare("SELECT COUNT(*) FROM students WHERE email = ? AND srcode != ?");
-                    $stmt->execute([$_POST[$field], $_POST['srcode']]);
-                    if ($stmt->fetchColumn() > 0) {
-                        throw new Exception("Email already exists for another student");
-                    }
-                }
-
-                // Validate phone number uniqueness if it's being updated
-                if ($field === 'phonenum' && $_POST[$field] !== $currentData['phonenum']) {
-                    $stmt = $pdo->prepare("SELECT COUNT(*) FROM students WHERE phonenum = ? AND srcode != ?");
-                    $stmt->execute([$_POST[$field], $_POST['srcode']]);
-                    if ($stmt->fetchColumn() > 0) {
-                        throw new Exception("Phone number already exists for another student");
-                    }
-                }
-
-                $updateFields[] = "$field = :$field";
-                $params[$field] = $_POST[$field];
             }
+            $update_fields[] = "$field = :$field";
+            $params[$field] = $_POST[$field];
         }
+    }
 
-        // Only update if there are fields to update
-        if (!empty($updateFields)) {
-            $sql = "UPDATE students SET " . implode(", ", $updateFields) . " WHERE srcode = :srcode";
-            $stmt = $pdo->prepare($sql);
-            $result = $stmt->execute($params);
+    // Only proceed if there are fields to update
+    if (!empty($update_fields)) {
+        $query = "UPDATE students SET " . implode(', ', $update_fields) . " WHERE srcode = :srcode";
+        $stmt = $pdo->prepare($query);
+        $result = $stmt->execute($params);
 
-            if ($result) {
+        if ($result) {
+            // Handle profile picture update if provided
+            if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] === 0) {
+                $upload_dir = '../uploads/profile_pictures/students/';
+                if (!file_exists($upload_dir)) {
+                    mkdir($upload_dir, 0777, true);
+                }
+                
+                $file_ext = strtolower(pathinfo($_FILES['profile_picture']['name'], PATHINFO_EXTENSION));
+                $file_name = $_POST['srcode'] . '.' . $file_ext;
+                
+                if (move_uploaded_file($_FILES['profile_picture']['tmp_name'], $upload_dir . $file_name)) {
+                    // Profile picture updated successfully
+                }
+            }
+
+            echo json_encode([
+                'success' => true, 
+                'message' => 'Student information updated successfully'
+            ]);
+        } else {
+            echo json_encode([
+                'success' => false, 
+                'message' => 'Failed to update student information'
+            ]);
+        }
+    } else {
+        // No fields to update but profile picture might have changed
+        if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] === 0) {
+            $upload_dir = '../uploads/profile_pictures/students/';
+            if (!file_exists($upload_dir)) {
+                mkdir($upload_dir, 0777, true);
+            }
+            
+            $file_ext = strtolower(pathinfo($_FILES['profile_picture']['name'], PATHINFO_EXTENSION));
+            $file_name = $_POST['srcode'] . '.' . $file_ext;
+            
+            if (move_uploaded_file($_FILES['profile_picture']['tmp_name'], $upload_dir . $file_name)) {
                 echo json_encode([
-                    'success' => true,
-                    'message' => 'Student updated successfully'
+                    'success' => true, 
+                    'message' => 'Profile picture updated successfully'
                 ]);
             } else {
-                throw new Exception("Failed to update student");
+                echo json_encode([
+                    'success' => false, 
+                    'message' => 'Failed to update profile picture'
+                ]);
             }
         } else {
             echo json_encode([
-                'success' => true,
-                'message' => 'No changes to update'
+                'success' => true, 
+                'message' => 'No changes were made'
             ]);
         }
-
-    } catch (PDOException $e) {
-        error_log("Database Error: " . $e->getMessage());
-        echo json_encode([
-            'success' => false,
-            'message' => 'Database error occurred. Please try again.'
-        ]);
-    } catch (Exception $e) {
-        echo json_encode([
-            'success' => false,
-            'message' => $e->getMessage()
-        ]);
     }
-} else {
+
+} catch (PDOException $e) {
+    error_log("Error updating student: " . $e->getMessage());
     echo json_encode([
         'success' => false,
-        'message' => 'Invalid request method'
+        'message' => 'Database error occurred'
     ]);
 } 

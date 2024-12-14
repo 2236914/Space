@@ -24080,3 +24080,77 @@ Stack trace:
 
 [06-Dec-2024 23:07:15 Asia/Manila] No sessions found in basic query
 [06-Dec-2024 23:07:15 Asia/Manila] Error fetching community data: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'r.post_id' in 'on clause'
+[13-Dec-2024 16:17:40 Europe/Berlin] 
+=== New Upload Request (2024-12-13 16:17:40) ===
+[13-Dec-2024 16:17:40 Europe/Berlin] Remote IP: ::1
+[13-Dec-2024 16:17:40 Europe/Berlin] User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36
+[13-Dec-2024 16:17:40 Europe/Berlin] Session Data: Array
+(
+    [user_id] => 2237621
+    [srcode] => 2237621
+    [firstname] => Gwyn
+    [lastname] => Maralit
+    [role] => student
+    [session_log_id] => 35
+)
+
+[13-Dec-2024 16:17:40 Europe/Berlin] POST Data: Array
+(
+)
+
+[13-Dec-2024 16:17:40 Europe/Berlin] FILES Data: Array
+(
+    [profile_picture] => Array
+        (
+            [name] => GMwu11wWIAA7TwB.jpg
+            [full_path] => GMwu11wWIAA7TwB.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\phpB1BD.tmp
+            [error] => 0
+            [size] => 51636
+        )
+
+)
+
+[13-Dec-2024 16:17:40 Europe/Berlin] Loading required files...
+[13-Dec-2024 23:17:40 Asia/Manila] Required files loaded successfully
+[13-Dec-2024 23:17:40 Asia/Manila] Session validated successfully
+[13-Dec-2024 23:17:40 Asia/Manila] File details: Array
+(
+    [name] => GMwu11wWIAA7TwB.jpg
+    [full_path] => GMwu11wWIAA7TwB.jpg
+    [type] => image/jpeg
+    [tmp_name] => C:\xampp\tmp\phpB1BD.tmp
+    [error] => 0
+    [size] => 51636
+)
+
+[13-Dec-2024 23:17:40 Asia/Manila] Reading file data...
+[13-Dec-2024 23:17:40 Asia/Manila] File data read successfully. Size: 51636 bytes
+[13-Dec-2024 23:17:40 Asia/Manila] Starting database transaction...
+[13-Dec-2024 23:17:40 Asia/Manila] Updating profile picture...
+[13-Dec-2024 23:17:40 Asia/Manila] Profile picture updated successfully
+[13-Dec-2024 23:17:40 Asia/Manila] === Request Complete (2024-12-13 23:17:40) ===
+
+[13-Dec-2024 23:19:32 Asia/Manila] Current srcode: 2237621
+[13-Dec-2024 23:19:32 Asia/Manila] Basic query results count: 1
+[13-Dec-2024 23:19:32 Asia/Manila] Basic query results: Array
+(
+    [0] => Array
+        (
+            [session_id] => 31
+            [srcode] => 2237621
+            [therapist_id] => THR-001
+            [session_date] => 2024-12-14
+            [session_time] => 09:00:00
+            [session_type] => online
+            [status] => pending
+            [notes] => hi
+            [created_at] => 2024-12-13 23:18:56
+            [updated_at] => 2024-12-13 23:18:56
+        )
+
+)
+
+[13-Dec-2024 23:19:32 Asia/Manila] Full query results count: 1
+[13-Dec-2024 23:19:32 Asia/Manila] Error fetching community data: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'r.post_id' in 'on clause'

@@ -350,3 +350,20 @@ Ikaw lang ang iniibig....
     [session_log_id] => 33
 )
 
+[13-Dec-2024 23:17:15 Asia/Manila] Received request: Array
+(
+    [selected_emoji] => 😊
+    [mood_name] => Happy
+    [description] =>  nice ............ nice ............ nice ............ nice ............ nice ............ nice ............ nice ............ nice ............ nice ............ 
+)
+
+[13-Dec-2024 23:17:15 Asia/Manila] Session data: Array
+(
+    [user_id] => 2237621
+    [srcode] => 2237621
+    [firstname] => Gwyn
+    [lastname] => Maralit
+    [role] => student
+    [session_log_id] => 35
+)
+

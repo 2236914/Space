@@ -1,14 +1,8 @@
 <?php
-session_start();
 require_once '../../configs/config.php';
 require_once '../../includes/admin_navigation_components.php';
-
-// Check if user is logged in and is an admin
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
-    header('Location: ../../signin.php');
-    exit();
-}
-
+require_once '../../configs/auth_check.php';
+checkAdminAuth();
 // Fetch therapists from database
 try {
     $stmt = $pdo->prepare("

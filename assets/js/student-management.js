@@ -1,5 +1,11 @@
 $(document).ready(function() {
-    // Add this before DataTable initialization
+    // First, check if DataTable already exists and destroy it
+    if ($.fn.DataTable.isDataTable('#studentsTable')) {
+        $('#studentsTable').DataTable().destroy();
+        $('#studentsTable').empty(); // Clear the table contents
+    }
+
+    // Debug AJAX call
     $.ajax({
         url: '../../admin_operations/get_students.php',
         success: function(response) {
@@ -11,22 +17,15 @@ $(document).ready(function() {
         }
     });
 
-    // Destroy existing DataTable if it exists
-    if ($.fn.DataTable.isDataTable('#studentsTable')) {
-        $('#studentsTable').DataTable().destroy();
-    }
-
+    // Initialize DataTable
     var table = $('#studentsTable').DataTable({
-        dom: '<"table-responsive"t>',
-        paging: false,
-        info: false,
-        searching: false,
-        lengthChange: false,
-        ordering: true,
+        processing: true,
+        serverSide: false,
+        responsive: true,
         ajax: {
             url: '../../admin_operations/get_students.php',
             dataSrc: function(json) {
-                console.log('Received data:', json); // Debug log
+                console.log('Received data:', json);
                 return json.data || [];
             }
         },
@@ -48,72 +47,87 @@ $(document).ready(function() {
                     </div>`;
                 }
             },
-            {
-                data: null,
-                render: function(data, type, row) {
-                    if (!row.course) return ''; // Safety check
-                    return `<div class="d-flex flex-column">
-                        <p class="text-xs font-weight-bold mb-0">${row.course}</p>
-                        <p class="text-xs text-secondary mb-0">${row.year_section} | ${row.department}</p>
-                    </div>`;
-                }
-            },
-            {
-                data: null,
-                render: function(data, type, row) {
-                    if (!row.email) return ''; // Safety check
-                    return `<div class="d-flex flex-column">
-                        <p class="text-xs font-weight-bold mb-0">${row.phonenum}</p>
-                        <p class="text-xs text-secondary mb-0">${row.email}</p>
-                    </div>`;
-                }
-            },
-            {
-                data: 'status',
-                render: function(data, type, row) {
-                    if (!row.status) return ''; // Safety check
-                    return `<span class="badge badge-sm bg-gradient-${getStatusClass(row.status)}">${row.status}</span>`;
-                }
-            },
-            {
-                data: 'created_date',
-                render: function(data, type, row) {
-                    return row.created_date || '';
-                }
-            },
-            {
-                data: null,
-                orderable: false,
-                render: function(data, type, row) {
-                    if (!row.srcode) return ''; // Safety check
-                    return `<button class="btn btn-link text-secondary mb-0 view-student" 
-                            data-srcode="${row.srcode}"
-                            data-bs-toggle="tooltip"
-                            title="View Profile">
-                        <i class="fas fa-eye text-xs"></i>
-                    </button>
-                    <button class="btn btn-link text-secondary mb-0 edit-student" 
-                            data-srcode="${row.srcode}"
-                            data-bs-toggle="tooltip"
-                            title="Edit Profile">
-                        <i class="fas fa-edit text-xs"></i>
-                    </button>`;
-                }
+        {
+            data: null,
+            render: function(data, type, row) {
+                return `<div class="d-flex flex-column">
+                    <p class="text-xs font-weight-bold mb-0">${row.course || ''}</p>
+                    <p class="text-xs text-secondary mb-0">${row.year_section} | ${row.department || ''}</p>
+                </div>`;
             }
-        ]
-    });
+        },
+        {
+            data: null,
+            render: function(data, type, row) {
+                return `<div class="d-flex flex-column">
+                    <p class="text-xs font-weight-bold mb-0">${row.phonenum || ''}</p>
+                    <p class="text-xs text-secondary mb-0">${row.email || ''}</p>
+                </div>`;
+            }
+        },
+        {
+            data: 'status',
+            render: function(data, type, row) {
+                return `<span class="badge badge-sm bg-gradient-${getStatusClass(row.status)}">${row.status}</span>`;
+            }
+        },
+        {
+            data: 'created_date',
+            render: function(data, type, row) {
+                return row.created_date || '';
+            }
+        },
+        {
+            data: null,
+            orderable: false,
+            render: function(data, type, row) {
+                return `<button class="btn btn-link text-secondary mb-0 view-student" 
+                        data-srcode="${row.srcode}"
+                        data-bs-toggle="tooltip"
+                        title="View Profile">
+                    <i class="fas fa-eye text-xs"></i>
+                </button>
+                <button class="btn btn-link text-secondary mb-0 edit-student" 
+                        data-srcode="${row.srcode}"
+                        data-bs-toggle="tooltip"
+                        title="Edit Profile">
+                    <i class="fas fa-edit text-xs"></i>
+                </button>`;
+            }
+        }
+    ],
+    responsive: true,
+    language: {
+        search: "_INPUT_",
+        searchPlaceholder: "Search students..."
+    },
+    dom: "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
+         "<'row'<'col-sm-12'tr>>" +
+         "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+    // Add error handling here, inside the DataTable configuration
+    error: function(xhr, error, thrown) {
+        console.error('DataTables error:', error);
+        showErrorAlert('Error loading data');
+    }
+});
 
-    // Debug sorting
-    table.on('order.dt', function() {
-        console.log('Sort order:', table.order());
-    });
+// Add global AJAX error handling after the DataTable initialization
+$(document).ajaxError(function(event, jqxhr, settings, thrownError) {
+    console.error('Ajax error occurred:', thrownError);
+    console.error('Response:', jqxhr.responseText);
+});
 
-    // Add error handling for AJAX requests
-    $(document).ajaxError(function(event, jqxhr, settings, thrownError) {
-        console.error('Ajax error occurred:', thrownError);
-        console.error('Response:', jqxhr.responseText);
-        showErrorAlert('Failed to load data. Please try refreshing the page.');
-    });
+// Add after DataTable initialization
+table.on('order.dt', function() {
+    console.log('Sort order:', table.order());
+});
+
+// Add after DataTable initialization
+$(document).ajaxError(function(event, jqxhr, settings, thrownError) {
+    console.error('Ajax error occurred:', thrownError);
+    console.error('Response:', jqxhr.responseText);
+    showErrorAlert('Failed to load data. Please try refreshing the page.');
+});
 
     // Helper function for status classes
     function getStatusClass(status) {
@@ -126,46 +140,46 @@ $(document).ready(function() {
     }
 
     // Custom search functionality
-    $('#searchStudents').on('keyup', function() {
-        const searchValue = $(this).val().toLowerCase();
-        
-        table.rows().every(function() {
-            const data = this.data();
-            const rowText = [
-                data.firstname,
-                data.lastname,
-                data.srcode,
-                data.course,
-                data.year_section,
-                data.department,
-                data.email,
-                data.phonenum
-            ].join(' ').toLowerCase();
+$('#searchStudents').on('keyup', function() {
+    const searchValue = $(this).val().toLowerCase();
+    
+    table.rows().every(function() {
+        const data = this.data();
+        const rowText = [
+            data.firstname,
+            data.lastname,
+            data.srcode,
+            data.course,
+            data.year_section,
+            data.department,
+            data.email,
+            data.phonenum
+        ].join(' ').toLowerCase();
 
-            if (rowText.includes(searchValue)) {
-                $(this.node()).show();
-            } else {
-                $(this.node()).hide();
-            }
-        });
-    });
-
-     // Filter handling
-     $('.dropdown-item').on('click', function(e) {
-        e.preventDefault();
-        const filterValue = $(this).data('filter');
-        
-        // Update button text
-        $('#filterDropdown').html(`<i class="fas fa-filter me-2"></i>${$(this).text()}`);
-
-        // Simple jQuery filtering (without using DataTables API)
-        if (filterValue === 'all') {
-            $('.table tbody tr').show();
+        if (rowText.includes(searchValue)) {
+            $(this.node()).show();
         } else {
-            $('.table tbody tr').hide();
-            $(`.table tbody tr:contains('${filterValue}')`).show();
+            $(this.node()).hide();
         }
     });
+});
+
+    // Filter handling
+$('.dropdown-item').on('click', function(e) {
+    e.preventDefault();
+    const filterValue = $(this).data('filter');
+    
+    // Update button text
+    $('#filterDropdown').html(`<i class="fas fa-filter me-2"></i>${$(this).text()}`);
+
+    // Simple jQuery filtering
+    if (filterValue === 'all') {
+        $('.table tbody tr').show();
+    } else {
+        $('.table tbody tr').hide();
+        $(`.table tbody tr:contains('${filterValue}')`).show();
+    }
+});
 
     // Export to CSV
     $('#exportCSV').on('click', function() {

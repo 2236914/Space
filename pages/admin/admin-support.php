@@ -1,11 +1,6 @@
 <?php
-session_start();
-
-// Check if user is logged in and is an admin
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
-    header('Location: ../../signin.php');
-    exit();
-}
+require_once '../../configs/auth_check.php';
+checkAdminAuth();
 
 // Required files
 require_once '../../configs/config.php';

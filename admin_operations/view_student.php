@@ -9,27 +9,28 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     exit();
 }
 
-// Check if ID is provided
 if (!isset($_GET['id'])) {
-    echo json_encode(['success' => false, 'message' => 'Student ID is required']);
+    header('Content-Type: application/json');
+    echo json_encode(['success' => false, 'message' => 'Student ID not provided']);
     exit();
 }
 
 try {
-    $srcode = $_GET['id'];
+    // Add error logging
+    error_log("Attempting to fetch student with ID: " . $_GET['id']);
     
-    // Fetch student details
     $query = "
         SELECT 
             s.srcode,
             s.firstname,
             s.lastname,
+            s.phonenum,
             s.email,
-            s.phonenum as contact_number,
-            s.course,
+            s.department,
             s.year,
             s.section,
-            s.department,
+            s.course,
+            CONCAT(s.year, '-', s.section) as year_section,
             s.status,
             DATE_FORMAT(s.created_date, '%d/%m/%y') as created_date
         FROM 
@@ -39,25 +40,29 @@ try {
     ";
     
     $stmt = $pdo->prepare($query);
-    $stmt->execute(['srcode' => $srcode]);
+    $stmt->execute(['srcode' => $_GET['id']]);
     $student = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($student) {
-        echo json_encode([
-            'success' => true,
-            'data' => $student
-        ]);
+        header('Content-Type: application/json');
+        echo json_encode(['success' => true, 'data' => $student]);
     } else {
+        error_log("No student found with ID: " . $_GET['id']);
+        header('Content-Type: application/json');
         echo json_encode([
-            'success' => false,
-            'message' => 'Student not found'
+            'success' => false, 
+            'message' => 'Student not found',
+            'debug' => 'Searched for srcode: ' . $_GET['id']
         ]);
     }
 
 } catch (PDOException $e) {
+    error_log("Error fetching student: " . $e->getMessage());
+    header('Content-Type: application/json');
     echo json_encode([
         'success' => false,
-        'message' => 'Failed to fetch student details: ' . $e->getMessage()
+        'message' => 'Database error occurred',
+        'debug' => $e->getMessage()
     ]);
 }
 ?> 
