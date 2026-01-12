@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/logo-space.png">
+  <link rel="icon" type="image/png" href="../assets/img/logo-space.png">
+  <title>Mood Tracker - Space</title>
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,900" />
+  <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
+  <link id="pagestyle" href="../assets/css/material-dashboard.css" rel="stylesheet" />
+  <style>
+    .demo-banner {
+      background: linear-gradient(90deg, #4CAF50 0%, #2196F3 100%);
+      color: white;
+      padding: 8px 20px;
+      text-align: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 9999;
+      font-size: 13px;
+    }
+    .demo-banner a { color: #fff; margin: 0 10px; }
+    body.g-sidenav-show { padding-top: 35px; }
+    .sidenav { top: 35px !important; }
+    .main-content { margin-top: 35px; }
+    .mood-emoji { font-size: 48px; cursor: pointer; transition: transform 0.2s; }
+    .mood-emoji:hover { transform: scale(1.2); }
+    .mood-emoji.selected { transform: scale(1.3); filter: drop-shadow(0 0 8px rgba(0,0,0,0.3)); }
+  </style>
+</head>
+
+<body class="g-sidenav-show bg-gray-100">
+  <!-- Demo Banner -->
+  <div class="demo-banner">
+    👨‍🎓 <strong>STUDENT DEMO - Mood Tracker</strong> | 
+    <a href="dashboard.html">Dashboard</a> |
+    <a href="community.html">Community</a> |
+    <a href="../therapist/dashboard.html">Therapist View</a> |
+    <a href="../index.html">Home</a>
+  </div>
+
+  <!-- Sidebar -->
+  <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-radius-lg fixed-start ms-2 bg-white my-2" id="sidenav-main">
+    <div class="sidenav-header">
+      <i class="fas fa-times p-3 cursor-pointer text-dark opacity-5 position-absolute end-0 top-0 d-xl-none" aria-hidden="true" id="iconSidenav"></i>
+      <a class="navbar-brand px-4 py-3 m-0" href="../index.html">
+        <img src="../assets/img/logo-space.png" class="navbar-brand-img" width="26" height="26" alt="main_logo">
+        <span class="ms-1 font-weight-bold lead text-dark">SPACE</span>
+      </a>
+    </div>
+    <hr class="horizontal dark mt-0 mb-2">
+
+    <div class="collapse navbar-collapse w-auto h-auto" id="sidenav-collapse-main">
+      <ul class="navbar-nav">
+        <li class="nav-item mb-2 mt-0">
+          <a href="#" class="nav-link text-dark">
+            <img src="../assets/img/default-avatar.png" class="avatar" alt="avatar">
+            <span class="nav-link-text ms-2 ps-1">Juan Dela Cruz</span>
+          </a>
+        </li>
+        <hr class="horizontal dark mt-0">
+        
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="dashboard.html">
+            <i class="material-symbols-rounded opacity-5">dashboard</i>
+            <span class="nav-link-text ms-1 ps-1">Dashboard</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark active" href="moodtracker.html">
+            <i class="material-symbols-rounded opacity-5">mood</i>
+            <span class="nav-link-text ms-1 ps-1">Mood Tracker</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="book-session.html">
+            <i class="material-symbols-rounded opacity-5">calendar_month</i>
+            <span class="nav-link-text ms-1 ps-1">Book Session</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="my-sessions.html">
+            <i class="material-symbols-rounded opacity-5">videocam</i>
+            <span class="nav-link-text ms-1 ps-1">My Sessions</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="community.html">
+            <i class="material-symbols-rounded opacity-5">forum</i>
+            <span class="nav-link-text ms-1 ps-1">Community</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="selfcare.html">
+            <i class="material-symbols-rounded opacity-5">spa</i>
+            <span class="nav-link-text ms-1 ps-1">Self-Care Tools</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="settings.html">
+            <i class="material-symbols-rounded opacity-5">settings</i>
+            <span class="nav-link-text ms-1 ps-1">Account Settings</span>
+          </a>
+        </li>
+
+        <hr class="horizontal dark mt-0">
+        <div class="d-flex justify-content-center">
+          <button type="button" class="btn bg-gradient-info w-85 mx-auto" onclick="showDemoAlert('Space Support')">
+            <i class="material-symbols-rounded opacity-5 me-2">support_agent</i>
+            <span class="nav-link-text">Space Support</span>
+          </button>
+        </div>
+        <div class="d-flex justify-content-center mt-2">
+          <a href="../signin.html" class="btn bg-gradient-primary w-85 mx-auto">
+            <i class="material-symbols-rounded opacity-5 me-2">logout</i>
+            <span class="nav-link-text">Sign Out</span>
+          </a>
+        </div>
+      </ul>
+    </div>
+  </aside>
+
+  <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
+    <!-- Navbar -->
+    <nav class="navbar navbar-main navbar-expand-lg position-sticky mt-2 top-1 px-0 py-1 mx-3 shadow-none border-radius-lg z-index-sticky" id="navbarBlur" data-scroll="true">
+      <div class="container-fluid py-1 px-2">
+        <nav aria-label="breadcrumb" class="ps-2">
+          <ol class="breadcrumb bg-transparent mb-0 p-0">
+            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Student</a></li>
+            <li class="breadcrumb-item text-sm text-dark active font-weight-bold" aria-current="page">Mood Tracker</li>
+          </ol>
+        </nav>
+      </div>
+    </nav>
+
+    <div class="container-fluid py-2">
+      <div class="row">
+        <div class="ms-3">
+          <h3 class="mb-0 h4 font-weight-bolder">Mood Tracker</h3>
+          <p class="mb-4">Track and monitor your daily emotional well-being with our mood tracking system.</p>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+          <div class="card">
+            <div class="card-header p-2 ps-3">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <p class="text-sm mb-0 text-capitalize">Today's Mood</p>
+                  <div class="d-flex align-items-center">
+                    <span style="font-size: 24px;">😊</span>
+                  </div>
+                </div>
+                <div class="icon icon-md icon-shape bg-gradient-info shadow text-center border-radius-lg">
+                  <i class="material-symbols-rounded opacity-10">mood</i>
+                </div>
+              </div>
+            </div>
+            <hr class="dark horizontal my-0">
+            <div class="card-footer p-2 ps-3">
+              <p class="mb-0 text-sm"><span class="text-info font-weight-bolder">Great</span> mood tracking</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+          <div class="card">
+            <div class="card-header p-2 ps-3">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <p class="text-sm mb-0 text-capitalize">Mood Streak</p>
+                  <h4 class="mb-0">7 Days</h4>
+                </div>
+                <div class="icon icon-md icon-shape bg-gradient-warning shadow-warning shadow text-center border-radius-lg">
+                  <i class="material-symbols-rounded opacity-10">local_fire_department</i>
+                </div>
+              </div>
+            </div>
+            <hr class="dark horizontal my-0">
+            <div class="card-footer p-2 ps-3">
+              <p class="mb-0 text-sm"><span class="text-warning font-weight-bolder">Keep it up!</span> You're doing great</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+          <div class="card">
+            <div class="card-header p-2 ps-3">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <p class="text-sm mb-0 text-capitalize">Weekly Entries</p>
+                  <h4 class="mb-0">7 Days</h4>
+                </div>
+                <div class="icon icon-md icon-shape bg-gradient-info shadow-info shadow text-center border-radius-lg">
+                  <i class="material-symbols-rounded opacity-10">calendar_month</i>
+                </div>
+              </div>
+            </div>
+            <hr class="dark horizontal my-0">
+            <div class="card-footer p-2 ps-3">
+              <p class="mb-0 text-sm"><span class="text-info font-weight-bolder">Perfect week</span> mood tracking</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-3 col-sm-6">
+          <div class="card">
+            <div class="card-header p-2 ps-3">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <p class="text-sm mb-0 text-capitalize">Journal Entries</p>
+                  <h4 class="mb-0">15 Total</h4>
+                </div>
+                <div class="icon icon-md icon-shape bg-gradient-primary shadow-primary shadow text-center border-radius-lg">
+                  <i class="material-symbols-rounded opacity-10">edit_note</i>
+                </div>
+              </div>
+            </div>
+            <hr class="dark horizontal my-0">
+            <div class="card-footer p-2 ps-3">
+              <p class="mb-0 text-sm"><span class="text-primary font-weight-bolder">+3</span> new entries this week</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mood Selection -->
+      <div class="row mt-4">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header p-3 pb-0">
+              <h6 class="font-weight-bolder mb-0">How are you feeling today?</h6>
+              <p class="text-sm mb-0">Select the emoji that best represents your current mood</p>
+            </div>
+            <div class="card-body p-3">
+              <div class="d-flex justify-content-around flex-wrap gap-3">
+                <div class="text-center" onclick="selectMood(this, 'Happy')">
+                  <span class="mood-emoji">😊</span>
+                  <p class="text-sm mt-2 mb-0">Happy</p>
+                </div>
+                <div class="text-center" onclick="selectMood(this, 'Sad')">
+                  <span class="mood-emoji">☹️</span>
+                  <p class="text-sm mt-2 mb-0">Sad</p>
+                </div>
+                <div class="text-center" onclick="selectMood(this, 'Calm')">
+                  <span class="mood-emoji">😌</span>
+                  <p class="text-sm mt-2 mb-0">Calm</p>
+                </div>
+                <div class="text-center" onclick="selectMood(this, 'Angry')">
+                  <span class="mood-emoji">😠</span>
+                  <p class="text-sm mt-2 mb-0">Angry</p>
+                </div>
+                <div class="text-center" onclick="selectMood(this, 'Fearful')">
+                  <span class="mood-emoji">😨</span>
+                  <p class="text-sm mt-2 mb-0">Fearful</p>
+                </div>
+                <div class="text-center" onclick="selectMood(this, 'Tired')">
+                  <span class="mood-emoji">😴</span>
+                  <p class="text-sm mt-2 mb-0">Tired</p>
+                </div>
+                <div class="text-center" onclick="selectMood(this, 'Thoughtful')">
+                  <span class="mood-emoji">🤔</span>
+                  <p class="text-sm mt-2 mb-0">Thoughtful</p>
+                </div>
+                <div class="text-center" onclick="selectMood(this, 'Love')">
+                  <span class="mood-emoji">😍</span>
+                  <p class="text-sm mt-2 mb-0">Love</p>
+                </div>
+              </div>
+              
+              <div class="mt-4">
+                <label class="form-label">Add a note about your day (optional)</label>
+                <textarea class="form-control" rows="4" placeholder="What's on your mind?"></textarea>
+              </div>
+              
+              <div class="text-end mt-3">
+                <button class="btn bg-gradient-primary" onclick="showDemoAlert('Mood Logging')">
+                  <i class="material-symbols-rounded me-1">save</i> Save Mood Entry
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mood History Chart -->
+      <div class="row mt-4">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header p-3 pb-0">
+              <div class="d-flex align-items-center">
+                <div class="icon icon-lg icon-shape bg-gradient-info shadow-info text-center border-radius-xl mt-n4 me-3">
+                  <i class="material-symbols-rounded opacity-10">insights</i>
+                </div>
+                <div>
+                  <h6 class="mb-0">Feel-O-Meter</h6>
+                  <p class="text-sm mb-0">Your mood patterns over time</p>
+                </div>
+              </div>
+            </div>
+            <div class="card-body p-3">
+              <div class="text-center py-5">
+                <i class="material-symbols-rounded" style="font-size: 64px; color: #ccc;">show_chart</i>
+                <p class="text-muted mt-2">Mood chart visualization would appear here in the live application</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer class="footer py-4">
+        <div class="container-fluid">
+          <div class="row align-items-center justify-content-lg-between">
+            <div class="col-lg-6 mb-lg-0 mb-4">
+              <div class="copyright text-center text-sm text-muted text-lg-start">
+                © 2024 CreoTech - Space Mental Health System (Demo)
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </main>
+
+  <!-- Core JS Files -->
+  <script src="../assets/js/core/popper.min.js"></script>
+  <script src="../assets/js/core/bootstrap.min.js"></script>
+  <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
+  <script src="../assets/js/material-dashboard.min.js"></script>
+  
+  <script>
+    function showDemoAlert(feature) {
+      alert('This is a demo. The "' + feature + '" feature would be fully functional in the live application.');
+    }
+    
+    function selectMood(element, mood) {
+      // Remove selected class from all
+      document.querySelectorAll('.mood-emoji').forEach(e => e.classList.remove('selected'));
+      // Add to clicked
+      element.querySelector('.mood-emoji').classList.add('selected');
+      console.log('Selected mood:', mood);
+    }
+  </script>
+</body>
+
+</html>

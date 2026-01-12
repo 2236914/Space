@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/logo-space.png">
+  <link rel="icon" type="image/png" href="../assets/img/logo-space.png">
+  <title>Book a Session - Space</title>
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,900" />
+  <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
+  <link id="pagestyle" href="../assets/css/material-dashboard.css" rel="stylesheet" />
+  <style>
+    .demo-banner {
+      background: linear-gradient(90deg, #4CAF50 0%, #2196F3 100%);
+      color: white;
+      padding: 8px 20px;
+      text-align: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 9999;
+      font-size: 13px;
+    }
+    .demo-banner a { color: #fff; margin: 0 10px; }
+    body.g-sidenav-show { padding-top: 35px; }
+    .sidenav { top: 35px !important; }
+    .main-content { margin-top: 35px; }
+    .therapist-card {
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+    .therapist-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    .therapist-card.selected {
+      border-color: #4CAF50;
+      background: linear-gradient(135deg, #e8f5e9 0%, #fff 100%);
+    }
+    .time-slot {
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .time-slot:hover {
+      background: #e3f2fd !important;
+    }
+    .time-slot.selected {
+      background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%) !important;
+      color: white !important;
+    }
+    .time-slot.unavailable {
+      opacity: 0.4;
+      pointer-events: none;
+      text-decoration: line-through;
+    }
+  </style>
+</head>
+
+<body class="g-sidenav-show bg-gray-100">
+  <!-- Demo Banner -->
+  <div class="demo-banner">
+    👨‍🎓 <strong>STUDENT DEMO - Book Session</strong> | 
+    <a href="dashboard.html">Dashboard</a> |
+    <a href="my-sessions.html">My Sessions</a> |
+    <a href="../therapist/dashboard.html">Therapist View</a> |
+    <a href="../index.html">Home</a>
+  </div>
+
+  <!-- Sidebar -->
+  <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-radius-lg fixed-start ms-2 bg-white my-2" id="sidenav-main">
+    <div class="sidenav-header">
+      <i class="fas fa-times p-3 cursor-pointer text-dark opacity-5 position-absolute end-0 top-0 d-xl-none" aria-hidden="true" id="iconSidenav"></i>
+      <a class="navbar-brand px-4 py-3 m-0" href="../index.html">
+        <img src="../assets/img/logo-space.png" class="navbar-brand-img" width="26" height="26" alt="main_logo">
+        <span class="ms-1 font-weight-bold lead text-dark">SPACE</span>
+      </a>
+    </div>
+    <hr class="horizontal dark mt-0 mb-2">
+    <div class="collapse navbar-collapse w-auto h-auto" id="sidenav-collapse-main">
+      <ul class="navbar-nav">
+        <li class="nav-item mb-2 mt-0">
+          <a href="#" class="nav-link text-dark">
+            <img src="../assets/img/default-avatar.png" class="avatar" alt="avatar">
+            <span class="nav-link-text ms-2 ps-1">Juan Dela Cruz</span>
+          </a>
+        </li>
+        <hr class="horizontal dark mt-0">
+        
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="dashboard.html">
+            <i class="material-symbols-rounded opacity-5">dashboard</i>
+            <span class="nav-link-text ms-1 ps-1">Dashboard</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="moodtracker.html">
+            <i class="material-symbols-rounded opacity-5">mood</i>
+            <span class="nav-link-text ms-1 ps-1">Mood Tracker</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark active" href="book-session.html">
+            <i class="material-symbols-rounded opacity-5">calendar_month</i>
+            <span class="nav-link-text ms-1 ps-1">Book Session</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="my-sessions.html">
+            <i class="material-symbols-rounded opacity-5">videocam</i>
+            <span class="nav-link-text ms-1 ps-1">My Sessions</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="community.html">
+            <i class="material-symbols-rounded opacity-5">forum</i>
+            <span class="nav-link-text ms-1 ps-1">Community</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="selfcare.html">
+            <i class="material-symbols-rounded opacity-5">spa</i>
+            <span class="nav-link-text ms-1 ps-1">Self-Care Tools</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="settings.html">
+            <i class="material-symbols-rounded opacity-5">settings</i>
+            <span class="nav-link-text ms-1 ps-1">Account Settings</span>
+          </a>
+        </li>
+
+        <hr class="horizontal dark mt-0">
+        <div class="d-flex justify-content-center">
+          <button type="button" class="btn bg-gradient-info w-85 mx-auto" onclick="showDemoAlert('Space Support')">
+            <i class="material-symbols-rounded opacity-5 me-2">support_agent</i>
+            <span class="nav-link-text">Space Support</span>
+          </button>
+        </div>
+        <div class="d-flex justify-content-center mt-2">
+          <a href="../signin.html" class="btn bg-gradient-primary w-85 mx-auto">
+            <i class="material-symbols-rounded opacity-5 me-2">logout</i>
+            <span class="nav-link-text">Sign Out</span>
+          </a>
+        </div>
+      </ul>
+    </div>
+  </aside>
+
+  <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
+    <!-- Navbar -->
+    <nav class="navbar navbar-main navbar-expand-lg position-sticky mt-2 top-1 px-0 py-1 mx-3 shadow-none border-radius-lg z-index-sticky" id="navbarBlur" data-scroll="true">
+      <div class="container-fluid py-1 px-2">
+        <nav aria-label="breadcrumb" class="ps-2">
+          <ol class="breadcrumb bg-transparent mb-0 p-0">
+            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="dashboard.html">Student</a></li>
+            <li class="breadcrumb-item text-sm text-dark active font-weight-bold" aria-current="page">Book a Session</li>
+          </ol>
+        </nav>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-12">
+          <h4 class="font-weight-bolder mb-1">Book a Therapy Session</h4>
+          <p class="text-muted mb-4">Choose your preferred therapist and schedule a time that works for you</p>
+        </div>
+      </div>
+
+      <!-- Step 1: Select Therapist -->
+      <div class="row mb-4">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header pb-0">
+              <div class="d-flex align-items-center">
+                <span class="badge bg-gradient-primary me-3" style="width: 30px; height: 30px; line-height: 20px;">1</span>
+                <h6 class="mb-0">Select a Therapist</h6>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <!-- Therapist 1 -->
+                <div class="col-lg-4 col-md-6 mb-3">
+                  <div class="card therapist-card h-100" onclick="selectTherapist(this, 'Dr. Maria Santos')">
+                    <div class="card-body text-center">
+                      <img src="../assets/img/default-avatar.png" class="rounded-circle mb-3" width="80" height="80" alt="Dr. Maria Santos">
+                      <h6 class="mb-1">Dr. Maria Santos</h6>
+                      <p class="text-sm text-muted mb-2">Licensed Clinical Psychologist</p>
+                      <div class="d-flex justify-content-center gap-1 mb-2">
+                        <span class="badge bg-light text-dark">Anxiety</span>
+                        <span class="badge bg-light text-dark">Depression</span>
+                      </div>
+                      <div class="d-flex justify-content-center align-items-center">
+                        <span class="text-warning">★★★★★</span>
+                        <span class="text-sm text-muted ms-1">(4.9)</span>
+                      </div>
+                      <p class="text-xs text-success mt-2 mb-0">
+                        <i class="material-symbols-rounded" style="font-size: 12px;">check_circle</i>
+                        Available this week
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Therapist 2 -->
+                <div class="col-lg-4 col-md-6 mb-3">
+                  <div class="card therapist-card h-100" onclick="selectTherapist(this, 'Dr. Juan Reyes')">
+                    <div class="card-body text-center">
+                      <img src="../assets/img/default-avatar.png" class="rounded-circle mb-3" width="80" height="80" alt="Dr. Juan Reyes">
+                      <h6 class="mb-1">Dr. Juan Reyes</h6>
+                      <p class="text-sm text-muted mb-2">Counseling Psychologist</p>
+                      <div class="d-flex justify-content-center gap-1 mb-2">
+                        <span class="badge bg-light text-dark">Stress</span>
+                        <span class="badge bg-light text-dark">Academic</span>
+                      </div>
+                      <div class="d-flex justify-content-center align-items-center">
+                        <span class="text-warning">★★★★★</span>
+                        <span class="text-sm text-muted ms-1">(4.8)</span>
+                      </div>
+                      <p class="text-xs text-success mt-2 mb-0">
+                        <i class="material-symbols-rounded" style="font-size: 12px;">check_circle</i>
+                        Available this week
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Therapist 3 -->
+                <div class="col-lg-4 col-md-6 mb-3">
+                  <div class="card therapist-card h-100" onclick="selectTherapist(this, 'Dr. Ana Cruz')">
+                    <div class="card-body text-center">
+                      <img src="../assets/img/default-avatar.png" class="rounded-circle mb-3" width="80" height="80" alt="Dr. Ana Cruz">
+                      <h6 class="mb-1">Dr. Ana Cruz</h6>
+                      <p class="text-sm text-muted mb-2">Clinical Psychologist</p>
+                      <div class="d-flex justify-content-center gap-1 mb-2">
+                        <span class="badge bg-light text-dark">Trauma</span>
+                        <span class="badge bg-light text-dark">Self-esteem</span>
+                      </div>
+                      <div class="d-flex justify-content-center align-items-center">
+                        <span class="text-warning">★★★★☆</span>
+                        <span class="text-sm text-muted ms-1">(4.7)</span>
+                      </div>
+                      <p class="text-xs text-success mt-2 mb-0">
+                        <i class="material-symbols-rounded" style="font-size: 12px;">check_circle</i>
+                        Available this week
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2: Select Date & Time -->
+      <div class="row mb-4">
+        <div class="col-lg-6 mb-3">
+          <div class="card h-100">
+            <div class="card-header pb-0">
+              <div class="d-flex align-items-center">
+                <span class="badge bg-gradient-info me-3" style="width: 30px; height: 30px; line-height: 20px;">2</span>
+                <h6 class="mb-0">Select a Date</h6>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="row text-center">
+                <div class="col" onclick="selectDate(this, 'Mon, Jan 13')">
+                  <div class="p-3 rounded time-slot">
+                    <div class="text-xs text-muted">MON</div>
+                    <div class="font-weight-bold">13</div>
+                  </div>
+                </div>
+                <div class="col" onclick="selectDate(this, 'Tue, Jan 14')">
+                  <div class="p-3 rounded time-slot">
+                    <div class="text-xs text-muted">TUE</div>
+                    <div class="font-weight-bold">14</div>
+                  </div>
+                </div>
+                <div class="col" onclick="selectDate(this, 'Wed, Jan 15')">
+                  <div class="p-3 rounded time-slot">
+                    <div class="text-xs text-muted">WED</div>
+                    <div class="font-weight-bold">15</div>
+                  </div>
+                </div>
+                <div class="col" onclick="selectDate(this, 'Thu, Jan 16')">
+                  <div class="p-3 rounded time-slot">
+                    <div class="text-xs text-muted">THU</div>
+                    <div class="font-weight-bold">16</div>
+                  </div>
+                </div>
+                <div class="col" onclick="selectDate(this, 'Fri, Jan 17')">
+                  <div class="p-3 rounded time-slot">
+                    <div class="text-xs text-muted">FRI</div>
+                    <div class="font-weight-bold">17</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6 mb-3">
+          <div class="card h-100">
+            <div class="card-header pb-0">
+              <div class="d-flex align-items-center">
+                <span class="badge bg-gradient-success me-3" style="width: 30px; height: 30px; line-height: 20px;">3</span>
+                <h6 class="mb-0">Select a Time</h6>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="row g-2">
+                <div class="col-4">
+                  <div class="p-2 rounded text-center time-slot" onclick="selectTime(this, '9:00 AM')">9:00 AM</div>
+                </div>
+                <div class="col-4">
+                  <div class="p-2 rounded text-center time-slot unavailable">10:00 AM</div>
+                </div>
+                <div class="col-4">
+                  <div class="p-2 rounded text-center time-slot" onclick="selectTime(this, '11:00 AM')">11:00 AM</div>
+                </div>
+                <div class="col-4">
+                  <div class="p-2 rounded text-center time-slot" onclick="selectTime(this, '1:00 PM')">1:00 PM</div>
+                </div>
+                <div class="col-4">
+                  <div class="p-2 rounded text-center time-slot" onclick="selectTime(this, '2:00 PM')">2:00 PM</div>
+                </div>
+                <div class="col-4">
+                  <div class="p-2 rounded text-center time-slot unavailable">3:00 PM</div>
+                </div>
+                <div class="col-4">
+                  <div class="p-2 rounded text-center time-slot" onclick="selectTime(this, '4:00 PM')">4:00 PM</div>
+                </div>
+                <div class="col-4">
+                  <div class="p-2 rounded text-center time-slot" onclick="selectTime(this, '5:00 PM')">5:00 PM</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 4: Session Details -->
+      <div class="row mb-4">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header pb-0">
+              <div class="d-flex align-items-center">
+                <span class="badge bg-gradient-warning me-3" style="width: 30px; height: 30px; line-height: 20px;">4</span>
+                <h6 class="mb-0">Session Details (Optional)</h6>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Session Type</label>
+                  <select class="form-select">
+                    <option selected>Video Call (Recommended)</option>
+                    <option>Voice Call Only</option>
+                    <option>Chat Session</option>
+                  </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Reason for Session</label>
+                  <select class="form-select">
+                    <option selected>General Check-in</option>
+                    <option>Academic Stress</option>
+                    <option>Anxiety/Depression</option>
+                    <option>Relationship Issues</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Additional Notes</label>
+                  <textarea class="form-control" rows="3" placeholder="Anything you'd like the therapist to know beforehand..."></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Booking Summary -->
+      <div class="row">
+        <div class="col-12">
+          <div class="card bg-gradient-dark">
+            <div class="card-body">
+              <div class="row align-items-center">
+                <div class="col-md-8">
+                  <h5 class="text-white mb-2">Booking Summary</h5>
+                  <p class="text-white-50 mb-0" id="summaryText">Select a therapist, date, and time to see your booking summary</p>
+                </div>
+                <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                  <button class="btn btn-white btn-lg" onclick="confirmBooking()">
+                    <i class="material-symbols-rounded me-2">event_available</i>
+                    Confirm Booking
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Core JS Files -->
+  <script src="../assets/js/core/popper.min.js"></script>
+  <script src="../assets/js/core/bootstrap.min.js"></script>
+  <script src="../assets/js/material-dashboard.min.js"></script>
+  
+  <script>
+    let booking = {
+      therapist: null,
+      date: null,
+      time: null
+    };
+
+    function selectTherapist(element, name) {
+      document.querySelectorAll('.therapist-card').forEach(card => card.classList.remove('selected'));
+      element.classList.add('selected');
+      booking.therapist = name;
+      updateSummary();
+    }
+
+    function selectDate(element, date) {
+      document.querySelectorAll('.col .time-slot').forEach(slot => {
+        if (slot.closest('.card-body').querySelector('.d-flex') === null) {
+          slot.classList.remove('selected');
+        }
+      });
+      element.querySelector('.time-slot').classList.add('selected');
+      booking.date = date;
+      updateSummary();
+    }
+
+    function selectTime(element, time) {
+      // Only for time slots
+      const parent = element.closest('.card-body');
+      parent.querySelectorAll('.time-slot').forEach(slot => slot.classList.remove('selected'));
+      element.classList.add('selected');
+      booking.time = time;
+      updateSummary();
+    }
+
+    function updateSummary() {
+      let summary = [];
+      if (booking.therapist) summary.push('Therapist: ' + booking.therapist);
+      if (booking.date) summary.push('Date: ' + booking.date);
+      if (booking.time) summary.push('Time: ' + booking.time);
+      
+      if (summary.length > 0) {
+        document.getElementById('summaryText').textContent = summary.join(' | ');
+      } else {
+        document.getElementById('summaryText').textContent = 'Select a therapist, date, and time to see your booking summary';
+      }
+    }
+
+    function confirmBooking() {
+      if (!booking.therapist || !booking.date || !booking.time) {
+        alert('Please select a therapist, date, and time before confirming.');
+        return;
+      }
+      
+      alert(`✅ Session Booked!\n\nTherapist: ${booking.therapist}\nDate: ${booking.date}\nTime: ${booking.time}\n\nThis is a demo - in the live app, you would receive a confirmation email and the session would appear in "My Sessions".`);
+    }
+
+    function showDemoAlert(feature) {
+      alert('This is a demo. The "' + feature + '" feature would be fully functional in the live application.');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/logo-space.png">
+  <link rel="icon" type="image/png" href="../assets/img/logo-space.png">
+  <title>Therapist Dashboard - Space</title>
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,900" />
+  <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
+  <link id="pagestyle" href="../assets/css/material-dashboard.css" rel="stylesheet" />
+  <style>
+    .demo-banner {
+      background: linear-gradient(90deg, #2196F3 0%, #00BCD4 100%);
+      color: white;
+      padding: 8px 20px;
+      text-align: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 9999;
+      font-size: 13px;
+    }
+    .demo-banner a { color: #fff; margin: 0 10px; }
+    body.g-sidenav-show { padding-top: 35px; }
+    .sidenav { top: 35px !important; }
+    .main-content { margin-top: 35px; }
+  </style>
+</head>
+
+<body class="g-sidenav-show bg-gray-100">
+  <!-- Demo Banner -->
+  <div class="demo-banner">
+    👨‍⚕️ <strong>THERAPIST DEMO</strong> | 
+    <a href="../signin.html">Sign In</a> |
+    <a href="../student/dashboard.html">Student View</a> |
+    <a href="../admin/dashboard.html">Admin View</a> |
+    <a href="../index.html">Home</a>
+  </div>
+
+  <!-- Sidebar -->
+  <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-radius-lg fixed-start ms-2 bg-white my-2" id="sidenav-main">
+    <div class="sidenav-header">
+      <i class="fas fa-times p-3 cursor-pointer text-dark opacity-5 position-absolute end-0 top-0 d-xl-none" aria-hidden="true" id="iconSidenav"></i>
+      <a class="navbar-brand px-4 py-3 m-0" href="../index.html">
+        <img src="../assets/img/logo-space.png" class="navbar-brand-img" width="26" height="26" alt="main_logo">
+        <span class="ms-1 font-weight-bold lead text-dark">SPACE</span>
+      </a>
+    </div>
+    <hr class="horizontal dark mt-0 mb-2">
+    <div class="collapse navbar-collapse w-auto h-auto" id="sidenav-collapse-main">
+      <ul class="navbar-nav">
+        <!-- User Profile -->
+        <li class="nav-item mb-2 mt-0">
+          <a href="#" class="nav-link text-dark">
+            <img src="../assets/img/default-avatar.png" class="avatar" alt="avatar">
+            <span class="nav-link-text ms-2 ps-1">Dr. Maria Santos</span>
+          </a>
+        </li>
+        <hr class="horizontal dark mt-0">
+
+        <!-- Dashboard -->
+        <li class="nav-item">
+          <a class="nav-link text-dark active" href="dashboard.html">
+            <i class="material-symbols-rounded opacity-5">dashboard</i>
+            <span class="nav-link-text ms-1 ps-1">Dashboard</span>
+          </a>
+        </li>
+
+        <!-- Student Mood Tracking -->
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="#" onclick="showDemoAlert('Mood Tracking')">
+            <i class="material-symbols-rounded opacity-5">mood</i>
+            <span class="nav-link-text ms-1 ps-1">Student Mood Data</span>
+          </a>
+        </li>
+
+        <!-- Video Sessions -->
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="#" onclick="showDemoAlert('Video Sessions')">
+            <i class="material-symbols-rounded opacity-5">videocam</i>
+            <span class="nav-link-text ms-1 ps-1">Video Sessions</span>
+          </a>
+        </li>
+
+        <!-- Appointments -->
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="#" onclick="showDemoAlert('Appointments')">
+            <i class="material-symbols-rounded opacity-5">calendar_month</i>
+            <span class="nav-link-text ms-1 ps-1">Appointments</span>
+          </a>
+        </li>
+
+        <!-- Community -->
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="#" onclick="showDemoAlert('Community')">
+            <i class="material-symbols-rounded opacity-5">forum</i>
+            <span class="nav-link-text ms-1 ps-1">Community</span>
+          </a>
+        </li>
+
+        <!-- Session Feedback -->
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="#" onclick="showDemoAlert('Session Feedback')">
+            <i class="material-symbols-rounded opacity-5">rate_review</i>
+            <span class="nav-link-text ms-1 ps-1">Session Feedback</span>
+          </a>
+        </li>
+
+        <!-- Reports -->
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="#" onclick="showDemoAlert('Reports')">
+            <i class="material-symbols-rounded opacity-5">monitoring</i>
+            <span class="nav-link-text ms-1 ps-1">Reports</span>
+          </a>
+        </li>
+
+        <!-- Settings -->
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="#" onclick="showDemoAlert('Settings')">
+            <i class="material-symbols-rounded opacity-5">settings</i>
+            <span class="nav-link-text ms-1 ps-1">Account Settings</span>
+          </a>
+        </li>
+
+        <hr class="horizontal dark mt-0">
+        
+        <!-- Sign Out Button -->
+        <div class="d-flex justify-content-center mt-auto">
+          <a href="../signin.html" class="btn bg-gradient-primary w-85 mx-auto">
+            <i class="material-symbols-rounded opacity-5 me-2">logout</i>
+            <span class="nav-link-text">Sign Out</span>
+          </a>
+        </div>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
+    <!-- Navbar -->
+    <nav class="navbar navbar-main navbar-expand-lg position-sticky mt-2 top-1 px-0 py-1 mx-3 shadow-none border-radius-lg z-index-sticky">
+      <div class="container-fluid py-1 px-2">
+        <nav aria-label="breadcrumb" class="ps-2">
+          <ol class="breadcrumb bg-transparent mb-0 p-0">
+            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="#">Pages</a></li>
+            <li class="breadcrumb-item text-sm text-dark active font-weight-bold">Dashboard</li>
+          </ol>
+        </nav>
+        <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+          <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+            <div class="input-group input-group-outline">
+              <label class="form-label">Search students...</label>
+              <input type="text" class="form-control">
+            </div>
+          </div>
+          <ul class="navbar-nav justify-content-end">
+            <li class="nav-item dropdown py-0 pe-3">
+              <a href="#" class="nav-link py-0 px-1 position-relative line-height-0" data-bs-toggle="dropdown">
+                <i class="material-symbols-rounded">notifications</i>
+                <span class="position-absolute top-5 start-100 translate-middle badge rounded-pill bg-danger border border-white small py-1 px-2">5</span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end p-2 me-sm-n4">
+                <li class="mb-2">
+                  <a class="dropdown-item border-radius-md" href="#">
+                    <div class="d-flex align-items-center py-1">
+                      <span class="material-symbols-rounded text-info">person</span>
+                      <div class="ms-2">
+                        <h6 class="text-sm font-weight-normal my-auto">New session request from Juan</h6>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+                <li class="mb-2">
+                  <a class="dropdown-item border-radius-md" href="#">
+                    <div class="d-flex align-items-center py-1">
+                      <span class="material-symbols-rounded text-warning">schedule</span>
+                      <div class="ms-2">
+                        <h6 class="text-sm font-weight-normal my-auto">Session in 30 minutes</h6>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Dashboard Content -->
+    <div class="container-fluid py-2">
+      <div class="row">
+        <div class="ms-3">
+          <h3 class="mb-0 h4 font-weight-bolder">Welcome, Dr. Santos!</h3>
+          <p class="mb-4">Here's your practice overview for today.</p>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+          <div class="card">
+            <div class="card-header p-2 ps-3">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <p class="text-sm mb-0 text-capitalize">Today's Sessions</p>
+                  <h4 class="mb-0">4</h4>
+                </div>
+                <div class="icon icon-md icon-shape bg-gradient-info shadow text-center border-radius-lg">
+                  <i class="material-symbols-rounded opacity-10">videocam</i>
+                </div>
+              </div>
+            </div>
+            <hr class="dark horizontal my-0">
+            <div class="card-footer p-2 ps-3">
+              <p class="mb-0 text-sm">Next: 2:00 PM - Juan D.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+          <div class="card">
+            <div class="card-header p-2 ps-3">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <p class="text-sm mb-0 text-capitalize">Active Students</p>
+                  <h4 class="mb-0">23</h4>
+                </div>
+                <div class="icon icon-md icon-shape bg-gradient-success shadow text-center border-radius-lg">
+                  <i class="material-symbols-rounded opacity-10">group</i>
+                </div>
+              </div>
+            </div>
+            <hr class="dark horizontal my-0">
+            <div class="card-footer p-2 ps-3">
+              <p class="mb-0 text-sm"><span class="text-success font-weight-bolder">+3</span> new this week</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+          <div class="card">
+            <div class="card-header p-2 ps-3">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <p class="text-sm mb-0 text-capitalize">Pending Requests</p>
+                  <h4 class="mb-0">7</h4>
+                </div>
+                <div class="icon icon-md icon-shape bg-gradient-warning shadow text-center border-radius-lg">
+                  <i class="material-symbols-rounded opacity-10">pending_actions</i>
+                </div>
+              </div>
+            </div>
+            <hr class="dark horizontal my-0">
+            <div class="card-footer p-2 ps-3">
+              <p class="mb-0 text-sm">Awaiting confirmation</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-3 col-sm-6">
+          <div class="card">
+            <div class="card-header p-2 ps-3">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <p class="text-sm mb-0 text-capitalize">Avg. Rating</p>
+                  <h4 class="mb-0">4.8 ⭐</h4>
+                </div>
+                <div class="icon icon-md icon-shape bg-gradient-primary shadow text-center border-radius-lg">
+                  <i class="material-symbols-rounded opacity-10">star</i>
+                </div>
+              </div>
+            </div>
+            <hr class="dark horizontal my-0">
+            <div class="card-footer p-2 ps-3">
+              <p class="mb-0 text-sm">From 156 reviews</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Today's Schedule -->
+      <div class="row mt-4">
+        <div class="col-lg-8 col-md-6 mb-md-0 mb-4">
+          <div class="card">
+            <div class="card-header pb-0">
+              <h6>Today's Schedule</h6>
+              <p class="text-sm">Your upcoming sessions for today</p>
+            </div>
+            <div class="card-body px-0 pb-2">
+              <div class="table-responsive">
+                <table class="table align-items-center mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Student</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Time</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Type</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+                      <th class="text-secondary opacity-7"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          <div><img src="../assets/img/default-avatar.png" class="avatar avatar-sm me-3" alt="user"></div>
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">Juan Dela Cruz</h6>
+                            <p class="text-xs text-secondary mb-0">SR-2021-00123</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td><p class="text-xs font-weight-bold mb-0">2:00 PM</p></td>
+                      <td class="align-middle text-center"><span class="badge badge-sm bg-gradient-info">Video Call</span></td>
+                      <td class="align-middle text-center"><span class="badge badge-sm bg-gradient-success">Confirmed</span></td>
+                      <td class="align-middle">
+                        <button class="btn btn-link text-info mb-0" onclick="showDemoAlert('Start Session')">
+                          <i class="material-symbols-rounded text-sm me-1">videocam</i> Start
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          <div><img src="../assets/img/default-avatar.png" class="avatar avatar-sm me-3" alt="user"></div>
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">Maria Garcia</h6>
+                            <p class="text-xs text-secondary mb-0">SR-2022-00456</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td><p class="text-xs font-weight-bold mb-0">3:30 PM</p></td>
+                      <td class="align-middle text-center"><span class="badge badge-sm bg-gradient-info">Video Call</span></td>
+                      <td class="align-middle text-center"><span class="badge badge-sm bg-gradient-success">Confirmed</span></td>
+                      <td class="align-middle">
+                        <button class="btn btn-link text-secondary mb-0" disabled>
+                          <i class="material-symbols-rounded text-sm me-1">schedule</i> Upcoming
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          <div><img src="../assets/img/default-avatar.png" class="avatar avatar-sm me-3" alt="user"></div>
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">Pedro Reyes</h6>
+                            <p class="text-xs text-secondary mb-0">SR-2023-00789</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td><p class="text-xs font-weight-bold mb-0">5:00 PM</p></td>
+                      <td class="align-middle text-center"><span class="badge badge-sm bg-gradient-info">Video Call</span></td>
+                      <td class="align-middle text-center"><span class="badge badge-sm bg-gradient-warning">Pending</span></td>
+                      <td class="align-middle">
+                        <button class="btn btn-link text-success mb-0" onclick="showDemoAlert('Confirm Session')">
+                          <i class="material-symbols-rounded text-sm me-1">check</i> Confirm
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100">
+            <div class="card-header pb-0">
+              <h6>Students Needing Attention</h6>
+              <p class="text-sm">Based on recent mood data</p>
+            </div>
+            <div class="card-body p-3">
+              <div class="timeline timeline-one-side">
+                <div class="timeline-block mb-3">
+                  <span class="timeline-step">
+                    <i class="material-symbols-rounded text-danger">warning</i>
+                  </span>
+                  <div class="timeline-content">
+                    <h6 class="text-dark text-sm font-weight-bold mb-0">Ana Martinez</h6>
+                    <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">Low mood for 3 consecutive days</p>
+                  </div>
+                </div>
+                <div class="timeline-block mb-3">
+                  <span class="timeline-step">
+                    <i class="material-symbols-rounded text-warning">schedule</i>
+                  </span>
+                  <div class="timeline-content">
+                    <h6 class="text-dark text-sm font-weight-bold mb-0">Carlos Lopez</h6>
+                    <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">Hasn't logged mood in 5 days</p>
+                  </div>
+                </div>
+                <div class="timeline-block">
+                  <span class="timeline-step">
+                    <i class="material-symbols-rounded text-info">chat</i>
+                  </span>
+                  <div class="timeline-content">
+                    <h6 class="text-dark text-sm font-weight-bold mb-0">Sofia Reyes</h6>
+                    <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">Requested follow-up session</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer class="footer py-4">
+        <div class="container-fluid">
+          <div class="row align-items-center justify-content-lg-between">
+            <div class="col-lg-6 mb-lg-0 mb-4">
+              <div class="copyright text-center text-sm text-muted text-lg-start">
+                © 2024 CreoTech - Space Mental Health System
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </main>
+
+  <!-- Core JS Files -->
+  <script src="../assets/js/core/popper.min.js"></script>
+  <script src="../assets/js/core/bootstrap.min.js"></script>
+  <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
+  <script src="../assets/js/material-dashboard.min.js"></script>
+  
+  <script>
+    function showDemoAlert(feature) {
+      alert('This is a demo. The "' + feature + '" feature would be fully functional in the live application.');
+    }
+  </script>
+</body>
+
+</html>

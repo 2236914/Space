@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="assets/img/logo-space.png">
+  <link rel="icon" type="image/png" href="assets/img/logo-space.png">
+  <title>Sign Up - Space</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,900" />
+  <link href="assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="assets/css/nucleo-svg.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
+  <link id="pagestyle" href="assets/css/material-dashboard.css" rel="stylesheet" />
+  <style>
+    .demo-banner {
+      background: linear-gradient(90deg, #e91e63 0%, #9c27b0 100%);
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 9999;
+      font-size: 14px;
+    }
+    body { padding-top: 40px; }
+  </style>
+</head>
+
+<body>
+  <!-- Demo Banner -->
+  <div class="demo-banner">
+    🎨 <strong>STATIC DEMO</strong> - Registration is disabled in this demo version
+  </div>
+
+  <!------------------- NAV ----------------------->
+  <div class="container position-sticky z-index-sticky top-0">
+    <div class="row">
+        <div class="col-12">
+        <nav class="navbar navbar-expand-lg position-absolute top-0 z-index-3 w-100 shadow-none my-3 navbar-transparent">
+          <div class="container-fluid">
+                    <a class="navbar-brand text-white font-weight-bolder"></a>
+                  <div>
+                    <a href="index.html" class="btn btn-sm btn-primary mb-0 me-1 mt-2 mt-md-0"><i class="material-symbols-rounded opacity-10 me-0 text-md">home</i></a>
+                  </div>
+          </div>
+        </nav>
+        </div>
+    </div>
+  </div>
+  <main class="main-content mt-0">
+        <section>
+            <div class="page-header min-vh-100">
+                <div class="container">
+                    <div class="row">
+                    <div class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 start-0 text-center justify-content-center flex-column">
+                      <div class="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center" style="background-image:url('assets/img/samplebg.png'); background-size: cover;">
+                      </div>
+                    </div>
+                        <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column ms-auto me-auto ms-lg-auto me-lg-5">
+                            <div class="card card-plain">
+                                <div class="card-header">
+                                    <h4 class="font-weight-bolder">Sign Up</h4>
+                                    <p class="mb-0">Enter your information to register</p>
+                                </div>
+                                <div class="card-body">
+                                    <form id="signupForm" onsubmit="handleDemoSignup(event)">
+                                        <div class="input-group input-group-outline mb-3">
+                                            <label class="form-label">First Name</label>
+                                            <input type="text" name="firstname" class="form-control">
+                                        </div>
+                                        <div class="input-group input-group-outline mb-3">
+                                            <label class="form-label">Last Name</label>
+                                            <input type="text" name="lastname" class="form-control">
+                                        </div>
+                                        <div class="input-group input-group-outline mb-3">
+                                            <label class="form-label">SR-Code</label>
+                                            <input type="text" name="srcode" class="form-control">
+                                        </div>
+                                        <div class="input-group input-group-outline mb-3">
+                                            <label class="form-label">Phone Number</label>
+                                            <input type="text" name="phonenum" class="form-control" maxlength="11">
+                                        </div>
+                                        <div class="input-group input-group-outline mb-3">
+                                            <label class="form-label">Email</label>
+                                            <input type="email" name="email" id="email" class="form-control">
+                                        </div>
+                                        <div class="input-group input-group-outline mb-3">
+                                            <label class="form-label">Password</label>
+                                            <input type="password" name="password" id="password" class="form-control">
+                                            <button type="button" class="btn btn-link position-absolute end-0 top-0 text-dark h-100" 
+                                                    onclick="togglePassword()" style="z-index: 3;">
+                                                <i class="material-symbols-rounded" id="password-toggle">visibility_off</i>
+                                            </button>
+                                        </div>
+                                        <div class="form-check form-check-info text-start ps-0">
+                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
+                                            <label class="form-check-label" for="flexCheckDefault">
+                                                I agree to the <a href="#" class="text-dark font-weight-bolder" data-bs-toggle="modal" data-bs-target="#termsModal">Terms and Conditions</a>
+                                            </label>
+                                        </div>
+                                        <div class="text-center">
+                                            <button type="submit" class="btn btn-lg bg-gradient-primary btn-responsive btn-lg w-100 mt-2 mb-0">
+                                                Sign Up
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="card-footer text-center pt-2 px-lg-2 px-1">
+                                    <p class="mb-2 text-sm mx-auto">
+                                        Already have an account?
+                                        <a href="signin.html" class="text-primary font-weight-bold">Sign in</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Terms Modal -->
+    <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="termsModalLabel">Terms and Conditions</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p class="text-sm"><strong>Welcome to Space: A Web-Based Mental Health Therapy System for Students of BSU TNEU Lipa.</strong></p>
+            <p class="text-sm">By using Space, you acknowledge that you have read, understood, and agree to be bound by these Terms and Conditions.</p>
+            <p class="text-sm"><strong>Eligibility:</strong> Only students enrolled at BSU TNEU Lipa are eligible to create an account.</p>
+            <p class="text-sm"><strong>Privacy:</strong> Space collects personal data to provide services. Your information is protected and kept confidential.</p>
+            <p class="text-sm"><strong>User Conduct:</strong> Users must not post abusive, offensive, or harmful content.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn bg-gradient-primary" data-bs-dismiss="modal">I Understand</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <!-- Core JS Files -->
+  <script src="assets/js/core/popper.min.js"></script>
+  <script src="assets/js/core/bootstrap.min.js"></script>
+  <script src="assets/js/material-dashboard.min.js"></script>
+  <script>
+    function handleDemoSignup(event) {
+      event.preventDefault();
+      alert('This is a demo version. In the live application, you would be registered and redirected to sign in. Redirecting to sign in page...');
+      window.location.href = 'signin.html';
+    }
+    
+    function togglePassword() {
+      const input = document.getElementById('password');
+      const icon = document.getElementById('password-toggle');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.textContent = 'visibility';
+      } else {
+        input.type = 'password';
+        icon.textContent = 'visibility_off';
+      }
+    }
+    
+    // Handle input focus for material design
+    document.addEventListener('DOMContentLoaded', function() {
+      const inputs = document.querySelectorAll('.input-group-outline input');
+      inputs.forEach(input => {
+        input.addEventListener('focus', function() {
+          this.parentElement.classList.add('is-focused');
+        });
+        input.addEventListener('blur', function() {
+          this.parentElement.classList.remove('is-focused');
+          if (this.value) this.parentElement.classList.add('is-filled');
+          else this.parentElement.classList.remove('is-filled');
+        });
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="assets/img/logo-space.png">
+  <link rel="icon" type="image/png" href="assets/img/logo-space.png">
+  <title>Space - Mental Health Therapy System</title>
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,900" />
+  <link href="assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="assets/css/nucleo-svg.css" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+  <link id="pagestyle" href="assets/css/material-dashboard.css" rel="stylesheet" />
+  <style>
+    .demo-banner {
+      background: linear-gradient(90deg, #e91e63 0%, #9c27b0 100%);
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 9999;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .demo-banner a { color: #fff; text-decoration: underline; }
+    body { padding-top: 40px; }
+    .demo-nav {
+      background: rgba(0,0,0,0.8);
+      padding: 8px 15px;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      border-radius: 10px;
+      z-index: 9998;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      max-width: 300px;
+    }
+    .demo-nav a {
+      color: white;
+      background: #e91e63;
+      padding: 6px 12px;
+      border-radius: 5px;
+      font-size: 12px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .demo-nav a:hover { background: #9c27b0; }
+    .demo-nav-title {
+      color: white;
+      font-size: 11px;
+      width: 100%;
+      text-align: center;
+      margin-bottom: 5px;
+      opacity: 0.8;
+    }
+  </style>
+</head>
+
+<body class="g-sidenav-show bg-white">
+  <!-- Demo Banner -->
+  <div class="demo-banner">
+    🎨 <strong>STATIC DEMO</strong> - This is a UI demonstration only. No backend functionality. 
+    <a href="https://github.com/your-repo/Space">View on GitHub</a>
+  </div>
+
+  <!-- Demo Navigation -->
+  <div class="demo-nav">
+    <div class="demo-nav-title">Quick Demo Navigation</div>
+    <a href="signin.html">Sign In</a>
+    <a href="signup.html">Sign Up</a>
+    <a href="student/dashboard.html">Student</a>
+    <a href="therapist/dashboard.html">Therapist</a>
+    <a href="admin/dashboard.html">Admin</a>
+  </div>
+
+  <!------------------- NAV ----------------------->
+  <div class="container position-sticky z-index-sticky top-0">
+    <div class="row">
+        <div class="col-12 px-0">
+            <nav class="navbar navbar-expand-lg blur border-radius-xl top-0 z-index-fixed shadow position-absolute my-3 py-2 start-0 end-0 mx-auto">
+                <div class="container-fluid">
+                    <a class="navbar-brand font-weight-bolder ms-sm-3 d-flex align-items-center" href="index.html">
+                        <img src="assets/img/logo-space.png" class="navbar-brand-img me-2" alt="Space Logo" style="height: 20px; width: auto;">
+                        SPACE
+                    </a>
+                    <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon mt-2">
+                            <span class="navbar-toggler-bar bar1"></span>
+                            <span class="navbar-toggler-bar bar2"></span>
+                            <span class="navbar-toggler-bar bar3"></span>
+                        </span>
+                    </button>
+                    <div class="collapse navbar-collapse pt-3 pb-2 py-lg-0" id="navigation">
+                        <ul class="navbar-nav navbar-nav-hover ms-lg-12 ps-lg-5 w-100">
+                            <li class="mx-2">
+                                <a href="#home" class="nav-link ps-2 d-flex cursor-pointer align-items-center">
+                                    <i class="material-symbols-rounded opacity-6 me-2 text-md">home</i>
+                                    Home
+                                </a>
+                            </li>
+                            <li class="nav-item mx-2">
+                                <a href="#about" class="nav-link ps-2 d-flex cursor-pointer align-items-center">
+                                    <i class="material-symbols-rounded opacity-6 me-2 text-md">info_i</i>
+                                    About
+                                </a>
+                            </li>
+                            <li class="nav-item mx-2">
+                                <a href="#team" class="nav-link ps-2 d-flex cursor-pointer align-items-center">
+                                    <i class="material-symbols-rounded opacity-6 me-2 text-md">diversity_1</i>
+                                    Team
+                                </a>
+                            </li>
+                            <li class="nav-item mx-2">
+                                <a href="#therapy" class="nav-link ps-2 d-flex cursor-pointer align-items-center">
+                                    <i class="material-symbols-rounded opacity-6 me-2 text-md">psychiatry</i>
+                                    Therapy
+                                </a>
+                            </li>
+                            <li class="nav-item mx-2">
+                                <a href="#contact" class="nav-link ps-2 d-flex cursor-pointer align-items-center">
+                                    <i class="material-symbols-rounded opacity-6 me-2 text-md">call</i>
+                                    Contact Us
+                                </a>
+                            </li>
+                            <li class="nav-item ms-lg-auto my-auto ms-3 ms-lg-0">
+                              <div class="dropdown">
+                                <button class="btn btn-sm bg-gradient-primary mb-0 me-1 mt-2 mt-md-0" 
+                                        type="button"
+                                        id="dropdownMenuPages" 
+                                        data-bs-toggle="dropdown" 
+                                        aria-expanded="false">
+                                  Account
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-animation ms-n3 dropdown-md p-3 border-radius-lg mt-0 mt-lg-3" 
+                                    aria-labelledby="dropdownMenuPages">
+                                  <li class="d-none d-lg-block">
+                                    <a href="signin.html" class="dropdown-item border-radius-md">Sign In</a>
+                                    <a href="signup.html" class="dropdown-item border-radius-md">Sign Up</a>
+                                  </li>
+                                  <li class="d-lg-none">
+                                    <a href="signin.html" class="dropdown-item border-radius-md">Sign In</a>
+                                    <a href="signup.html" class="dropdown-item border-radius-md">Sign Up</a>
+                                  </li>
+                                </ul>
+                              </div> 
+                          </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+  </div>
+  <main>
+    <!------------------- HEADER/HOME ----------------------->
+  <section class="py-3" id="home">
+    <div class="container">
+      <div class="row align-items-center min-vh-100 py-5 mx-0">
+        <!-- Left column with text -->
+        <div class="col-lg-6 col-md-12 d-flex justify-content-center flex-column mb-lg-0 mb-5 text-lg-start text-center">
+          <h1 class="font-weight-black mb-4" style="font-size: clamp(2.5rem, 5vw, 4.5rem);">Space</h1>
+          <h5 class="text-muted px-lg-0 px-3">
+            Prioritize your well-being with professional support, self-care tools, and a community that understands.
+          </h5>
+          <div class="buttons d-flex gap-3 justify-content-lg-start justify-content-center">
+              <a href="#about" class="btn bg-gradient-primary btn-responsive mt-4">Discover</a>
+              <a href="signup.html" class="btn btn-outline-primary btn-responsive shadow-none mt-4">Join Space</a>
+          </div>
+        </div>
+        <!-- Right column with image -->
+        <div class="col-lg-6 col-md-12 text-center">
+          <img src="assets/img/happy.png" 
+               class="img-fluid" 
+               alt="Space Header Image" 
+               loading="lazy"
+               style="max-width: 80%; width: auto; height: auto;">
+        </div>
+      </div>
+    </div>
+  </section>
+    <!------------------- ABOUT  ----------------------->
+    <section class="py-4" id="about">
+      <div class="container">
+        <div class="row align-items-center py-5 mx-0">
+          <div class="col-lg-6 col-md-12 d-flex justify-content-center flex-column mb-lg-0 mb-5 text-lg-start text-center">
+            <h3 class="mb-4">Find your safe space</h3>
+            <p class="mb-4">Space is a web-based system providing BSU TNEU students with accessible therapy, mood tracking, and self-care tools. Empowering you to prioritize your mental health, Space offers:</p>
+            <ul class="mb-4 px-lg-0 px-3" style="margin-left: 20px;">
+              <li class="mb-2">Licensed Therapy: Secure, on-demand sessions.</li>
+              <li class="mb-2">Mood Tracking: Monitor and understand your emotions.</li>
+              <li class="mb-2">Self-Care Tools: Mindfulness exercises, journaling, and more.</li>
+            </ul>
+            <h3 class="mb-4">We're here for you</h3>
+            <p>Join a supportive community that puts your well-being first—because your mental health matters.</p>
+            <p class="blockquote my-4 ms-2">
+              <span class="text-bold"> "It's okay to not be okay. What matters is taking that first step to heal."</span>
+              <br>
+              <small class="blockquote-footer">
+                 Space Team.
+              </small>
+            </p>
+          </div>
+          <div class="col-lg-6 col-md-12 d-flex justify-content-center align-items-center">
+            <img src="https://cdn.donmai.us/original/18/c1/__paimon_genshin_impact_drawn_by_waxgroud__18c1ae5bd2a75471a3552686cf731a0c.png" 
+                 class="img-fluid" 
+                 alt="Space About Image" 
+                 loading="lazy"
+                 style="max-width: 80%; width: auto; height: auto; border-radius: 10px;">
+          </div>
+        </div>
+      </div>
+    </section>
+    <!------------------- TEAM/DEVELOPERS  ----------------------->
+    <section class="py-5" id="team">
+        <div class="container">
+          <div class="row align-items-center py-5 mx-0">
+            <div class="col-12 mb-5">
+              <div class="icon icon-shape icon-md bg-gradient-primary shadow text-center mb-3">
+                <i class="material-symbols-rounded opacity-10">supervisor_account</i>
+              </div>
+              <h3 class="mb-auto">CreoTech</h3>
+              <div class="col-12 mb-5">
+              <p style="max-width: 100%;">
+                Meet the brilliant minds behind CreoTech, the driving force behind Space. Our team is dedicated to blending technology and compassion to create an innovative platform that empowers student mental health.
+              </p>
+            </div>
+          </div>
+          <div class="row mx-3 pt-6">
+            <div class="col-lg-4 col-md-6 pb-5">
+              <div class="card card-profile card-plain">
+                <div class="text-start mt-n5">
+                  <div class="position-relative w-25">
+                    <div class="blur-shadow-avatar">
+                      <img class="avatar avatar-xxl border-radius-xl" src="assets/img/faithanne.png">
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body ps-0">
+                  <h5 class="mb-0">Faith Anne Banares</h5>
+                  <p class="text-muted">CreoTech</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 pb-5">
+              <div class="card card-profile card-plain">
+                <div class="text-start mt-n5">
+                  <div class="position-relative w-25">
+                    <div class="blur-shadow-avatar">
+                      <img class="avatar avatar-xxl border-radius-xl" src="assets/img/alethea.jpg">
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body ps-0">
+                  <h5 class="mb-0">Alethea Malata</h5>
+                  <p class="text-muted">CreoTech</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 pb-5">
+              <div class="card card-profile card-plain">
+                <div class="text-start mt-n5">
+                  <div class="position-relative w-25">
+                    <div class="blur-shadow-avatar">
+                      <img class="avatar avatar-xxl border-radius-xl" src="assets/img/gwy.jpg">
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body ps-0">
+                  <h5 class="mb-0">Gertrude Gwyn Maralit</h5>
+                  <p class="text-muted">CreoTech</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </section>
+    <!------------------- THERAPY/APPLICATION  ----------------------->
+    <section class="py-5" id="therapy">
+      <div class="container">
+          <div class="row align-items-center py-5 mx-0">
+              <div class="col-lg-6 col-md-12">
+                  <div class="row justify-content-start g-4">
+                      <div class="col-md-6">
+                          <div class="info">
+                              <i class="material-symbols-rounded text-3xl text-gradient text-primary mb-3">verified</i>
+                              <h5>Licensed Professionals</h5>
+                              <p>Work with certified psychologists and licensed therapists dedicated to supporting student mental health and well-being.</p>
+                          </div>
+                      </div>
+                      <div class="col-md-6">
+                          <div class="info">
+                              <i class="material-symbols-rounded text-3xl text-gradient text-primary mb-3">schedule</i>
+                              <h5>Flexible Online Sessions</h5>
+                              <p>Easily schedule therapy sessions tailored to your needs, ensuring accessibility and privacy.</p>
+                          </div>
+                      </div>
+                      <div class="col-md-6">
+                          <div class="info">
+                              <i class="material-symbols-rounded text-3xl text-gradient text-primary mb-3">support</i>
+                              <h5>Community Support</h5>
+                              <p>Join a community that fosters understanding and growth through guided discussions and resources.</p>
+                          </div>
+                      </div>
+                      <div class="col-md-6">
+                          <div class="info">
+                              <i class="material-symbols-rounded text-3xl text-gradient text-primary mb-3">insights</i>
+                              <h5>Growth Opportunities</h5>
+                              <p>Access tools and resources for managing stress and enhancing self-care practices.</p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-lg-4 ms-auto mt-lg-0 mt-4">
+                  <div class="card">
+                      <div class="card-header p-0 position-relative mt-2 mx-2 z-index-2">
+                          <a class="d-block blur-shadow-image">
+                              <img src="https://w.wallhaven.cc/full/dp/wallhaven-dpyvv3.jpg" 
+                                   alt="img-colored-shadow" 
+                                   class="img-fluid border-radius-lg">
+                          </a>
+                      </div>
+                      <div class="card-body text-center p-4">
+                          <h5 class="font-weight-normal">
+                              <a href="javascript:;">Join Our Mental Health Team!</a>
+                          </h5>
+                          <p class="mb-0">
+                              We're expanding our network of licensed therapists to better serve our students. Collaborate with us to make a meaningful impact in the field of mental health.
+                          </p>
+                          <button type="button" class="btn bg-gradient-primary btn-sm mb-0 mt-3" onclick="alert('This is a demo. In the live version, this opens the therapist application form.')">
+                            Apply Now
+                          </button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </section>
+    <!------------------- CONTACT  ----------------------->
+    <section class="py-3" id="contact">
+      <div class="page-header min-vh-100">
+          <div class="container">
+              <div class="row">
+                  <!-- Left Side: Image -->
+                  <div class="col-lg-6 col-md-8 d-flex justify-content-center align-items-center mx-auto">
+                    <img src="https://preview.redd.it/happy-birthday-paimon-v0-x5arhzw0yb3b1.jpg?width=640&crop=smart&auto=webp&s=bac82f414b88ca68e5d9852632011ede65a98146" 
+                         alt="Contact Us" 
+                         class="img-fluid" 
+                         style="border-radius: 10px; max-width: 80%;">
+                  </div>
+                  <!-- Right Side: Contact Form -->
+                  <div class="col-lg-6 col-md-8 ms-auto me-auto">
+                    <div class="card d-flex blur justify-content-center my-sm-0 my-sm-6 mt-8 mb-5 border-0"> 
+                        <div class="card-header p-0 position-relative mt-2 mx-2 z-index-2 bg-transparent text-center">
+                            <h3>Contact Us</h3>
+                            <p class="text-sm mb-0">For further questions contact us using the form below.</p>
+                        </div>
+                        <div class="card-body">
+                            <form id="contact-form" onsubmit="handleDemoSubmit(event)">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="input-group input-group-dynamic mb-4">
+                                                <label class="form-label">First Name</label>
+                                                <input class="form-control" type="text" name="firstName" id="firstName">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 ps-2">
+                                            <div class="input-group input-group-dynamic">
+                                                <label class="form-label">Last Name</label>
+                                                <input type="text" class="form-control" name="lastName" id="lastName">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-4">
+                                        <div class="input-group input-group-dynamic">
+                                            <label class="form-label">Email Address</label>
+                                            <input type="email" class="form-control" name="email" id="email">
+                                        </div>
+                                    </div>
+                                    <div class="input-group mb-4 input-group-static">
+                                        <label>Your message</label>
+                                        <textarea name="message" class="form-control" id="message" rows="4"></textarea>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-check form-switch mb-4 d-flex align-items-center">
+                                                <input class="form-check-input" type="checkbox" id="terms">
+                                                <label class="form-check-label ms-3 mb-0" for="terms">
+                                                    I agree to the <a href="#" class="text-dark text-decoration-underline">Terms and Conditions</a>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <button type="submit" class="btn bg-gradient-primary w-100">Send to Space</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+              </div>
+          </div>
+      </div>
+    </section>
+    <!------------------- FAQ  ----------------------->
+    <section class="py-4">
+      <div class="container">
+        <div class="row my-5">
+          <div class="col-md-6 mx-auto text-center">
+            <h2>Frequently Asked Questions</h2>
+            <p>Find answers to common questions about using the Space platform for mental health support.</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-10 mx-auto">
+            <div class="accordion" id="accordionRental">
+              <div class="accordion-item mb-3">
+                <h5 class="accordion-header" id="headingOne">
+                  <button class="accordion-button border-bottom font-weight-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    What features does the Space platform offer for mental health support?
+                    <i class="collapse-close fa fa-plus text-xs pt-1 position-absolute end-0"></i>
+                    <i class="collapse-open fa fa-minus text-xs pt-1 position-absolute end-0"></i>
+                  </button>
+                </h5>
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionRental">
+                  <div class="accordion-body text-sm opacity-8">
+                    Space provides virtual therapy sessions, mood tracking, and self-care tools to help students manage their mental well-being. 
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item mb-3">
+                <h5 class="accordion-header" id="headingTwo">
+                  <button class="accordion-button border-bottom font-weight-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    How can I book a therapy session on the Space platform?
+                    <i class="collapse-close fa fa-plus text-xs pt-1 position-absolute end-0"></i>
+                    <i class="collapse-open fa fa-minus text-xs pt-1 position-absolute end-0"></i>
+                  </button>
+                </h5>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionRental">
+                  <div class="accordion-body text-sm opacity-8">
+                    Students can book therapy sessions directly through the dashboard by checking available dates and scheduling an appointment.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item mb-3">
+                <h5 class="accordion-header" id="headingThree">
+                  <button class="accordion-button border-bottom font-weight-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    Is my information safe on the Space platform?
+                    <i class="collapse-close fa fa-plus text-xs pt-1 position-absolute end-0"></i>
+                    <i class="collapse-open fa fa-minus text-xs pt-1 position-absolute end-0"></i>
+                  </button>
+                </h5>
+                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionRental">
+                  <div class="accordion-body text-sm opacity-8">
+                    Yes, Space prioritizes user privacy and data security to ensure all personal information and interactions remain confidential.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <!------------------- FOOTER  ----------------------->
+  <footer class="footer pt-5 mt-5">
+    <div class="container">
+      <div class="row">
+        <!-- Logo, Team Info, and Description -->
+        <div class="col-md-4 mb-4 ms-auto">
+          <div>
+            <a href="#">
+              <img src="assets/img/logo-space.png" class="mb-3 footer-logo" alt="main_logo" style="height: 40px;">
+            </a>
+            <h6 class="font-weight-bolder mb-4">CreoTech</h6>
+          </div>
+          <p class="small">
+            Created by third-year BSIT students majoring in Service Management as part of an academic group project at BSU TNEU.
+          </p>
+          <div>
+            <ul class="d-flex flex-row ms-n3 nav">
+              <li class="nav-item">
+                <a class="nav-link pe-1" href="https://www.facebook.com/" target="_blank">
+                  <i class="fab fa-facebook text-lg opacity-8"></i>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link pe-1" href="https://twitter.com/" target="_blank">
+                  <i class="fab fa-twitter text-lg opacity-8"></i>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link pe-1" href="https://github.com/" target="_blank">
+                  <i class="fab fa-github text-lg opacity-8"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+  
+        <!-- About Section -->
+        <div class="col-md-2 col-sm-6 col-6 mb-4">
+          <div>
+            <h6 class="text-sm">About</h6>
+            <ul class="flex-column ms-n3 nav">
+              <li class="nav-item">
+                <a class="nav-link" href="#team">Meet the Team</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#about">Our Project</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+  
+        <!-- Help & Support Section -->
+        <div class="col-md-2 col-sm-6 col-6 mb-4">
+          <div>
+            <h6 class="text-sm">Help & Support</h6>
+            <ul class="flex-column ms-n3 nav">
+              <li class="nav-item">
+                <a class="nav-link" href="#contact">Contact Us</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+  
+        <!-- Footer Bottom Text -->
+        <div class="col-12">
+          <div class="text-center">
+            <p class="text-dark my-4 text-sm font-weight-normal">
+              &copy; 2024 CreoTech. All rights reserved.  
+              This project is for academic purposes only as part of the BSU TNEU curriculum.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  
+  <!--   Core JS Files   -->
+  <script src="assets/js/core/popper.min.js"></script>
+  <script src="assets/js/core/bootstrap.min.js"></script>
+  <script src="assets/js/plugins/perfect-scrollbar.min.js"></script>
+  <script src="assets/js/plugins/smooth-scrollbar.min.js"></script>
+  <script src="assets/js/material-dashboard.min.js"></script>
+  <script>
+    function handleDemoSubmit(event) {
+      event.preventDefault();
+      alert('This is a demo version. In the live application, your message would be sent to the Space team.');
+    }
+    
+    // Handle input focus for material design
+    document.addEventListener('DOMContentLoaded', function() {
+      const inputs = document.querySelectorAll('.input-group-dynamic input, .input-group-dynamic textarea');
+      inputs.forEach(input => {
+        input.addEventListener('focus', function() {
+          this.parentElement.classList.add('is-focused');
+        });
+        input.addEventListener('blur', function() {
+          this.parentElement.classList.remove('is-focused');
+          if (this.value) this.parentElement.classList.add('is-filled');
+          else this.parentElement.classList.remove('is-filled');
+        });
+      });
+    });
+  </script>
+</body>
+
+</html>

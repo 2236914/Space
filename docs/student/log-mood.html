@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/logo-space.png">
+  <link rel="icon" type="image/png" href="../assets/img/logo-space.png">
+  <title>Log Today's Mood - Space</title>
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,900" />
+  <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
+  <link id="pagestyle" href="../assets/css/material-dashboard.css" rel="stylesheet" />
+  <style>
+    .demo-banner {
+      background: linear-gradient(90deg, #4CAF50 0%, #2196F3 100%);
+      color: white;
+      padding: 8px 20px;
+      text-align: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 9999;
+      font-size: 13px;
+    }
+    .demo-banner a { color: #fff; margin: 0 10px; }
+    body.g-sidenav-show { padding-top: 35px; }
+    .sidenav { top: 35px !important; }
+    .main-content { margin-top: 35px; }
+    .mood-emoji { 
+      font-size: 56px; 
+      cursor: pointer; 
+      transition: all 0.3s ease;
+      opacity: 0.6;
+      display: inline-block;
+    }
+    .mood-emoji:hover { 
+      transform: scale(1.2); 
+      opacity: 1;
+    }
+    .mood-emoji.selected { 
+      transform: scale(1.3); 
+      opacity: 1;
+      filter: drop-shadow(0 0 10px rgba(0,0,0,0.3)); 
+    }
+    .mood-option {
+      text-align: center;
+      padding: 15px;
+      cursor: pointer;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+    .mood-option:hover {
+      background: #f8f9fa;
+    }
+    .mood-option.selected {
+      background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+    }
+    .mood-label {
+      font-size: 14px;
+      color: #344767;
+      margin-top: 8px;
+      font-weight: 500;
+    }
+  </style>
+</head>
+
+<body class="g-sidenav-show bg-gray-100">
+  <!-- Demo Banner -->
+  <div class="demo-banner">
+    👨‍🎓 <strong>STUDENT DEMO - Log Mood</strong> | 
+    <a href="dashboard.html">Dashboard</a> |
+    <a href="moodtracker.html">Mood Tracker</a> |
+    <a href="../therapist/dashboard.html">Therapist View</a> |
+    <a href="../index.html">Home</a>
+  </div>
+
+  <!-- Sidebar -->
+  <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-radius-lg fixed-start ms-2 bg-white my-2" id="sidenav-main">
+    <div class="sidenav-header">
+      <i class="fas fa-times p-3 cursor-pointer text-dark opacity-5 position-absolute end-0 top-0 d-xl-none" aria-hidden="true" id="iconSidenav"></i>
+      <a class="navbar-brand px-4 py-3 m-0" href="../index.html">
+        <img src="../assets/img/logo-space.png" class="navbar-brand-img" width="26" height="26" alt="main_logo">
+        <span class="ms-1 font-weight-bold lead text-dark">SPACE</span>
+      </a>
+    </div>
+    <hr class="horizontal dark mt-0 mb-2">
+    <div class="collapse navbar-collapse w-auto h-auto" id="sidenav-collapse-main">
+      <ul class="navbar-nav">
+        <li class="nav-item mb-2 mt-0">
+          <a href="#" class="nav-link text-dark">
+            <img src="../assets/img/default-avatar.png" class="avatar" alt="avatar">
+            <span class="nav-link-text ms-2 ps-1">Juan Dela Cruz</span>
+          </a>
+        </li>
+        <hr class="horizontal dark mt-0">
+        
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="dashboard.html">
+            <i class="material-symbols-rounded opacity-5">dashboard</i>
+            <span class="nav-link-text ms-1 ps-1">Dashboard</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="moodtracker.html">
+            <i class="material-symbols-rounded opacity-5">mood</i>
+            <span class="nav-link-text ms-1 ps-1">Mood Tracker</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="book-session.html">
+            <i class="material-symbols-rounded opacity-5">calendar_month</i>
+            <span class="nav-link-text ms-1 ps-1">Book Session</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="my-sessions.html">
+            <i class="material-symbols-rounded opacity-5">videocam</i>
+            <span class="nav-link-text ms-1 ps-1">My Sessions</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="community.html">
+            <i class="material-symbols-rounded opacity-5">forum</i>
+            <span class="nav-link-text ms-1 ps-1">Community</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="selfcare.html">
+            <i class="material-symbols-rounded opacity-5">spa</i>
+            <span class="nav-link-text ms-1 ps-1">Self-Care Tools</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="settings.html">
+            <i class="material-symbols-rounded opacity-5">settings</i>
+            <span class="nav-link-text ms-1 ps-1">Account Settings</span>
+          </a>
+        </li>
+
+        <hr class="horizontal dark mt-0">
+        <div class="d-flex justify-content-center">
+          <button type="button" class="btn bg-gradient-info w-85 mx-auto" onclick="showDemoAlert('Space Support')">
+            <i class="material-symbols-rounded opacity-5 me-2">support_agent</i>
+            <span class="nav-link-text">Space Support</span>
+          </button>
+        </div>
+        <div class="d-flex justify-content-center mt-2">
+          <a href="../signin.html" class="btn bg-gradient-primary w-85 mx-auto">
+            <i class="material-symbols-rounded opacity-5 me-2">logout</i>
+            <span class="nav-link-text">Sign Out</span>
+          </a>
+        </div>
+      </ul>
+    </div>
+  </aside>
+
+  <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
+    <!-- Navbar -->
+    <nav class="navbar navbar-main navbar-expand-lg position-sticky mt-2 top-1 px-0 py-1 mx-3 shadow-none border-radius-lg z-index-sticky" id="navbarBlur" data-scroll="true">
+      <div class="container-fluid py-1 px-2">
+        <nav aria-label="breadcrumb" class="ps-2">
+          <ol class="breadcrumb bg-transparent mb-0 p-0">
+            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="dashboard.html">Student</a></li>
+            <li class="breadcrumb-item text-sm text-dark active font-weight-bold" aria-current="page">Log Today's Mood</li>
+          </ol>
+        </nav>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container-fluid py-4">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="card">
+            <div class="card-header pb-0 text-center">
+              <h4 class="font-weight-bolder mb-1">How are you feeling today?</h4>
+              <p class="text-sm text-muted mb-0">Select the emoji that best represents your current mood</p>
+            </div>
+            <div class="card-body pt-4">
+              <!-- Date Display -->
+              <div class="text-center mb-4">
+                <span class="badge bg-gradient-primary px-4 py-2" id="currentDate">
+                  <i class="material-symbols-rounded me-1" style="font-size: 16px; vertical-align: middle;">calendar_today</i>
+                  <span id="dateText"></span>
+                </span>
+              </div>
+
+              <!-- Mood Selection -->
+              <div class="row justify-content-center mb-4">
+                <div class="col-auto">
+                  <div class="mood-option" onclick="selectMood(this, '😢', 'Very Sad')">
+                    <div class="mood-emoji">😢</div>
+                    <div class="mood-label">Very Sad</div>
+                  </div>
+                </div>
+                <div class="col-auto">
+                  <div class="mood-option" onclick="selectMood(this, '😔', 'Sad')">
+                    <div class="mood-emoji">😔</div>
+                    <div class="mood-label">Sad</div>
+                  </div>
+                </div>
+                <div class="col-auto">
+                  <div class="mood-option" onclick="selectMood(this, '😐', 'Neutral')">
+                    <div class="mood-emoji">😐</div>
+                    <div class="mood-label">Neutral</div>
+                  </div>
+                </div>
+                <div class="col-auto">
+                  <div class="mood-option" onclick="selectMood(this, '😊', 'Good')">
+                    <div class="mood-emoji">😊</div>
+                    <div class="mood-label">Good</div>
+                  </div>
+                </div>
+                <div class="col-auto">
+                  <div class="mood-option" onclick="selectMood(this, '😄', 'Great')">
+                    <div class="mood-emoji">😄</div>
+                    <div class="mood-label">Great</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Selected Mood Display -->
+              <div id="selectedMoodDisplay" class="text-center mb-4" style="display: none;">
+                <div class="alert alert-light border" role="alert">
+                  <span id="selectedEmoji" style="font-size: 32px;"></span>
+                  <span id="selectedLabel" class="ms-2 font-weight-bold"></span>
+                </div>
+              </div>
+
+              <!-- Journal Entry -->
+              <div class="mb-4">
+                <label class="form-label font-weight-bold">Add a note (optional)</label>
+                <textarea class="form-control" id="moodNote" rows="4" placeholder="What's on your mind? Any thoughts you'd like to share about how you're feeling..."></textarea>
+              </div>
+
+              <!-- Quick Tags -->
+              <div class="mb-4">
+                <label class="form-label font-weight-bold">What's influencing your mood?</label>
+                <div class="d-flex flex-wrap gap-2">
+                  <button class="btn btn-sm btn-outline-secondary mood-tag" onclick="toggleTag(this)">😴 Sleep</button>
+                  <button class="btn btn-sm btn-outline-secondary mood-tag" onclick="toggleTag(this)">📚 Studies</button>
+                  <button class="btn btn-sm btn-outline-secondary mood-tag" onclick="toggleTag(this)">👥 Friends</button>
+                  <button class="btn btn-sm btn-outline-secondary mood-tag" onclick="toggleTag(this)">👨‍👩‍👧 Family</button>
+                  <button class="btn btn-sm btn-outline-secondary mood-tag" onclick="toggleTag(this)">💪 Exercise</button>
+                  <button class="btn btn-sm btn-outline-secondary mood-tag" onclick="toggleTag(this)">🍎 Nutrition</button>
+                  <button class="btn btn-sm btn-outline-secondary mood-tag" onclick="toggleTag(this)">💼 Work</button>
+                  <button class="btn btn-sm btn-outline-secondary mood-tag" onclick="toggleTag(this)">❤️ Relationships</button>
+                </div>
+              </div>
+
+              <!-- Submit Button -->
+              <div class="text-center">
+                <button class="btn bg-gradient-success btn-lg px-5" onclick="saveMood()">
+                  <i class="material-symbols-rounded me-2">check_circle</i>
+                  Save Mood Entry
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Streak Card -->
+          <div class="card mt-4">
+            <div class="card-body">
+              <div class="row align-items-center">
+                <div class="col-auto">
+                  <div class="icon icon-lg icon-shape bg-gradient-warning shadow text-center border-radius-lg">
+                    <i class="material-symbols-rounded opacity-10">local_fire_department</i>
+                  </div>
+                </div>
+                <div class="col">
+                  <h6 class="mb-0">Current Streak: 7 Days 🔥</h6>
+                  <p class="text-sm text-muted mb-0">Keep logging daily to maintain your streak!</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Core JS Files -->
+  <script src="../assets/js/core/popper.min.js"></script>
+  <script src="../assets/js/core/bootstrap.min.js"></script>
+  <script src="../assets/js/material-dashboard.min.js"></script>
+  
+  <script>
+    let selectedMoodData = null;
+
+    // Set current date
+    document.getElementById('dateText').textContent = new Date().toLocaleDateString('en-US', { 
+      weekday: 'long', 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    });
+
+    function selectMood(element, emoji, label) {
+      // Remove selected class from all
+      document.querySelectorAll('.mood-option').forEach(opt => opt.classList.remove('selected'));
+      document.querySelectorAll('.mood-emoji').forEach(em => em.classList.remove('selected'));
+      
+      // Add selected class to clicked
+      element.classList.add('selected');
+      element.querySelector('.mood-emoji').classList.add('selected');
+      
+      // Store selection
+      selectedMoodData = { emoji, label };
+      
+      // Show selected mood
+      document.getElementById('selectedMoodDisplay').style.display = 'block';
+      document.getElementById('selectedEmoji').textContent = emoji;
+      document.getElementById('selectedLabel').textContent = 'You selected: ' + label;
+    }
+
+    function toggleTag(button) {
+      button.classList.toggle('btn-outline-secondary');
+      button.classList.toggle('btn-primary');
+    }
+
+    function saveMood() {
+      if (!selectedMoodData) {
+        alert('Please select a mood first!');
+        return;
+      }
+      
+      const note = document.getElementById('moodNote').value;
+      const tags = Array.from(document.querySelectorAll('.mood-tag.btn-primary')).map(btn => btn.textContent.trim());
+      
+      // Demo save
+      alert(`✅ Mood Saved!\n\nMood: ${selectedMoodData.emoji} ${selectedMoodData.label}\nNote: ${note || '(none)'}\nTags: ${tags.length ? tags.join(', ') : '(none)'}\n\nThis is a demo - in the live app, your mood would be saved to your profile.`);
+    }
+
+    function showDemoAlert(feature) {
+      alert('This is a demo. The "' + feature + '" feature would be fully functional in the live application.');
+    }
+  </script>
+</body>
+</html>
